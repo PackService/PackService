@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct PackServiceApp: App {
+    @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoginView()
         }
     }
 }

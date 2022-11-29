@@ -1,0 +1,11 @@
+//
+//  Config.xcconfig
+//  PackService
+//
+//  Created by 이범준 on 11/28/22.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+KAKAO_NATIVE_APP_KEY = b0634a50ce9c50e251e4d735a9742203
