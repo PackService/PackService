@@ -19,7 +19,7 @@ struct LoginView: View {
         VStack(spacing: 20) {
             Text(loginStatusInfo(kakaoAuthVM.isLoggedIn))
                 .padding()
-            Button("카카오 로그인", action: {
+            Button("카카오 로그인22222", action: {
                 kakaoAuthVM.handleKakaoLogin()
             })
             Button("카카오 로그아웃", action: {
