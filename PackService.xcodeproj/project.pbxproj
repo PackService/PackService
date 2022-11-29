@@ -28,6 +28,15 @@
 		ADE0F3C32935CE13005D2732 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = ADE0F3C22935CE13005D2732 /* FirebaseAuth */; };
 		ADE0F3C62935CEBE005D2732 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = ADE0F3C52935CEBE005D2732 /* GoogleSignIn */; };
 		ADE0F3C82935CEBE005D2732 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = ADE0F3C72935CEBE005D2732 /* GoogleSignInSwift */; };
+		ADE0F3CF2935F97D005D2732 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F3CE2935F97D005D2732 /* HomeView.swift */; };
+		ADE0F3D12935F99F005D2732 /* AppleAuthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F3D02935F99F005D2732 /* AppleAuthVM.swift */; };
+		ADFBE38B29366E3000D45B42 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ADFBE38A29366E3000D45B42 /* GoogleService-Info.plist */; };
+		ADFBE39229366F5E00D45B42 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = ADFBE39129366F5E00D45B42 /* FirebaseAuthCombine-Community */; };
+		ADFBE394293677DD00D45B42 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = ADFBE393293677DD00D45B42 /* FirebaseAnalytics */; };
+		ADFBE396293677E900D45B42 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = ADFBE395293677E900D45B42 /* FirebaseFirestore */; };
+		ADFBE398293677F700D45B42 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = ADFBE397293677F700D45B42 /* FirebaseStorage */; };
+		ADFBE39A293679F000D45B42 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFBE399293679F000D45B42 /* AuthViewModel.swift */; };
+		ADFBE39C29367BF200D45B42 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = ADFBE39B29367BF200D45B42 /* FirebaseDatabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +51,11 @@
 		ADE0F3B82934588C005D2732 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		ADE0F3BA2934683D005D2732 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		ADE0F3BC2935BCC1005D2732 /* KakaoAuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoAuthVM.swift; sourceTree = "<group>"; };
+		ADE0F3CD2935F73D005D2732 /* PackService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PackService.entitlements; sourceTree = "<group>"; };
+		ADE0F3CE2935F97D005D2732 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		ADE0F3D02935F99F005D2732 /* AppleAuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthVM.swift; sourceTree = "<group>"; };
+		ADFBE38A29366E3000D45B42 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		ADFBE399293679F000D45B42 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +68,19 @@
 				ADE0F3A229345269005D2732 /* KakaoSDKCommonCore in Frameworks */,
 				ADE0F3A429345269005D2732 /* KakaoSDKNavi in Frameworks */,
 				ADE0F3A829345269005D2732 /* KakaoSDKStory in Frameworks */,
+				ADFBE396293677E900D45B42 /* FirebaseFirestore in Frameworks */,
+				ADFBE39C29367BF200D45B42 /* FirebaseDatabase in Frameworks */,
 				ADE0F3C82935CEBE005D2732 /* GoogleSignInSwift in Frameworks */,
 				ADE0F3C62935CEBE005D2732 /* GoogleSignIn in Frameworks */,
 				ADE0F3AC29345269005D2732 /* KakaoSDKTemplate in Frameworks */,
+				ADFBE394293677DD00D45B42 /* FirebaseAnalytics in Frameworks */,
 				ADE0F3A029345269005D2732 /* KakaoSDKCommon in Frameworks */,
 				ADE0F3C32935CE13005D2732 /* FirebaseAuth in Frameworks */,
+				ADFBE398293677F700D45B42 /* FirebaseStorage in Frameworks */,
 				ADE0F39E29345269005D2732 /* KakaoSDKAuth in Frameworks */,
 				ADE0F3AE29345269005D2732 /* KakaoSDKUser in Frameworks */,
 				ADE0F3A629345269005D2732 /* KakaoSDKShare in Frameworks */,
+				ADFBE39229366F5E00D45B42 /* FirebaseAuthCombine-Community in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +92,7 @@
 			children = (
 				ADE0F38B2934515F005D2732 /* PackService */,
 				ADE0F38A2934515F005D2732 /* Products */,
+				ADFBE38C29366F4A00D45B42 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,6 +107,8 @@
 		ADE0F38B2934515F005D2732 /* PackService */ = {
 			isa = PBXGroup;
 			children = (
+				ADFBE38A29366E3000D45B42 /* GoogleService-Info.plist */,
+				ADE0F3CD2935F73D005D2732 /* PackService.entitlements */,
 				ADE0F3B3293455D4005D2732 /* Model */,
 				ADE0F3B2293455C7005D2732 /* ViewModel */,
 				ADE0F3B1293455C1005D2732 /* View */,
@@ -114,6 +136,7 @@
 			children = (
 				ADE0F38E2934515F005D2732 /* ContentView.swift */,
 				ADE0F3BA2934683D005D2732 /* LoginView.swift */,
+				ADE0F3CE2935F97D005D2732 /* HomeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -122,6 +145,8 @@
 			isa = PBXGroup;
 			children = (
 				ADE0F3BC2935BCC1005D2732 /* KakaoAuthVM.swift */,
+				ADE0F3D02935F99F005D2732 /* AppleAuthVM.swift */,
+				ADFBE399293679F000D45B42 /* AuthViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -131,6 +156,13 @@
 			children = (
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		ADFBE38C29366F4A00D45B42 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,6 +195,11 @@
 				ADE0F3C22935CE13005D2732 /* FirebaseAuth */,
 				ADE0F3C52935CEBE005D2732 /* GoogleSignIn */,
 				ADE0F3C72935CEBE005D2732 /* GoogleSignInSwift */,
+				ADFBE39129366F5E00D45B42 /* FirebaseAuthCombine-Community */,
+				ADFBE393293677DD00D45B42 /* FirebaseAnalytics */,
+				ADFBE395293677E900D45B42 /* FirebaseFirestore */,
+				ADFBE397293677F700D45B42 /* FirebaseStorage */,
+				ADFBE39B29367BF200D45B42 /* FirebaseDatabase */,
 			);
 			productName = PackService;
 			productReference = ADE0F3892934515F005D2732 /* PackService.app */;
@@ -177,6 +214,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1410;
+				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					ADE0F3882934515F005D2732 = {
 						CreatedOnToolsVersion = 14.1;
@@ -213,6 +251,7 @@
 			files = (
 				ADE0F39429345160005D2732 /* Preview Assets.xcassets in Resources */,
 				ADE0F39129345160005D2732 /* Assets.xcassets in Resources */,
+				ADFBE38B29366E3000D45B42 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,10 +263,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADE0F3B729345618005D2732 /* AppDelegate.swift in Sources */,
+				ADE0F3CF2935F97D005D2732 /* HomeView.swift in Sources */,
 				ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */,
+				ADE0F3D12935F99F005D2732 /* AppleAuthVM.swift in Sources */,
 				ADE0F38D2934515F005D2732 /* PackServiceApp.swift in Sources */,
 				ADE0F3BB2934683D005D2732 /* LoginView.swift in Sources */,
 				ADE0F3BD2935BCC1005D2732 /* KakaoAuthVM.swift in Sources */,
+				ADFBE39A293679F000D45B42 /* AuthViewModel.swift in Sources */,
 				ADE0F3B92934588C005D2732 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,6 +399,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PackService/PackService.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PackService/Preview Content\"";
@@ -374,7 +417,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Leebumju.PackService;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Leebumju.PackService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -388,6 +432,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PackService/PackService.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PackService/Preview Content\"";
@@ -405,7 +450,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Leebumju.PackService;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Leebumju.PackService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -528,6 +574,31 @@
 			isa = XCSwiftPackageProductDependency;
 			package = ADE0F3C42935CEBE005D2732 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		ADFBE39129366F5E00D45B42 /* FirebaseAuthCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ADE0F3C12935CE13005D2732 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseAuthCombine-Community";
+		};
+		ADFBE393293677DD00D45B42 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ADE0F3C12935CE13005D2732 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		ADFBE395293677E900D45B42 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ADE0F3C12935CE13005D2732 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		ADFBE397293677F700D45B42 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ADE0F3C12935CE13005D2732 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		ADFBE39B29367BF200D45B42 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ADE0F3C12935CE13005D2732 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

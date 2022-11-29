@@ -5,12 +5,12 @@
 //  Created by 이범준 on 11/29/22.
 //
 
-import Foundation
+import SwiftUI
 import Combine
 import KakaoSDKAuth
 import KakaoSDKUser
 
-class KaKaoAuthVM: ObservableObject {
+class KakaoAuthVM: ObservableObject {
     
     @Published var isLoggedIn: Bool = false
     
