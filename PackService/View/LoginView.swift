@@ -11,45 +11,56 @@ import AuthenticationServices
 struct LoginView: View {
     @StateObject var kakaoAuthVM = KakaoAuthVM()
     @StateObject var appleLoginData = AppleAuthVM()
+    @State var firstNaviLinkActive = false
     
     var body: some View {
-        VStack(spacing: 20) {
-//            Button("카카오 로그아웃", action: {
-//                kakaoAuthVM.kakaoLogout()
-//            })
-            Button(action: {kakaoAuthVM.handleKakaoLogin()}){
-                Image("kakao_login_large_wide")
-                    .resizable()
-                    .frame(height: 45)
-                    .clipShape(Rectangle())
-                    .padding(.horizontal,30)
-            }
-            
-            SignInWithAppleButton { (request) in
-                appleLoginData.nonce = randomNonceString()
-                request.requestedScopes = [.email,.fullName]
-                request.nonce = sha256(appleLoginData.nonce)
-            } onCompletion: { (result) in
-                //getting error or success
-                switch result {
-                case .success(let user):
-                    print("apple login success")
-                    guard let credential = user.credential as? ASAuthorizationAppleIDCredential else {
-                        print("error with firebase")
-                        return
-                    }
-                    appleLoginData.authenticate(credential: credential)
-                case .failure(let error):
-                    print(error.localizedDescription)
+        NavigationView {
+            VStack(spacing: 20) {
+                //            Button("카카오 로그아웃", action: {
+                //                kakaoAuthVM.kakaoLogout()
+                //            })
+                NavigationLink(destination: MemberShipAgreementView(firstNaviLinkActive: $firstNaviLinkActive), isActive: $firstNaviLinkActive) {
+                    Text("Click Here")
+                        .foregroundColor(Color.white)
+                        .frame(width: 100, height: 60, alignment: .center)
+                        .background(RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.red))
                 }
+                .navigationBarHidden(true)
+                Button(action: {kakaoAuthVM.handleKakaoLogin()}){
+                    Image("kakao_login_large_wide")
+                        .resizable()
+                        .frame(height: 45)
+                        .clipShape(Rectangle())
+                        .padding(.horizontal,30)
+                }
+                
+                SignInWithAppleButton { (request) in
+                    appleLoginData.nonce = randomNonceString()
+                    request.requestedScopes = [.email,.fullName]
+                    request.nonce = sha256(appleLoginData.nonce)
+                } onCompletion: { (result) in
+                    //getting error or success
+                    switch result {
+                    case .success(let user):
+                        print("apple login success")
+                        guard let credential = user.credential as? ASAuthorizationAppleIDCredential else {
+                            print("error with firebase")
+                            return
+                        }
+                        appleLoginData.authenticate(credential: credential)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+                .signInWithAppleButtonStyle(.black)
+                .frame(height: 45)
+                .clipShape(Rectangle())
+                .padding(.horizontal,30)
+                .offset(y: 0)
             }
-            .signInWithAppleButtonStyle(.black)
-            .frame(height: 45)
-            .clipShape(Rectangle())
-            .padding(.horizontal,30)
-            .offset(y: 0)
+            .padding()
         }
-        .padding()
     }
 }
 
