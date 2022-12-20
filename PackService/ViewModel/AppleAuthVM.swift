@@ -31,6 +31,7 @@ class AppleAuthVM: ObservableObject {
             print(result)
             if let error = err {
                 print(error.localizedDescription)
+                print("error")
                 return
             }
             
