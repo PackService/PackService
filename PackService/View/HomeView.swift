@@ -14,13 +14,11 @@ struct HomeView: View {
         NavigationView {
             VStack(spacing: 20) {
                 Text("Logged in successFully using apple login")
-                
                 Button(action: {
                     //logout
                     DispatchQueue.global(qos: .background).async {
                         try? Auth.auth().signOut()
                     }
-                    
                     //back view to loginview
                     withAnimation(.easeInOut) {
                         log_Status = false

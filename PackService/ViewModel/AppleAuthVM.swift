@@ -28,7 +28,6 @@ class AppleAuthVM: ObservableObject {
         let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: nonce)
         
         Auth.auth().signIn(with: firebaseCredential) { (result, err) in
-            print(result)
             if let error = err {
                 print(error.localizedDescription)
                 print("error")

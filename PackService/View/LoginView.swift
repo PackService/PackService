@@ -8,12 +8,7 @@
 import SwiftUI
 import AuthenticationServices
 
-
 struct LoginView: View {
-    @State var email = ""
-    @State var pw = ""
-    @ObservedObject var viewModel = AuthViewModel()
-        
     @StateObject var kakaoAuthVM = KakaoAuthVM()
     @StateObject var appleLoginData = AppleAuthVM()
     let loginStatusInfo: (Bool) -> String = { isLoggedIn in
@@ -23,38 +18,21 @@ struct LoginView: View {
     var body: some View {
         VStack(spacing: 20) {
             Text(loginStatusInfo(kakaoAuthVM.isLoggedIn)).padding()
-//            TextField("id", text: $id)
-//            SecureField("PW", text: $password)
-//            TextField("email", text: $email)
-//            TextField("nickName", text: $nickName)
-//            TextField("name", text: $name)
-//            TextField("address", text: $address)
-//            Button {
-//                viewModel.registerUser(id, password, nickName, address, email, name)
-//            } label: {
-//                Text("등록")
-//            }
-//            TextField("Email", text: $email)
-//            SecureField("PW", text: $pw)
-//            Button {
-//                viewModel.registerUser(email: email, password: pw)
-//            } label: {
-//                Text("등록")
-//            }
-//
-            Button("카카오 로그인", action: {
-                kakaoAuthVM.handleKakaoLogin()
-            })
             Button("카카오 로그아웃", action: {
                 kakaoAuthVM.kakaoLogout()
             })
-
+            Button(action: {kakaoAuthVM.handleKakaoLogin()}){
+                Image("kakao_login_large_wide")
+                    .resizable()
+                    .frame(height: 45)
+                    .clipShape(Rectangle())
+                    .padding(.horizontal,30)
+            }
             
             SignInWithAppleButton { (request) in
                 appleLoginData.nonce = randomNonceString()
                 request.requestedScopes = [.email,.fullName]
                 request.nonce = sha256(appleLoginData.nonce)
-                print(request)
             } onCompletion: { (result) in
                 //getting error or success
                 switch result {
@@ -70,10 +48,10 @@ struct LoginView: View {
                 }
             }
             .signInWithAppleButtonStyle(.black)
-            .frame(height: 55)
-            .clipShape(Capsule())
+            .frame(height: 45)
+            .clipShape(Rectangle())
             .padding(.horizontal,30)
-            .offset(y: 70)
+            .offset(y: 0)
         }
         .padding()
     }
