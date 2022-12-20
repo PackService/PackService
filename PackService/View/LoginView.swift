@@ -34,23 +34,23 @@ struct LoginView: View {
 //            } label: {
 //                Text("등록")
 //            }
-            TextField("Email", text: $email)
-            SecureField("PW", text: $pw)
-            Button {
-                viewModel.registerUser(email: email, password: pw)
-            } label: {
-                Text("등록")
-            }
-
-            Button("카카오 로그인", action: {
-                kakaoAuthVM.handleKakaoLogin()
-            })
-            Button("카카오 로그아웃", action: {
-                kakaoAuthVM.kakaoLogout()
-            })
-            Button("구글 로그인", action: {
-                
-            })
+//            TextField("Email", text: $email)
+//            SecureField("PW", text: $pw)
+//            Button {
+//                viewModel.registerUser(email: email, password: pw)
+//            } label: {
+//                Text("등록")
+//            }
+//
+//            Button("카카오 로그인", action: {
+//                kakaoAuthVM.handleKakaoLogin()
+//            })
+//            Button("카카오 로그아웃", action: {
+//                kakaoAuthVM.kakaoLogout()
+//            })
+//            Button("구글 로그인", action: {
+//                
+//            })
             
             SignInWithAppleButton { (request) in
                 appleLoginData.nonce = randomNonceString()

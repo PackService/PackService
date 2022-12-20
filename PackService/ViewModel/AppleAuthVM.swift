@@ -9,7 +9,6 @@ import SwiftUI
 import CryptoKit
 import AuthenticationServices
 import Firebase
-import FirebaseAuth
 
 class AppleAuthVM: ObservableObject {
     @Published var nonce = ""
@@ -47,7 +46,6 @@ class AppleAuthVM: ObservableObject {
 
 //apple login with firebase
 // Adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
-
 func sha256(_ input: String) -> String {
   let inputData = Data(input.utf8)
   let hashedData = SHA256.hash(data: inputData)
