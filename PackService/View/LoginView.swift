@@ -42,15 +42,13 @@ struct LoginView: View {
 //                Text("등록")
 //            }
 //
-//            Button("카카오 로그인", action: {
-//                kakaoAuthVM.handleKakaoLogin()
-//            })
-//            Button("카카오 로그아웃", action: {
-//                kakaoAuthVM.kakaoLogout()
-//            })
-//            Button("구글 로그인", action: {
-//                
-//            })
+            Button("카카오 로그인", action: {
+                kakaoAuthVM.handleKakaoLogin()
+            })
+            Button("카카오 로그아웃", action: {
+                kakaoAuthVM.kakaoLogout()
+            })
+
             
             SignInWithAppleButton { (request) in
                 appleLoginData.nonce = randomNonceString()
