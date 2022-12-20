@@ -10,14 +10,17 @@ import Firebase
 
 struct HomeView: View {
     @AppStorage("log_status") var log_Status = false
+    @StateObject var kakaoAuthVM = KakaoAuthVM()
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                Text("Logged in successFully using apple login")
+                Text("Logged in successFully")
                 Button(action: {
                     //logout
                     DispatchQueue.global(qos: .background).async {
                         try? Auth.auth().signOut()
+                        //카카오 로그인 했을 경우에만 아래 실행되도록 수정 필요
+                        try? kakaoAuthVM.kakaoLogout()
                     }
                     //back view to loginview
                     withAnimation(.easeInOut) {

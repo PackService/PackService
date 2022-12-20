@@ -12,13 +12,12 @@ import KakaoSDKUser
 
 class KakaoAuthVM: ObservableObject {
     
-    @Published var isLoggedIn: Bool = false
-    
+    @AppStorage("log_status") var log_status = false
     @MainActor
     func kakaoLogout() {
         Task {
             if await handleKakaoLogout() {
-                isLoggedIn = false
+                log_status = false
             }
         }
     }
@@ -66,8 +65,6 @@ class KakaoAuthVM: ObservableObject {
                 }
                 else {
                     print("loginWithKakaoAccount() success.")
-                    
-                    //do something
                     _ = oauthToken
                     continuation.resume(returning: true)
                 }
@@ -81,10 +78,10 @@ class KakaoAuthVM: ObservableObject {
             // 카카오톡 설치 여부 확인 - 설치 되어있을 때
             if (UserApi.isKakaoTalkLoginAvailable()) {
                 //카카오 앱을 통해 로그인
-                isLoggedIn = await handleLoginWithKakaoTalkApp()
+                log_status = await handleLoginWithKakaoTalkApp()
             } else { //카카오톡 설치 안되어있을 때
                 //카카오 웹뷰로 로그인
-                isLoggedIn = await handleLoginWithKakaoAccount()
+                log_status = await handleLoginWithKakaoAccount()
             }
         }
     }
