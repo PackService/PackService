@@ -11,7 +11,7 @@ struct MemberShipAgreementView: View {
     @Binding var firstNaviLinkActive: Bool
     var body: some View {
         VStack{
-            Text("This is Second Page.")
+            Text("회원가입 이용약관.")
             NavigationLink(destination: SignUpView(firstNaviLinkActive: $firstNaviLinkActive)) {
                 Text("Click Here")
                     .foregroundColor(Color.white)

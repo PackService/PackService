@@ -8,10 +8,21 @@
 import SwiftUI
 
 struct SignUpView: View {
+    @ObservedObject var viewModel = AuthViewModel()
     @Binding var firstNaviLinkActive: Bool
+    @State var emailInput: String = ""
+    @State var passwordInput: String = ""
     var body: some View {
         VStack{
-            Text("This is Last Page.")
+            TextField("이메일", text: $emailInput).keyboardType(.emailAddress).autocapitalization(.none)
+            SecureField("비밀번호", text: $passwordInput).keyboardType(.default)
+            SecureField("비밀번호 확인", text: $passwordInput).keyboardType(.default)
+            Button {
+                viewModel.registerUser(email: emailInput, password: passwordInput)
+            } label: {
+                Text("등록")
+            }
+            Text("회원가입")
             Button(action: {
                 firstNaviLinkActive = false
             }, label: {
