@@ -26,15 +26,6 @@ struct LoginView: View {
                     //            Button("카카오 로그아웃", action: {
                     //                kakaoAuthVM.kakaoLogout()
                     //            })
-                    NavigationLink(destination: MemberShipAgreementView(firstNaviLinkActive: $firstNaviLinkActive), isActive: $firstNaviLinkActive) {
-                        Text("Click Here")
-                            .foregroundColor(Color.white)
-                            .frame(width: 100, height: 60, alignment: .center)
-                            .background(RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.red))
-                    }
-                    .navigationBarHidden(true)
-                    
                     Button(action: {
                         print("로그인 버튼 클릭되었음")
                     }, label: {
@@ -74,6 +65,22 @@ struct LoginView: View {
                     .offset(y: 0)
                 }
                 .padding()
+                
+                
+                Button(action: {
+                    print("아이디/비밀번호 찾기 버튼 클릭되었음")
+                }, label: {
+                    Text("아이디/비밀번호 찾기")
+                })
+                .offset(x: -70, y: 150)
+                
+                
+                NavigationLink(destination: MemberShipAgreementView(firstNaviLinkActive: $firstNaviLinkActive), isActive: $firstNaviLinkActive) {
+                    Text("회원가입")
+                }
+                .navigationBarHidden(true)
+                .offset(x: 70,y: 150)
+                
             }
         }
     }

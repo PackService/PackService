@@ -51,6 +51,8 @@ class KakaoAuthVM: ObservableObject {
                     //do something
                     _ = oauthToken
                     continuation.resume(returning: true)
+                    print(oauthToken)
+                    //뭐 client id 이런걸로 택배 그거 해야겄네
                 }
             }
         }

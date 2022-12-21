@@ -36,6 +36,7 @@ class AppleAuthVM: ObservableObject {
             
             //usr succesfully logged into firebase
             print("login firebase")
+            print(firebaseCredential)
             //
             withAnimation(.easeInOut) {
                 self.log_status = true

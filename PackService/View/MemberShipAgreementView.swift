@@ -9,17 +9,26 @@ import SwiftUI
 
 struct MemberShipAgreementView: View {
     @Binding var firstNaviLinkActive: Bool
+    @State var isToggleOn: Bool = true
+    var item = "aslfjalefjaoseifjapoeifjapo efjaosifjapweoifj asdoifj apweoifj aspdofijwpe ofijqwdpofij qwepoifj apsoijfeapsoeifj apoeisjf aposeifj apsoeifj apsoeifjaopsiej fpaosiej fpaoisejf poasiejdfpoasiej paosie fjpoaisje fopiasje fawefoaiofij qwepoifj apsoijfeapsoeifj apoeisjf aposeifj apsoeifj apsoeifjaopsiej fpaosiej fpaoisejf poasiejdfpoasiej paosie fjpoaisje fopiasje fawefoaiofij qwepoifj apsoijfeapsoeifj apoeisjf aposeifj apsoeifj apsoeifjaopsiej fpaosiej fpaoisejf poasiejdfpoasiej paosie fjpoaisje fopiasje fawefoaiofij qwepoifj apsoijfeapsoeifj apoeisjf aposeifj apsoeifj apsoeifjaopsiej fpaosiej fpaoisejf poasiejdfpoasiej paosie fjpoaisje fopiasje fawefoaiofij qwepoifj apsoijfeapsoeifj apoeisjf aposeifj apsoeifj apsoeifjaopsiej fpaosiej fpaoisejf poasiejdfpoasiej paosie fjpoaisje fopiasje fawefoaiofij qwepoifj apsoijfeapsoeifj apoeisjf aposeifj apsoeifj apsoeifjaopsiej fpaosiej fpaoisejf poasiejdfpoasiej paosie fjpoaisje fopiasje fawefoaiofij qwepoifj apsoijfeapsoeifj apoeisjf aposeifj apsoeifj apsoeifjaopsiej fpaosiej fpaoisejf poasiejdfpoasiej paosie fjpoaisje fopiasje fawefoaiofij qwepoifj apsoijfeapsoeifj apoeisjf aposeifj apsoeifj apsoeifjaopsiej fpaosiej fpaoisejf poasiejdfpoasiej paosie fjpoaisje fopiasje fawefoaiofij qwepoifj apsoijfeapsoeifj apoeisjf aposeifj apsoeifj apsoeifjaopsiej fpaosiej fpaoisejf poasiejdfpoasiej paosie fjpoaisje fopiasje fawefoaiofij qwepoifj apsoijfeapsoeifj apoeisjf aposeifj apsoeifj apsoeifjaopsiej fpaosiej fpaoisejf poasiejdfpoasiej paosie fjpoaisje fopiasje fawefoai"
     var body: some View {
-        VStack{
-            Text("회원가입 이용약관.")
+        
+        VStack(spacing: 10) {
+            Text("이용약관")
+                .frame(alignment:.trailing)
+            GroupBox {
+                ScrollView(.vertical, showsIndicators: true) {
+                    Text(item)
+                        .font(.footnote)
+                }
+                .frame(height: 100)
+            }
+            .padding(20)
             NavigationLink(destination: SignUpView(firstNaviLinkActive: $firstNaviLinkActive)) {
                 Text("Click Here")
-                    .foregroundColor(Color.white)
-                    .frame(width: 100, height: 60, alignment: .center)
-                    .background(RoundedRectangle(cornerRadius: 10)
-                        .fill(Color.green))
             }
         }
+        
     }
 }
 
