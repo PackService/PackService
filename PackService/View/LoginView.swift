@@ -9,6 +9,7 @@ import SwiftUI
 import AuthenticationServices
 
 struct LoginView: View {
+    
     @StateObject var kakaoAuthVM = KakaoAuthVM()
     @StateObject var appleLoginData = AppleAuthVM()
     @State var firstNaviLinkActive = false

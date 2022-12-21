@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AD1ADDCE2952477300545DB7 /* MemberShipAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDCD2952477300545DB7 /* MemberShipAgreementView.swift */; };
+		AD1ADDD029531EC600545DB7 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDCF29531EC600545DB7 /* SignUpView.swift */; };
 		ADE0F38D2934515F005D2732 /* PackServiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38C2934515F005D2732 /* PackServiceApp.swift */; };
 		ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38E2934515F005D2732 /* ContentView.swift */; };
 		ADE0F39129345160005D2732 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADE0F39029345160005D2732 /* Assets.xcassets */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		AD1ADDCD2952477300545DB7 /* MemberShipAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberShipAgreementView.swift; sourceTree = "<group>"; };
+		AD1ADDCF29531EC600545DB7 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		ADE0F3892934515F005D2732 /* PackService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PackService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADE0F38C2934515F005D2732 /* PackServiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackServiceApp.swift; sourceTree = "<group>"; };
 		ADE0F38E2934515F005D2732 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				ADE0F3BA2934683D005D2732 /* LoginView.swift */,
 				ADE0F3CE2935F97D005D2732 /* HomeView.swift */,
 				AD1ADDCD2952477300545DB7 /* MemberShipAgreementView.swift */,
+				AD1ADDCF29531EC600545DB7 /* SignUpView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 			files = (
 				ADE0F3B729345618005D2732 /* AppDelegate.swift in Sources */,
 				ADE0F3CF2935F97D005D2732 /* HomeView.swift in Sources */,
+				AD1ADDD029531EC600545DB7 /* SignUpView.swift in Sources */,
 				ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */,
 				ADE0F3D12935F99F005D2732 /* AppleAuthVM.swift in Sources */,
 				ADE0F38D2934515F005D2732 /* PackServiceApp.swift in Sources */,

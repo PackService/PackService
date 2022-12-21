@@ -10,7 +10,16 @@ import SwiftUI
 struct MemberShipAgreementView: View {
     @Binding var firstNaviLinkActive: Bool
     var body: some View {
-        Text("회원가입 약관동의란")
+        VStack{
+            Text("This is Second Page.")
+            NavigationLink(destination: SignUpView(firstNaviLinkActive: $firstNaviLinkActive)) {
+                Text("Click Here")
+                    .foregroundColor(Color.white)
+                    .frame(width: 100, height: 60, alignment: .center)
+                    .background(RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.green))
+            }
+        }
     }
 }
 
