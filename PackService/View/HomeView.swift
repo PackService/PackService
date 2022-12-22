@@ -35,6 +35,21 @@ struct HomeView: View {
                         .background(Color.pink)
                         .clipShape(Capsule())
                 })
+                
+                Spacer()
+                
+                NavigationLink {
+                    AddTrackingNumberView()
+                } label: {
+                    Text("운송장 번호 등록")
+                        .bold()
+                        .foregroundColor(.white)
+                        .padding(.vertical, 12)
+                        .frame(width: UIScreen.main.bounds.width / 2)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                }
+
             }
             .navigationTitle("Home")
         }
