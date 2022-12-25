@@ -45,7 +45,7 @@
 		ADFBE394293677DD00D45B42 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = ADFBE393293677DD00D45B42 /* FirebaseAnalytics */; };
 		ADFBE396293677E900D45B42 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = ADFBE395293677E900D45B42 /* FirebaseFirestore */; };
 		ADFBE398293677F700D45B42 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = ADFBE397293677F700D45B42 /* FirebaseStorage */; };
-		ADFBE39A293679F000D45B42 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFBE399293679F000D45B42 /* AuthViewModel.swift */; };
+		ADFBE39A293679F000D45B42 /* EmailAuthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFBE399293679F000D45B42 /* EmailAuthVM.swift */; };
 		ADFBE39C29367BF200D45B42 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = ADFBE39B29367BF200D45B42 /* FirebaseDatabase */; };
 /* End PBXBuildFile section */
 
@@ -75,7 +75,7 @@
 		ADE0F3CD2935F73D005D2732 /* PackService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PackService.entitlements; sourceTree = "<group>"; };
 		ADE0F3CE2935F97D005D2732 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		ADE0F3D02935F99F005D2732 /* AppleAuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthVM.swift; sourceTree = "<group>"; };
-		ADFBE399293679F000D45B42 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		ADFBE399293679F000D45B42 /* EmailAuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,7 +190,7 @@
 			children = (
 				ADE0F3BC2935BCC1005D2732 /* KakaoAuthVM.swift */,
 				ADE0F3D02935F99F005D2732 /* AppleAuthVM.swift */,
-				ADFBE399293679F000D45B42 /* AuthViewModel.swift */,
+				ADFBE399293679F000D45B42 /* EmailAuthVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -324,7 +324,7 @@
 				ADE0F38D2934515F005D2732 /* PackServiceApp.swift in Sources */,
 				ADE0F3BB2934683D005D2732 /* LoginView.swift in Sources */,
 				ADE0F3BD2935BCC1005D2732 /* KakaoAuthVM.swift in Sources */,
-				ADFBE39A293679F000D45B42 /* AuthViewModel.swift in Sources */,
+				ADFBE39A293679F000D45B42 /* EmailAuthVM.swift in Sources */,
 				ADE0F3B92934588C005D2732 /* SceneDelegate.swift in Sources */,
 				AD1ADDCE2952477300545DB7 /* MemberShipAgreementView.swift in Sources */,
 			);

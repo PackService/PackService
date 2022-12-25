@@ -12,7 +12,8 @@ struct LoginView: View {
     @State var emailInput : String = ""
     @State var passwordInput: String = ""
     @StateObject var kakaoAuthVM = KakaoAuthVM()
-    @StateObject var appleLoginData = AppleAuthVM()
+    @StateObject var appleAuthVM = AppleAuthVM()
+    @ObservedObject var emailAuthVM = EmailAuthVM()
     @State var firstNaviLinkActive = false
     
     var body: some View {
@@ -27,11 +28,18 @@ struct LoginView: View {
                     //                kakaoAuthVM.kakaoLogout()
                     //            })
                     Button(action: {
+                        emailAuthVM.login(email: emailInput, password: passwordInput)
                         print("로그인 버튼 클릭되었음")
                     }, label: {
                         Text("로그인")
                     })
-                    
+                    Button {
+                        emailAuthVM.logout()
+                    } label: {
+                        Text("로그아웃")
+                    }
+                    Text(emailAuthVM.currentUser?.uid ?? "비로그인")
+                                    .padding()
                     Button(action: {kakaoAuthVM.handleKakaoLogin()}){
                         Image("kakao_login_large_wide")
                             .resizable()
@@ -41,9 +49,9 @@ struct LoginView: View {
                     }
                     
                     SignInWithAppleButton { (request) in
-                        appleLoginData.nonce = randomNonceString()
+                        appleAuthVM.nonce = randomNonceString()
                         request.requestedScopes = [.email,.fullName]
-                        request.nonce = sha256(appleLoginData.nonce)
+                        request.nonce = sha256(appleAuthVM.nonce)
                     } onCompletion: { (result) in
                         //getting error or success
                         switch result {
@@ -53,7 +61,7 @@ struct LoginView: View {
                                 print("error with firebase")
                                 return
                             }
-                            appleLoginData.authenticate(credential: credential)
+                            appleAuthVM.authenticate(credential: credential)
                         case .failure(let error):
                             print(error.localizedDescription)
                         }

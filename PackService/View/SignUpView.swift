@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @ObservedObject var viewModel = AuthViewModel()
+    @ObservedObject var viewModel = EmailAuthVM()
     @Binding var firstNaviLinkActive: Bool
     @State var emailInput: String = ""
     @State var passwordInput: String = ""
