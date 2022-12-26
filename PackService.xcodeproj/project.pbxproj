@@ -14,6 +14,7 @@
 		7E04351329544648005187E8 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E04351029544648005187E8 /* NetworkManager.swift */; };
 		7E043515295446F5005187E8 /* AddTrackingNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E043514295446F5005187E8 /* AddTrackingNumberView.swift */; };
 		7E04351729544845005187E8 /* CompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E04351629544845005187E8 /* CompanyView.swift */; };
+		7E8724D62959818E00C0B1C9 /* TrackingInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8724D52959818E00C0B1C9 /* TrackingInfoModel.swift */; };
 		AD1ADDCE2952477300545DB7 /* MemberShipAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDCD2952477300545DB7 /* MemberShipAgreementView.swift */; };
 		AD1ADDD029531EC600545DB7 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDCF29531EC600545DB7 /* SignUpView.swift */; };
 		AD1ADDD2295331C800545DB7 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDD1295331C800545DB7 /* ProfileView.swift */; };
@@ -57,6 +58,7 @@
 		7E04351029544648005187E8 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		7E043514295446F5005187E8 /* AddTrackingNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrackingNumberView.swift; sourceTree = "<group>"; };
 		7E04351629544845005187E8 /* CompanyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanyView.swift; sourceTree = "<group>"; };
+		7E8724D52959818E00C0B1C9 /* TrackingInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingInfoModel.swift; sourceTree = "<group>"; };
 		AD1ADDCD2952477300545DB7 /* MemberShipAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberShipAgreementView.swift; sourceTree = "<group>"; };
 		AD1ADDCF29531EC600545DB7 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		AD1ADDD1295331C800545DB7 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 			children = (
 				AD1ADDD32953326C00545DB7 /* UserData.swift */,
 				7E04350A2954454C005187E8 /* CompanyModel.swift */,
+				7E8724D52959818E00C0B1C9 /* TrackingInfoModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				ADE0F3CF2935F97D005D2732 /* HomeView.swift in Sources */,
 				7E04350B2954454C005187E8 /* CompanyModel.swift in Sources */,
 				7E04351229544648005187E8 /* TrackingInfoService.swift in Sources */,
+				7E8724D62959818E00C0B1C9 /* TrackingInfoModel.swift in Sources */,
 				7E04351729544845005187E8 /* CompanyView.swift in Sources */,
 				AD1ADDD029531EC600545DB7 /* SignUpView.swift in Sources */,
 				ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */,
