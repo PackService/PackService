@@ -50,6 +50,18 @@ struct HomeView: View {
                         .background(Color.blue)
                         .cornerRadius(10)
                 }
+                
+                NavigationLink {
+                    RecommendTrackView()
+                } label: {
+                    Text("추천 택배사 조회")
+                        .bold()
+                        .foregroundColor(.white)
+                        .padding(.vertical, 12)
+                        .frame(width: UIScreen.main.bounds.width / 2)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                }
 
             }
             .navigationTitle("Home")
