@@ -12,10 +12,10 @@ import Firebase
 
 class AppleAuthVM: ObservableObject {
     @Published var nonce = ""
-    @AppStorage("log_status") var log_status = false
+    @AppStorage("log_status") var logStatus = false
     
     func authenticate(credential: ASAuthorizationAppleIDCredential) {
-        //getting token
+        // getting token
         guard let token = credential.identityToken else {
             print("error with firebase")
             return
@@ -34,12 +34,12 @@ class AppleAuthVM: ObservableObject {
                 return
             }
             
-            //usr succesfully logged into firebase
+            // usr succesfully logged into firebase
             print("login firebase")
             print(firebaseCredential)
             //
             withAnimation(.easeInOut) {
-                self.log_status = true
+                self.logStatus = true
             }
         }
     }
