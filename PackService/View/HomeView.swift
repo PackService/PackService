@@ -11,6 +11,7 @@ import Firebase
 struct HomeView: View {
     @AppStorage("log_status") var log_Status = false
     @StateObject var kakaoAuthVM = KakaoAuthVM()
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
