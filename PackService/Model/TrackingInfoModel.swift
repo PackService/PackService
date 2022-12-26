@@ -88,7 +88,7 @@ import Foundation
 
 
 // MARK: - TrackingInfo
-struct TrackingInfo {
+struct TrackingInfoModel {
     let complete: Bool
     let level: Int
     let invoiceNo: String
@@ -96,7 +96,7 @@ struct TrackingInfo {
     let itemImage, itemName: String
     let receiverAddr, receiverName, recipient: String
     let senderName: String?
-    let trackingDetails: [TrackingDetail]?
+    let trackingDetails: [TrackingDetailsModel]?
     let estimate: String?
     let productInfo: String?
     
@@ -106,7 +106,7 @@ struct TrackingInfo {
 }
 
 // MARK: - TrackingDetail
-struct TrackingDetail {
+struct TrackingDetailsModel {
     let kind: String
     let level: Int
     let manName, telno, telno2: String

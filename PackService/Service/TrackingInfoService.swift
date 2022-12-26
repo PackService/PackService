@@ -9,4 +9,5 @@ import Foundation
 
 class TrackingInfoService {
     
+    @Published var trackingInfo: T
 }
