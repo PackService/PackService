@@ -6,8 +6,8 @@
 //
 
 import Foundation
-
-class TrackingInfoService {
-    
-    @Published var trackingInfo: T
-}
+//
+//class TrackingInfoService {
+//    
+//    @Published var trackingInfo: T
+//}

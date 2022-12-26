@@ -11,7 +11,7 @@ struct ContentView: View {
     @AppStorage("log_status") var logStatus = false
     var body: some View {
         ZStack {
-            if log_Status {
+            if logStatus {
                 HomeView()
             } else {
                 LoginView()

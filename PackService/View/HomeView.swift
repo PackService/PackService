@@ -25,7 +25,7 @@ struct HomeView: View {
                     }
                     // back view to loginview
                     withAnimation(.easeInOut) {
-                        log_Status = false
+                        logStatus = false
                     }
                 }, label: {
                     Text("Log out")
