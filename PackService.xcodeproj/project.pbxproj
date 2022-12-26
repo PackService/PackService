@@ -18,6 +18,7 @@
 		AD1ADDD029531EC600545DB7 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDCF29531EC600545DB7 /* SignUpView.swift */; };
 		AD1ADDD2295331C800545DB7 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDD1295331C800545DB7 /* ProfileView.swift */; };
 		AD1ADDD42953326C00545DB7 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDD32953326C00545DB7 /* UserData.swift */; };
+		AD1ADDDE29598F0A00545DB7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = AD1ADDDD29598F0A00545DB7 /* .swiftlint.yml */; };
 		ADE0F38D2934515F005D2732 /* PackServiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38C2934515F005D2732 /* PackServiceApp.swift */; };
 		ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38E2934515F005D2732 /* ContentView.swift */; };
 		ADE0F39129345160005D2732 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADE0F39029345160005D2732 /* Assets.xcassets */; };
@@ -61,6 +62,7 @@
 		AD1ADDCF29531EC600545DB7 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		AD1ADDD1295331C800545DB7 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		AD1ADDD32953326C00545DB7 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		AD1ADDDD29598F0A00545DB7 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		ADE0F3892934515F005D2732 /* PackService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PackService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADE0F38C2934515F005D2732 /* PackServiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackServiceApp.swift; sourceTree = "<group>"; };
 		ADE0F38E2934515F005D2732 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 		ADE0F3802934515F005D2732 = {
 			isa = PBXGroup;
 			children = (
+				AD1ADDDD29598F0A00545DB7 /* .swiftlint.yml */,
 				ADE0F38B2934515F005D2732 /* PackService */,
 				ADE0F38A2934515F005D2732 /* Products */,
 				ADFBE38C29366F4A00D45B42 /* Frameworks */,
@@ -218,6 +221,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ADE0F39729345160005D2732 /* Build configuration list for PBXNativeTarget "PackService" */;
 			buildPhases = (
+				AD1ADDDC29598EC200545DB7 /* SwiftLint Script */,
 				ADE0F3852934515F005D2732 /* Sources */,
 				ADE0F3862934515F005D2732 /* Frameworks */,
 				ADE0F3872934515F005D2732 /* Resources */,
@@ -295,6 +299,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD1ADDDE29598F0A00545DB7 /* .swiftlint.yml in Resources */,
 				ADE0F39429345160005D2732 /* Preview Assets.xcassets in Resources */,
 				ADE0F39129345160005D2732 /* Assets.xcassets in Resources */,
 				7E04350929544485005187E8 /* GoogleService-Info.plist in Resources */,
@@ -302,6 +307,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AD1ADDDC29598EC200545DB7 /* SwiftLint Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "SwiftLint Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		ADE0F3852934515F005D2732 /* Sources */ = {

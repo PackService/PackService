@@ -12,11 +12,12 @@ struct SignUpView: View {
     @Binding var firstNaviLinkActive: Bool
     @State var emailInput: String = ""
     @State var passwordInput: String = ""
+    @State var passwordCheckInput: String = ""
     var body: some View {
         VStack{
             TextField("이메일", text: $emailInput).keyboardType(.emailAddress).autocapitalization(.none)
             SecureField("비밀번호", text: $passwordInput).keyboardType(.default)
-            SecureField("비밀번호 확인", text: $passwordInput).keyboardType(.default)
+            SecureField("비밀번호 확인", text: $passwordCheckInput).keyboardType(.default)
             Button {
                 viewModel.registerUser(email: emailInput, password: passwordInput)
             } label: {
