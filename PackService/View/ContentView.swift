@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @AppStorage("log_status") var log_Status = false
+    @AppStorage("log_status") var logStatus = false
     var body: some View {
         ZStack {
             if log_Status {

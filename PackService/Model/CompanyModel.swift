@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /*
  
  URL: https://info.sweettracker.co.kr/api/v1/companylist?t_key=eVPJb8troT0cn5eY15H6yw

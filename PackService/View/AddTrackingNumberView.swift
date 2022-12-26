@@ -35,7 +35,6 @@ struct AddTrackingNumberView: View {
                 Text("운송장 번호: \(trackingNumber)")
             }
             
-            
             Button {
                 
             } label: {
@@ -50,7 +49,6 @@ struct AddTrackingNumberView: View {
         }
         
         Spacer()
-        
         
     } 
 }

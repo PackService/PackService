@@ -12,7 +12,7 @@ import KakaoSDKUser
 
 class KakaoAuthVM: ObservableObject {
     
-    @AppStorage("log_status") var log_status = false
+    @AppStorage("log_status") var logStatus = false
     @MainActor
     func kakaoLogout() {
         Task {
@@ -38,7 +38,7 @@ class KakaoAuthVM: ObservableObject {
     }
     
     func handleLoginWithKakaoTalkApp() async -> Bool {
-        //카카오 앱을 통해 로그인
+        // 카카오 앱을 통해 로그인
         await withCheckedContinuation{ continuation in
             UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
                 if let error = error {
@@ -52,7 +52,7 @@ class KakaoAuthVM: ObservableObject {
                     _ = oauthToken
                     continuation.resume(returning: true)
                     print(oauthToken)
-                    //뭐 client id 이런걸로 택배 그거 해야겄네
+                    // 뭐 client id 이런걸로 택배 그거 해야겄네
                 }
             }
         }
