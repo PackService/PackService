@@ -88,7 +88,7 @@ import Foundation
 
 
 // MARK: - TrackingInfo
-struct TrackingInfoModel {
+struct TrackingInfoModel: Codable {
     let complete: Bool
     let level: Int
     let invoiceNo: String
@@ -101,14 +101,30 @@ struct TrackingInfoModel {
     let productInfo: String?
     
     enum CodingKeys: String, CodingKey {
+        case complete
+        case level
+        case invoiceNo
+        case itemImage, itemName
+        case receiverAddr, receiverName, recipient
+        case senderName
+        case trackingDetails
+        case estimate
+        case productInfo
         case isValidInvoice = "result"
     }
 }
 
 // MARK: - TrackingDetail
-struct TrackingDetailsModel {
+struct TrackingDetailsModel: Codable {
     let kind: String
     let level: Int
     let manName, telno, telno2: String
     let timeString, detailWhere: String
+    
+    enum CodingKeys: String, CodingKey {
+        case kind
+        case level
+        case manName, telno, telno2
+        case timeString, detailWhere
+    }
 }
