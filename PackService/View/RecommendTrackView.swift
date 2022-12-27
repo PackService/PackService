@@ -20,7 +20,7 @@ struct RecommendTrackView: View {
                     .padding()
                     .background(Color(uiColor: .secondarySystemBackground))
                     .onChange(of: trackingNumber) { _ in
-                        recommendVM.recommendCompanies(trackingNumber)
+                        recommendVM.getRecommendCompanies(trackingNumber)
                     }
                 
                 Picker(selection: $selectedCompany, label: Text("택배사 선택")) {
@@ -38,7 +38,7 @@ struct RecommendTrackView: View {
             }
             Button {
                 print(recommendVM.allRecommend.recommend)
-                recommendVM.recommendCompanies(trackingNumber)
+                recommendVM.getRecommendCompanies(trackingNumber)
             } label: {
                 
                 Text("운송장 조회")

@@ -13,10 +13,10 @@ class RecommendService: ObservableObject {
     var recommendSubscription: AnyCancellable?
     
     init( _ invoice: String) {
-        recommendCompanies(invoice)
+        getRecommendCompanies(invoice)
     }
     
-    func recommendCompanies(_ invoice: String) {
+    func getRecommendCompanies(_ invoice: String) {
         guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/recommend?t_invoice=\(invoice)&t_key=eVPJb8troT0cn5eY15H6yw") else { return }
         
         recommendSubscription = NetworkingManager.download(url: url)
