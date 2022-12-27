@@ -18,7 +18,7 @@ struct RecommendModel: Codable {
 // MARK: - Company
 struct Recommend: Hashable, Identifiable, Codable {
     let id: String
-    let international: String
+    let international: String?
     let name: String
     
     enum CodingKeys: String, CodingKey {

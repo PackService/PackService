@@ -8,19 +8,37 @@
 import SwiftUI
 
 struct RecommendTrackView: View {
-    @StateObject var recommendVM = RecommendService()
-    @StateObject var companyVM = CompanyService()
+    @StateObject var recommendVM = RecommendService("")
     
     @State var trackingNumber = ""
-    
+    @State var selectedCompany = Recommend(id: "", international: "", name: "")
 
     var body: some View {
         VStack(spacing: 20) {
-        
+            Form {
+                TextField("운송장 번호 입력", text: $trackingNumber)
+                    .padding()
+                    .background(Color(uiColor: .secondarySystemBackground))
+                    .onChange(of: trackingNumber) { _ in
+                        recommendVM.recommendCompanies(trackingNumber)
+                    }
+                
+                Picker(selection: $selectedCompany, label: Text("택배사 선택")) {
+                    ForEach(recommendVM.allRecommend.recommend) { company in
+                        Text(company.name).tag(company)
+                    }
+                }
+                .pickerStyle(.navigationLink)
+
+            }
+            .frame(maxHeight: 200)
+            
+            VStack(alignment: .leading, spacing: 20) {
+                Text("운송장 번호: \(trackingNumber)")
+            }
             Button {
                 print(recommendVM.allRecommend.recommend)
-                print(companyVM.allCompanies.company)
-//                print(recommendVM.allCompanies.company)
+                recommendVM.recommendCompanies(trackingNumber)
             } label: {
                 
                 Text("운송장 조회")

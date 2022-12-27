@@ -12,12 +12,12 @@ class RecommendService: ObservableObject {
     @Published var allRecommend: RecommendModel = RecommendModel(recommend: [])
     var recommendSubscription: AnyCancellable?
     
-    init() {
-        recommendCompanies()
+    init( _ invoice: String) {
+        recommendCompanies(invoice)
     }
     
-    func recommendCompanies() {
-        guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/recommend?t_invoice=364097746100&t_key=eVPJb8troT0cn5eY15H6yw") else { return }
+    func recommendCompanies(_ invoice: String) {
+        guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/recommend?t_invoice=\(invoice)&t_key=eVPJb8troT0cn5eY15H6yw") else { return }
         
         recommendSubscription = NetworkingManager.download(url: url)
             .decode(type: RecommendModel.self, decoder: JSONDecoder())
