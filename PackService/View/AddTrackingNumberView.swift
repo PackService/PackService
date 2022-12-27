@@ -35,8 +35,9 @@ struct AddTrackingNumberView: View {
                 Text("운송장 번호: \(trackingNumber)")
             }
             
-            Button {
-                
+            NavigationLink {
+//                TrackingInfoView(companyId: selectedCompany.id, invoiceNumber: trackingNumber)
+                TrackingInfoLoadingView(companyId: $selectedCompany.id, invoiceNumber: $trackingNumber)
             } label: {
                 Text("운송장 조회")
                     .foregroundColor(.white)
@@ -45,6 +46,7 @@ struct AddTrackingNumberView: View {
                     .background(Color.blue)
                     .cornerRadius(10)
             }
+            
             Spacer()
         }
         

@@ -95,8 +95,8 @@ struct TrackingInfoModel: Codable {
     let isValidInvoice: String
     let itemImage, itemName: String
     let receiverAddr, receiverName, recipient: String
-    let senderName: String?
-    let trackingDetails: [TrackingDetailsModel]?
+    let senderName: String
+    let trackingDetails: [TrackingDetailsModel]
     let estimate: String?
     let productInfo: String?
     
@@ -115,7 +115,8 @@ struct TrackingInfoModel: Codable {
 }
 
 // MARK: - TrackingDetail
-struct TrackingDetailsModel: Codable {
+struct TrackingDetailsModel: Identifiable, Codable {
+    let id = UUID().uuidString
     let kind: String
     let level: Int
     let manName, telno, telno2: String
@@ -125,6 +126,7 @@ struct TrackingDetailsModel: Codable {
         case kind
         case level
         case manName, telno, telno2
-        case timeString, detailWhere
+        case timeString
+        case detailWhere = "where"
     }
 }

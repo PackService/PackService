@@ -47,7 +47,7 @@ struct CompanyModel: Codable {
 
 // MARK: - Company
 struct Company: Hashable, Identifiable, Codable {
-    let id: String
+    var id: String
     let international: String
     let name: String
     
