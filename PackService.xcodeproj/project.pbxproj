@@ -14,6 +14,7 @@
 		7E04351329544648005187E8 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E04351029544648005187E8 /* NetworkManager.swift */; };
 		7E043515295446F5005187E8 /* AddTrackingNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E043514295446F5005187E8 /* AddTrackingNumberView.swift */; };
 		7E04351729544845005187E8 /* CompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E04351629544845005187E8 /* CompanyView.swift */; };
+		7E3B49F3295D9FFF0020036C /* ExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B49F2295D9FFF0020036C /* ExampleView.swift */; };
 		7E53B7D6295C6B2E00555967 /* AnimatedCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53B7D5295C6B2E00555967 /* AnimatedCircle.swift */; };
 		7E8724D62959818E00C0B1C9 /* TrackingInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8724D52959818E00C0B1C9 /* TrackingInfoModel.swift */; };
 		7E8724D82959C0AE00C0B1C9 /* TrackingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8724D72959C0AE00C0B1C9 /* TrackingInfoView.swift */; };
@@ -64,6 +65,7 @@
 		7E04351029544648005187E8 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		7E043514295446F5005187E8 /* AddTrackingNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrackingNumberView.swift; sourceTree = "<group>"; };
 		7E04351629544845005187E8 /* CompanyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanyView.swift; sourceTree = "<group>"; };
+		7E3B49F2295D9FFF0020036C /* ExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleView.swift; sourceTree = "<group>"; };
 		7E53B7D5295C6B2E00555967 /* AnimatedCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCircle.swift; sourceTree = "<group>"; };
 		7E8724D52959818E00C0B1C9 /* TrackingInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingInfoModel.swift; sourceTree = "<group>"; };
 		7E8724D72959C0AE00C0B1C9 /* TrackingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingInfoView.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				AD1ADDE12959A94700545DB7 /* RecommendTrackView.swift */,
 				7E8724D72959C0AE00C0B1C9 /* TrackingInfoView.swift */,
 				7E53B7D5295C6B2E00555967 /* AnimatedCircle.swift */,
+				7E3B49F2295D9FFF0020036C /* ExampleView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -377,6 +380,7 @@
 				AD1ADDE22959A94700545DB7 /* RecommendTrackView.swift in Sources */,
 				ADE0F3B92934588C005D2732 /* SceneDelegate.swift in Sources */,
 				AD1ADDCE2952477300545DB7 /* MemberShipAgreementView.swift in Sources */,
+				7E3B49F3295D9FFF0020036C /* ExampleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
