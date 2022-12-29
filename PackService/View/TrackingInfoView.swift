@@ -43,9 +43,10 @@ struct TrackingInfoView: View {
                 }
                 .padding(.horizontal, 20)
                 
-                
-                
                 List {
+                    // Identifiable 프로토콜 지우기
+                    // (ForEach(trackingInfo.trackingDetails.indices))
+                    // LazyVStack & LazyHStack 사용
                     ForEach(trackingInfo.trackingDetails) { detail in
                         VStack(alignment: .leading, spacing: 5) {
                             Text("\(detail.level)")
