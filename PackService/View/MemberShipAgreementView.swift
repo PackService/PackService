@@ -41,45 +41,27 @@ struct MemberShipAgreementView: View {
                 Text("만들어주세요")
                     .padding(.leading, 10)
                     .font(.custom("Pretendard-Bold", size: 30))
-                Toggle("", isOn: $isOn1)
-                  .toggleStyle(CheckboxToggleStyle(style: .circle))
-                  .foregroundColor(ColorManager.negativeColor)
+                Button(action: {
+                    print(isOn1)
+                    isOn1 = !isOn1
+                }, label: {
+                    if isOn1 == false {
+                        Image("EmptyCheckBox")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                    } else {
+                        Image("FullCheckBox")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                    }
+                })
                 Spacer()
             }
             Spacer()
         }
     }
 }
-struct CheckboxToggleStyle: ToggleStyle {
-  @Environment(\.isEnabled) var isEnabled
-  let style: Style // custom param
 
-  func makeBody(configuration: Configuration) -> some View {
-    Button(action: {
-      configuration.isOn.toggle() // toggle the state binding
-    }, label: {
-      HStack {
-          Image(systemName: configuration.isOn ? "checkmark.\(style.sfSymbolName).fill" : "checkmark.\(style.sfSymbolName).black")
-          .imageScale(.large)
-      }
-    })
-    .buttonStyle(PlainButtonStyle()) // remove any implicit styling from the button
-    .disabled(!isEnabled)
-  }
-
-  enum Style {
-    case square, circle
-
-    var sfSymbolName: String {
-      switch self {
-      case .square:
-        return "square"
-      case .circle:
-        return "circle"
-      }
-    }
-  }
-}
 
 struct MemberShipAgreementView_Previews: PreviewProvider {
     static var previews: some View {
