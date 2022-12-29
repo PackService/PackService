@@ -31,15 +31,28 @@ struct LoginView: View {
                         emailAuthVM.login(email: emailInput, password: passwordInput)
                         print("로그인 버튼 클릭되었음")
                     }, label: {
-                        Text("로그인")
+                        Text("가나다라마바사아자차카타파하")
+                            .font(.system(size: 20))
                     })
                     Button {
                         emailAuthVM.logout()
                     } label: {
-                        Text("로그아웃")
+                        Text("가나다라마바사아자차카타파하")
+                            .font(.custom("Pretendard-Bold", size: 20))
                     }
+                    .onAppear {
+                        for family: String in UIFont.familyNames {
+                            print(family)
+                            for names: String in
+                                    UIFont.fontNames(forFamilyName: family){
+                                print("===\(names)")
+                            }
+                        }
+                    }
+                    
+                    
                     Text(emailAuthVM.currentUser?.uid ?? "비로그인")
-                                    .padding()
+                        .padding()
                     Button(action: {kakaoAuthVM.handleKakaoLogin()}){
                         Image("kakao_login_large_wide")
                             .resizable()

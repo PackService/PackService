@@ -24,6 +24,15 @@
 		AD1ADDE02959A79800545DB7 /* RecommendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDDF2959A79800545DB7 /* RecommendService.swift */; };
 		AD1ADDE22959A94700545DB7 /* RecommendTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDE12959A94700545DB7 /* RecommendTrackView.swift */; };
 		AD1ADDE42959B57500545DB7 /* RecommendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDE32959B57500545DB7 /* RecommendModel.swift */; };
+		AD1ADE13295DD77400545DB7 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = AD1ADE0B295DD77400545DB7 /* Pretendard-Thin.otf */; };
+		AD1ADE14295DD77400545DB7 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = AD1ADE0C295DD77400545DB7 /* Pretendard-SemiBold.otf */; };
+		AD1ADE15295DD77400545DB7 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = AD1ADE0D295DD77400545DB7 /* Pretendard-Regular.otf */; };
+		AD1ADE16295DD77400545DB7 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = AD1ADE0E295DD77400545DB7 /* Pretendard-Light.otf */; };
+		AD1ADE17295DD77400545DB7 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = AD1ADE0F295DD77400545DB7 /* Pretendard-Medium.otf */; };
+		AD1ADE18295DD77400545DB7 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = AD1ADE10295DD77400545DB7 /* Pretendard-ExtraLight.otf */; };
+		AD1ADE19295DD77400545DB7 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = AD1ADE11295DD77400545DB7 /* Pretendard-ExtraBold.otf */; };
+		AD1ADE1A295DD77400545DB7 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = AD1ADE12295DD77400545DB7 /* Pretendard-Bold.otf */; };
+		AD1ADE1E295E030100545DB7 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADE1D295E030100545DB7 /* ColorManager.swift */; };
 		ADE0F38D2934515F005D2732 /* PackServiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38C2934515F005D2732 /* PackServiceApp.swift */; };
 		ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38E2934515F005D2732 /* ContentView.swift */; };
 		ADE0F39129345160005D2732 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADE0F39029345160005D2732 /* Assets.xcassets */; };
@@ -73,6 +82,15 @@
 		AD1ADDDF2959A79800545DB7 /* RecommendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendService.swift; sourceTree = "<group>"; };
 		AD1ADDE12959A94700545DB7 /* RecommendTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendTrackView.swift; sourceTree = "<group>"; };
 		AD1ADDE32959B57500545DB7 /* RecommendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendModel.swift; sourceTree = "<group>"; };
+		AD1ADE0B295DD77400545DB7 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Thin.otf"; path = "../../../../Downloads/Pretendard-1/public/static/Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		AD1ADE0C295DD77400545DB7 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-SemiBold.otf"; path = "../../../../Downloads/Pretendard-1/public/static/Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		AD1ADE0D295DD77400545DB7 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Regular.otf"; path = "../../../../Downloads/Pretendard-1/public/static/Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		AD1ADE0E295DD77400545DB7 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Light.otf"; path = "../../../../Downloads/Pretendard-1/public/static/Pretendard-Light.otf"; sourceTree = "<group>"; };
+		AD1ADE0F295DD77400545DB7 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Medium.otf"; path = "../../../../Downloads/Pretendard-1/public/static/Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		AD1ADE10295DD77400545DB7 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-ExtraLight.otf"; path = "../../../../Downloads/Pretendard-1/public/static/Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		AD1ADE11295DD77400545DB7 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-ExtraBold.otf"; path = "../../../../Downloads/Pretendard-1/public/static/Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		AD1ADE12295DD77400545DB7 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Bold.otf"; path = "../../../../Downloads/Pretendard-1/public/static/Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		AD1ADE1D295E030100545DB7 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		ADE0F3892934515F005D2732 /* PackService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PackService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADE0F38C2934515F005D2732 /* PackServiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackServiceApp.swift; sourceTree = "<group>"; };
 		ADE0F38E2934515F005D2732 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -137,6 +155,21 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		AD1ADE08295DCED400545DB7 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				AD1ADE12295DD77400545DB7 /* Pretendard-Bold.otf */,
+				AD1ADE11295DD77400545DB7 /* Pretendard-ExtraBold.otf */,
+				AD1ADE10295DD77400545DB7 /* Pretendard-ExtraLight.otf */,
+				AD1ADE0E295DD77400545DB7 /* Pretendard-Light.otf */,
+				AD1ADE0F295DD77400545DB7 /* Pretendard-Medium.otf */,
+				AD1ADE0D295DD77400545DB7 /* Pretendard-Regular.otf */,
+				AD1ADE0C295DD77400545DB7 /* Pretendard-SemiBold.otf */,
+				AD1ADE0B295DD77400545DB7 /* Pretendard-Thin.otf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 		ADE0F3802934515F005D2732 = {
 			isa = PBXGroup;
 			children = (
@@ -158,6 +191,7 @@
 		ADE0F38B2934515F005D2732 /* PackService */ = {
 			isa = PBXGroup;
 			children = (
+				AD1ADE08295DCED400545DB7 /* Font */,
 				7E04350829544485005187E8 /* GoogleService-Info.plist */,
 				ADE0F3CD2935F73D005D2732 /* PackService.entitlements */,
 				ADE0F3B3293455D4005D2732 /* Model */,
@@ -172,6 +206,7 @@
 				ADE0F3B02934539D005D2732 /* Config.xcconfig */,
 				ADE0F3B629345618005D2732 /* AppDelegate.swift */,
 				ADE0F3B82934588C005D2732 /* SceneDelegate.swift */,
+				AD1ADE1D295E030100545DB7 /* ColorManager.swift */,
 			);
 			path = PackService;
 			sourceTree = "<group>";
@@ -315,9 +350,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD1ADDDE29598F0A00545DB7 /* .swiftlint.yml in Resources */,
+				AD1ADE1A295DD77400545DB7 /* Pretendard-Bold.otf in Resources */,
+				AD1ADE16295DD77400545DB7 /* Pretendard-Light.otf in Resources */,
+				AD1ADE18295DD77400545DB7 /* Pretendard-ExtraLight.otf in Resources */,
+				AD1ADE13295DD77400545DB7 /* Pretendard-Thin.otf in Resources */,
 				ADE0F39429345160005D2732 /* Preview Assets.xcassets in Resources */,
+				AD1ADE14295DD77400545DB7 /* Pretendard-SemiBold.otf in Resources */,
+				AD1ADE19295DD77400545DB7 /* Pretendard-ExtraBold.otf in Resources */,
+				AD1ADE15295DD77400545DB7 /* Pretendard-Regular.otf in Resources */,
 				ADE0F39129345160005D2732 /* Assets.xcassets in Resources */,
 				7E04350929544485005187E8 /* GoogleService-Info.plist in Resources */,
+				AD1ADE17295DD77400545DB7 /* Pretendard-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +403,7 @@
 				7E8724D62959818E00C0B1C9 /* TrackingInfoModel.swift in Sources */,
 				7E04351729544845005187E8 /* CompanyView.swift in Sources */,
 				AD1ADDD029531EC600545DB7 /* SignUpView.swift in Sources */,
+				AD1ADE1E295E030100545DB7 /* ColorManager.swift in Sources */,
 				ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */,
 				AD1ADDD2295331C800545DB7 /* ProfileView.swift in Sources */,
 				7E04351129544648005187E8 /* CompanyService.swift in Sources */,
