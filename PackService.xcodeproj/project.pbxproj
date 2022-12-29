@@ -35,6 +35,7 @@
 		AD1ADE19295DD77400545DB7 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = AD1ADE11295DD77400545DB7 /* Pretendard-ExtraBold.otf */; };
 		AD1ADE1A295DD77400545DB7 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = AD1ADE12295DD77400545DB7 /* Pretendard-Bold.otf */; };
 		AD1ADE1E295E030100545DB7 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADE1D295E030100545DB7 /* ColorManager.swift */; };
+		AD1ADE20295E1AC800545DB7 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADE1F295E1AC800545DB7 /* ButtonStyle.swift */; };
 		ADE0F38D2934515F005D2732 /* PackServiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38C2934515F005D2732 /* PackServiceApp.swift */; };
 		ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38E2934515F005D2732 /* ContentView.swift */; };
 		ADE0F39129345160005D2732 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADE0F39029345160005D2732 /* Assets.xcassets */; };
@@ -95,6 +96,7 @@
 		AD1ADE11295DD77400545DB7 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-ExtraBold.otf"; path = "../../../../Downloads/Pretendard-1/public/static/Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		AD1ADE12295DD77400545DB7 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Bold.otf"; path = "../../../../Downloads/Pretendard-1/public/static/Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		AD1ADE1D295E030100545DB7 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
+		AD1ADE1F295E1AC800545DB7 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		ADE0F3892934515F005D2732 /* PackService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PackService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADE0F38C2934515F005D2732 /* PackServiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackServiceApp.swift; sourceTree = "<group>"; };
 		ADE0F38E2934515F005D2732 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				ADE0F3B629345618005D2732 /* AppDelegate.swift */,
 				ADE0F3B82934588C005D2732 /* SceneDelegate.swift */,
 				AD1ADE1D295E030100545DB7 /* ColorManager.swift */,
+				AD1ADE1F295E1AC800545DB7 /* ButtonStyle.swift */,
 			);
 			path = PackService;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				7E04351729544845005187E8 /* CompanyView.swift in Sources */,
 				AD1ADDD029531EC600545DB7 /* SignUpView.swift in Sources */,
 				AD1ADE1E295E030100545DB7 /* ColorManager.swift in Sources */,
+				AD1ADE20295E1AC800545DB7 /* ButtonStyle.swift in Sources */,
 				ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */,
 				AD1ADDD2295331C800545DB7 /* ProfileView.swift in Sources */,
 				7E04351129544648005187E8 /* CompanyService.swift in Sources */,
