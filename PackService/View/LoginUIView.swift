@@ -82,6 +82,7 @@ struct InputTextField: View {
             .focused($isFocused)
             .font(FontManager.body1)
             .foregroundColor(ColorManager.defaultForeground)
+            .tint(ColorManager.primaryColor)
             .padding(.horizontal, 20)
             .padding(.vertical, 18)
             .background(alignment: .leading) {
@@ -112,6 +113,7 @@ struct SecureInputTextField: View {
             .focused($isFocused)
             .font(FontManager.body1)
             .foregroundColor(ColorManager.defaultForeground)
+            .tint(ColorManager.primaryColor)
             .padding(.horizontal, 20)
             .padding(.vertical, 18)
             .background(alignment: .leading) {
@@ -139,17 +141,3 @@ struct LoginUIView_Previews: PreviewProvider {
         LoginUIView()
     }
 }
-
-
-//        { status in
-//            if status {
-//                isFocused = true
-//            } else {
-//                if !input.isEmpty {
-//                    title = ""
-//                }
-//                isFocused = false
-//            }
-//        } onCommit: {
-//            isFocused = false
-//        }
