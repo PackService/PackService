@@ -16,30 +16,10 @@ struct MemberShipAgreementView: View {
     var agreementName = ["이용약관", "개인정보 처리방침"]
     var agreementContent = ["aslfjalefjaoseifjapoeifjapo iej f paosie fjpoaisje fopiasje fawefoai" , "개인정보처리방침 뭐시기저시기 ㅁ쟏러ㅔ맺댜러ㅔ매쟈더램젇"]
     var body: some View {
-//        List(0...1, id: \.self) { idx in
-//            DisclosureGroup {
-//                HStack {
-//                    VStack {
-//                        ScrollView {
-//                            Text(agreementContent[idx])
-//                        }
-//                        .frame(height: 200)
-//                    }
-//
-//                }
-//            } label: {
-//                HStack {
-//                    Text(agreementName[idx])
-//                    Spacer()
-//                }
-//            }
-//        }
-//    }
-        HStack{
+        HStack {
             VStack(alignment: .leading, spacing: 10) {
                 Text("계정을")
                     .padding(.leading, 10)
-                    .padding(.top, 20)
                     .font(.custom("Pretendard-Bold", size: 30))
                 Text("만들어주세요")
                     .padding(.leading, 10)
@@ -106,6 +86,13 @@ struct MemberShipAgreementView: View {
                         .padding(.top, 10)
                         .font(.custom("Pretendard", size: 20))
                         .foregroundColor(.gray)
+                    NavigationLink {
+                        ServiceAgreeDescriptView()
+                    } label: {
+                        Text("보기")
+                            .underline()
+                            .padding(.top, 10)
+                    }
                 }
                 HStack(spacing: 20) {
                     Button(action: {
@@ -123,10 +110,19 @@ struct MemberShipAgreementView: View {
                     })
                     .padding(.leading, 10)
                     .padding(.top, 10)
+                    
                     Text("개인정보 수집 및 이용 동의")
                         .padding(.top, 10)
                         .font(.custom("Pretendard", size: 20))
                         .foregroundColor(.gray)
+                    
+                    NavigationLink {
+                        PersonAgreeDescriptView()
+                    } label: {
+                        Text("보기")
+                            .underline()
+                            .padding(.top, 10)
+                    }
                 }
                 Spacer()
             }
@@ -146,7 +142,7 @@ struct MemberShipAgreementView: View {
 //
             if allAgree == true {
                 NavigationLink {
-                    RecommendTrackView()
+                    SignUpView(firstNaviLinkActive: $firstNaviLinkActive)
                 } label: {
                     Text("계정 만들기")
                 }
@@ -160,9 +156,11 @@ struct MemberShipAgreementView: View {
                 .buttonStyle(NormalButtonStyle())
             }
         }
-        
+        .navigationTitle("약관 동의")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
+
 
 
 struct MemberShipAgreementView_Previews: PreviewProvider {

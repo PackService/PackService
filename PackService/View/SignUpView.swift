@@ -37,7 +37,7 @@ struct SignUpView: View {
     }
 }
 
-struct SwiftUIView_Previews: PreviewProvider {
+struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
         SignUpView(firstNaviLinkActive: .constant(true))
     }

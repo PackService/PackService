@@ -36,6 +36,8 @@
 		AD1ADE1A295DD77400545DB7 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = AD1ADE12295DD77400545DB7 /* Pretendard-Bold.otf */; };
 		AD1ADE1E295E030100545DB7 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADE1D295E030100545DB7 /* ColorManager.swift */; };
 		AD1ADE20295E1AC800545DB7 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADE1F295E1AC800545DB7 /* ButtonStyle.swift */; };
+		AD1ADE22295E9C0600545DB7 /* ServiceAgreeDescriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADE21295E9C0600545DB7 /* ServiceAgreeDescriptView.swift */; };
+		AD1ADE24295EAC5F00545DB7 /* PersonAgreeDescriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADE23295EAC5F00545DB7 /* PersonAgreeDescriptView.swift */; };
 		ADE0F38D2934515F005D2732 /* PackServiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38C2934515F005D2732 /* PackServiceApp.swift */; };
 		ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38E2934515F005D2732 /* ContentView.swift */; };
 		ADE0F39129345160005D2732 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADE0F39029345160005D2732 /* Assets.xcassets */; };
@@ -97,6 +99,8 @@
 		AD1ADE12295DD77400545DB7 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Bold.otf"; path = "../../../../Downloads/Pretendard-1/public/static/Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		AD1ADE1D295E030100545DB7 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		AD1ADE1F295E1AC800545DB7 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
+		AD1ADE21295E9C0600545DB7 /* ServiceAgreeDescriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAgreeDescriptView.swift; sourceTree = "<group>"; };
+		AD1ADE23295EAC5F00545DB7 /* PersonAgreeDescriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonAgreeDescriptView.swift; sourceTree = "<group>"; };
 		ADE0F3892934515F005D2732 /* PackService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PackService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADE0F38C2934515F005D2732 /* PackServiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackServiceApp.swift; sourceTree = "<group>"; };
 		ADE0F38E2934515F005D2732 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -241,6 +245,8 @@
 				7E8724D72959C0AE00C0B1C9 /* TrackingInfoView.swift */,
 				7E53B7D5295C6B2E00555967 /* AnimatedCircle.swift */,
 				7E3B49F2295D9FFF0020036C /* ExampleView.swift */,
+				AD1ADE21295E9C0600545DB7 /* ServiceAgreeDescriptView.swift */,
+				AD1ADE23295EAC5F00545DB7 /* PersonAgreeDescriptView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -411,9 +417,11 @@
 				7E04350B2954454C005187E8 /* CompanyModel.swift in Sources */,
 				7E04351229544648005187E8 /* TrackingInfoService.swift in Sources */,
 				7E8724D62959818E00C0B1C9 /* TrackingInfoModel.swift in Sources */,
+				AD1ADE22295E9C0600545DB7 /* ServiceAgreeDescriptView.swift in Sources */,
 				7E04351729544845005187E8 /* CompanyView.swift in Sources */,
 				AD1ADDD029531EC600545DB7 /* SignUpView.swift in Sources */,
 				AD1ADE1E295E030100545DB7 /* ColorManager.swift in Sources */,
+				AD1ADE24295EAC5F00545DB7 /* PersonAgreeDescriptView.swift in Sources */,
 				AD1ADE20295E1AC800545DB7 /* ButtonStyle.swift in Sources */,
 				ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */,
 				AD1ADDD2295331C800545DB7 /* ProfileView.swift in Sources */,

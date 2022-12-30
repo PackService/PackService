@@ -100,7 +100,7 @@ struct LoginView: View {
                     Text("회원가입")
                 }
                 .navigationBarHidden(true)
-                .offset(x: 70,y: 150)
+                .offset(x: 70,y: 200)
                 
             }
         }
