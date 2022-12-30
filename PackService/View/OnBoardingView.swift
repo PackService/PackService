@@ -19,9 +19,23 @@ struct OnBoardingView: View {
                 Spacer()
                 
                 VStack(spacing: 16) {
-                    ThirdPartyButtonView(type: .apple)
-                    ThirdPartyButtonView(type: .kakao)
-                    ThirdPartyButtonView(type: .email)
+                    Button {
+                        
+                    } label: {
+                        ThirdPartyButtonView(type: .apple)
+                    }
+                    
+                    Button {
+                        
+                    } label: {
+                        ThirdPartyButtonView(type: .kakao)
+                    }
+                    
+                    Button {
+                        
+                    } label: {
+                        ThirdPartyButtonView(type: .email)
+                    }
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 16)

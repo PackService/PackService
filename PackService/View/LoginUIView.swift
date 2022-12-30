@@ -73,20 +73,25 @@ struct LoginUIView: View {
 
 struct InputTextField: View {
     
-    var title: String
-    @Binding var input: String
+    @State var title: String
     @State var isFocused: Bool = false
+    @Binding var input: String
     
     var body: some View {
         TextField("", text: $input) { status in
             if status {
                 isFocused = true
             } else {
+                if !input.isEmpty {
+                    title = ""
+                }
                 isFocused = false
             }
         } onCommit: {
             isFocused = false
         }
+        .font(FontManager.body1)
+        .foregroundColor(ColorManager.defaultForeground)
         .padding(.horizontal, 20)
         .padding(.vertical, 18)
         .background(alignment: .leading) {
