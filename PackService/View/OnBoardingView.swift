@@ -52,18 +52,6 @@ struct OnBoardingView: View {
 
 struct OnBoardingView_Previews: PreviewProvider {
     static var previews: some View {
-        OnBoardingView()
-        
-        Group {
-            SignUpButton(type: .apple)
-                .previewLayout(.sizeThatFits)
-            
-            SignUpButton(type: .kakao)
-                .previewLayout(.sizeThatFits)
-            
-            SignUpButton(type: .email)
-                .previewLayout(.sizeThatFits)
-        }
-        
+        OnBoardingView()        
     }
 }
