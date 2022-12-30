@@ -11,7 +11,7 @@ struct OnBoardingView: View {
     var body: some View {
         
         VStack(alignment: .center) {
-            Text("내 소중한 택배의\n우당탕탕 즐거운 대모험")
+            Text("내 소중한 택배의\n우당탕탕 대모험 📦")
                 .multilineTextAlignment(.center)
                 .font(FontManager.title1)
                 .lineSpacing(5)
@@ -38,14 +38,19 @@ struct OnBoardingView: View {
             HStack {
                 Text("이미 계정이 있나요?")
                     .foregroundColor(Color("foreground1"))
-                Text("로그인")
-                    .foregroundColor(Color("primary_color"))
-                    .overlay(
-                        Rectangle()
-                            .frame(height: 1)
-                            .offset(y: 2)
-                            .foregroundColor(Color("primary_color"))
-                        , alignment: .bottom)
+                
+                Button {
+                    
+                } label: {
+                    Text("로그인")
+                        .foregroundColor(Color("primary_color"))
+                        .overlay(
+                            Rectangle()
+                                .frame(height: 1)
+                                .offset(y: 2)
+                                .foregroundColor(Color("primary_color"))
+                            , alignment: .bottom)
+                }
             }
             .font(FontManager.body2)
         }

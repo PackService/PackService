@@ -20,6 +20,9 @@
 		7E8724D62959818E00C0B1C9 /* TrackingInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8724D52959818E00C0B1C9 /* TrackingInfoModel.swift */; };
 		7E8724D82959C0AE00C0B1C9 /* TrackingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8724D72959C0AE00C0B1C9 /* TrackingInfoView.swift */; };
 		7EF5DE4B295ECA600064E4D1 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF5DE4A295ECA600064E4D1 /* FontManager.swift */; };
+		7EF5DE4F295ED7470064E4D1 /* LoginUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF5DE4E295ED7470064E4D1 /* LoginUIView.swift */; };
+		7EF5DE51295EEFFC0064E4D1 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF5DE50295EEFFC0064E4D1 /* ButtonView.swift */; };
+		7EF5DE53295EF3960064E4D1 /* ThirdPartyButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF5DE52295EF3960064E4D1 /* ThirdPartyButtonView.swift */; };
 		AD1ADDCE2952477300545DB7 /* MemberShipAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDCD2952477300545DB7 /* MemberShipAgreementView.swift */; };
 		AD1ADDD029531EC600545DB7 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDCF29531EC600545DB7 /* SignUpView.swift */; };
 		AD1ADDD2295331C800545DB7 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDD1295331C800545DB7 /* ProfileView.swift */; };
@@ -85,6 +88,9 @@
 		7E8724D52959818E00C0B1C9 /* TrackingInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingInfoModel.swift; sourceTree = "<group>"; };
 		7E8724D72959C0AE00C0B1C9 /* TrackingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingInfoView.swift; sourceTree = "<group>"; };
 		7EF5DE4A295ECA600064E4D1 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
+		7EF5DE4E295ED7470064E4D1 /* LoginUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUIView.swift; sourceTree = "<group>"; };
+		7EF5DE50295EEFFC0064E4D1 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
+		7EF5DE52295EF3960064E4D1 /* ThirdPartyButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPartyButtonView.swift; sourceTree = "<group>"; };
 		AD1ADDCD2952477300545DB7 /* MemberShipAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberShipAgreementView.swift; sourceTree = "<group>"; };
 		AD1ADDCF29531EC600545DB7 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		AD1ADDD1295331C800545DB7 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -253,6 +259,9 @@
 				AD1ADE21295E9C0600545DB7 /* ServiceAgreeDescriptView.swift */,
 				AD1ADE23295EAC5F00545DB7 /* PersonAgreeDescriptView.swift */,
 				7E16336E295E9C1000EBFB87 /* OnBoardingView.swift */,
+				7EF5DE4E295ED7470064E4D1 /* LoginUIView.swift */,
+				7EF5DE50295EEFFC0064E4D1 /* ButtonView.swift */,
+				7EF5DE52295EF3960064E4D1 /* ThirdPartyButtonView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -417,11 +426,14 @@
 				AD1ADDD42953326C00545DB7 /* UserData.swift in Sources */,
 				7EF5DE4B295ECA600064E4D1 /* FontManager.swift in Sources */,
 				ADE0F3B729345618005D2732 /* AppDelegate.swift in Sources */,
+				7EF5DE53295EF3960064E4D1 /* ThirdPartyButtonView.swift in Sources */,
+				7EF5DE51295EEFFC0064E4D1 /* ButtonView.swift in Sources */,
 				7E043515295446F5005187E8 /* AddTrackingNumberView.swift in Sources */,
 				7E53B7D6295C6B2E00555967 /* AnimatedCircle.swift in Sources */,
 				ADE0F3CF2935F97D005D2732 /* HomeView.swift in Sources */,
 				AD1ADDE42959B57500545DB7 /* RecommendModel.swift in Sources */,
 				7E04350B2954454C005187E8 /* CompanyModel.swift in Sources */,
+				7EF5DE4F295ED7470064E4D1 /* LoginUIView.swift in Sources */,
 				7E04351229544648005187E8 /* TrackingInfoService.swift in Sources */,
 				7E8724D62959818E00C0B1C9 /* TrackingInfoModel.swift in Sources */,
 				AD1ADE22295E9C0600545DB7 /* ServiceAgreeDescriptView.swift in Sources */,
