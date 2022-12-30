@@ -19,7 +19,7 @@ struct LoginUIView: View {
                 
                 VStack(spacing: 16) {
                     InputTextField(title: "이메일", input: $emailInput)
-                    InputTextField(title: "비밀번호", input: $passwordInput)
+                    SecureInputTextField(title: "비밀번호", input: $passwordInput)
                     
                     Button {
                         
@@ -73,42 +73,61 @@ struct LoginUIView: View {
 
 struct InputTextField: View {
     
-    @State var title: String
-    @State var isFocused: Bool = false
+    @State var title: String = ""
+    @FocusState var isFocused: Bool
     @Binding var input: String
     
     var body: some View {
-        TextField("", text: $input) { status in
-            if status {
-                isFocused = true
-            } else {
-                if !input.isEmpty {
-                    title = ""
-                }
-                isFocused = false
+        TextField("", text: $input)
+            .focused($isFocused)
+            .font(FontManager.body1)
+            .foregroundColor(ColorManager.defaultForeground)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 18)
+            .background(alignment: .leading) {
+                Text(input.isEmpty ? title : "")
+                    .padding(.leading, 20)
+                    .font(FontManager.body1)
+                    .foregroundColor(ColorManager.foreground2)
+                    .scaleEffect(isFocused ? 0 : 1.0)
             }
-        } onCommit: {
-            isFocused = false
-        }
-        .font(FontManager.body1)
-        .foregroundColor(ColorManager.defaultForeground)
-        .padding(.horizontal, 20)
-        .padding(.vertical, 18)
-        .background(alignment: .leading) {
-            Text(title)
-                .padding(.leading, 20)
-                .font(FontManager.body1)
-                .foregroundColor(ColorManager.foreground2)
-                .scaleEffect(isFocused ? 0 : 1.0)
-        }
-        .background(
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(ColorManager.primaryColor, lineWidth: 2)
-                .opacity(isFocused ? 1.0 : 0.0)
-                .background(isFocused ? ColorManager.background.cornerRadius(10) : ColorManager.background2.cornerRadius(10))
-                .animation(Animation.easeIn(duration: 0.25), value: isFocused)
-        )
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(ColorManager.primaryColor, lineWidth: 2)
+                    .opacity(isFocused ? 1.0 : 0.0)
+                    .background(isFocused ? ColorManager.background.cornerRadius(10) : ColorManager.background2.cornerRadius(10))
+                    .animation(Animation.easeIn(duration: 0.25), value: isFocused)
+            )
+    }
+}
 
+struct SecureInputTextField: View {
+
+    @State var title: String = ""
+    @FocusState private var isFocused: Bool
+    @Binding var input: String
+    
+    var body: some View {
+        SecureField("", text: $input)
+            .focused($isFocused)
+            .font(FontManager.body1)
+            .foregroundColor(ColorManager.defaultForeground)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 18)
+            .background(alignment: .leading) {
+                Text(input.isEmpty ? title : "")
+                    .padding(.leading, 20)
+                    .font(FontManager.body1)
+                    .foregroundColor(ColorManager.foreground2)
+                    .scaleEffect(isFocused ? 0 : 1.0)
+            }
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(ColorManager.primaryColor, lineWidth: 2)
+                    .opacity(isFocused ? 1.0 : 0.0)
+                    .background(isFocused ? ColorManager.background.cornerRadius(10) : ColorManager.background2.cornerRadius(10))
+                    .animation(Animation.easeIn(duration: 0.25), value: isFocused)
+            )
     }
 }
 
@@ -120,3 +139,17 @@ struct LoginUIView_Previews: PreviewProvider {
         LoginUIView()
     }
 }
+
+
+//        { status in
+//            if status {
+//                isFocused = true
+//            } else {
+//                if !input.isEmpty {
+//                    title = ""
+//                }
+//                isFocused = false
+//            }
+//        } onCommit: {
+//            isFocused = false
+//        }
