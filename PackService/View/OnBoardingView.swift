@@ -11,10 +11,10 @@ struct OnBoardingView: View {
     var body: some View {
         
         VStack(alignment: .center) {
-            Text("내 택배 위치를\n손쉽게 추적하기")
+            Text("내 소중한 택배의\n우당탕탕 즐거운 대모험")
                 .multilineTextAlignment(.center)
-                .font(.title2)
-                .fontWeight(.bold)
+                .font(FontManager.title1)
+                .lineSpacing(5)
             
             Spacer()
             
@@ -47,9 +47,9 @@ struct OnBoardingView: View {
                             .foregroundColor(Color("primary_color"))
                         , alignment: .bottom)
             }
+            .font(FontManager.body2)
         }
-        .padding(.vertical, 41)
-        
+        .padding(.vertical, 41)        
     }
 }
 
@@ -97,7 +97,9 @@ struct SignUpButton: View {
                 .scaledToFill()
                 .frame(width: size.0, height: size.1)
             Text(text + "로 계속하기")
-                .font(.headline)
+                .font(FontManager.title2)
+//                .font(.system(size: 17))
+                .fontWeight(.semibold)
         }
         .foregroundColor(fgColor)
         .frame(maxWidth: .infinity)
