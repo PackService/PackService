@@ -237,16 +237,16 @@
 				ADE0F3BA2934683D005D2732 /* LoginView.swift */,
 				7E04351629544845005187E8 /* CompanyView.swift */,
 				ADE0F3CE2935F97D005D2732 /* HomeView.swift */,
-				AD1ADDCD2952477300545DB7 /* MemberShipAgreementView.swift */,
-				AD1ADDCF29531EC600545DB7 /* SignUpView.swift */,
 				AD1ADDD1295331C800545DB7 /* ProfileView.swift */,
 				7E043514295446F5005187E8 /* AddTrackingNumberView.swift */,
 				AD1ADDE12959A94700545DB7 /* RecommendTrackView.swift */,
 				7E8724D72959C0AE00C0B1C9 /* TrackingInfoView.swift */,
 				7E53B7D5295C6B2E00555967 /* AnimatedCircle.swift */,
 				7E3B49F2295D9FFF0020036C /* ExampleView.swift */,
+				AD1ADDCD2952477300545DB7 /* MemberShipAgreementView.swift */,
 				AD1ADE21295E9C0600545DB7 /* ServiceAgreeDescriptView.swift */,
 				AD1ADE23295EAC5F00545DB7 /* PersonAgreeDescriptView.swift */,
+				AD1ADDCF29531EC600545DB7 /* SignUpView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
