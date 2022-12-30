@@ -13,58 +13,61 @@ struct LoginUIView: View {
     @State var passwordInput: String = ""
     
     var body: some View {
-        VStack {
-            Spacer()
-            
-            VStack(spacing: 16) {
-                InputTextField(title: "이메일", input: $emailInput)
-                InputTextField(title: "비밀번호", input: $passwordInput)
+        NavigationView {
+            VStack {
+                Spacer()
                 
-                Button {
-                    
-                } label: {
-                    ButtonView(text: "로그인")
-                }
-                .padding(.top, 40)
-                
-                HStack {
-                    Text("계정이 없으신가요?")
-                        .foregroundColor(Color("foreground1"))
+                VStack(spacing: 16) {
+                    InputTextField(title: "이메일", input: $emailInput)
+                    InputTextField(title: "비밀번호", input: $passwordInput)
                     
                     Button {
                         
                     } label: {
-                        Text("회원가입")
-                            .foregroundColor(Color("primary_color"))
-                            .overlay(
-                                Rectangle()
-                                    .frame(height: 1)
-                                    .offset(y: 2)
-                                    .foregroundColor(Color("primary_color"))
-                                , alignment: .bottom)
-                    }                    
-                }
-                .font(FontManager.body2)
-
-                Divider()
-                    .padding(.vertical, 24)
-
-                Button {
+                        ButtonView(text: "로그인")
+                    }
+                    .padding(.top, 40)
                     
-                } label: {
-                    ThirdPartyButtonView(type: .apple)
-                }
-                
-                Button {
+                    HStack {
+                        Text("계정이 없으신가요?")
+                            .foregroundColor(Color("foreground1"))
+                        
+                        Button {
+                            
+                        } label: {
+                            Text("회원가입")
+                                .foregroundColor(Color("primary_color"))
+                                .overlay(
+                                    Rectangle()
+                                        .frame(height: 1)
+                                        .offset(y: 2)
+                                        .foregroundColor(Color("primary_color"))
+                                    , alignment: .bottom)
+                        }
+                    }
+                    .font(FontManager.body2)
+
+                    Divider()
+                        .padding(.vertical, 24)
+
+                    Button {
+                        
+                    } label: {
+                        ThirdPartyButtonView(type: .apple)
+                    }
                     
-                } label: {
-                    ThirdPartyButtonView(type: .kakao)
+                    Button {
+                        
+                    } label: {
+                        ThirdPartyButtonView(type: .kakao)
+                    }
+                    
                 }
-                
+                .padding(.horizontal, 20)
             }
-            .padding(.horizontal, 20)
+            .padding(.vertical, 41)
         }
-        .padding(.vertical, 41)
+        .navigationBarHidden(true)
     }
 }
 
