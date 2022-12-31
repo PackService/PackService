@@ -9,7 +9,16 @@ import Foundation
 import SwiftUI
 
 struct ColorManager {
-    static let primaryColor = Color("PrimaryColor")
-    static let secondaryColor = Color("SecondaryColor")
-    static let negativeColor = Color("NegativeColor")
+    static let primaryColor = Color("primary_color")
+    static let secondaryColor = Color("secondary_color")
+    static let negativeColor = Color("nagative_color")
+    static let background = Color("background")
+    static let background1 = Color("background1")
+    static let background2 = Color("background2")
+    static let defaultForegroundDisabled = Color("default_foreground_disabled")
+    static let defaultForeground = Color("default_foreground")
+    static let foreground1 = Color("foreground1")
+    static let foreground2 = Color("foreground2")
+    static let emailButtonColor = Color("email_button_color")
+    static let kakaoButtonColor = Color("kakao_button_color")
 }

@@ -45,9 +45,9 @@ struct ExampleView: View {
                     )
                     .cornerRadius(30)
                     
-                    
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, 50)
+//            .padding(.vertical, 50)
 
         }
         
