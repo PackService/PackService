@@ -14,7 +14,7 @@ struct MemberShipAgreementView: View {
     @State var serviceAgree = false
     @State var personInfoAgree = false
     var agreementName = ["이용약관", "개인정보 처리방침"]
-    var agreementContent = ["aslfjalefjaoseifjapoeifjapo iej f paosie fjpoaisje fopiasje fawefoai" , "개인정보처리방침 뭐시기저시기 ㅁ쟏러ㅔ맺댜러ㅔ매쟈더램젇"]
+    var agreementContent = ["aslfjalefjaoseifjapoeifjapo iej f paosie fjpoaisje foddpiasje fawefoai" , "개인정보처리방침 뭐시기저시기 ㅁ쟏러ㅔ맺댜러ㅔ매쟈더램젇"]
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 10) {
