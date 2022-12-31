@@ -13,17 +13,15 @@ struct MemberShipAgreementView: View {
     @State var ageAgree = false
     @State var serviceAgree = false
     @State var personInfoAgree = false
-    var agreementName = ["이용약관", "개인정보 처리방침"]
-    var agreementContent = ["aslfjalefjaoseifjapoeifjapo iej f paosie fjpoaisje foddpiasje fawefoai" , "개인정보처리방침 뭐시기저시기 ㅁ쟏러ㅔ맺댜러ㅔ매쟈더램젇"]
     var body: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 0) {
                 Text("계정을")
                     .padding(.leading, 10)
-                    .font(.custom("Pretendard-Bold", size: 30))
+                    .font(FontManager.title1)
                 Text("만들어주세요")
                     .padding(.leading, 10)
-                    .font(.custom("Pretendard-Bold", size: 30))
+                    .font(FontManager.title1)
                 HStack(spacing: 20) {
                     Button(action: {
                         print(allAgree)
@@ -43,7 +41,7 @@ struct MemberShipAgreementView: View {
                     .padding(.top, 20)
                     Text("전체 동의하기")
                         .padding(.top, 20)
-                        .font(.custom("Pretendard-Bold", size: 20))
+                        .font(FontManager.body1)
                 }
                 HStack(spacing: 20) {
                     Button(action: {
@@ -63,8 +61,7 @@ struct MemberShipAgreementView: View {
                     .padding(.top, 10)
                     Text("만 14세 이상입니다")
                         .padding(.top, 10)
-                        .font(.custom("Pretendard", size: 20))
-                        .foregroundColor(.gray)
+                        .font(FontManager.body2)
                 }
                 HStack(spacing: 20) {
                     Button(action: {
@@ -84,14 +81,14 @@ struct MemberShipAgreementView: View {
                     .padding(.top, 10)
                     Text("서비스 이용 약관")
                         .padding(.top, 10)
-                        .font(.custom("Pretendard", size: 20))
-                        .foregroundColor(.gray)
+                        .font(FontManager.body2)
                     NavigationLink {
                         ServiceAgreeDescriptView()
                     } label: {
                         Text("보기")
                             .underline()
                             .padding(.top, 10)
+                            .font(FontManager.body2)
                     }
                 }
                 HStack(spacing: 20) {
@@ -113,8 +110,7 @@ struct MemberShipAgreementView: View {
                     
                     Text("개인정보 수집 및 이용 동의")
                         .padding(.top, 10)
-                        .font(.custom("Pretendard", size: 20))
-                        .foregroundColor(.gray)
+                        .font(FontManager.body2)
                     
                     NavigationLink {
                         PersonAgreeDescriptView()
@@ -122,6 +118,7 @@ struct MemberShipAgreementView: View {
                         Text("보기")
                             .underline()
                             .padding(.top, 10)
+                            .font(FontManager.body2)
                     }
                 }
                 Spacer()
@@ -129,17 +126,6 @@ struct MemberShipAgreementView: View {
             Spacer()
         }
         VStack {
-//            NavigationLink {
-//                if allAgree == true || (ageAgree == true && serviceAgree == true && personInfoAgree == true) {
-//                    RecommendTrackView()
-//                } else {
-//                    //View를 보여주기를 원하는거같은데 우짜지
-//                }
-//            } label: {
-//                Text("계정 만들기")
-//            }
-//            .buttonStyle(NormalButtonStyle())
-//
             if allAgree == true {
                 NavigationLink {
                     SignUpView(firstNaviLinkActive: $firstNaviLinkActive)
@@ -160,8 +146,6 @@ struct MemberShipAgreementView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
-
-
 
 struct MemberShipAgreementView_Previews: PreviewProvider {
     static var previews: some View {
