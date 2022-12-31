@@ -120,9 +120,12 @@ struct MemberShipAgreementView: View {
             Spacer()
             Button(action: {
                 print("회원가입 진행")
+                // 그 밑에서 화면 띄우는 거 진행해야됨 토글
             }, label: {
+                // 버튼 비활성화 시키고 아닐땐 활성화 되게
                 ButtonView(text: "계정 만들기")
             })
+            .disabled(true) //비활성화 하는거 다시 구현
             .padding(.leading, 20)
             .padding(.trailing, 20)
         }
