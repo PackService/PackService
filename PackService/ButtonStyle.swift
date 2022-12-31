@@ -18,3 +18,4 @@ struct NormalButtonStyle: ButtonStyle {
             .cornerRadius(50.0)
     }
 }
+

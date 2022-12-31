@@ -11,6 +11,7 @@ import AuthenticationServices
 struct LoginView: View {
     @State var emailInput : String = ""
     @State var passwordInput: String = ""
+    @State var signUpScreen: Bool = false // 회원가입 진행 bool 변수
     @StateObject var kakaoAuthVM = KakaoAuthVM()
     @StateObject var appleAuthVM = AppleAuthVM()
     @ObservedObject var emailAuthVM = EmailAuthVM()
@@ -82,25 +83,26 @@ struct LoginView: View {
                     .signInWithAppleButtonStyle(.black)
                     .frame(height: 45)
                     .clipShape(Rectangle())
-                    .padding(.horizontal,30)
+                    .padding(.horizontal, 30)
                     .offset(y: 0)
                 }
                 .padding()
-                
-                
+            
                 Button(action: {
                     print("아이디/비밀번호 찾기 버튼 클릭되었음")
                 }, label: {
                     Text("아이디/비밀번호 찾기")
                 })
                 .offset(x: -70, y: 150)
-                
-                
-                NavigationLink(destination: MemberShipAgreementView(firstNaviLinkActive: $firstNaviLinkActive), isActive: $firstNaviLinkActive) {
-                    Text("회원가입")
+               
+                Button("회원가입") {
+                    signUpScreen.toggle()
                 }
-                .navigationBarHidden(true)
-                .offset(x: 70,y: 200)
+                if signUpScreen {
+                    MemberShipAgreementView(signUpScreen: $signUpScreen)
+                        .transition(.move(edge: .bottom))
+                        .animation(.spring())
+                }
                 
             }
         }
