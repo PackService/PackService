@@ -43,6 +43,7 @@
 		AD1ADE20295E1AC800545DB7 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADE1F295E1AC800545DB7 /* ButtonStyle.swift */; };
 		AD1ADE22295E9C0600545DB7 /* ServiceAgreeDescriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADE21295E9C0600545DB7 /* ServiceAgreeDescriptView.swift */; };
 		AD1ADE24295EAC5F00545DB7 /* PersonAgreeDescriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADE23295EAC5F00545DB7 /* PersonAgreeDescriptView.swift */; };
+		ADC1407229604ABE0067CDE3 /* ToggleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC1407129604ABE0067CDE3 /* ToggleButtonView.swift */; };
 		ADE0F38D2934515F005D2732 /* PackServiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38C2934515F005D2732 /* PackServiceApp.swift */; };
 		ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38E2934515F005D2732 /* ContentView.swift */; };
 		ADE0F39129345160005D2732 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADE0F39029345160005D2732 /* Assets.xcassets */; };
@@ -111,6 +112,7 @@
 		AD1ADE1F295E1AC800545DB7 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		AD1ADE21295E9C0600545DB7 /* ServiceAgreeDescriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAgreeDescriptView.swift; sourceTree = "<group>"; };
 		AD1ADE23295EAC5F00545DB7 /* PersonAgreeDescriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonAgreeDescriptView.swift; sourceTree = "<group>"; };
+		ADC1407129604ABE0067CDE3 /* ToggleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButtonView.swift; sourceTree = "<group>"; };
 		ADE0F3892934515F005D2732 /* PackService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PackService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADE0F38C2934515F005D2732 /* PackServiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackServiceApp.swift; sourceTree = "<group>"; };
 		ADE0F38E2934515F005D2732 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				7EF5DE4E295ED7470064E4D1 /* LoginUIView.swift */,
 				7EF5DE50295EEFFC0064E4D1 /* ButtonView.swift */,
 				7EF5DE52295EF3960064E4D1 /* ThirdPartyButtonView.swift */,
+				ADC1407129604ABE0067CDE3 /* ToggleButtonView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				AD1ADE20295E1AC800545DB7 /* ButtonStyle.swift in Sources */,
 				7E16336F295E9C1000EBFB87 /* OnBoardingView.swift in Sources */,
 				ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */,
+				ADC1407229604ABE0067CDE3 /* ToggleButtonView.swift in Sources */,
 				AD1ADDD2295331C800545DB7 /* ProfileView.swift in Sources */,
 				7E04351129544648005187E8 /* CompanyService.swift in Sources */,
 				ADE0F3D12935F99F005D2732 /* AppleAuthVM.swift in Sources */,

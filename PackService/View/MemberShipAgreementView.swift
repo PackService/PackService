@@ -10,10 +10,12 @@ import SwiftUI
 struct MemberShipAgreementView: View {
 
     @Binding var signUpScreen: Bool
-    @State var allAgree = false
-    @State var ageAgree = false
-    @State var serviceAgree = false
-    @State var personInfoAgree = false
+    @State var serviceAgreeScreen: Bool = false // servceAgreeDescriptView 화면 전환 변수
+    @State var personAgreeScreen: Bool = false // personAgreeDescriptView 화면 전환 변수
+    @State var allAgree: Bool = false
+    @State var ageAgree: Bool = false
+    @State var serviceAgree: Bool = false
+    @State var personInfoAgree: Bool = false
     var body: some View {
         Color.white
             .edgesIgnoringSafeArea(.all)
@@ -25,21 +27,22 @@ struct MemberShipAgreementView: View {
                     Image(systemName: "xmark")
                         .font(.largeTitle)
                 })
+                
                 Text("계정을")
                     .padding(.leading, 20)
                     .font(FontManager.title1)
                 Text("만들어주세요")
                     .padding(.leading, 20)
                     .font(FontManager.title1)
+                
                 HStack(spacing: 0) {
                     Button(action: {
                         allAgree.toggle()
+                        ageAgree.toggle()
+                        serviceAgree.toggle()
+                        personInfoAgree.toggle()
                     }, label: {
-                        Image(systemName: "checkmark.circle.fill")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(allAgree ? ColorManager.primaryColor : ColorManager.secondaryColor)
+                        ToggleButtonView(agree: allAgree)
                     })
                     .padding(.leading, 20)
                     .padding(.top, 25)
@@ -48,15 +51,12 @@ struct MemberShipAgreementView: View {
                         .padding(.leading, 16)
                         .font(FontManager.body1)
                 }
+                
                 HStack(spacing: 0) {
                     Button(action: {
                         ageAgree.toggle()
                     }, label: {
-                        Image(systemName: "checkmark.circle.fill")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(allAgree ? ColorManager.primaryColor : ColorManager.secondaryColor)
+                        ToggleButtonView(agree: ageAgree)
                     })
                     .padding(.leading, 20)
                     .padding(.top, 16)
@@ -65,15 +65,12 @@ struct MemberShipAgreementView: View {
                         .padding(.leading, 16)
                         .font(FontManager.body2)
                 }
+                
                 HStack(spacing: 0) {
                     Button(action: {
                         serviceAgree.toggle()
                     }, label: {
-                        Image(systemName: "checkmark.circle.fill")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(ageAgree ? ColorManager.primaryColor : ColorManager.secondaryColor)
+                        ToggleButtonView(agree: serviceAgree)
                     })
                     .padding(.leading, 20)
                     .padding(.top, 16)
@@ -81,53 +78,63 @@ struct MemberShipAgreementView: View {
                         .padding(.top, 20)
                         .padding(.leading, 16)
                         .font(FontManager.body2)
-                    NavigationLink {
-                        ServiceAgreeDescriptView()
-                    } label: {
+                    Button(action: {
+                        serviceAgreeScreen.toggle()
+                    }, label: {
                         Text("보기")
                             .underline()
                             .padding(.top, 16)
                             .padding(.leading, 8)
                             .font(FontManager.body2)
-                    }
+                    })
                 }
+                
                 HStack(spacing: 0) {
                     Button(action: {
                         personInfoAgree.toggle()
                     }, label: {
-                        Image(systemName: "checkmark.circle.fill")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(ageAgree ? ColorManager.primaryColor : ColorManager.secondaryColor)
+                        ToggleButtonView(agree: personInfoAgree)
                     })
                     .padding(.leading, 20)
                     .padding(.top, 16)
-                    
                     Text("개인정보 수집 및 이용 동의")
                         .padding(.top, 17)
                         .padding(.leading, 16)
                         .font(FontManager.body2)
-                    
-                    NavigationLink {
-                        PersonAgreeDescriptView()
-                    } label: {
+                    Button(action: {
+                        personAgreeScreen.toggle()
+                    }, label: {
                         Text("보기")
                             .underline()
-                            .padding(.top, 10)
+                            .padding(.top, 16)
                             .padding(.leading, 8)
                             .font(FontManager.body2)
-                    }
+                    })
                 }
+                
                 Spacer()
             }
             Spacer()
         }
         VStack {
             Spacer()
-            ButtonView(text: "계정 만들기")
-                .padding(.leading, 20)
-                .padding(.trailing, 20)
+            Button(action: {
+                print("회원가입 진행")
+            }, label: {
+                ButtonView(text: "계정 만들기")
+            })
+            .padding(.leading, 20)
+            .padding(.trailing, 20)
+        }
+        if serviceAgreeScreen {
+            ServiceAgreeDescriptView(serviceAgreeScreen: $serviceAgreeScreen)
+                .transition(.move(edge: .bottom))
+                .animation(.spring())
+        }
+        if personAgreeScreen {
+            PersonAgreeDescriptView(personAgreeScreen: $personAgreeScreen)
+                .transition(.move(edge: .bottom))
+                .animation(.spring())
         }
     }
 }

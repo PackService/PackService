@@ -8,9 +8,21 @@
 import SwiftUI
 
 struct ServiceAgreeDescriptView: View {
+    @Binding var serviceAgreeScreen: Bool
     var body: some View {
+        Color.white
+            .edgesIgnoringSafeArea(.all)
         HStack {
             VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    Button(action: {
+                        serviceAgreeScreen.toggle()
+                    }, label: {
+                        Image(systemName: "xmark")
+                            .font(.largeTitle)
+                    })
+                    Text("나의택배앱 서비스 이용약관")
+                }
                 Text("서비스 이용약관")
                     .padding(.leading, 10)
                     .padding(.top, 30)
@@ -27,14 +39,12 @@ struct ServiceAgreeDescriptView: View {
             }
             Spacer()
         }
-        .navigationTitle("이용약관 동의")
-        .navigationBarTitleDisplayMode(.inline)
     }
     
 }
 
 struct ServiceAgreeDescriptView_Previews: PreviewProvider {
     static var previews: some View {
-        ServiceAgreeDescriptView()
+        ServiceAgreeDescriptView(serviceAgreeScreen: .constant(true))
     }
 }

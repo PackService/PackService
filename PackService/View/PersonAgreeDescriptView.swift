@@ -8,9 +8,21 @@
 import SwiftUI
 
 struct PersonAgreeDescriptView: View {
+    @Binding var personAgreeScreen: Bool
     var body: some View {
+        Color.white
+            .edgesIgnoringSafeArea(.all)
         HStack {
             VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    Button(action: {
+                        personAgreeScreen.toggle()
+                    }, label: {
+                        Image(systemName: "xmark")
+                            .font(.largeTitle)
+                    })
+                    Text("개인정보 뭐 서비스 이용약관")
+                }
                 Text("서비스 이용약관")
                     .padding(.leading, 10)
                     .padding(.top, 30)
@@ -27,13 +39,11 @@ struct PersonAgreeDescriptView: View {
             }
             Spacer()
         }
-        .navigationTitle("개인정보 수집 및 이용 동의")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct PersonAgreeDescriptView_Previews: PreviewProvider {
     static var previews: some View {
-        PersonAgreeDescriptView()
+        PersonAgreeDescriptView(personAgreeScreen: .constant(true))
     }
 }

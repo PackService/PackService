@@ -103,7 +103,6 @@ struct LoginView: View {
                         .transition(.move(edge: .bottom))
                         .animation(.spring())
                 }
-                
             }
         }
     }
