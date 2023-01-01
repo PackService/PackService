@@ -46,12 +46,12 @@ struct SignUpView: View {
                         .padding(.leading, 16)
                         .font(FontManager.body1)
                 }
-                InputTextField(title: "사용할 이메일 주소를 입력하세요", input: $emailInput)
-                    .padding(.top, 16)
-                SecureInputTextField(title: "비밀번호", input: $passwordInput)
-                    .padding(.top, 16)
-                SecureInputTextField(title: "비밀번호를 한번 더 입력하세요", input: $passwordCheckInput)
-                    .padding(.top, 16)
+//                InputTextField(title: "사용할 이메일 주소를 입력하세요", input: $emailInput)
+//                    .padding(.top, 16)
+//                SecureInputTextField(title: "비밀번호", input: $passwordInput)
+//                    .padding(.top, 16)
+//                SecureInputTextField(title: "비밀번호를 한번 더 입력하세요", input: $passwordCheckInput)
+//                    .padding(.top, 16)
                 Spacer()
             }
             Spacer()

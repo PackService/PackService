@@ -11,7 +11,7 @@ import SwiftUI
 struct ColorManager {
     static let primaryColor = Color("primary_color")
     static let secondaryColor = Color("secondary_color")
-    static let negativeColor = Color("nagative_color")
+    static let negativeColor = Color("negative_color")
     static let background = Color("background")
     static let background1 = Color("background1")
     static let background2 = Color("background2")
