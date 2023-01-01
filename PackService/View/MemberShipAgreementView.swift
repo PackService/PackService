@@ -37,9 +37,6 @@ struct MemberShipAgreementView: View {
                 Text("계정을\n만들어주세요")
                     .padding(.leading, 20)
                     .font(FontManager.title1)
-//                Text("만들어주세요")
-//                    .padding(.leading, 20)
-//                    .font(FontManager.title1)
                 
                 HStack(spacing: 0) {
                     Button(action: {
@@ -95,33 +92,7 @@ struct MemberShipAgreementView: View {
                     })
                 }
                 
-                HStack(spacing: 0) {
-                    Button(action: {
-                        personInfoAgree.toggle()
-                    }, label: {
-                        ToggleButtonView(agree: personInfoAgree)
-                    })
-                    .padding(.leading, 20)
-                    .padding(.top, 16)
-                    Text("개인정보 수집 및 이용 동의")
-                        .padding(.top, 17)
-                        .padding(.leading, 16)
-                        .font(FontManager.body2)
-                    Button(action: {
-                        personAgreeScreen.toggle()
-                    }, label: {
-                        Text("보기")
-                            .overlay(
-                                Rectangle()
-                                    .frame(height: 1)
-                                    .offset(y: 2)
-                                    .foregroundColor(ColorManager.primaryColor)
-                                , alignment: .bottom)
-                            .padding(.top, 16)
-                            .padding(.leading, 8)
-                            .font(FontManager.body2)
-                    })
-                }
+                toggleText()
                 
                 if allAgree {
                     VStack {
@@ -130,6 +101,8 @@ struct MemberShipAgreementView: View {
                     }
                     .animation(Animation.easeIn, value: allAgree)
                 }
+                
+                Spacer()
             }
             Spacer()
         }
@@ -171,8 +144,37 @@ struct MemberShipAgreementView: View {
     }
 }
 
-extension MemberShipAgreementView {
-    
+struct ToggleText: View {  // 함수화 진행 중
+    var agree: Bool = false
+    var body: some View {
+        HStack(spacing: 0) {
+            Button(action: {
+                self.agree.toggle()
+            }, label: {
+                ToggleButtonView(agree: agree)
+            })
+            .padding(.leading, 20)
+            .padding(.top, 16)
+            Text("개인정보 수집 및 이용 동의")
+                .padding(.top, 17)
+                .padding(.leading, 16)
+                .font(FontManager.body2)
+            Button(action: {
+                //personAgreeScreen.toggle()
+            }, label: {
+                Text("보기")
+                    .overlay(
+                        Rectangle()
+                            .frame(height: 1)
+                            .offset(y: 2)
+                            .foregroundColor(ColorManager.primaryColor)
+                        , alignment: .bottom)
+                    .padding(.top, 16)
+                    .padding(.leading, 8)
+                    .font(FontManager.body2)
+            })
+        }
+    }
 }
 
 struct MemberShipAgreementView_Previews: PreviewProvider {
