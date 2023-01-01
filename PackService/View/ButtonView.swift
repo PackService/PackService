@@ -20,6 +20,19 @@ struct ButtonView: View {
             .background(ColorManager.primaryColor.cornerRadius(29))
     }
 }
+struct DisabledButtonView: View {
+    
+    var text: String
+    
+    var body: some View {
+        Text(text)
+            .foregroundColor(ColorManager.background)
+            .font(FontManager.title2)
+            .frame(maxWidth: .infinity)
+            .frame(height: 58)
+            .background(ColorManager.defaultForegroundDisabled.cornerRadius(29))
+    }
+}
 
 struct ButtonView_Previews: PreviewProvider {
     static var previews: some View {

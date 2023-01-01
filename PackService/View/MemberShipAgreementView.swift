@@ -12,6 +12,7 @@ struct MemberShipAgreementView: View {
     @Binding var signUpScreen: Bool
     @State var serviceAgreeScreen: Bool = false // servceAgreeDescriptView 화면 전환 변수
     @State var personAgreeScreen: Bool = false // personAgreeDescriptView 화면 전환 변수
+    @State var nextSignUpScreen: Bool = false // 약관동의 후 회원가입 화면 진행
     @State var allAgree: Bool = false
     @State var ageAgree: Bool = false
     @State var serviceAgree: Bool = false
@@ -38,9 +39,9 @@ struct MemberShipAgreementView: View {
                 HStack(spacing: 0) {
                     Button(action: {
                         allAgree.toggle()
-                        ageAgree.toggle()
-                        serviceAgree.toggle()
-                        personInfoAgree.toggle()
+                        ageAgree = true
+                        serviceAgree = true
+                        personInfoAgree = true
                     }, label: {
                         ToggleButtonView(agree: allAgree)
                     })
@@ -118,16 +119,23 @@ struct MemberShipAgreementView: View {
         }
         VStack {
             Spacer()
-            Button(action: {
-                print("회원가입 진행")
-                // 그 밑에서 화면 띄우는 거 진행해야됨 토글
-            }, label: {
-                // 버튼 비활성화 시키고 아닐땐 활성화 되게
-                ButtonView(text: "계정 만들기")
-            })
-            .disabled(true) //비활성화 하는거 다시 구현
-            .padding(.leading, 20)
-            .padding(.trailing, 20)
+            if ageAgree && serviceAgree && personInfoAgree {
+                Button(action: {
+                    nextSignUpScreen.toggle()
+                }, label: {
+                    ButtonView(text: "계정 만들기")
+                })
+                .padding(.leading, 20)
+                .padding(.trailing, 20)
+            } else {
+                Button(action: {
+                }, label: {
+                    DisabledButtonView(text: "계정 만들기")
+                })
+                .disabled(true)
+                .padding(.leading, 20)
+                .padding(.trailing, 20)
+            }
         }
         if serviceAgreeScreen {
             ServiceAgreeDescriptView(serviceAgreeScreen: $serviceAgreeScreen)
@@ -136,6 +144,11 @@ struct MemberShipAgreementView: View {
         }
         if personAgreeScreen {
             PersonAgreeDescriptView(personAgreeScreen: $personAgreeScreen)
+                .transition(.move(edge: .bottom))
+                .animation(.spring())
+        }
+        if nextSignUpScreen {
+            SignUpView(nextSignUpScreen: $nextSignUpScreen, signUpScreen: $signUpScreen)
                 .transition(.move(edge: .bottom))
                 .animation(.spring())
         }
