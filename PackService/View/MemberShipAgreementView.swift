@@ -17,6 +17,11 @@ struct MemberShipAgreementView: View {
     @State var ageAgree: Bool = false
     @State var serviceAgree: Bool = false
     @State var personInfoAgree: Bool = false
+    
+    
+    @State var emailInput: String = ""
+    @State var passwordInput: String = ""
+    
     var body: some View {
         Color.white
             .edgesIgnoringSafeArea(.all)
@@ -29,19 +34,19 @@ struct MemberShipAgreementView: View {
                         .font(.largeTitle)
                 })
                 
-                Text("계정을")
+                Text("계정을\n만들어주세요")
                     .padding(.leading, 20)
                     .font(FontManager.title1)
-                Text("만들어주세요")
-                    .padding(.leading, 20)
-                    .font(FontManager.title1)
+//                Text("만들어주세요")
+//                    .padding(.leading, 20)
+//                    .font(FontManager.title1)
                 
                 HStack(spacing: 0) {
                     Button(action: {
                         allAgree.toggle()
-                        ageAgree = true
-                        serviceAgree = true
-                        personInfoAgree = true
+                        ageAgree = allAgree
+                        serviceAgree = allAgree
+                        personInfoAgree = allAgree
                     }, label: {
                         ToggleButtonView(agree: allAgree)
                     })
@@ -106,14 +111,25 @@ struct MemberShipAgreementView: View {
                         personAgreeScreen.toggle()
                     }, label: {
                         Text("보기")
-                            .underline()
+                            .overlay(
+                                Rectangle()
+                                    .frame(height: 1)
+                                    .offset(y: 2)
+                                    .foregroundColor(ColorManager.primaryColor)
+                                , alignment: .bottom)
                             .padding(.top, 16)
                             .padding(.leading, 8)
                             .font(FontManager.body2)
                     })
                 }
                 
-                Spacer()
+                if allAgree {
+                    VStack {
+                        TextField("email", text: $emailInput)
+                        TextField("password", text: $passwordInput)
+                    }
+                    .animation(Animation.easeIn, value: allAgree)
+                }
             }
             Spacer()
         }
@@ -153,6 +169,10 @@ struct MemberShipAgreementView: View {
                 .animation(.spring())
         }
     }
+}
+
+extension MemberShipAgreementView {
+    
 }
 
 struct MemberShipAgreementView_Previews: PreviewProvider {

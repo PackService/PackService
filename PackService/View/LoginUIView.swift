@@ -94,6 +94,9 @@ struct LoginUIView: View {
                 self.isPasswordValid = true
                 return
             }
+        } else {
+            self.isEmailValid = false
+            return
         }
         
 //        self.isEmailValid = false

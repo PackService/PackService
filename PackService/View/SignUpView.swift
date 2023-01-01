@@ -16,8 +16,8 @@ struct SignUpView: View {
     @State var passwordInput: String = ""
     @State var passwordCheckInput: String = ""
     var body: some View {
-        Color.white
-            .edgesIgnoringSafeArea(.all)
+//        Color.white
+//            .edgesIgnoringSafeArea(.all)
         HStack {
             VStack(alignment: .leading, spacing: 0) {
                 Button(action: {
