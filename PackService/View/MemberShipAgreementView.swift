@@ -17,8 +17,6 @@ struct MemberShipAgreementView: View {
     @State var ageAgree: Bool = false
     @State var serviceAgree: Bool = false
     @State var personInfoAgree: Bool = false
-    
-    
     @State var emailInput: String = ""
     @State var passwordInput: String = ""
     
@@ -55,60 +53,75 @@ struct MemberShipAgreementView: View {
                         .font(FontManager.body1)
                 }
                 
-                HStack(spacing: 0) {
-                    Button(action: {
-                        ageAgree.toggle()
-                    }, label: {
-                        ToggleButtonView(agree: ageAgree)
-                    })
-                    .padding(.leading, 20)
-                    .padding(.top, 16)
-                    Text("만 14세 이상입니다")
-                        .padding(.top, 20)
-                        .padding(.leading, 16)
-                        .font(FontManager.body2)
-                }
-                
-                HStack(spacing: 0) {
-                    Button(action: {
-                        serviceAgree.toggle()
-                    }, label: {
-                        ToggleButtonView(agree: serviceAgree)
-                    })
-                    .padding(.leading, 20)
-                    .padding(.top, 16)
-                    Text("서비스 이용 약관")
-                        .padding(.top, 20)
-                        .padding(.leading, 16)
-                        .font(FontManager.body2)
-                    Button(action: {
-                        serviceAgreeScreen.toggle()
-                    }, label: {
-                        Text("보기")
-                            .underline()
-                            .padding(.top, 16)
-                            .padding(.leading, 8)
+                if !ageAgree || !serviceAgree || !personInfoAgree { // 전체 동의하기 안 눌렸을 경우
+                    
+                    HStack(spacing: 0) {
+                        Button(action: {
+                            ageAgree.toggle()
+                        }, label: {
+                            ToggleButtonView(agree: ageAgree)
+                        })
+                        .padding(.leading, 20)
+                        .padding(.top, 16)
+                        ToggleTextView(text: "만 14세 이상입니다")
+                    }
+
+                    // 서비스 이용약관 동의
+                    HStack(spacing: 0) {
+                        Button(action: {
+                            serviceAgree.toggle()
+                        }, label: {
+                            ToggleButtonView(agree: serviceAgree)
+                        })
+                        .padding(.leading, 20)
+                        .padding(.top, 16)
+                        ToggleTextView(text: "서비스 이용 약관")
+                        Button(action: {
+                            serviceAgreeScreen.toggle()
+                        }, label: {
+                            ToggleDetailTextView()
+                        })
+                    }
+                    
+                    // 개인정보 동의
+                    HStack(spacing: 0) {
+                        Button(action: {
+                            personInfoAgree.toggle()
+                        }, label: {
+                            ToggleButtonView(agree: personInfoAgree)
+                        })
+                        .padding(.leading, 20)
+                        .padding(.top, 16)
+                        Text("개인정보 수집 및 이용 동의")
+                            .padding(.top, 17)
+                            .padding(.leading, 16)
                             .font(FontManager.body2)
-                    })
-                }
-                
-//                toggleText()
-                
-                if allAgree {
+                        Button(action: {
+                            personAgreeScreen.toggle()
+                        }, label: {
+                            ToggleDetailTextView()
+                        })
+                    }
+                } else { //전체 동의하기가 눌렸을 경우
                     VStack {
                         TextField("email", text: $emailInput)
+                            .onAppear(perform: {
+                                // 뷰가 나타날떄 수행 할 코드
+                                allAgree = true
+                            })
+        
                         TextField("password", text: $passwordInput)
                     }
                     .animation(Animation.easeIn, value: allAgree)
                 }
-                
                 Spacer()
             }
             Spacer()
         }
+        
         VStack {
             Spacer()
-            if ageAgree && serviceAgree && personInfoAgree {
+            if ageAgree && serviceAgree && personInfoAgree { //버튼 활성화 조건
                 Button(action: {
                     nextSignUpScreen.toggle()
                 }, label: {
@@ -144,36 +157,28 @@ struct MemberShipAgreementView: View {
     }
 }
 
-struct ToggleText: View {  // 함수화 진행 중
-    var agree: Bool = false
+struct ToggleTextView: View { // "만 14세 이상입니다" 글씨 함수
+    var text: String
     var body: some View {
-        HStack(spacing: 0) {
-            Button(action: {
-//                self.agree.toggle()
-            }, label: {
-                ToggleButtonView(agree: agree)
-            })
-            .padding(.leading, 20)
+        Text(text)
+            .padding(.top, 20)
+            .padding(.leading, 16)
+            .font(FontManager.body2)
+    }
+}
+
+struct ToggleDetailTextView: View { // "보기" 글씨 함수
+    var body: some View {
+        Text("보기")
+            .overlay(
+                Rectangle()
+                    .frame(height: 1)
+                    .offset(y: 2)
+                    .foregroundColor(ColorManager.primaryColor)
+                , alignment: .bottom)
             .padding(.top, 16)
-            Text("개인정보 수집 및 이용 동의")
-                .padding(.top, 17)
-                .padding(.leading, 16)
-                .font(FontManager.body2)
-            Button(action: {
-                //personAgreeScreen.toggle()
-            }, label: {
-                Text("보기")
-                    .overlay(
-                        Rectangle()
-                            .frame(height: 1)
-                            .offset(y: 2)
-                            .foregroundColor(ColorManager.primaryColor)
-                        , alignment: .bottom)
-                    .padding(.top, 16)
-                    .padding(.leading, 8)
-                    .font(FontManager.body2)
-            })
-        }
+            .padding(.leading, 8)
+            .font(FontManager.body2)
     }
 }
 
