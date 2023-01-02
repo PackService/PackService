@@ -104,13 +104,14 @@ struct MemberShipAgreementView: View {
                     }
                 } else { //전체 동의하기가 눌렸을 경우
                     VStack {
-                        TextField("email", text: $emailInput)
-                            .onAppear(perform: {
-                                // 뷰가 나타날떄 수행 할 코드
-                                allAgree = true
-                            })
-        
-                        TextField("password", text: $passwordInput)
+//                        TextField("email", text: $emailInput)
+//                            .onAppear(perform: {
+//                                // 뷰가 나타날떄 수행 할 코드
+//                                allAgree = true
+//                            })
+//
+//                        TextField("password", text: $passwordInput)
+                        SignUpView(signUpScreen: $signUpScreen)
                     }
                     .animation(Animation.easeIn, value: allAgree)
                 }
@@ -146,11 +147,6 @@ struct MemberShipAgreementView: View {
         }
         if personAgreeScreen {
             PersonAgreeDescriptView(personAgreeScreen: $personAgreeScreen)
-                .transition(.move(edge: .bottom))
-                .animation(.spring())
-        }
-        if nextSignUpScreen {
-            SignUpView(nextSignUpScreen: $nextSignUpScreen, signUpScreen: $signUpScreen)
                 .transition(.move(edge: .bottom))
                 .animation(.spring())
         }
