@@ -104,14 +104,11 @@ struct MemberShipAgreementView: View {
                     }
                 } else { //전체 동의하기가 눌렸을 경우
                     VStack {
-//                        TextField("email", text: $emailInput)
-//                            .onAppear(perform: {
-//                                // 뷰가 나타날떄 수행 할 코드
-//                                allAgree = true
-//                            })
-//
-//                        TextField("password", text: $passwordInput)
-                        SignUpView(signUpScreen: $signUpScreen)
+                        SignUpView(signUpScreen: $signUpScreen) // 회원가입 화면 뷰 보여주기
+                            .onAppear(perform: {
+                                // 뷰가 나타날떄 수행 할 코드
+                                allAgree = true
+                            })
                     }
                     .animation(Animation.easeIn, value: allAgree)
                 }

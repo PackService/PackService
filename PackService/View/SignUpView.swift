@@ -28,16 +28,15 @@ struct SignUpView: View {
     @FocusState private var focusState: TextFieldType?
     //
     
-    
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 0) {
-                InputTextField(title: "이메일", input: $emailInput, isValid: $isEmailValid, isSubmitted: $isSubmitted, isFocused: $focusState)
+                InputTextField2(title: "이메일", input: $emailInput, isValid: $isEmailValid, isSubmitted: $isSubmitted, isFocused2: $focusState)
                     .offset(x: !(isSubmitted && !isEmailValid) || !isAnimated ? 0 : -10)
                 
                 
-                SecureInputTextField(title: "비밀번호", input: $passwordInput, isValid: $isPasswordValid, isSubmitted: $isSubmitted, isFocused: $focusState)
-                    .offset(x: !(isSubmitted && !isPasswordValid) || !isAnimated ? 0 : -10)
+//                SecureInputTextField(title: "비밀번호", input: $passwordInput, isValid: $isPasswordValid, isSubmitted: $isSubmitted, isFocused: $focusState)
+//                    .offset(x: !(isSubmitted && !isPasswordValid) || !isAnimated ? 0 : -10)
                 Spacer()
             }
             .onSubmit {
@@ -45,16 +44,7 @@ struct SignUpView: View {
             }
             Spacer()
         }
-        VStack {
-            Spacer()
-            Button(action: {
-//                nextSignUpScreen.toggle()
-            }, label: {
-                ButtonView(text: "계정 만들기")
-            })
-            .padding(.leading, 20)
-            .padding(.trailing, 20)
-        }
+        
 //        VStack {
 //            TextField("이메일", text: $emailInput).keyboardType(.emailAddress).autocapitalization(.none)
 //            SecureField("비밀번호", text: $passwordInput).keyboardType(.default)
@@ -105,6 +95,41 @@ struct SignUpView: View {
         self.isPasswordValid = false
         self.focusState = .password
         
+    }
+}
+
+struct InputTextField2: View {
+    
+    @State var title: String = ""
+//    @FocusState var isFocused: Bool
+    @Binding var input: String
+    @Binding var isValid: Bool
+    @Binding var isSubmitted: Bool
+    var isFocused2: FocusState<SignUpView.TextFieldType?>.Binding
+    
+    var body: some View {
+        TextField("", text: $input)
+            .focused(isFocused2, equals: .email)
+            .submitLabel(.next)
+            .font(FontManager.body1)
+            .foregroundColor(ColorManager.defaultForeground)
+            .tint(ColorManager.primaryColor)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 18)
+            .placeholder(when: input.isEmpty) {
+                Text(title)
+                    .padding(.leading, 20)
+                    .font(FontManager.body1)
+                    .foregroundColor(ColorManager.foreground2)
+            }
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .strokeBorder(!(isSubmitted && !isValid) ? ColorManager.primaryColor : ColorManager.negativeColor, lineWidth: 2)
+                    .opacity(self.isFocused2.wrappedValue == .email ? 1.0 : 0.0)
+                    .background(self.isFocused2.wrappedValue == .email ? ColorManager.background.cornerRadius(10) : ColorManager.background2.cornerRadius(10))
+                    .animation(Animation.easeIn(duration: 0.25), value: self.isFocused2.wrappedValue == .email)
+            )
+            
     }
 }
 
