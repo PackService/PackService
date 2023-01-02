@@ -92,7 +92,7 @@ struct MemberShipAgreementView: View {
                     })
                 }
                 
-                toggleText()
+//                toggleText()
                 
                 if allAgree {
                     VStack {
@@ -149,7 +149,7 @@ struct ToggleText: View {  // 함수화 진행 중
     var body: some View {
         HStack(spacing: 0) {
             Button(action: {
-                self.agree.toggle()
+//                self.agree.toggle()
             }, label: {
                 ToggleButtonView(agree: agree)
             })
