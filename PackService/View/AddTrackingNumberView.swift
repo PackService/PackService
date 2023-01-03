@@ -14,6 +14,16 @@ struct AddTrackingNumberView: View {
     @State var isSubmitted: Bool = false
     @FocusState var focusState: LoginUIView.TextFieldType?
     
+    let columns: [GridItem] = [
+        GridItem(.flexible(), spacing: nil, alignment: nil),
+        GridItem(.flexible(), spacing: nil, alignment: nil),
+        GridItem(.flexible(), spacing: nil, alignment: nil)
+    ]
+    
+    let numpads: [String] = [
+        "1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "back"
+    ]
+    
     var body: some View {
         VStack(spacing: 16) {
             InputTextField(title: "운송장 번호를 입력하세요", input: $trackingNumber, isValid: $isValid, isSubmitted: $isSubmitted, isFocused: $focusState)
@@ -46,6 +56,34 @@ struct AddTrackingNumberView: View {
             }
             
             Spacer()
+            
+            LazyVGrid(columns: columns) {
+                ForEach(numpads, id: \.self) { content in
+                    Button {
+                        
+                    } label: {
+                        if content == "back" {
+                            Image(systemName: "arrow.left")
+                                .renderingMode(.template)
+                                .resizable()
+                                .frame(width: 25, height: 20.7)
+                                .font(Font.custom("Pretendard-SemiBold", size: 32.0))
+                                .foregroundColor(ColorManager.defaultForeground)
+                        } else {
+                            Text(content)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 52)
+                                .font(Font.custom("Pretendard-SemiBold", size: 32.0))
+                                .foregroundColor(ColorManager.defaultForeground)
+                                .padding(.vertical, 12)
+//                                .background(Color.red)
+                        }
+                        
+                    }
+                    .disabled(content.isEmpty)
+                }
+            }
+            .padding(.horizontal, -20)
             
             ButtonView(text: "운송장 등록")
         }
