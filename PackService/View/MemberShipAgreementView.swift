@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MemberShipAgreementView: View {
 
+    @ObservedObject var viewModel = EmailAuthVM() 
     @Binding var signUpScreen: Bool
     @State var serviceAgreeScreen: Bool = false // servceAgreeDescriptView 화면 전환 변수
     @State var personAgreeScreen: Bool = false // personAgreeDescriptView 화면 전환 변수
@@ -19,6 +20,19 @@ struct MemberShipAgreementView: View {
     @State var personInfoAgree: Bool = false
     @State var emailInput: String = ""
     @State var passwordInput: String = ""
+    @State var passwordCheckInput: String = ""
+    // 텍스트 필드 애니메이션 변수들
+    enum TextFieldType: Hashable {
+        case email
+        case password
+        //case passwordCheck
+    }
+    @State var isEmailValid: Bool = false
+    @State var isPasswordValid: Bool = false
+    @State var isSubmitted: Bool = false
+    @State var isAnimated: Bool = false
+    @FocusState private var focusState: TextFieldType?
+    //
     
     var body: some View {
         Color.white
@@ -92,25 +106,32 @@ struct MemberShipAgreementView: View {
                         })
                         .padding(.leading, 20)
                         .padding(.top, 16)
-                        Text("개인정보 수집 및 이용 동의")
-                            .padding(.top, 17)
-                            .padding(.leading, 16)
-                            .font(FontManager.body2)
+                        ToggleTextView(text: "개인정보 수집 및 이용 동의")
                         Button(action: {
                             personAgreeScreen.toggle()
                         }, label: {
                             ToggleDetailTextView()
                         })
                     }
-                } else { //전체 동의하기가 눌렸을 경우
+                } else { // 전체 동의하기가 눌렸을 경우
                     VStack {
-                        SignUpView(signUpScreen: $signUpScreen) // 회원가입 화면 뷰 보여주기
+                        InputTextField2(title: "이메일", input: $emailInput, isValid: $isEmailValid, isSubmitted: $isSubmitted, isFocused2: $focusState)
+                            .offset(x: !(isSubmitted && !isEmailValid) || !isAnimated ? 0 : -10)
                             .onAppear(perform: {
-                                // 뷰가 나타날떄 수행 할 코드
                                 allAgree = true
                             })
+                        
+                        SecureInputTextField2(title: "비밀번호", input: $passwordInput, isValid: $isPasswordValid, isSubmitted: $isSubmitted, isFocused: $focusState)
+                            .offset(x: !(isSubmitted && !isPasswordValid) || !isAnimated ? 0 : -10)
+                        
+                        SecureInputTextField2(title: "비밀번호 확인", input: $passwordCheckInput, isValid: $isPasswordValid, isSubmitted: $isSubmitted, isFocused: $focusState)
+                            .offset(x: !(isSubmitted && !isPasswordValid) || !isAnimated ? 0 : -10)
+                        Spacer()
                     }
                     .animation(Animation.easeIn, value: allAgree)
+                    .onSubmit {
+                        toggleFocus()
+                    }
                 }
                 Spacer()
             }
@@ -121,7 +142,7 @@ struct MemberShipAgreementView: View {
             Spacer()
             if ageAgree && serviceAgree && personInfoAgree { //버튼 활성화 조건
                 Button(action: {
-                    nextSignUpScreen.toggle()
+                    viewModel.registerUser(email: emailInput, password: passwordInput)
                 }, label: {
                     ButtonView(text: "계정 만들기")
                 })
@@ -148,6 +169,14 @@ struct MemberShipAgreementView: View {
                 .animation(.spring())
         }
     }
+    
+    func toggleFocus() {
+        if focusState == .email {
+            focusState = .password
+        } else if focusState == .password {
+            focusState = nil
+        }
+    }
 }
 
 struct ToggleTextView: View { // "만 14세 이상입니다" 글씨 함수
@@ -172,6 +201,75 @@ struct ToggleDetailTextView: View { // "보기" 글씨 함수
             .padding(.top, 16)
             .padding(.leading, 8)
             .font(FontManager.body2)
+    }
+}
+
+struct InputTextField2: View {
+
+    @State var title: String = ""
+//    @FocusState var isFocused: Bool
+    @Binding var input: String
+    @Binding var isValid: Bool
+    @Binding var isSubmitted: Bool
+    var isFocused2: FocusState<MemberShipAgreementView.TextFieldType?>.Binding
+
+    var body: some View {
+        TextField("", text: $input)
+            .focused(isFocused2, equals: .email)
+            .submitLabel(.next)
+            .font(FontManager.body1)
+            .foregroundColor(ColorManager.defaultForeground)
+            .tint(ColorManager.primaryColor)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 18)
+            .placeholder(when: input.isEmpty) {
+                Text(title)
+                    .padding(.leading, 20)
+                    .font(FontManager.body1)
+                    .foregroundColor(ColorManager.foreground2)
+            }
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .strokeBorder(!(isSubmitted && !isValid) ? ColorManager.primaryColor : ColorManager.negativeColor, lineWidth: 2)
+                    .opacity(self.isFocused2.wrappedValue == .email ? 1.0 : 0.0)
+                    .background(self.isFocused2.wrappedValue == .email ? ColorManager.background.cornerRadius(10) : ColorManager.background2.cornerRadius(10))
+                    .animation(Animation.easeIn(duration: 0.25), value: self.isFocused2.wrappedValue == .email)
+            )
+
+    }
+}
+
+struct SecureInputTextField2: View {
+
+    @State var title: String = ""
+//    @FocusState private var isFocused: Bool
+    @Binding var input: String
+    @Binding var isValid: Bool
+    @Binding var isSubmitted: Bool
+    var isFocused: FocusState<MemberShipAgreementView.TextFieldType?>.Binding
+
+    var body: some View {
+        SecureField("", text: $input)
+            .focused(isFocused, equals: .password)
+            .submitLabel(.return)
+            .font(FontManager.body1)
+            .foregroundColor(ColorManager.defaultForeground)
+            .tint(ColorManager.primaryColor)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 18)
+            .placeholder(when: input.isEmpty) {
+                Text(title)
+                    .padding(.leading, 20)
+                    .font(FontManager.body1)
+                    .foregroundColor(ColorManager.foreground2)
+            }
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .strokeBorder(!(isSubmitted && !isValid) ? ColorManager.primaryColor : ColorManager.negativeColor, lineWidth: 2)
+                    .opacity(isFocused.wrappedValue == .password ? 1.0 : 0.0)
+                    .background(isFocused.wrappedValue == .password ? ColorManager.background.cornerRadius(10) : ColorManager.background2.cornerRadius(10))
+                    .animation(Animation.easeIn(duration: 0.25), value: isFocused.wrappedValue == .password)
+            )
     }
 }
 

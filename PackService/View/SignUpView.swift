@@ -31,16 +31,16 @@ struct SignUpView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 0) {
-                InputTextField2(title: "이메일", input: $emailInput, isValid: $isEmailValid, isSubmitted: $isSubmitted, isFocused2: $focusState)
-                    .offset(x: !(isSubmitted && !isEmailValid) || !isAnimated ? 0 : -10)
-                
-                
-//                SecureInputTextField(title: "비밀번호", input: $passwordInput, isValid: $isPasswordValid, isSubmitted: $isSubmitted, isFocused: $focusState)
+//                InputTextField2(title: "이메일", input: $emailInput, isValid: $isEmailValid, isSubmitted: $isSubmitted, isFocused2: $focusState)
+//                    .offset(x: !(isSubmitted && !isEmailValid) || !isAnimated ? 0 : -10)
+//
+//
+//                SecureInputTextField2(title: "비밀번호", input: $passwordInput, isValid: $isPasswordValid, isSubmitted: $isSubmitted, isFocused: $focusState)
 //                    .offset(x: !(isSubmitted && !isPasswordValid) || !isAnimated ? 0 : -10)
                 Spacer()
             }
             .onSubmit {
-                toggleFocus()
+//                toggleFocus()
             }
             Spacer()
         }
@@ -68,70 +68,77 @@ struct SignUpView: View {
     }
     
     
-    func toggleFocus() {
-        if focusState == .email {
-            focusState = .password
-        } else if focusState == .password {
-            focusState = nil
-        }
-    }
-    
-    func validationCheck() {
-        if emailInput == "abc" {
-            self.isEmailValid = true
-            
-            if passwordInput == "1234" {
-                self.isPasswordValid = true
-                self.focusState = .password
-                return
-            }
-        } else {
-            self.isEmailValid = false
-            self.focusState = .password
-            return
-        }
-        
-//        self.isEmailValid = false
-        self.isPasswordValid = false
-        self.focusState = .password
-        
-    }
 }
+//
+//struct InputTextField2: View {
+//
+//    @State var title: String = ""
+////    @FocusState var isFocused: Bool
+//    @Binding var input: String
+//    @Binding var isValid: Bool
+//    @Binding var isSubmitted: Bool
+//    var isFocused2: FocusState<SignUpView.TextFieldType?>.Binding
+//
+//    var body: some View {
+//        TextField("", text: $input)
+//            .focused(isFocused2, equals: .email)
+//            .submitLabel(.next)
+//            .font(FontManager.body1)
+//            .foregroundColor(ColorManager.defaultForeground)
+//            .tint(ColorManager.primaryColor)
+//            .padding(.horizontal, 20)
+//            .padding(.vertical, 18)
+//            .placeholder(when: input.isEmpty) {
+//                Text(title)
+//                    .padding(.leading, 20)
+//                    .font(FontManager.body1)
+//                    .foregroundColor(ColorManager.foreground2)
+//            }
+//            .background(
+//                RoundedRectangle(cornerRadius: 10)
+//                    .strokeBorder(!(isSubmitted && !isValid) ? ColorManager.primaryColor : ColorManager.negativeColor, lineWidth: 2)
+//                    .opacity(self.isFocused2.wrappedValue == .email ? 1.0 : 0.0)
+//                    .background(self.isFocused2.wrappedValue == .email ? ColorManager.background.cornerRadius(10) : ColorManager.background2.cornerRadius(10))
+//                    .animation(Animation.easeIn(duration: 0.25), value: self.isFocused2.wrappedValue == .email)
+//            )
+//
+//    }
+//}
+//
+//struct SecureInputTextField2: View {
+//
+//    @State var title: String = ""
+////    @FocusState private var isFocused: Bool
+//    @Binding var input: String
+//    @Binding var isValid: Bool
+//    @Binding var isSubmitted: Bool
+//    var isFocused: FocusState<SignUpView.TextFieldType?>.Binding
+//
+//    var body: some View {
+//        SecureField("", text: $input)
+//            .focused(isFocused, equals: .password)
+//            .submitLabel(.return)
+//            .font(FontManager.body1)
+//            .foregroundColor(ColorManager.defaultForeground)
+//            .tint(ColorManager.primaryColor)
+//            .padding(.horizontal, 20)
+//            .padding(.vertical, 18)
+//            .placeholder(when: input.isEmpty) {
+//                Text(title)
+//                    .padding(.leading, 20)
+//                    .font(FontManager.body1)
+//                    .foregroundColor(ColorManager.foreground2)
+//            }
+//            .background(
+//                RoundedRectangle(cornerRadius: 10)
+//                    .strokeBorder(!(isSubmitted && !isValid) ? ColorManager.primaryColor : ColorManager.negativeColor, lineWidth: 2)
+//                    .opacity(isFocused.wrappedValue == .password ? 1.0 : 0.0)
+//                    .background(isFocused.wrappedValue == .password ? ColorManager.background.cornerRadius(10) : ColorManager.background2.cornerRadius(10))
+//                    .animation(Animation.easeIn(duration: 0.25), value: isFocused.wrappedValue == .password)
+//            )
+//    }
+//}
 
-struct InputTextField2: View {
-    
-    @State var title: String = ""
-//    @FocusState var isFocused: Bool
-    @Binding var input: String
-    @Binding var isValid: Bool
-    @Binding var isSubmitted: Bool
-    var isFocused2: FocusState<SignUpView.TextFieldType?>.Binding
-    
-    var body: some View {
-        TextField("", text: $input)
-            .focused(isFocused2, equals: .email)
-            .submitLabel(.next)
-            .font(FontManager.body1)
-            .foregroundColor(ColorManager.defaultForeground)
-            .tint(ColorManager.primaryColor)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 18)
-            .placeholder(when: input.isEmpty) {
-                Text(title)
-                    .padding(.leading, 20)
-                    .font(FontManager.body1)
-                    .foregroundColor(ColorManager.foreground2)
-            }
-            .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .strokeBorder(!(isSubmitted && !isValid) ? ColorManager.primaryColor : ColorManager.negativeColor, lineWidth: 2)
-                    .opacity(self.isFocused2.wrappedValue == .email ? 1.0 : 0.0)
-                    .background(self.isFocused2.wrappedValue == .email ? ColorManager.background.cornerRadius(10) : ColorManager.background2.cornerRadius(10))
-                    .animation(Animation.easeIn(duration: 0.25), value: self.isFocused2.wrappedValue == .email)
-            )
-            
-    }
-}
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
