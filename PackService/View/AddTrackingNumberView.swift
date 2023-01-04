@@ -13,6 +13,7 @@ struct AddTrackingNumberView: View {
     @State var isValid: Bool = false
     @State var isSubmitted: Bool = false
     @FocusState var focusState: LoginUIView.TextFieldType?
+    @State var animationTrigger: Bool = false
     
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: nil, alignment: nil),
@@ -26,7 +27,7 @@ struct AddTrackingNumberView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            InputTextField(title: "운송장 번호를 입력하세요", input: $trackingNumber, isValid: $isValid, isSubmitted: $isSubmitted, isFocused: $focusState)
+            DefaultTextField(title: "운송장 번호를 입력하세요", input: $trackingNumber, wrongAttempt: $isValid, isFocused: $focusState, animationTrigger: $animationTrigger)
             
             Button {
                 

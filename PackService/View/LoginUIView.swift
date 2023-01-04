@@ -17,10 +17,15 @@ struct LoginUIView: View {
     @State var emailInput: String = ""
     @State var passwordInput: String = ""
     
-    @State var isEmailValid: Bool = false
-    @State var isPasswordValid: Bool = false
+    @State var isEmailValid: Bool = true
+    @State var isPasswordValid: Bool = true
+    
     @State var isSubmitted: Bool = false
-    @State var isAnimated: Bool = false
+    
+    @State var emailAttempt: Bool = false
+    @State var passwordAttempt: Bool = false
+    
+    @State var animationTrigger: Bool = false
     @FocusState private var focusState: TextFieldType?
 
     var body: some View {
@@ -29,29 +34,30 @@ struct LoginUIView: View {
                 VStack {
                     Spacer()
                     
-                    VStack(spacing: 16) {                        
+                    VStack(spacing: 16) {
                         VStack {
-                            InputTextField(title: "이메일", input: $emailInput, isValid: $isEmailValid, isSubmitted: $isSubmitted, isFocused: $focusState)
-                                .offset(x: !(isSubmitted && !isEmailValid) || !isAnimated ? 0 : -10)
-                                
+                            DefaultTextField(title: "이메일", input: $emailInput, wrongAttempt: $emailAttempt, isFocused: $focusState, animationTrigger: $animationTrigger)
                             
-                            SecureInputTextField(title: "비밀번호", input: $passwordInput, isValid: $isPasswordValid, isSubmitted: $isSubmitted, isFocused: $focusState)
-                                .offset(x: !(isSubmitted && !isPasswordValid) || !isAnimated ? 0 : -10)
+                            SecuredTextField(title: "비밀번호", input: $passwordInput, wrongAttempt: $passwordAttempt, isFocused: $focusState, animationTrigger: $animationTrigger)
                         }
                         .onSubmit {
                             toggleFocus()
                         }
                         
-                        
                         Button {
                             isSubmitted = true
                             validationCheck()
+                            
+                            emailAttempt = (isSubmitted && !isEmailValid)
+                            passwordAttempt = (isSubmitted && !isPasswordValid)
+                            
                             if !(isEmailValid && isPasswordValid) {
                                 withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
-                                    isAnimated = true
+                                    animationTrigger = true
                                 }
                             }
-                            isAnimated = false
+                            
+                            animationTrigger = false
                         } label: {
                             ButtonView(text: "로그인")
                         }
@@ -99,8 +105,7 @@ struct LoginUIView: View {
             .ignoresSafeArea(.keyboard, edges: .all)
         }
         .navigationBarHidden(true)
-        
-        
+                
     }
     
     func toggleFocus() {
@@ -120,10 +125,12 @@ struct LoginUIView: View {
                 self.focusState = .password
                 return
             }
+        } else if emailInput != "abc" && passwordInput.isEmpty {
+            self.isEmailValid = false
+            self.focusState = .email
+            return
         } else {
             self.isEmailValid = false
-            self.focusState = .password
-            return
         }
         
 //        self.isEmailValid = false
@@ -133,72 +140,75 @@ struct LoginUIView: View {
     }
 }
 
-struct InputTextField: View {
+struct DefaultTextField: View {
     
     @State var title: String = ""
-//    @FocusState var isFocused: Bool
     @Binding var input: String
-    @Binding var isValid: Bool
-    @Binding var isSubmitted: Bool
+    @Binding var wrongAttempt: Bool
     var isFocused: FocusState<LoginUIView.TextFieldType?>.Binding
+    @Binding var animationTrigger: Bool
     
     var body: some View {
-        TextField("", text: $input)
-            .focused(isFocused, equals: .email)
-            .submitLabel(.next)
-            .font(FontManager.body1)
-            .foregroundColor(ColorManager.defaultForeground)
-            .tint(ColorManager.primaryColor)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 18)
-            .placeholder(when: input.isEmpty) {
-                Text(title)
-                    .padding(.leading, 20)
-                    .font(FontManager.body1)
-                    .foregroundColor(ColorManager.foreground2)
-            }
-            .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .strokeBorder(!(isSubmitted && !isValid) ? ColorManager.primaryColor : ColorManager.negativeColor, lineWidth: 2)
-                    .opacity(self.isFocused.wrappedValue == .email ? 1.0 : 0.0)
-                    .background(self.isFocused.wrappedValue == .email ? ColorManager.background.cornerRadius(10) : ColorManager.background2.cornerRadius(10))
-                    .animation(Animation.easeIn(duration: 0.25), value: self.isFocused.wrappedValue == .email)
+        ZStack {
+            TextField("", text: $input)
+                .focused(isFocused, equals: .email)
+                .submitLabel(.next)
+                .font(FontManager.body1)
+                .foregroundColor(ColorManager.defaultForeground)
+                .tint(ColorManager.primaryColor)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 18)
+                .placeholder(when: input.isEmpty) {
+                    Text(title)
+                        .padding(.leading, 20)
+                        .font(FontManager.body1)
+                        .foregroundColor(ColorManager.foreground2)
+                }
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .strokeBorder(!wrongAttempt ? ColorManager.primaryColor : ColorManager.negativeColor, lineWidth: 2)
+                        .opacity(isFocused.wrappedValue == .email ? 1.0 : 0.0)
+                        .background(isFocused.wrappedValue == .email ? ColorManager.background.cornerRadius(10) : ColorManager.background2.cornerRadius(10))
+                        .animation(Animation.easeIn(duration: 0.25), value: isFocused.wrappedValue == .email)
             )
-            
+        }
+        .offset(x: !wrongAttempt || !animationTrigger ? 0 : -10)
     }
 }
 
-struct SecureInputTextField: View {
+struct SecuredTextField: View {
 
     @State var title: String = ""
-//    @FocusState private var isFocused: Bool
     @Binding var input: String
-    @Binding var isValid: Bool
-    @Binding var isSubmitted: Bool
+    @Binding var wrongAttempt: Bool
     var isFocused: FocusState<LoginUIView.TextFieldType?>.Binding
+    @Binding var animationTrigger: Bool
     
     var body: some View {
-        SecureField("", text: $input)
-            .focused(isFocused, equals: .password)
-            .submitLabel(.return)
-            .font(FontManager.body1)
-            .foregroundColor(ColorManager.defaultForeground)
-            .tint(ColorManager.primaryColor)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 18)
-            .placeholder(when: input.isEmpty) {
-                Text(title)
-                    .padding(.leading, 20)
-                    .font(FontManager.body1)
-                    .foregroundColor(ColorManager.foreground2)
-            }
-            .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .strokeBorder(!(isSubmitted && !isValid) ? ColorManager.primaryColor : ColorManager.negativeColor, lineWidth: 2)
-                    .opacity(isFocused.wrappedValue == .password ? 1.0 : 0.0)
-                    .background(isFocused.wrappedValue == .password ? ColorManager.background.cornerRadius(10) : ColorManager.background2.cornerRadius(10))
-                    .animation(Animation.easeIn(duration: 0.25), value: isFocused.wrappedValue == .password)
+        ZStack {
+            SecureField("", text: $input)
+                .focused(isFocused, equals: .password)
+                .submitLabel(.return)
+                .font(FontManager.body1)
+                .foregroundColor(ColorManager.defaultForeground)
+                .tint(ColorManager.primaryColor)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 18)
+                .placeholder(when: input.isEmpty) {
+                    Text(title)
+                        .padding(.leading, 20)
+                        .font(FontManager.body1)
+                        .foregroundColor(ColorManager.foreground2)
+                }
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .strokeBorder(!wrongAttempt ? ColorManager.primaryColor : ColorManager.negativeColor, lineWidth: 2)
+                        .opacity(isFocused.wrappedValue == .password ? 1.0 : 0.0)
+                        .background(isFocused.wrappedValue == .password ? ColorManager.background.cornerRadius(10) : ColorManager.background2.cornerRadius(10))
+                        .animation(Animation.easeIn(duration: 0.25), value: isFocused.wrappedValue == .password)
             )
+        }
+        .offset(x: !wrongAttempt || !animationTrigger ? 0 : -10)
     }
 }
 
