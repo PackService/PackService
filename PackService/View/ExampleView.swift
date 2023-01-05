@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct ExampleView: View {
     
@@ -15,41 +16,25 @@ struct ExampleView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading) {
-            Text("계정을\n만들어주세요")
+        VStack(spacing: 16) {
+            InputTextFieldView(text: $emailTextFieldText, placeholder: "이메일")
+                .frame(height: 62)
             
-            TextField("사용할 이메일 주소를 입력하세요", text: $emailTextFieldText)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-            
-            TextField("비밀번호", text: $passwordTextFieldText)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-            
-            TextField("비밀번호를 한번 더 입력하세요", text: $passwordConfirmTextFieldText)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-            
+            InputTextFieldView(text: $emailTextFieldText, placeholder: "비밀번호", isSecure: true)
+                .frame(height: 62)
+//                .fixedSize(horizontal: true, vertical: true)
+                
+//                .frame(maxWidth: UIScreen.main.bounds.width)
+                
             Spacer()
-            
             Button {
                 
             } label: {
-                Text("계정 만들기")
-                    .font(.headline)
-                    .foregroundColor(Color.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        Color.purple
-                    )
-                    .cornerRadius(30)
-                    
+                Text("클릭")
             }
-            .padding(.horizontal, 50)
-//            .padding(.vertical, 50)
 
         }
+        .padding(.horizontal, 20)
         
     }
 }

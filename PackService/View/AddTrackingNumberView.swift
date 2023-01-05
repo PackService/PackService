@@ -15,6 +15,8 @@ struct AddTrackingNumberView: View {
     @FocusState var focusState: LoginUIView.TextFieldType?
     @State var animationTrigger: Bool = false
     
+    @State var text: String = ""
+    
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: nil, alignment: nil),
         GridItem(.flexible(), spacing: nil, alignment: nil),
@@ -61,7 +63,7 @@ struct AddTrackingNumberView: View {
             LazyVGrid(columns: columns) {
                 ForEach(numpads, id: \.self) { content in
                     Button {
-                        
+                        buttonPressed(content)
                     } label: {
                         if content == "back" {
                             Image(systemName: "arrow.left")
@@ -91,6 +93,14 @@ struct AddTrackingNumberView: View {
         .padding(.horizontal, 20)
         .padding(.top, 41)
         
+    }
+    
+    func buttonPressed(_ content: String) {
+        if content != "back" {
+            self.trackingNumber += content
+        } else {
+            self.trackingNumber = String(self.trackingNumber.dropLast())
+        }
     }
 }
 
