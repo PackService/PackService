@@ -44,6 +44,7 @@
 		AD1ADE20295E1AC800545DB7 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADE1F295E1AC800545DB7 /* ButtonStyle.swift */; };
 		AD1ADE22295E9C0600545DB7 /* ServiceAgreeDescriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADE21295E9C0600545DB7 /* ServiceAgreeDescriptView.swift */; };
 		AD1ADE24295EAC5F00545DB7 /* PersonAgreeDescriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADE23295EAC5F00545DB7 /* PersonAgreeDescriptView.swift */; };
+		AD5830522967EAC600099836 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5830512967EAC600099836 /* MainView.swift */; };
 		ADC1407229604ABE0067CDE3 /* ToggleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC1407129604ABE0067CDE3 /* ToggleButtonView.swift */; };
 		ADE0F38D2934515F005D2732 /* PackServiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38C2934515F005D2732 /* PackServiceApp.swift */; };
 		ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38E2934515F005D2732 /* ContentView.swift */; };
@@ -114,6 +115,7 @@
 		AD1ADE1F295E1AC800545DB7 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		AD1ADE21295E9C0600545DB7 /* ServiceAgreeDescriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAgreeDescriptView.swift; sourceTree = "<group>"; };
 		AD1ADE23295EAC5F00545DB7 /* PersonAgreeDescriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonAgreeDescriptView.swift; sourceTree = "<group>"; };
+		AD5830512967EAC600099836 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		ADC1407129604ABE0067CDE3 /* ToggleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButtonView.swift; sourceTree = "<group>"; };
 		ADE0F3892934515F005D2732 /* PackService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PackService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADE0F38C2934515F005D2732 /* PackServiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackServiceApp.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				7EF5DE52295EF3960064E4D1 /* ThirdPartyButtonView.swift */,
 				ADC1407129604ABE0067CDE3 /* ToggleButtonView.swift */,
 				7EADB95E2966C8E0004E4216 /* InputTextFieldView.swift */,
+				AD5830512967EAC600099836 /* MainView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				7EF5DE4B295ECA600064E4D1 /* FontManager.swift in Sources */,
 				ADE0F3B729345618005D2732 /* AppDelegate.swift in Sources */,
 				7EF5DE53295EF3960064E4D1 /* ThirdPartyButtonView.swift in Sources */,
+				AD5830522967EAC600099836 /* MainView.swift in Sources */,
 				7EF5DE51295EEFFC0064E4D1 /* ButtonView.swift in Sources */,
 				7E043515295446F5005187E8 /* AddTrackingNumberView.swift in Sources */,
 				7E53B7D6295C6B2E00555967 /* AnimatedCircle.swift in Sources */,
