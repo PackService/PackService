@@ -9,7 +9,16 @@ import SwiftUI
 
 // MARK: - MainView
 struct MainView: View {
-    var currentPackage = ["가방", "옷", "신발"]
+    let packageName: [String] = [ // 추후 slidertabview에 있는거 빼오기
+        "토리든 다이브인 저분자 하알루", "2번째 택배", "3번째 택배"
+    ]
+    let packageNumber: [String] = [
+        "12345664343433", "343343545", "2453452345"
+    ]
+    let packageState: [String] = [
+        "간선상차", "간선하차", "뭐시기"
+    ]
+    
     var body: some View {
         TabView {
             mainTabView
@@ -161,15 +170,34 @@ extension MainView {
             
             ScrollView {
                 LazyVStack {
-                    ForEach(0..<currentPackage.count) { package in
+                    ForEach(0..<packageName.count) { item in
                         // 배송 진행중인 목록 보여주는 곳
-                        Text(currentPackage[package])
+                        CurrentPackageCell(packageName: packageName[item], packageNumber: packageNumber[item], packageState: packageNumber[item])
                     }
                 }
             }
+            .padding(.trailing, 20)
             
             Spacer()
         }
+
+    }
+}
+
+struct CurrentPackageCell {
+    var packageName: String
+    var packageNumber: String
+    var packageState: String
+    
+    var body: some View {
+        HStack {
+            VStack {
+                Text(packageName)
+                Text(packageNumber)
+                Text(packageState)
+            }
+        }
+        .frame(height: 76)
     }
 }
 
@@ -185,9 +213,9 @@ extension MainView {
                 SystemButtonView(buttonType: .arrow, text: "계정", email: "abc@naver.com")
                 SystemButtonView(buttonType: .toggle, text: "알림설정")
                 SystemButtonView(buttonType: .arrow, text: "이용약관")
-                SystemButtonView(buttonType: .arrow, text: "이용약관")
-                SystemButtonView(buttonType: .version, text: "이용약관")
-                SystemButtonView(buttonType: .arrow, text: "이용약관")
+                SystemButtonView(buttonType: .arrow, text: "개인정보처리방침")
+                SystemButtonView(buttonType: .version, text: "현재 버전")
+                SystemButtonView(buttonType: .arrow, text: "피드백 보내기")
             }
             .padding(.top, 26)
             
