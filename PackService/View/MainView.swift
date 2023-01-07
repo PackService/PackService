@@ -154,172 +154,6 @@ extension MainView {
     
 }
 
-// MARK: - 2번째 TabView
-extension MainView {
-    var packListTabView: some View {
-        VStack {
-            HStack {
-                Text("배송 목록")
-                    .font(FontManager.title1)
-                
-                Spacer()
-                Button(action: {
-                    
-                }, label: {
-                    Image(systemName: "plus.circle.fill")
-                        .resizable()
-                        .frame(width: 32, height: 32)
-                })
-                .padding(.trailing, 20)
-            }
-            
-            // 검색 텍스트필드 해야함
-            Text("search")
-                .padding(.trailing, 20)
-                .padding(.bottom, 16)
-            
-            ScrollView {
-                LazyVStack {
-                    ForEach(packInfoModel, id: \.packageNumber) { packInfo in
-                        // 배송 진행중인 목록 보여주는 곳
-                        CurrentPackageCell(packInfoModel: packInfo)
-                    }
-                }
-            }
-            .padding(.trailing, 20)
-            
-            Spacer()
-        }
-    }
-}
-
-// 배송정보, 배송이름, 배송상태 구조체
-struct PackInfoModel {
-    var packageNumber: String
-    var packageName: String
-    var packageArrvieTime: String
-    var packageState: String
-}
-
-struct CurrentPackageCell: View {
-    var packInfoModel: PackInfoModel
-    
-    var body: some View {
-        HStack {
-            Spacer()
-            VStack {
-                HStack {
-                    Image(systemName: "circle.fill")
-                        .resizable()
-                        .frame(width: 44, height: 44)
-                    VStack(alignment: .leading) {
-                        Text(packInfoModel.packageName)
-                            .font(FontManager.title3)
-                            .padding(.bottom, 2)
-                        HStack {
-                            Text(packInfoModel.packageNumber)
-                                .font(FontManager.caption1)
-                                .foregroundColor(ColorManager.foreground1)
-                            Spacer()
-                            Text(packInfoModel.packageArrvieTime)
-                                .font(FontManager.caption1)
-                                .foregroundColor(ColorManager.foreground1)
-                                .padding(.trailing, 8)
-                            Text(packInfoModel.packageState)
-                                .font(FontManager.caption2)
-                                .foregroundColor(ColorManager.primaryColor)
-                        }
-                    }
-                    .padding(.leading, 16)
-                    Spacer()
-                }
-                .padding(16)
-            }
-            Spacer()
-        }
-        .background(
-            ColorManager.background
-                .cornerRadius(10)
-                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 2)
-        )
-        .padding(8)
-        .frame(height: 76)
-    }
-}
-
-// MARK: - 3번째 TabView SystemTabView
-
-extension MainView {
-    var systemTabView: some View {
-        VStack {
-            Text("설정")
-                .font(FontManager.title2)
-            
-            VStack(spacing: 10) {
-                SystemButtonView(buttonType: .arrow, text: "계정", email: "abc@naver.com")
-                SystemButtonView(buttonType: .toggle, text: "알림설정")
-                SystemButtonView(buttonType: .arrow, text: "이용약관")
-                SystemButtonView(buttonType: .arrow, text: "개인정보처리방침")
-                SystemButtonView(buttonType: .version, text: "현재 버전")
-                SystemButtonView(buttonType: .arrow, text: "피드백 보내기")
-            }
-            .padding(.top, 26)
-            
-            Spacer()
-        }
-        .padding(.trailing, 20)
-    }
-}
-
-struct SystemButtonView: View {
-    
-    @State private var alarmToggle = true
-    var buttonType: ButtonType
-    var text: String
-    var email: String?
-    var version: String?
-    
-    enum ButtonType {
-        case arrow
-        case toggle
-        case version
-    }
-    
-    var body: some View {
-        ZStack {
-            Rectangle()
-                .frame(height: 48)
-                .foregroundColor(ColorManager.background2)
-                .cornerRadius(10)
-            HStack {
-                Text(text)
-                    .padding(.leading, 20)
-                    .font(FontManager.body2)
-                Spacer()
-                switch buttonType {
-                case .arrow:
-                    Text(email ?? "")
-                        .padding(.trailing, 14.9)
-                        .font(FontManager.body2)
-                        .foregroundColor(ColorManager.primaryColor)
-                    Image(systemName: "chevron.right")
-                        .resizable()
-                        .frame(width: 10.1, height: 17.6)
-                        .padding(.trailing, 26.9)
-                case .toggle:
-                    Toggle("", isOn: $alarmToggle)
-                        .padding(.trailing, 20)
-                case .version:
-                    Text(version ?? "0.0.1")
-                        .padding(.trailing, 20)
-                        .font(FontManager.body2)
-                        .foregroundColor(ColorManager.primaryColor)
-                }
-            }
-        }
-    }
-}
-
 // MARK: - MainTabView의 SliderTabView
 
 struct SliderTabView: View {
@@ -532,6 +366,173 @@ struct TruckView: View {
                 .foregroundColor(.white)
                 .symbolVariant(.fill)
                 .frame(width: 20.8, height: 14.9)
+        }
+    }
+}
+
+
+// MARK: - 2번째 TabView
+extension MainView {
+    var packListTabView: some View {
+        VStack {
+            HStack {
+                Text("배송 목록")
+                    .font(FontManager.title1)
+                
+                Spacer()
+                Button(action: {
+                    
+                }, label: {
+                    Image(systemName: "plus.circle.fill")
+                        .resizable()
+                        .frame(width: 32, height: 32)
+                })
+                .padding(.trailing, 20)
+            }
+            
+            // 검색 텍스트필드 해야함
+            Text("search")
+                .padding(.trailing, 20)
+                .padding(.bottom, 16)
+            
+            ScrollView {
+                LazyVStack {
+                    ForEach(packInfoModel, id: \.packageNumber) { packInfo in
+                        // 배송 진행중인 목록 보여주는 곳
+                        CurrentPackageCell(packInfoModel: packInfo)
+                    }
+                }
+            }
+            .padding(.trailing, 20)
+            
+            Spacer()
+        }
+    }
+}
+
+// 배송정보, 배송이름, 배송상태 구조체
+struct PackInfoModel {
+    var packageNumber: String
+    var packageName: String
+    var packageArrvieTime: String
+    var packageState: String
+}
+
+struct CurrentPackageCell: View {
+    var packInfoModel: PackInfoModel
+    
+    var body: some View {
+        HStack {
+            Spacer()
+            VStack {
+                HStack {
+                    Image(systemName: "circle.fill")
+                        .resizable()
+                        .frame(width: 44, height: 44)
+                    VStack(alignment: .leading) {
+                        Text(packInfoModel.packageName)
+                            .font(FontManager.title3)
+                            .padding(.bottom, 2)
+                        HStack {
+                            Text(packInfoModel.packageNumber)
+                                .font(FontManager.caption1)
+                                .foregroundColor(ColorManager.foreground1)
+                            Spacer()
+                            Text(packInfoModel.packageArrvieTime)
+                                .font(FontManager.caption1)
+                                .foregroundColor(ColorManager.foreground1)
+                                .padding(.trailing, 8)
+                            Text(packInfoModel.packageState)
+                                .font(FontManager.caption2)
+                                .foregroundColor(ColorManager.primaryColor)
+                        }
+                    }
+                    .padding(.leading, 16)
+                    Spacer()
+                }
+                .padding(16)
+            }
+            Spacer()
+        }
+        .background(
+            ColorManager.background
+                .cornerRadius(10)
+                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 2)
+        )
+        .padding(8)
+        .frame(height: 76)
+    }
+}
+
+// MARK: - 3번째 TabView SystemTabView
+
+extension MainView {
+    var systemTabView: some View {
+        VStack {
+            Text("설정")
+                .font(FontManager.title2)
+            
+            VStack(spacing: 10) {
+                SystemButtonView(buttonType: .arrow, text: "계정", email: "abc@naver.com")
+                SystemButtonView(buttonType: .toggle, text: "알림설정")
+                SystemButtonView(buttonType: .arrow, text: "이용약관")
+                SystemButtonView(buttonType: .arrow, text: "개인정보처리방침")
+                SystemButtonView(buttonType: .version, text: "현재 버전")
+                SystemButtonView(buttonType: .arrow, text: "피드백 보내기")
+            }
+            .padding(.top, 26)
+            
+            Spacer()
+        }
+        .padding(.trailing, 20)
+    }
+}
+
+struct SystemButtonView: View {
+    
+    @State private var alarmToggle = true
+    var buttonType: ButtonType
+    var text: String
+    var email: String?
+    var version: String?
+    
+    enum ButtonType {
+        case arrow
+        case toggle
+        case version
+    }
+    
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .frame(height: 48)
+                .foregroundColor(ColorManager.background2)
+                .cornerRadius(10)
+            HStack {
+                Text(text)
+                    .padding(.leading, 20)
+                    .font(FontManager.body2)
+                Spacer()
+                switch buttonType {
+                case .arrow:
+                    Text(email ?? "")
+                        .padding(.trailing, 14.9)
+                        .font(FontManager.body2)
+                        .foregroundColor(ColorManager.primaryColor)
+                    Image(systemName: "chevron.right")
+                        .resizable()
+                        .frame(width: 10.1, height: 17.6)
+                        .padding(.trailing, 26.9)
+                case .toggle:
+                    Toggle("", isOn: $alarmToggle)
+                        .padding(.trailing, 20)
+                case .version:
+                    Text(version ?? "0.0.1")
+                        .padding(.trailing, 20)
+                        .font(FontManager.body2)
+                        .foregroundColor(ColorManager.primaryColor)
+                }
+            }
         }
     }
 }
