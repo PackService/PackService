@@ -7,120 +7,25 @@
 
 import SwiftUI
 
+// MARK: - MainView
 struct MainView: View {
-    
+    var currentPackage = ["가방", "옷", "신발"]
     var body: some View {
         TabView {
-            VStack {
-                HStack {
-                    Text("지금 배송중")
-                        .font(FontManager.title1)
-                    Spacer()
-                    
-                    //버튼 모양 수정 필요
-                    Button(action: {
-                        
-                    }, label: {
-                        ToggleButtonView(agree: true)
-                    })
-                    .padding(.trailing, 20)
+            mainTabView
+                .tabItem{
+                    Image(systemName: "house")
+                        .environment(\.symbolVariants, .none)
                 }
-                
-                SliderTabView() // 슬라이더 탭 뷰
-                
-                HStack {
-                    Text("인사이트")
-                        .font(FontManager.title1)
-                    Spacer()
-                }
-                .padding(.top, -60) //인사이트와 슬라이더 탭뷰와의 간격
-                
-                VStack { // 인사이트 정보
-                    HStack {
-                        Text("최단 시간 배송 완료")
-                            .font(FontManager.caption1)
-                            .padding(.leading, 20)
-                        Spacer()
-                        Text("신기록")
-                            .padding(.trailing, 20)
-                    }
-                    .padding(.top, 16)
-                    HStack {
-                        Text("1일 3시간 32분")
-                            .font(FontManager.body1)
-                            .padding(.leading, 20)
-                        Spacer()
-                    }
-                    Spacer()
-                }
-                .frame(height: 88)
-                .background(ColorManager.background2)
-                .padding(.trailing, 20)
-                .padding(.top, -40) // 인사이트 글씨와 인사이트 정보 간격
-                
-                VStack { // 함수화 해야함
-                    HStack {
-                        ZStack {
-                            Rectangle()
-                                .foregroundColor(ColorManager.background)
-                                .padding(3)
-                            PackInfoCell()
-                        }
-                        ZStack {
-                            Rectangle()
-                                .foregroundColor(ColorManager.background)
-                                .padding(3)
-                            PackInfoCell()
-                        }
-                    }
-                    HStack {
-                        ZStack {
-                            Rectangle()
-                                .foregroundColor(ColorManager.background)
-                                .padding(3)
-                            PackInfoCell()
-                        }
-                        ZStack {
-                            Rectangle()
-                                .foregroundColor(ColorManager.background)
-                                .padding(3)
-                            PackInfoCell()
-                        }
-                    }
-                }
-                .frame(height: 196)
-                .background(ColorManager.background2)
-                .padding(.trailing, 20)
-                .padding(.top, 10)
-                
-                Rectangle()
-                    .padding(.top, 16)
-                    .padding(.trailing, 20)
-                    .foregroundColor(ColorManager.primaryColor)
-                    
-                Spacer()
-            }
-            .tabItem{
-                Image(systemName: "house.fill")
-            }
-            
-            
-            
-            //비어있는 버튼으로 수정해야됨
-            // 배송 탭
-            VStack {
-                Text("shipping Tab")
-                Spacer()
-            }
+            packListTabView
                 .tabItem {
                     Image(systemName: "shippingbox")
-                        .foregroundColor(Color.red)
+                        .environment(\.symbolVariants, .none)
                 }
-            
-            // 설정 탭
-            Text("System Tab")
+            systemTabView
                 .tabItem {
                     Image(systemName: "gearshape")
+                        .environment(\.symbolVariants, .none)
                 }
         }
         .padding(.leading, 20)
@@ -129,6 +34,219 @@ struct MainView: View {
     }
     
 }
+
+// MARK: - MainTabView
+extension MainView {
+    var mainTabView: some View { // mainTabView
+        VStack {
+            HStack {
+                Text("지금 배송중")
+                    .font(FontManager.title1)
+                Spacer()
+                
+                //버튼 모양 수정 필요
+                Button(action: {
+                    
+                }, label: {
+                    Image(systemName: "plus.circle.fill")
+                        .resizable()
+                        .frame(width: 32, height: 32)
+                })
+                .padding(.trailing, 20)
+            }
+            
+            SliderTabView() // 슬라이더 탭 뷰
+            
+            HStack {
+                Text("인사이트")
+                    .font(FontManager.title1)
+                Spacer()
+            }
+            .padding(.top, -60) //인사이트와 슬라이더 탭뷰와의 간격
+            
+            VStack { // 인사이트 정보
+                HStack {
+                    Text("최단 시간 배송 완료")
+                        .font(FontManager.caption1)
+                        .padding(.leading, 20)
+                    Spacer()
+                    Text("신기록")
+                        .font(FontManager.caption2)
+                        .frame(width: 54, height: 20)
+                        .foregroundColor(.white)
+                        .background(ColorManager.primaryColor)
+                        .cornerRadius(10)
+                        .padding(.trailing, 20)
+                }
+                .padding(.top, 16)
+                HStack {
+                    Text("1일 3시간 32분")
+                        .font(FontManager.body1)
+                        .padding(.leading, 20)
+                    Spacer()
+                }
+                Spacer()
+            }
+            .frame(height: 88)
+            .background(ColorManager.background2)
+            .cornerRadius(10)
+            .padding(.trailing, 20)
+            .padding(.top, -40) // 인사이트 글씨와 인사이트 정보 간격
+            
+            VStack {
+                HStack {
+                    PackInfoCell(title: "일일 최대 배송 개수", content: "5개")
+                    PackInfoCell(title: "평균 배송 소요 시간", content: "1일 19시간 28분")
+                }
+                HStack {
+                    PackInfoCell(title: "가장 빠른 지역", content: "용인시 수지구")
+                    PackInfoCell(title: "가장 빠른 택배사", content: "CJ대한통운")
+                }
+                
+            }
+            .frame(height: 196)
+            .padding(.trailing, 20)
+            .padding(.top, 10)
+            
+            promotionView
+            Spacer()
+        }
+    }
+    
+// MARK: - promotionView
+    var promotionView: some View {
+        VStack {
+            HStack {
+                Text("(광고) 한여름에 뭐시기 저시기")
+                    .font(FontManager.body1)
+                    .padding(.leading, 20)
+                Spacer()
+            }
+            .padding(.top, 20)
+            HStack {
+                Text("카카오가 주관하는 뭐시기 저시기니까 그런줄 아셈")
+                    .font(FontManager.caption1)
+                    .padding(.leading, 20)
+                Spacer()
+            }
+            .padding(.top, 16)
+            Spacer()
+        }
+        .background(ColorManager.background2)
+        .cornerRadius(10)
+        .padding(.top,16)
+        .padding(.trailing, 20)
+    }
+    
+}
+
+extension MainView {
+    var packListTabView: some View {
+        VStack {
+            HStack {
+                Text("배송 목록")
+                    .font(FontManager.title1)
+                
+                Spacer()
+                Button(action: {
+                    
+                }, label: {
+                    Image(systemName: "plus.circle.fill")
+                        .resizable()
+                        .frame(width: 32, height: 32)
+                })
+                .padding(.trailing, 20)
+            }
+            Text("search")
+            
+            ScrollView {
+                LazyVStack {
+                    ForEach(0..<currentPackage.count) { package in
+                        // 배송 진행중인 목록 보여주는 곳
+                        Text(currentPackage[package])
+                    }
+                }
+            }
+            
+            Spacer()
+        }
+    }
+}
+
+// MARK: - SystemTabView
+
+extension MainView {
+    var systemTabView: some View {
+        VStack {
+            Text("설정")
+                .font(FontManager.title2)
+            
+            VStack(spacing: 10) {
+                SystemButtonView(buttonType: .arrow, text: "계정", email: "abc@naver.com")
+                SystemButtonView(buttonType: .toggle, text: "알림설정")
+                SystemButtonView(buttonType: .arrow, text: "이용약관")
+                SystemButtonView(buttonType: .arrow, text: "이용약관")
+                SystemButtonView(buttonType: .version, text: "이용약관")
+                SystemButtonView(buttonType: .arrow, text: "이용약관")
+            }
+            .padding(.top, 26)
+            
+            Spacer()
+        }
+        .padding(.trailing, 20)
+    }
+}
+
+struct SystemButtonView: View {
+    
+    @State private var alarmToggle = true
+    var buttonType: ButtonType
+    var text: String
+    var email: String?
+    var version: String?
+    
+    enum ButtonType {
+        case arrow
+        case toggle
+        case version
+    }
+    
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .frame(height: 48)
+                .foregroundColor(ColorManager.background2)
+                .cornerRadius(10)
+            HStack {
+                Text(text)
+                    .padding(.leading, 20)
+                    .font(FontManager.body2)
+                Spacer()
+                switch buttonType {
+                case .arrow:
+                    Text(email ?? "")
+                        .padding(.trailing, 14.9)
+                        .font(FontManager.body2)
+                        .foregroundColor(ColorManager.primaryColor)
+                    Image(systemName: "chevron.right")
+                        .resizable()
+                        .frame(width: 10.1, height: 17.6)
+                        .padding(.trailing, 26.9)
+                case .toggle:
+                    Toggle("", isOn: $alarmToggle)
+                        .padding(.trailing, 20)
+                case .version:
+                    Text(version ?? "0.0.1")
+                        .padding(.trailing, 20)
+                        .font(FontManager.body2)
+                        .foregroundColor(ColorManager.primaryColor)
+                }
+            }
+        }
+    }
+}
+
+// MARK: - SliderTabView
 
 struct SliderTabView: View {
     init() {
@@ -176,7 +294,6 @@ struct SliderTabView: View {
                             .padding(.leading, 16)
                             .padding(.trailing, 34)
                             
-                            
                             HStack {
                                 ZStack(alignment: .leading) {
                                     Rectangle()
@@ -192,7 +309,7 @@ struct SliderTabView: View {
                                     OrderButton()
                                     Image(systemName: "shippingbox.circle.fill")
                                         .resizable()
-                                        .frame(width: 30, height: 32)
+                                        .frame(width: 32, height: 32)
                                         .foregroundColor(ColorManager.primaryColor)
                                         .background(ColorManager.background)
                                         .clipShape(Circle())
@@ -201,11 +318,11 @@ struct SliderTabView: View {
                             }
                             Spacer()
                         }
-                        .background(ColorManager.background)
-                        .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .strokeBorder(ColorManager.background2, lineWidth: 5)
-                            )
+                        .background( // slideTabView 그림자 넣기
+                            ColorManager.background
+                                .cornerRadius(10)
+                                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 2)
+                        )
                         
                         Spacer()
                         
@@ -226,20 +343,42 @@ struct SliderTabView: View {
     
 }
 
+// MARK: - PackInfoCell
+
 struct PackInfoCell: View {
+    var title: String
+    var content: String
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("일일 최대 배송 개수")
-                .padding(.bottom, 8)
-                .font(FontManager.caption1)
-            Text("5개")
-                .font(FontManager.body1)
+        
+        ZStack(alignment: .leading) {
+            Rectangle()
+                .foregroundColor(ColorManager.background)
+                .padding(3)
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 4) {
+                    Text(title)
+                        .font(FontManager.caption1)
+                    Image(systemName: "n.circle.fill")
+                        .resizable()
+                        .frame(width: 16, height: 16)
+                        .foregroundColor(ColorManager.primaryColor)
+                }
+                Text(content)
+                    .font(FontManager.body1)
+            }
+            .frame(height: 40)
+            .padding(.leading, 20)
         }
-        .frame(height: 40)
+        .background( // slideTabView 그림자 넣기
+            ColorManager.background
+                .cornerRadius(10)
+                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 2)
+        )
     }
     
 }
 
+// MARK: - ProgressBar
 // progressbar animation
 enum OrderStatus {
     case ready
@@ -260,8 +399,6 @@ struct OrderButton: View {
     var body: some View {
         VStack {
             ZStack {
-
-                
                 HStack {
                     Rectangle()
                         .fill(ColorManager.primaryColor)
@@ -269,33 +406,33 @@ struct OrderButton: View {
                         .animation(.linear(duration: (status == .finished) ? progressBarAnimationTime : progressBarAnimationTime))
                     Spacer()
                         .frame(width:(status == .ready) ? progressBarWidth : 0)
-                }.frame(width: progressBarWidth)
+                }
+                .frame(width: progressBarWidth)
                 
                 ZStack {
-                    HStack {
-                        Spacer()
-                            .frame(width:(status == .ready) ? 0: 250) // box 움직임을 위한 프레임
-
-                        Image(systemName: "shippingbox.circle.fill")
-                            .resizable()
-                            .frame(width: 32, height: 32)
-                            .foregroundColor(ColorManager.primaryColor)
-                            .background(ColorManager.background)
-                            .clipShape(Circle())
-                            .animation(Animation.linear(duration: (status == .started) ? progressBarAnimationTime : animationTime).delay(0))
-                        Spacer()
-                            .frame(width:(status == .ready) ? 250 : 0)
-                    }.frame(width: progressBarWidth)
+                    VStack {
+                        HStack {
+                            Spacer()
+                                .frame(width:(status == .ready) ? 0: 250) // box 움직임을 위한 프레임
+                            
+                            TruckView()
+                                .foregroundColor(ColorManager.primaryColor)
+                                .background(ColorManager.background)
+                                .clipShape(Circle())
+                                .animation(Animation.linear(duration: (status == .started) ? progressBarAnimationTime : animationTime).delay(0))
+                            
+                            Spacer()
+                                .frame(width:(status == .ready) ? 250 : 0)
+                        }
+                        .frame(width: progressBarWidth)
+                    }
                 }
-            }.frame(width: progressBarWidth)
-
+            }
+            .frame(width: progressBarWidth)
         }
         .onAppear {
             download()
         }
-    
-    
-    
     }
 
     func download() {
@@ -308,6 +445,21 @@ struct OrderButton: View {
         }
     }
 
+}
+
+struct TruckView: View {
+    var body: some View {
+        ZStack {
+            Circle()
+                .fill(ColorManager.primaryColor)
+                .frame(width: 32, height: 32)
+            Image(systemName: "box.truck")
+                .resizable()
+                .foregroundColor(.white)
+                .symbolVariant(.fill)
+                .frame(width: 20.8, height: 14.9)
+        }
+    }
 }
 
 struct MainView_Previews: PreviewProvider {
