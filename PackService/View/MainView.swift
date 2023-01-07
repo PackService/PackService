@@ -9,14 +9,19 @@ import SwiftUI
 
 // MARK: - MainView
 struct MainView: View {
-    let packageName: [String] = [ // 추후 slidertabview에 있는거 빼오기
-        "토리든 다이브인 저분자 하알루", "2번째 택배", "3번째 택배"
-    ]
-    let packageNumber: [String] = [
-        "12345664343433", "343343545", "2453452345"
-    ]
-    let packageState: [String] = [
-        "간선상차", "간선하차", "뭐시기"
+    
+    @State var packInfoModel = [ // 모델에서 받아올때 이부분 수정해야될듯
+        PackInfoModel(packageNumber: "1213214234", packageName: "첫번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
+        PackInfoModel(packageNumber: "94894899834", packageName: "두번째 택배", packageArrvieTime: "12/29", packageState: "배송 완료"),
+        PackInfoModel(packageNumber: "493048234", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
+        PackInfoModel(packageNumber: "49304823422", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
+        PackInfoModel(packageNumber: "49304823454", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
+        PackInfoModel(packageNumber: "4930482344", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
+        PackInfoModel(packageNumber: "4930483234", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
+        PackInfoModel(packageNumber: "4930483134", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
+        PackInfoModel(packageNumber: "4930413234", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
+        PackInfoModel(packageNumber: "4930383234", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
+        PackInfoModel(packageNumber: "49383234", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중")
     ]
     
     var body: some View {
@@ -44,7 +49,7 @@ struct MainView: View {
     
 }
 
-// MARK: - MainTabView
+// MARK: - 1번째 MainTabView
 extension MainView {
     var mainTabView: some View { // mainTabView
         VStack {
@@ -53,7 +58,7 @@ extension MainView {
                     .font(FontManager.title1)
                 Spacer()
                 
-                //버튼 모양 수정 필요
+                // 버튼 모양 수정 필요
                 Button(action: {
                     
                 }, label: {
@@ -71,7 +76,7 @@ extension MainView {
                     .font(FontManager.title1)
                 Spacer()
             }
-            .padding(.top, -60) //인사이트와 슬라이더 탭뷰와의 간격
+            .padding(.top, -60) // 인사이트와 슬라이더 탭뷰와의 간격
             
             VStack { // 인사이트 정보
                 HStack {
@@ -143,12 +148,13 @@ extension MainView {
         }
         .background(ColorManager.background2)
         .cornerRadius(10)
-        .padding(.top,16)
+        .padding(.top, 16)
         .padding(.trailing, 20)
     }
     
 }
 
+// MARK: - 2번째 TabView
 extension MainView {
     var packListTabView: some View {
         VStack {
@@ -166,13 +172,17 @@ extension MainView {
                 })
                 .padding(.trailing, 20)
             }
+            
+            // 검색 텍스트필드 해야함
             Text("search")
+                .padding(.trailing, 20)
+                .padding(.bottom, 16)
             
             ScrollView {
                 LazyVStack {
-                    ForEach(0..<packageName.count) { item in
+                    ForEach(packInfoModel, id: \.packageNumber) { packInfo in
                         // 배송 진행중인 목록 보여주는 곳
-                        CurrentPackageCell(packageName: packageName[item], packageNumber: packageNumber[item], packageState: packageNumber[item])
+                        CurrentPackageCell(packInfoModel: packInfo)
                     }
                 }
             }
@@ -180,28 +190,64 @@ extension MainView {
             
             Spacer()
         }
-
     }
 }
 
-struct CurrentPackageCell {
-    var packageName: String
+// 배송정보, 배송이름, 배송상태 구조체
+struct PackInfoModel {
     var packageNumber: String
+    var packageName: String
+    var packageArrvieTime: String
     var packageState: String
+}
+
+struct CurrentPackageCell: View {
+    var packInfoModel: PackInfoModel
     
     var body: some View {
         HStack {
+            Spacer()
             VStack {
-                Text(packageName)
-                Text(packageNumber)
-                Text(packageState)
+                HStack {
+                    Image(systemName: "circle.fill")
+                        .resizable()
+                        .frame(width: 44, height: 44)
+                    VStack(alignment: .leading) {
+                        Text(packInfoModel.packageName)
+                            .font(FontManager.title3)
+                            .padding(.bottom, 2)
+                        HStack {
+                            Text(packInfoModel.packageNumber)
+                                .font(FontManager.caption1)
+                                .foregroundColor(ColorManager.foreground1)
+                            Spacer()
+                            Text(packInfoModel.packageArrvieTime)
+                                .font(FontManager.caption1)
+                                .foregroundColor(ColorManager.foreground1)
+                                .padding(.trailing, 8)
+                            Text(packInfoModel.packageState)
+                                .font(FontManager.caption2)
+                                .foregroundColor(ColorManager.primaryColor)
+                        }
+                    }
+                    .padding(.leading, 16)
+                    Spacer()
+                }
+                .padding(16)
             }
+            Spacer()
         }
+        .background(
+            ColorManager.background
+                .cornerRadius(10)
+                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 2)
+        )
+        .padding(8)
         .frame(height: 76)
     }
 }
 
-// MARK: - SystemTabView
+// MARK: - 3번째 TabView SystemTabView
 
 extension MainView {
     var systemTabView: some View {
@@ -274,7 +320,7 @@ struct SystemButtonView: View {
     }
 }
 
-// MARK: - SliderTabView
+// MARK: - MainTabView의 SliderTabView
 
 struct SliderTabView: View {
     init() {
@@ -371,7 +417,7 @@ struct SliderTabView: View {
     
 }
 
-// MARK: - PackInfoCell
+// MARK: - MaintabView에 있는 일일 최대, 가장 빠른 지역 등을 위한 PackInfoCell
 
 struct PackInfoCell: View {
     var title: String
@@ -406,7 +452,7 @@ struct PackInfoCell: View {
     
 }
 
-// MARK: - ProgressBar
+// MARK: - MainTabView의 ProgressBar
 // progressbar animation
 enum OrderStatus {
     case ready
