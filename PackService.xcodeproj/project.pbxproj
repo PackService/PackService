@@ -47,6 +47,7 @@
 		AD5830522967EAC600099836 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5830512967EAC600099836 /* MainView.swift */; };
 		AD583054296A97FB00099836 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD583053296A97FB00099836 /* MainTabView.swift */; };
 		AD583056296A9A1700099836 /* PromotionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD583055296A9A1700099836 /* PromotionView.swift */; };
+		AD583058296AA78800099836 /* PackLogoButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD583057296AA78800099836 /* PackLogoButtonView.swift */; };
 		ADC1407229604ABE0067CDE3 /* ToggleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC1407129604ABE0067CDE3 /* ToggleButtonView.swift */; };
 		ADE0F38D2934515F005D2732 /* PackServiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38C2934515F005D2732 /* PackServiceApp.swift */; };
 		ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38E2934515F005D2732 /* ContentView.swift */; };
@@ -120,6 +121,7 @@
 		AD5830512967EAC600099836 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		AD583053296A97FB00099836 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		AD583055296A9A1700099836 /* PromotionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionView.swift; sourceTree = "<group>"; };
+		AD583057296AA78800099836 /* PackLogoButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackLogoButtonView.swift; sourceTree = "<group>"; };
 		ADC1407129604ABE0067CDE3 /* ToggleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButtonView.swift; sourceTree = "<group>"; };
 		ADE0F3892934515F005D2732 /* PackService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PackService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADE0F38C2934515F005D2732 /* PackServiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackServiceApp.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 				AD5830512967EAC600099836 /* MainView.swift */,
 				AD583053296A97FB00099836 /* MainTabView.swift */,
 				AD583055296A9A1700099836 /* PromotionView.swift */,
+				AD583057296AA78800099836 /* PackLogoButtonView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 			files = (
 				AD583056296A9A1700099836 /* PromotionView.swift in Sources */,
 				AD1ADDE02959A79800545DB7 /* RecommendService.swift in Sources */,
+				AD583058296AA78800099836 /* PackLogoButtonView.swift in Sources */,
 				AD1ADDD42953326C00545DB7 /* UserData.swift in Sources */,
 				7EF5DE4B295ECA600064E4D1 /* FontManager.swift in Sources */,
 				ADE0F3B729345618005D2732 /* AppDelegate.swift in Sources */,
