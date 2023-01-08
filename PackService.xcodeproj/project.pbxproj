@@ -48,6 +48,7 @@
 		AD583054296A97FB00099836 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD583053296A97FB00099836 /* MainTabView.swift */; };
 		AD583056296A9A1700099836 /* PromotionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD583055296A9A1700099836 /* PromotionView.swift */; };
 		AD583058296AA78800099836 /* PackLogoButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD583057296AA78800099836 /* PackLogoButtonView.swift */; };
+		AD58305A296AB06100099836 /* SelectCompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD583059296AB06100099836 /* SelectCompanyView.swift */; };
 		ADC1407229604ABE0067CDE3 /* ToggleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC1407129604ABE0067CDE3 /* ToggleButtonView.swift */; };
 		ADE0F38D2934515F005D2732 /* PackServiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38C2934515F005D2732 /* PackServiceApp.swift */; };
 		ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38E2934515F005D2732 /* ContentView.swift */; };
@@ -122,6 +123,7 @@
 		AD583053296A97FB00099836 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		AD583055296A9A1700099836 /* PromotionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionView.swift; sourceTree = "<group>"; };
 		AD583057296AA78800099836 /* PackLogoButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackLogoButtonView.swift; sourceTree = "<group>"; };
+		AD583059296AB06100099836 /* SelectCompanyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCompanyView.swift; sourceTree = "<group>"; };
 		ADC1407129604ABE0067CDE3 /* ToggleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButtonView.swift; sourceTree = "<group>"; };
 		ADE0F3892934515F005D2732 /* PackService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PackService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADE0F38C2934515F005D2732 /* PackServiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackServiceApp.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				AD583053296A97FB00099836 /* MainTabView.swift */,
 				AD583055296A9A1700099836 /* PromotionView.swift */,
 				AD583057296AA78800099836 /* PackLogoButtonView.swift */,
+				AD583059296AB06100099836 /* SelectCompanyView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				ADE0F3BD2935BCC1005D2732 /* KakaoAuthVM.swift in Sources */,
 				7E8724D82959C0AE00C0B1C9 /* TrackingInfoView.swift in Sources */,
 				ADFBE39A293679F000D45B42 /* EmailAuthVM.swift in Sources */,
+				AD58305A296AB06100099836 /* SelectCompanyView.swift in Sources */,
 				AD1ADDE22959A94700545DB7 /* RecommendTrackView.swift in Sources */,
 				ADE0F3B92934588C005D2732 /* SceneDelegate.swift in Sources */,
 				AD1ADDCE2952477300545DB7 /* MemberShipAgreementView.swift in Sources */,

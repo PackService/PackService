@@ -32,6 +32,6 @@ struct PackLogoButtonView: View {
 
 struct PackLogoButtonView_Previews: PreviewProvider {
     static var previews: some View {
-        PackLogoButtonView(circleColor: ColorManager.primaryColor, logoImage: Image(systemName: "house"), logoName: "CJ대한통운")
+        PackLogoButtonView(circleColor: ColorManager.primaryColor, logoImage: Image("cj_logo"), logoName: "CJ대한통운")
     }
 }

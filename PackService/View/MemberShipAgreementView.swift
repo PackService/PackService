@@ -43,11 +43,14 @@ struct MemberShipAgreementView: View {
                     signUpScreen.toggle()
                 }, label: {
                     Image(systemName: "xmark")
+                        .resizable()
+                        .foregroundColor(.black)
+                        .frame(width: 25, height: 25)
                         .font(.largeTitle)
+                        .padding(.bottom, 20)
                 })
                 
                 Text("계정을\n만들어주세요")
-                    .padding(.leading, 20)
                     .font(FontManager.title1)
                 
                 HStack(spacing: 0) {
@@ -59,7 +62,6 @@ struct MemberShipAgreementView: View {
                     }, label: {
                         ToggleButtonView(agree: allAgree)
                     })
-                    .padding(.leading, 20)
                     .padding(.top, 25)
                     Text("전체 동의하기")
                         .padding(.top, 24)
@@ -75,7 +77,6 @@ struct MemberShipAgreementView: View {
                         }, label: {
                             ToggleButtonView(agree: ageAgree)
                         })
-                        .padding(.leading, 20)
                         .padding(.top, 16)
                         ToggleTextView(text: "만 14세 이상입니다")
                     }
@@ -87,7 +88,6 @@ struct MemberShipAgreementView: View {
                         }, label: {
                             ToggleButtonView(agree: serviceAgree)
                         })
-                        .padding(.leading, 20)
                         .padding(.top, 16)
                         ToggleTextView(text: "서비스 이용 약관")
                         Button(action: {
@@ -104,7 +104,6 @@ struct MemberShipAgreementView: View {
                         }, label: {
                             ToggleButtonView(agree: personInfoAgree)
                         })
-                        .padding(.leading, 20)
                         .padding(.top, 16)
                         ToggleTextView(text: "개인정보 수집 및 이용 동의")
                         Button(action: {
@@ -128,6 +127,8 @@ struct MemberShipAgreementView: View {
                             .offset(x: !(isSubmitted && !isPasswordValid) || !isAnimated ? 0 : -10)
                         Spacer()
                     }
+                    .padding(.trailing, 20)
+                    .padding(.top, 20)
                     .animation(Animation.easeIn, value: allAgree)
                     .onSubmit {
                         toggleFocus()
@@ -137,6 +138,7 @@ struct MemberShipAgreementView: View {
             }
             Spacer()
         }
+        .padding(.leading, 20)
         
         VStack {
             Spacer()
@@ -195,12 +197,13 @@ struct ToggleDetailTextView: View { // "보기" 글씨 함수
             .overlay(
                 Rectangle()
                     .frame(height: 1)
-                    .offset(y: 2)
-                    .foregroundColor(ColorManager.primaryColor)
+                    .offset(y: 1)
+                    .foregroundColor(ColorManager.foreground2)
                 , alignment: .bottom)
             .padding(.top, 16)
             .padding(.leading, 8)
             .font(FontManager.body2)
+            .foregroundColor(ColorManager.foreground2)
     }
 }
 
