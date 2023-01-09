@@ -179,6 +179,7 @@ struct MemberShipAgreementView: View {
             focusState = nil
         }
     }
+    
 }
 
 struct ToggleTextView: View { // "만 14세 이상입니다" 글씨 함수

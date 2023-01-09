@@ -51,6 +51,7 @@
 		AD583056296A9A1700099836 /* PromotionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD583055296A9A1700099836 /* PromotionView.swift */; };
 		AD583058296AA78800099836 /* PackLogoButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD583057296AA78800099836 /* PackLogoButtonView.swift */; };
 		AD58305A296AB06100099836 /* SelectCompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD583059296AB06100099836 /* SelectCompanyView.swift */; };
+		AD58305C296BFBA800099836 /* SystemTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD58305B296BFBA800099836 /* SystemTabView.swift */; };
 		ADC1407229604ABE0067CDE3 /* ToggleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC1407129604ABE0067CDE3 /* ToggleButtonView.swift */; };
 		ADE0F38D2934515F005D2732 /* PackServiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38C2934515F005D2732 /* PackServiceApp.swift */; };
 		ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38E2934515F005D2732 /* ContentView.swift */; };
@@ -128,6 +129,7 @@
 		AD583055296A9A1700099836 /* PromotionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionView.swift; sourceTree = "<group>"; };
 		AD583057296AA78800099836 /* PackLogoButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackLogoButtonView.swift; sourceTree = "<group>"; };
 		AD583059296AB06100099836 /* SelectCompanyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCompanyView.swift; sourceTree = "<group>"; };
+		AD58305B296BFBA800099836 /* SystemTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemTabView.swift; sourceTree = "<group>"; };
 		ADC1407129604ABE0067CDE3 /* ToggleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButtonView.swift; sourceTree = "<group>"; };
 		ADE0F3892934515F005D2732 /* PackService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PackService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADE0F38C2934515F005D2732 /* PackServiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackServiceApp.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				AD583059296AB06100099836 /* SelectCompanyView.swift */,
 				7E088714296BC77C0011819D /* TextFieldType.swift */,
 				7E088716296BCAC90011819D /* TextFieldView.swift */,
+				AD58305B296BFBA800099836 /* SystemTabView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -477,6 +480,7 @@
 				AD1ADE20295E1AC800545DB7 /* ButtonStyle.swift in Sources */,
 				7E16336F295E9C1000EBFB87 /* OnBoardingView.swift in Sources */,
 				ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */,
+				AD58305C296BFBA800099836 /* SystemTabView.swift in Sources */,
 				ADC1407229604ABE0067CDE3 /* ToggleButtonView.swift in Sources */,
 				AD1ADDD2295331C800545DB7 /* ProfileView.swift in Sources */,
 				7E04351129544648005187E8 /* CompanyService.swift in Sources */,
