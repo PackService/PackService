@@ -345,8 +345,6 @@ struct ServiceAgreeDescriptView: View {
 //    2. 2014년 7월 10일부터 시행되던 종전 약관은 이 약관으로 대체됩니다.
 
     var body: some View {
-        Color.white
-            .edgesIgnoringSafeArea(.all)
         HStack {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
@@ -369,6 +367,15 @@ struct ServiceAgreeDescriptView: View {
             }
             Spacer()
         }
+    }
+}
+
+struct NoSafeAreaServiceAgreeView: View {
+    @Binding var serviceAgreeScreen: Bool
+    var body: some View {
+        Color.white
+            .edgesIgnoringSafeArea(.all)
+        ServiceAgreeDescriptView(serviceAgreeScreen: $serviceAgreeScreen)
     }
 }
 

@@ -161,7 +161,7 @@ struct MemberShipAgreementView: View {
             }
         }
         if serviceAgreeScreen {
-            ServiceAgreeDescriptView(serviceAgreeScreen: $serviceAgreeScreen)
+            NoSafeAreaServiceAgreeView(serviceAgreeScreen: $serviceAgreeScreen)
                 .transition(.move(edge: .bottom))
                 .animation(.spring())
         }
