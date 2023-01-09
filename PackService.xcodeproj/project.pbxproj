@@ -14,6 +14,8 @@
 		7E04351329544648005187E8 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E04351029544648005187E8 /* NetworkManager.swift */; };
 		7E043515295446F5005187E8 /* AddTrackingNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E043514295446F5005187E8 /* AddTrackingNumberView.swift */; };
 		7E04351729544845005187E8 /* CompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E04351629544845005187E8 /* CompanyView.swift */; };
+		7E088715296BC77C0011819D /* TextFieldType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E088714296BC77C0011819D /* TextFieldType.swift */; };
+		7E088717296BCAC90011819D /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E088716296BCAC90011819D /* TextFieldView.swift */; };
 		7E16336F295E9C1000EBFB87 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E16336E295E9C1000EBFB87 /* OnBoardingView.swift */; };
 		7E3B49F3295D9FFF0020036C /* ExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B49F2295D9FFF0020036C /* ExampleView.swift */; };
 		7E53B7D6295C6B2E00555967 /* AnimatedCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53B7D5295C6B2E00555967 /* AnimatedCircle.swift */; };
@@ -89,6 +91,8 @@
 		7E04351029544648005187E8 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		7E043514295446F5005187E8 /* AddTrackingNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrackingNumberView.swift; sourceTree = "<group>"; };
 		7E04351629544845005187E8 /* CompanyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanyView.swift; sourceTree = "<group>"; };
+		7E088714296BC77C0011819D /* TextFieldType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldType.swift; sourceTree = "<group>"; };
+		7E088716296BCAC90011819D /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
 		7E16336E295E9C1000EBFB87 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		7E3B49F2295D9FFF0020036C /* ExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleView.swift; sourceTree = "<group>"; };
 		7E53B7D5295C6B2E00555967 /* AnimatedCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCircle.swift; sourceTree = "<group>"; };
@@ -283,6 +287,8 @@
 				AD583055296A9A1700099836 /* PromotionView.swift */,
 				AD583057296AA78800099836 /* PackLogoButtonView.swift */,
 				AD583059296AB06100099836 /* SelectCompanyView.swift */,
+				7E088714296BC77C0011819D /* TextFieldType.swift */,
+				7E088716296BCAC90011819D /* TextFieldView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -453,9 +459,11 @@
 				AD5830522967EAC600099836 /* MainView.swift in Sources */,
 				7EF5DE51295EEFFC0064E4D1 /* ButtonView.swift in Sources */,
 				7E043515295446F5005187E8 /* AddTrackingNumberView.swift in Sources */,
+				7E088715296BC77C0011819D /* TextFieldType.swift in Sources */,
 				7E53B7D6295C6B2E00555967 /* AnimatedCircle.swift in Sources */,
 				ADE0F3CF2935F97D005D2732 /* HomeView.swift in Sources */,
 				AD1ADDE42959B57500545DB7 /* RecommendModel.swift in Sources */,
+				7E088717296BCAC90011819D /* TextFieldView.swift in Sources */,
 				7E04350B2954454C005187E8 /* CompanyModel.swift in Sources */,
 				7EF5DE4F295ED7470064E4D1 /* LoginUIView.swift in Sources */,
 				7E04351229544648005187E8 /* TrackingInfoService.swift in Sources */,
