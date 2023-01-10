@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct TrackingInfoView: View {
     @State var showMenu: Bool? = false
     
@@ -50,13 +49,17 @@ struct TrackingInfoView: View {
                     
                     HStack(spacing: 10) {
                         TrackingInfoCardView(title: "배송기사", content: "홍길동", deliveryman: true, show: $showMenu)
-                        TrackingInfoCardView(title: "보내는 분", content: nil)
+                        TrackingInfoCardView(title: "예상 완료 시간", content: nil)
                     }
                 }
                 
                 PromotionView(promotionTitle: "광고란", promotionContent: "광고입니다.")
                     .padding(.vertical, 8)
+                
+                TrackingPositionView()
+                
                 Spacer()
+                
             }
             .padding(.horizontal, 20)
             
@@ -65,7 +68,6 @@ struct TrackingInfoView: View {
                     .animation(Animation.easeIn(duration: 2), value: showMenu)
             }
         }
-        
         
     }
 }
@@ -101,10 +103,9 @@ struct TrackingInfoCardView: View {
                     
                     if deliveryman {
                         Button {
-//                            withAnimation(Animation.easeIn(duration: 0.5)) {
-//
-//                            }
-                            show?.toggle()
+                            withAnimation(Animation.easeIn(duration: 0.2)) {
+                                show?.toggle()
+                            }
                             
                         } label: {
                             
@@ -140,7 +141,6 @@ struct MenuView: View {
                 .onTapGesture {
                     show = false
                 }
-                
             
             RoundedRectangle(cornerRadius: 16)
                 .fill(ColorManager.background)
@@ -195,6 +195,146 @@ struct MenuView: View {
         }
         
     }
+}
+
+struct TrackingPositionView: View {
+    @State var step: Double = 1
+    @State var showList: Bool = false
+    
+    var body: some View {
+        
+        VStack(spacing: 8) {
+            HStack {
+                Text("택배 위치")
+                    .font(FontManager.title1)
+                
+                Spacer()
+                
+                Button {
+                    step += 1
+                } label: {
+                    Image(systemName: "arrow.clockwise.circle.fill")
+                        .renderingMode(.template)
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(ColorManager.primaryColor)
+                }
+            }
+            
+            ColorManager.background
+                .cornerRadius(10)
+                .frame(width: 350, height: 152)
+                .shadow(color: Color.black.opacity(0.05), radius: 10, x: 0, y: 2)
+                .overlay(
+                    VStack {
+                        TrackingProgressView(currentStep: $step)
+                            .padding()
+                            .padding(.vertical, 8)
+                            .animation(Animation.easeIn(duration: 1.0), value: step)
+                            .onAppear {
+                                step = 0
+                            }
+                        
+                        var arr = ["군포", "기흥", nil, "죽전"]
+
+                        HStack {
+                            ForEach(arr, id: \.self) { item in
+                                
+                                Text(item ?? "(정보없음)")
+                                    .font(FontManager.caption1)
+                                    .foregroundColor(item != arr[Int(step)] ? ColorManager.foreground1 : ColorManager.primaryColor)
+        //                        Text((dict[key] ?? "(정보없음)") ?? "(정보없음)")
+                                if item != arr.last! {
+                                    Spacer()
+                                }
+                                
+                            }
+                        }
+                        .padding(.horizontal, 20)
+                        
+                        if showList {
+                            
+                        }
+                        
+                        Divider()
+                        
+                        Button {
+                            showList.toggle()
+                        } label: {
+                            HStack {
+                                Text(showList ? "간략히 보기" : "자세히 보기")
+                                    .font(FontManager.body2)
+                                
+                                Image(systemName: showList ? "chevron.up" : "chevron.down")
+                                    .renderingMode(.template)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 16, height: 16)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .foregroundColor(ColorManager.foreground2)
+                            
+                        }
+
+                    }
+                    
+                        
+                )
+        }
+        
+    }
+}
+
+struct TrackingProgressView: View {
+    @Binding var currentStep: Double
+    
+    var body: some View {
+        ProgressView("Loading...", value: currentStep, total: 3)
+            .progressViewStyle(TrackingProgressViewStyle(value: $currentStep))
+    }
+}
+
+struct TrackingProgressViewStyle: ProgressViewStyle {
+    @Binding var value: Double
+    
+    func makeBody(configuration: Configuration) -> some View {
+        
+        return GeometryReader { geometry in
+            let offset = geometry.size.width / 3 * value
+            
+            VStack {
+                ZStack(alignment: .leading) {
+                    ZStack(alignment: .leading) {
+                        RoundedRectangle(cornerRadius: 32)
+                            .frame(width: geometry.size.width, height: 32)
+                            .overlay(
+                                ColorManager.background2.cornerRadius(32)
+                            )
+
+                        RoundedRectangle(cornerRadius: 32)
+                            .frame(width: value == 0 ? 40 : CGFloat(configuration.fractionCompleted ?? 0) * geometry.size.width, height: 32)
+                            .foregroundColor(ColorManager.primaryColor)
+                    }
+                    
+                    RoundedRectangle(cornerRadius: 32)
+                        .fill(ColorManager.primaryColor)
+                        .frame(width: 40, height: 32)
+                        .overlay(
+                            Image(systemName: "box.truck.fill")
+                                .renderingMode(.template)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 18, height: 18)
+                                .foregroundColor(ColorManager.background)
+                        )
+                        .offset(x: value != 3 ? (offset - (value == 0 ? 0 : 30)) : geometry.size.width - 40)
+                }
+            }
+        }
+        
+    }
+
 }
 
 struct TrackingInfoView_Previews: PreviewProvider {
