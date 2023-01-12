@@ -367,8 +367,18 @@ struct ServiceAgreeDescriptView: View {
             }
             Spacer()
         }
+        .toolbar(.hidden, for: .tabBar)
     }
 }
+
+//struct NavigationServiceAgreeView: View {
+//    var body: some View {
+//        VStack {
+//            Text("서비스 이용 약관")
+//                .toolbar(.hidden, for: .tabBar)
+//        }
+//    }
+//}
 
 struct NoSafeAreaServiceAgreeView: View {
     @Binding var serviceAgreeScreen: Bool

@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - MainView
 struct MainView: View {
-    
+    @State var serviceAgreeScreen: Bool = false
     @State var packInfoModel = [ // 모델에서 받아올때 이부분 수정해야될듯
         PackInfoModel(packageNumber: "1213214234", packageName: "첫번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
         PackInfoModel(packageNumber: "94894899834", packageName: "두번째 택배", packageArrvieTime: "12/29", packageState: "배송 완료"),
@@ -26,8 +26,9 @@ struct MainView: View {
     
     var body: some View {
         TabView {
+            
             MainTabView()
-                .tabItem{
+                .tabItem {
                     Image(systemName: "house")
                         .environment(\.symbolVariants, .none)
                 }
@@ -36,11 +37,12 @@ struct MainView: View {
                     Image(systemName: "shippingbox")
                         .environment(\.symbolVariants, .none)
                 }
-            SystemTabView(serviceAgreeScreen: false)
+            SystemTabView()
                 .tabItem {
                     Image(systemName: "gearshape")
                         .environment(\.symbolVariants, .none)
                 }
+            
         }
         .padding(.leading, 20)
         .padding(.top, 20)

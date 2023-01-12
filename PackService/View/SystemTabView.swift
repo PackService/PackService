@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct SystemTabView: View {
-    @State var serviceAgreeScreen = false
+    @State var serviceAgreeScreen: Bool = false
     var body: some View {
         VStack {
             if serviceAgreeScreen {
                 ServiceAgreeDescriptView(serviceAgreeScreen: $serviceAgreeScreen)
+                    .transition(.move(edge: .bottom))
+                    .animation(.spring())
             } else {
                 Text("설정")
                     .font(FontManager.title2)
@@ -25,6 +27,10 @@ struct SystemTabView: View {
                         SystemButtonView(buttonType: .arrow, text: "이용약관")
                     })
                     .foregroundColor(.black)
+                    
+                    //                    NavigationLink(destination: NavigationServiceAgreeView()) {
+                    //                        SystemButtonView(buttonType: .arrow, text: "이용약관")
+                    //                    }
                     SystemButtonView(buttonType: .arrow, text: "개인정보처리방침")
                     SystemButtonView(buttonType: .version, text: "현재 버전")
                     SystemButtonView(buttonType: .arrow, text: "피드백 보내기")
@@ -88,6 +94,6 @@ struct SystemButtonView: View {
 
 struct SystemTabView_Previews: PreviewProvider {
     static var previews: some View {
-        SystemTabView(serviceAgreeScreen: false)
+        MainView()
     }
 }

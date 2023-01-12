@@ -286,12 +286,12 @@
 				7EADB95E2966C8E0004E4216 /* InputTextFieldView.swift */,
 				AD5830512967EAC600099836 /* MainView.swift */,
 				AD583053296A97FB00099836 /* MainTabView.swift */,
+				AD58305B296BFBA800099836 /* SystemTabView.swift */,
 				AD583055296A9A1700099836 /* PromotionView.swift */,
 				AD583057296AA78800099836 /* PackLogoButtonView.swift */,
 				AD583059296AB06100099836 /* SelectCompanyView.swift */,
 				7E088714296BC77C0011819D /* TextFieldType.swift */,
 				7E088716296BCAC90011819D /* TextFieldView.swift */,
-				AD58305B296BFBA800099836 /* SystemTabView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
