@@ -8,39 +8,49 @@
 import SwiftUI
 import UIKit
 
+struct ExampleParentView: View {
+    var body: some View {
+        NavigationView {
+            VStack {
+                
+                Spacer()
+                ExampleView()
+            }
+            .navigationTitle("This is Parent View")
+        }
+    }
+}
+
 struct ExampleView: View {
     
-    @State var emailTextFieldText: String = ""
-    @State var passwordTextFieldText: String = ""
-    @State var passwordConfirmTextFieldText: String = ""
+    @State var showList = false
     
     var body: some View {
-        
-        VStack(spacing: 16) {
-            InputTextFieldView(text: $emailTextFieldText, placeholder: "이메일")
-                .frame(height: 62)
-            
-            InputTextFieldView(text: $emailTextFieldText, placeholder: "비밀번호", isSecure: true)
-                .frame(height: 62)
-//                .fixedSize(horizontal: true, vertical: true)
-                
-//                .frame(maxWidth: UIScreen.main.bounds.width)
-                
-            Spacer()
+        VStack {
             Button {
-                
+                showList.toggle()
             } label: {
-                Text("클릭")
+                Text("리스트 보기")
             }
 
+            Spacer()
+            
+//            VStack {
+                if showList {
+                    List(1..<10) { index in
+                        TrackingPositionListCellView(status: "집화처리", position: "군포직영", deliveryMan: "홍길동", time: "07:48", date: "2022.11.22", isCurrent: true)
+                            .listRowSeparator(.hidden)
+                    }
+                    .listStyle(InsetListStyle())
+                }
+//            }
         }
-        .padding(.horizontal, 20)
         
     }
 }
 
 struct ExampleView_Previews: PreviewProvider {
     static var previews: some View {
-        ExampleView()
+        ExampleParentView()
     }
 }

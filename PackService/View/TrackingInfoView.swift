@@ -11,63 +11,70 @@ struct TrackingInfoView: View {
     @State var showMenu: Bool? = false
     
     var body: some View {
-        
         ZStack {
-            VStack(spacing: 16) {
-                HStack(spacing: 16) {
-                    Circle()
-                        .fill(ColorManager.defaultForegroundDisabled)
-                        .frame(width: 54, height: 54)
-                        .overlay(
-                            Image("CJ_logo")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 39.7, height: 34.1)
-                        )
-                    
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("토리든 다이브인 저분자 히알루론산 클렌징 폼 150ml")
-                            .font(FontManager.title2)
-                            .frame(maxWidth: 233, alignment: .leading)
-    //                        .background(Color.red)
-                        HStack(spacing: 8) {
-                            Text("CJ 대한통운")
-                            Text("123456789012")
-                        }
-                        .font(FontManager.caption1)
-                        .foregroundColor(ColorManager.foreground1)
+            ScrollView {
+                    ZStack {
+                            VStack(spacing: 16) {
+                                HStack(spacing: 16) {
+                                    Circle()
+                                        .fill(ColorManager.defaultForegroundDisabled)
+                                        .frame(width: 54, height: 54)
+                                        .overlay(
+                                            Image("CJ_logo")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 39.7, height: 34.1)
+                                        )
+                                    
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        Text("토리든 다이브인 저분자 히알루론산 클렌징 폼 150ml")
+                                            .font(FontManager.title2)
+                                            .frame(maxWidth: 233, alignment: .leading)
+                    //                        .background(Color.red)
+                                        HStack(spacing: 8) {
+                                            Text("CJ 대한통운")
+                                            Text("123456789012")
+                                        }
+                                        .font(FontManager.caption1)
+                                        .foregroundColor(ColorManager.foreground1)
+                                    }
+                                        
+                                    Spacer()
+                                }
+                                
+                                VStack(spacing: 10) {
+                                    HStack(spacing: 10) {
+                                        TrackingInfoCardView(title: "받는 분", content: "박*환")
+                                        TrackingInfoCardView(title: "보내는 분", content: "토*든")
+                                    }
+                                    
+                                    HStack(spacing: 10) {
+                                        TrackingInfoCardView(title: "배송기사", content: "홍길동", deliveryman: true, show: $showMenu)
+                                        TrackingInfoCardView(title: "예상 완료 시간", content: nil)
+                                    }
+                                }
+                                
+                                PromotionView(promotionTitle: "광고란", promotionContent: "광고입니다.")
+                                    .padding(.vertical, 8)
+                                
+                                TrackingPositionView()
+                                
+                                Spacer()
+                                
+                            }
+                            .padding(.horizontal, 20)
+                            
+                            
                     }
-                        
-                    Spacer()
-                }
-                
-                VStack(spacing: 10) {
-                    HStack(spacing: 10) {
-                        TrackingInfoCardView(title: "받는 분", content: "박*환")
-                        TrackingInfoCardView(title: "보내는 분", content: "토*든")
-                    }
-                    
-                    HStack(spacing: 10) {
-                        TrackingInfoCardView(title: "배송기사", content: "홍길동", deliveryman: true, show: $showMenu)
-                        TrackingInfoCardView(title: "예상 완료 시간", content: nil)
-                    }
-                }
-                
-                PromotionView(promotionTitle: "광고란", promotionContent: "광고입니다.")
-                    .padding(.vertical, 8)
-                
-                TrackingPositionView()
-                
-                Spacer()
-                
+                    .frame(maxHeight: .infinity)
             }
-            .padding(.horizontal, 20)
             
             if showMenu ?? false {
                 MenuView(show: $showMenu)
                     .animation(Animation.easeIn(duration: 2), value: showMenu)
             }
         }
+        
         
     }
 }
@@ -193,13 +200,15 @@ struct MenuView: View {
                 
                 )
         }
-        
+//        .frame(minHeight: .infinity)
     }
 }
 
 struct TrackingPositionView: View {
     @State var step: Double = 1
     @State var showList: Bool = false
+    @Environment(\.defaultMinListRowHeight) var minRowHeight
+
     
     var body: some View {
         
@@ -220,26 +229,30 @@ struct TrackingPositionView: View {
                         .foregroundColor(ColorManager.primaryColor)
                 }
             }
-            
-            ColorManager.background
-                .cornerRadius(10)
-                .frame(width: 350, height: 152)
-                .shadow(color: Color.black.opacity(0.05), radius: 10, x: 0, y: 2)
-                .overlay(
-                    VStack {
+        
+            ZStack {
+                ColorManager.background
+                    .cornerRadius(10)
+//                    .frame(width: 350, height: 152)
+                    .shadow(color: Color.black.opacity(0.05), radius: 10, x: 0, y: 2)
+                    
+                
+                VStack {
+                    Group {
                         TrackingProgressView(currentStep: $step)
-                            .padding()
-                            .padding(.vertical, 8)
+                            .frame(height: 32)
+                            .padding(.top, 24)
+                            .padding(.horizontal, 12)
                             .animation(Animation.easeIn(duration: 1.0), value: step)
                             .onAppear {
                                 step = 0
                             }
+    //                        .background(Color.red)
                         
                         var arr = ["군포", "기흥", nil, "죽전"]
 
                         HStack {
                             ForEach(arr, id: \.self) { item in
-                                
                                 Text(item ?? "(정보없음)")
                                     .font(FontManager.caption1)
                                     .foregroundColor(item != arr[Int(step)] ? ColorManager.foreground1 : ColorManager.primaryColor)
@@ -251,41 +264,60 @@ struct TrackingPositionView: View {
                             }
                         }
                         .padding(.horizontal, 20)
-                        
-                        if showList {
-                            
-                        }
-                        
-                        Divider()
-                        
-                        Button {
-                            showList.toggle()
-                        } label: {
-                            HStack {
-                                Text(showList ? "간략히 보기" : "자세히 보기")
-                                    .font(FontManager.body2)
-                                
-                                Image(systemName: showList ? "chevron.up" : "chevron.down")
-                                    .renderingMode(.template)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 16, height: 16)
+                    }
+//                    .background(Color.yellow)
+                    
+                    Spacer()
+                    
+                    //MARK: - List
+                    if showList {
+                        List {
+                            ForEach(1..<16) { index in
+                                TrackingPositionListCellView(status: "집화처리", position: "군포직영", deliveryMan: "홍길동", time: "\(index)", date: "2022.11.22", isCurrent: true)
+                                    .listRowSeparator(.hidden)
+                                    .padding(.vertical, 4)
                             }
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 16)
-                            .foregroundColor(ColorManager.foreground2)
-                            
                         }
-
+                        .frame(minHeight: minRowHeight * 15)
+                        .listStyle(InsetListStyle())
+                        .scrollDisabled(true)
                     }
                     
-                        
-                )
+                    Divider()
+                    
+                    Button {
+                        showList.toggle()
+                    } label: {
+                        HStack {
+                            Text(showList ? "간략히 보기" : "자세히 보기")
+                                .font(FontManager.body2)
+                            
+                            Image(systemName: showList ? "chevron.up" : "chevron.down")
+                                .renderingMode(.template)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 16, height: 16)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .foregroundColor(ColorManager.foreground2)
+                    }
+
+                }
+                
+            }
+//            .frame(height: 152)
+//            .onPreferenceChange(ListGeometryPreferenceKey.self) { value in
+//                self.listSize = value
+//            }
+//            .frame(maxHeight: .infinity)
+            
         }
         
     }
 }
 
+//MARK: - ProgressView
 struct TrackingProgressView: View {
     @Binding var currentStep: Double
     
@@ -295,6 +327,7 @@ struct TrackingProgressView: View {
     }
 }
 
+//MARK: - ProgressView Style
 struct TrackingProgressViewStyle: ProgressViewStyle {
     @Binding var value: Double
     
@@ -307,10 +340,8 @@ struct TrackingProgressViewStyle: ProgressViewStyle {
                 ZStack(alignment: .leading) {
                     ZStack(alignment: .leading) {
                         RoundedRectangle(cornerRadius: 32)
+                            .fill(ColorManager.background2)
                             .frame(width: geometry.size.width, height: 32)
-                            .overlay(
-                                ColorManager.background2.cornerRadius(32)
-                            )
 
                         RoundedRectangle(cornerRadius: 32)
                             .frame(width: value == 0 ? 40 : CGFloat(configuration.fractionCompleted ?? 0) * geometry.size.width, height: 32)
@@ -337,13 +368,105 @@ struct TrackingProgressViewStyle: ProgressViewStyle {
 
 }
 
+//MARK: - List Cell
+struct TrackingPositionListCellView: View {
+    
+    var status: String
+    var position: String
+    var deliveryMan: String? = nil
+    var time: String
+    var date: String
+    var isCurrent: Bool = false
+    @State var scale = 1.0
+    
+    var body: some View {
+        HStack(alignment: .top) {
+            Circle()
+                .fill(ColorManager.primaryColor)
+                .frame(width: 8, height: 8, alignment: .top)
+                .scaleEffect(scale)
+                .padding(.top, 8)
+                .padding(.horizontal, 4)
+                .onAppear {
+                    if isCurrent {
+                        withAnimation(Animation.easeIn(duration: 0.7).repeatForever(autoreverses: true)) {
+                            scale = 1.3
+                        }
+                    }
+                }
+            
+            leftColumn
+            
+            Spacer()
+            
+            rightColumn
+        }
+        
+    }
+}
+
+extension TrackingPositionListCellView {
+    var leftColumn: some View {
+        VStack(alignment: .leading) {
+            Text(status)
+                .font(FontManager.body2)
+                .foregroundColor(ColorManager.defaultForeground)
+            HStack {
+                Text(position)
+                    
+                if let deliveryMan = deliveryMan {
+                    Text("(\(deliveryMan))" )
+                }
+            }
+            .font(FontManager.caption1)
+            .foregroundColor(ColorManager.foreground1)
+            
+        }
+    }
+    
+    var rightColumn: some View {
+        VStack(alignment: .trailing) {
+            Text(time)
+                .font(FontManager.body2)
+                .foregroundColor(ColorManager.defaultForeground)
+            Text(date)
+                .font(FontManager.caption1)
+                .foregroundColor(ColorManager.foreground1)
+        }
+    }
+}
+
+extension View {
+    
+    func updateListGeoSize(_ size: CGSize) -> some View {
+        preference(key: ListGeometryPreferenceKey.self, value: size)
+    }
+}
+
+//MARK: - Preference Key
+struct ListGeometryPreferenceKey: PreferenceKey {
+    
+    static var defaultValue: CGSize = .zero
+    
+    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+        value = nextValue()
+    }
+}
+
+
+//MARK: - Previews
 struct TrackingInfoView_Previews: PreviewProvider {
 
     static let companyIdPreview = "04"
     static let invoiceNumberPreview = "1111111111"
 
     static var previews: some View {
-        TrackingInfoView()
+        
+        Group {
+            TrackingInfoView()
+            TrackingPositionListCellView(status: "집화처리", position: "군포직영", deliveryMan: "홍길동", time: "07:48", date: "2022.11.22", isCurrent: true)
+        }
+        
 //        TrackingInfoCardView(title: "받는 분", content: "박*환")
     }
 }
