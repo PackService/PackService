@@ -13,60 +13,59 @@ struct TrackingInfoView: View {
     var body: some View {
         ZStack {
             ScrollView {
-                    ZStack {
-                            VStack(spacing: 16) {
-                                HStack(spacing: 16) {
-                                    Circle()
-                                        .fill(ColorManager.defaultForegroundDisabled)
-                                        .frame(width: 54, height: 54)
-                                        .overlay(
-                                            Image("CJ_logo")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 39.7, height: 34.1)
-                                        )
-                                    
-                                    VStack(alignment: .leading, spacing: 8) {
-                                        Text("토리든 다이브인 저분자 히알루론산 클렌징 폼 150ml")
-                                            .font(FontManager.title2)
-                                            .frame(maxWidth: 233, alignment: .leading)
-                    //                        .background(Color.red)
-                                        HStack(spacing: 8) {
-                                            Text("CJ 대한통운")
-                                            Text("123456789012")
-                                        }
-                                        .font(FontManager.caption1)
-                                        .foregroundColor(ColorManager.foreground1)
-                                    }
-                                        
-                                    Spacer()
+                ZStack {
+                    VStack(spacing: 16) {
+                        HStack(spacing: 16) {
+                            Circle()
+                                .fill(ColorManager.defaultForegroundDisabled)
+                                .frame(width: 54, height: 54)
+                                .overlay(
+                                    Image("CJ_logo")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 39.7, height: 34.1)
+                                )
+                            
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("토리든 다이브인 저분자 히알루론산 클렌징 폼 150ml")
+                                    .font(FontManager.title2)
+                                    .frame(maxWidth: 233, alignment: .leading)
+            //                        .background(Color.red)
+                                HStack(spacing: 8) {
+                                    Text("CJ 대한통운")
+                                    Text("123456789012")
                                 }
-                                
-                                VStack(spacing: 10) {
-                                    HStack(spacing: 10) {
-                                        TrackingInfoCardView(title: "받는 분", content: "박*환")
-                                        TrackingInfoCardView(title: "보내는 분", content: "토*든")
-                                    }
-                                    
-                                    HStack(spacing: 10) {
-                                        TrackingInfoCardView(title: "배송기사", content: "홍길동", deliveryman: true, show: $showMenu)
-                                        TrackingInfoCardView(title: "예상 완료 시간", content: nil)
-                                    }
-                                }
-                                
-                                PromotionView(promotionTitle: "광고란", promotionContent: "광고입니다.")
-                                    .padding(.vertical, 8)
-                                
-                                TrackingPositionView()
-                                
-                                Spacer()
-                                
+                                .font(FontManager.caption1)
+                                .foregroundColor(ColorManager.foreground1)
                             }
-                            .padding(.horizontal, 20)
+                                
+                            Spacer()
+                        }
+                        
+                        VStack(spacing: 10) {
+                            HStack(spacing: 10) {
+                                TrackingInfoCardView(title: "받는 분", content: "박*환")
+                                TrackingInfoCardView(title: "보내는 분", content: "토*든")
+                            }
                             
-                            
+                            HStack(spacing: 10) {
+                                TrackingInfoCardView(title: "배송기사", content: "홍길동", deliveryman: true, show: $showMenu)
+                                TrackingInfoCardView(title: "예상 완료 시간", content: nil)
+                            }
+                        }
+                        
+                        PromotionView(promotionTitle: "광고란", promotionContent: "광고입니다.")
+                            .padding(.vertical, 8)
+                        
+                        TrackingPositionView()
+                        
+                        Spacer()
+                        
                     }
-                    .frame(maxHeight: .infinity)
+                    .padding(.horizontal, 20)
+                        
+                }
+                .frame(maxHeight: .infinity)
             }
             
             if showMenu ?? false {
@@ -207,6 +206,7 @@ struct MenuView: View {
 struct TrackingPositionView: View {
     @State var step: Double = 1
     @State var showList: Bool = false
+//    @State var listSize: CGSize = .zero
     @Environment(\.defaultMinListRowHeight) var minRowHeight
 
     
@@ -264,6 +264,7 @@ struct TrackingPositionView: View {
                             }
                         }
                         .padding(.horizontal, 20)
+                        .padding(.bottom, 8)
                     }
 //                    .background(Color.yellow)
                     
@@ -271,19 +272,15 @@ struct TrackingPositionView: View {
                     
                     //MARK: - List
                     if showList {
-                        List {
+                        VStack {
                             ForEach(1..<16) { index in
                                 TrackingPositionListCellView(status: "집화처리", position: "군포직영", deliveryMan: "홍길동", time: "\(index)", date: "2022.11.22", isCurrent: true)
-                                    .listRowSeparator(.hidden)
-                                    .padding(.vertical, 4)
+                                    .padding(.vertical, 8)
                             }
                         }
-                        .frame(minHeight: minRowHeight * 15)
-                        .listStyle(InsetListStyle())
-                        .scrollDisabled(true)
+                        .padding(.vertical, 16)
+                        .padding(.horizontal, 16)
                     }
-                    
-                    Divider()
                     
                     Button {
                         showList.toggle()
@@ -302,6 +299,12 @@ struct TrackingPositionView: View {
                         .padding(.vertical, 16)
                         .foregroundColor(ColorManager.foreground2)
                     }
+                    .overlay (
+                        Rectangle()
+                            .fill(ColorManager.background2)
+                            .frame(height: 2)
+                        , alignment: .top
+                    )
 
                 }
                 
@@ -310,7 +313,7 @@ struct TrackingPositionView: View {
 //            .onPreferenceChange(ListGeometryPreferenceKey.self) { value in
 //                self.listSize = value
 //            }
-//            .frame(maxHeight: .infinity)
+            
             
         }
         
