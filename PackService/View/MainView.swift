@@ -26,7 +26,6 @@ struct MainView: View {
     
     var body: some View {
         TabView {
-            
             MainTabView()
                 .tabItem {
                     Image(systemName: "house")
@@ -42,7 +41,6 @@ struct MainView: View {
                     Image(systemName: "gearshape")
                         .environment(\.symbolVariants, .none)
                 }
-            
         }
         .padding(.leading, 20)
         .padding(.top, 20)
@@ -61,18 +59,22 @@ extension MainView {
                 .padding(.trailing, 20)
                 .padding(.bottom, 16)
             
-            ScrollView {
-                LazyVStack {
-                    ForEach(packInfoModel, id: \.packageNumber) { packInfo in
-                        // 배송 진행중인 목록 보여주는 곳
-                        CurrentPackageCell(packInfoModel: packInfo)
-                    }
+            List {
+                ForEach(packInfoModel, id: \.packageNumber) { packInfo in
+                    // 배송 진행중인 목록 보여주는 곳
+                    CurrentPackageCell(packInfoModel: packInfo)
                 }
+                .onDelete(perform: removeRows)
             }
+            .listStyle(InsetListStyle()) // 스타일 수정 필요
             .padding(.trailing, 20)
             
             Spacer()
         }
+    }
+    
+    func removeRows(at offsets: IndexSet) {
+      packInfoModel.remove(atOffsets: offsets)
     }
 }
 
@@ -129,55 +131,6 @@ struct CurrentPackageCell: View {
         .frame(height: 76)
     }
 }
-
-//struct SystemButtonView: View {
-//    
-//    @State private var alarmToggle = true
-//    var buttonType: ButtonType
-//    var text: String
-//    var email: String?
-//    var version: String?
-//    
-//    enum ButtonType {
-//        case arrow
-//        case toggle
-//        case version
-//    }
-//    
-//    var body: some View {
-//        ZStack {
-//            Rectangle()
-//                .frame(height: 48)
-//                .foregroundColor(ColorManager.background2)
-//                .cornerRadius(10)
-//            HStack {
-//                Text(text)
-//                    .padding(.leading, 20)
-//                    .font(FontManager.body2)
-//                Spacer()
-//                switch buttonType {
-//                case .arrow:
-//                    Text(email ?? "")
-//                        .padding(.trailing, 14.9)
-//                        .font(FontManager.body2)
-//                        .foregroundColor(ColorManager.primaryColor)
-//                    Image(systemName: "chevron.right")
-//                        .resizable()
-//                        .frame(width: 10.1, height: 17.6)
-//                        .padding(.trailing, 26.9)
-//                case .toggle:
-//                    Toggle("", isOn: $alarmToggle)
-//                        .padding(.trailing, 20)
-//                case .version:
-//                    Text(version ?? "0.0.1")
-//                        .padding(.trailing, 20)
-//                        .font(FontManager.body2)
-//                        .foregroundColor(ColorManager.primaryColor)
-//                }
-//            }
-//        }
-//    }
-//}
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {

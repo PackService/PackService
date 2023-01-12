@@ -367,18 +367,24 @@ struct ServiceAgreeDescriptView: View {
             }
             Spacer()
         }
-        .toolbar(.hidden, for: .tabBar)
     }
 }
 
-//struct NavigationServiceAgreeView: View {
-//    var body: some View {
-//        VStack {
-//            Text("서비스 이용 약관")
-//                .toolbar(.hidden, for: .tabBar)
-//        }
-//    }
-//}
+struct NavigationServiceAgreeView: View {
+    @State private var showNavigationBar = false
+    var body: some View {
+        VStack {
+            Text("제1조 (목 적)\n본 이용약관(이하 \"약관\"이라 합니다)은 택배조회서비스(이하 \"회사\"라 합니다)가 운영하는 \"택배 배송정보 제공 서비스\"(이하 \"서비스\"라 합니다)를 \"이용자\"가 이용함에 따르는 이용조건 및 절차 등을 규정하는 데 그 목적이 있습니다.\n\n제2조 (용어의 정의) \n본 \"약관\"에서 사용하는 용어의 정의는 다음과 같습니다.\n1항\n \"택배 배송정보 제공 서비스\"란 유무선망을 통한 푸시 알림, 혹은 송장번호 조회 등의 방법을 통해 \"이용자\"가 주문한 택배의 배송 진행 상태에 관한 정보를 제공하는 \"서비스\"입니다.\n2항\n\"서비스\"는 \"스마트택배\"란 명칭의 프로그램을 통해서 제공됩니다.\n3항\n\"이용자\"란 \"스마트택배\" 프로그램을 \"이용자\" 본인" )
+            Spacer()
+        }
+        .onDisappear(perform: {
+            // 뷰가 나타날떄 수행 할 코드
+            showNavigationBar = true
+        })
+        .toolbar(showNavigationBar ? .visible : .hidden, for: .tabBar)
+        .padding(.trailing, 20)
+    }
+}
 
 struct NoSafeAreaServiceAgreeView: View {
     @Binding var serviceAgreeScreen: Bool

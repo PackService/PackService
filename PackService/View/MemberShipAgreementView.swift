@@ -18,21 +18,25 @@ struct MemberShipAgreementView: View {
     @State var ageAgree: Bool = false
     @State var serviceAgree: Bool = false
     @State var personInfoAgree: Bool = false
+    
+    // 텍스트 필드 애니메이션 변수들
     @State var emailInput: String = ""
     @State var passwordInput: String = ""
-    @State var passwordCheckInput: String = ""
-    // 텍스트 필드 애니메이션 변수들
-    enum TextFieldType: Hashable {
-        case email
-        case password
-        //case passwordCheck
-    }
-    @State var isEmailValid: Bool = false
-    @State var isPasswordValid: Bool = false
+    @State var passwordConfirmInput: String = ""
+    
+    @State var isEmailValid: Bool = true
+    @State var isPasswordValid: Bool = true
+    @State var isPasswordConfirmValid: Bool = true
+    
     @State var isSubmitted: Bool = false
-    @State var isAnimated: Bool = false
+    
+    @State var emailAttempt: Bool = false
+    @State var passwordAttempt: Bool = false
+    @State var passwordConfirmAttempt: Bool = false
+    
+    @State var animationTrigger: Bool = false
     @FocusState private var focusState: TextFieldType?
-    //
+    // ----------
     
     var body: some View {
         Color.white
@@ -114,19 +118,16 @@ struct MemberShipAgreementView: View {
                     }
                 } else { // 전체 동의하기가 눌렸을 경우
                     VStack {
-                        InputTextField2(title: "이메일", input: $emailInput, isValid: $isEmailValid, isSubmitted: $isSubmitted, isFocused2: $focusState)
-                            .offset(x: !(isSubmitted && !isEmailValid) || !isAnimated ? 0 : -10)
-                            .onAppear(perform: {
-                                allAgree = true
-                            })
+                        TextFieldView(title: "이메일", input: $emailInput, wrongAttempt: $emailAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .email)
                         
-                        SecureInputTextField2(title: "비밀번호", input: $passwordInput, isValid: $isPasswordValid, isSubmitted: $isSubmitted, isFocused: $focusState)
-                            .offset(x: !(isSubmitted && !isPasswordValid) || !isAnimated ? 0 : -10)
-                        
-                        SecureInputTextField2(title: "비밀번호 확인", input: $passwordCheckInput, isValid: $isPasswordValid, isSubmitted: $isSubmitted, isFocused: $focusState)
-                            .offset(x: !(isSubmitted && !isPasswordValid) || !isAnimated ? 0 : -10)
+                        TextFieldView(title: "비밀번호", input: $passwordInput, wrongAttempt: $passwordAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .password, isSecure: true)
+                        TextFieldView(title: "비밀번호 확인", input: $passwordConfirmInput, wrongAttempt: $passwordConfirmAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .passwordConfirm, isSecure: true)
                         Spacer()
                     }
+                    .onAppear(perform: {
+                        // 뷰가 나타날떄 수행 할 코드
+                        allAgree = true
+                    })
                     .padding(.trailing, 20)
                     .padding(.top, 20)
                     .animation(Animation.easeIn, value: allAgree)
@@ -144,7 +145,21 @@ struct MemberShipAgreementView: View {
             Spacer()
             if ageAgree && serviceAgree && personInfoAgree { //버튼 활성화 조건
                 Button(action: {
-                    viewModel.registerUser(email: emailInput, password: passwordInput)
+//                    viewModel.registerUser(email: emailInput, password: passwordInput)
+                    isSubmitted = true
+                    validationCheck()
+                    
+                    emailAttempt = (isSubmitted && !isEmailValid)
+                    passwordAttempt = (isSubmitted && !isPasswordValid)
+                    passwordConfirmAttempt = (isSubmitted && !isPasswordConfirmValid)
+                    
+                    if !(isEmailValid && isPasswordValid) {
+                        withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
+                            animationTrigger = true
+                        }
+                    }
+                    
+                    animationTrigger = false
                 }, label: {
                     ButtonView(text: "계정 만들기")
                 })
@@ -180,6 +195,27 @@ struct MemberShipAgreementView: View {
         }
     }
     
+    func validationCheck() {
+        if emailInput == "abc" {
+            self.isEmailValid = true
+            
+            if passwordInput == "1234" {
+                self.isPasswordValid = true
+                self.focusState = .password
+                return
+            }
+        } else if emailInput != "abc" && passwordInput.isEmpty {
+            self.isEmailValid = false
+            self.focusState = .email
+            return
+        } else {
+            self.isEmailValid = false
+        }
+        
+        self.isPasswordValid = false
+        self.focusState = .password
+        
+    }
 }
 
 struct ToggleTextView: View { // "만 14세 이상입니다" 글씨 함수
@@ -205,75 +241,6 @@ struct ToggleDetailTextView: View { // "보기" 글씨 함수
             .padding(.leading, 8)
             .font(FontManager.body2)
             .foregroundColor(ColorManager.foreground2)
-    }
-}
-
-struct InputTextField2: View {
-
-    @State var title: String = ""
-//    @FocusState var isFocused: Bool
-    @Binding var input: String
-    @Binding var isValid: Bool
-    @Binding var isSubmitted: Bool
-    var isFocused2: FocusState<MemberShipAgreementView.TextFieldType?>.Binding
-
-    var body: some View {
-        TextField("", text: $input)
-            .focused(isFocused2, equals: .email)
-            .submitLabel(.next)
-            .font(FontManager.body1)
-            .foregroundColor(ColorManager.defaultForeground)
-            .tint(ColorManager.primaryColor)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 18)
-            .placeholder(when: input.isEmpty) {
-                Text(title)
-                    .padding(.leading, 20)
-                    .font(FontManager.body1)
-                    .foregroundColor(ColorManager.foreground2)
-            }
-            .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .strokeBorder(!(isSubmitted && !isValid) ? ColorManager.primaryColor : ColorManager.negativeColor, lineWidth: 2)
-                    .opacity(self.isFocused2.wrappedValue == .email ? 1.0 : 0.0)
-                    .background(self.isFocused2.wrappedValue == .email ? ColorManager.background.cornerRadius(10) : ColorManager.background2.cornerRadius(10))
-                    .animation(Animation.easeIn(duration: 0.25), value: self.isFocused2.wrappedValue == .email)
-            )
-
-    }
-}
-
-struct SecureInputTextField2: View {
-
-    @State var title: String = ""
-//    @FocusState private var isFocused: Bool
-    @Binding var input: String
-    @Binding var isValid: Bool
-    @Binding var isSubmitted: Bool
-    var isFocused: FocusState<MemberShipAgreementView.TextFieldType?>.Binding
-
-    var body: some View {
-        SecureField("", text: $input)
-            .focused(isFocused, equals: .password)
-            .submitLabel(.return)
-            .font(FontManager.body1)
-            .foregroundColor(ColorManager.defaultForeground)
-            .tint(ColorManager.primaryColor)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 18)
-            .placeholder(when: input.isEmpty) {
-                Text(title)
-                    .padding(.leading, 20)
-                    .font(FontManager.body1)
-                    .foregroundColor(ColorManager.foreground2)
-            }
-            .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .strokeBorder(!(isSubmitted && !isValid) ? ColorManager.primaryColor : ColorManager.negativeColor, lineWidth: 2)
-                    .opacity(isFocused.wrappedValue == .password ? 1.0 : 0.0)
-                    .background(isFocused.wrappedValue == .password ? ColorManager.background.cornerRadius(10) : ColorManager.background2.cornerRadius(10))
-                    .animation(Animation.easeIn(duration: 0.25), value: isFocused.wrappedValue == .password)
-            )
     }
 }
 

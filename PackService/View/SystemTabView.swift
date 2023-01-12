@@ -8,38 +8,30 @@
 import SwiftUI
 
 struct SystemTabView: View {
-    @State var serviceAgreeScreen: Bool = false
     var body: some View {
-        VStack {
-            if serviceAgreeScreen {
-                ServiceAgreeDescriptView(serviceAgreeScreen: $serviceAgreeScreen)
-                    .transition(.move(edge: .bottom))
-                    .animation(.spring())
-            } else {
+        NavigationView {
+            VStack {
                 Text("설정")
                     .font(FontManager.title2)
                 VStack(spacing: 10) {
                     SystemButtonView(buttonType: .arrow, text: "계정", email: "abc@naver.com")
                     SystemButtonView(buttonType: .toggle, text: "알림설정")
-                    Button(action: {
-                        serviceAgreeScreen.toggle()
-                    }, label: {
+                    NavigationLink(destination: NavigationServiceAgreeView()) {
                         SystemButtonView(buttonType: .arrow, text: "이용약관")
-                    })
+                    }
                     .foregroundColor(.black)
-                    
-                    //                    NavigationLink(destination: NavigationServiceAgreeView()) {
-                    //                        SystemButtonView(buttonType: .arrow, text: "이용약관")
-                    //                    }
-                    SystemButtonView(buttonType: .arrow, text: "개인정보처리방침")
+                    NavigationLink(destination: NavigationPersonAgreeView()) {
+                        SystemButtonView(buttonType: .arrow, text: "개인정보처리방침")
+                    }
+                    .foregroundColor(.black)
                     SystemButtonView(buttonType: .version, text: "현재 버전")
                     SystemButtonView(buttonType: .arrow, text: "피드백 보내기")
                 }
                 .padding(.top, 26)
                 Spacer()
             }
+            .padding(.trailing, 20)
         }
-        .padding(.trailing, 20)
     }
 }
 
