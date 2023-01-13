@@ -13,25 +13,27 @@ struct PackLogoButtonView: View {
     var logoName: String
     
     var body: some View {
-        VStack {
+        VStack(spacing: 4) {
             ZStack {
-                Image(systemName: "circle.fill")
-                    .resizable()
+                Circle()
+                    .fill(circleColor)
                     .frame(width: 54, height: 54)
-                    .foregroundColor(circleColor)
+                
                 logoImage
                     .resizable()
-                    .frame(width: 30, height: 30)
+                    .frame(width: 35, height: 32)
                     .foregroundColor(.black)
             }
+            
             Text(logoName)
                 .font(FontManager.body2)
+                .foregroundColor(ColorManager.defaultForeground)
         }
     }
 }
 
 struct PackLogoButtonView_Previews: PreviewProvider {
     static var previews: some View {
-        PackLogoButtonView(circleColor: ColorManager.primaryColor, logoImage: Image("cj_logo"), logoName: "CJ대한통운")
+        PackLogoButtonView(circleColor: ColorManager.primaryColor, logoImage: Image("CJ_logo"), logoName: "CJ대한통운")
     }
 }

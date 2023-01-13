@@ -15,9 +15,12 @@ struct AddTrackingNumberView: View {
     @FocusState var focusState: TextFieldType?
     @State var animationTrigger: Bool = false
     
-    @State var text: String = ""
+    @State var text: String? = nil
     
-
+    @State var showSelectCompanyView: Bool = false
+    
+    @State var width = CGFloat.zero
+    @State var height = CGFloat.zero
     
     var body: some View {
         ZStack {
@@ -26,27 +29,22 @@ struct AddTrackingNumberView: View {
                     focusState = nil
                 }
             
-            VStack(spacing: 16) {
+            VStack(alignment: .leading, spacing: 16) {
                 TextFieldView(title: "운송장 번호를 입력하세요", input: $trackingNumber, wrongAttempt: $isValid, isFocused: $focusState, animationTrigger: $animationTrigger, type: .trackingNumber)
                     .keyboardType(.numberPad)
                     .onSubmit {
                         toggleFocus()
                     }
-                    .toolbar {
-                        ToolbarItem(placement: .keyboard) {
-                            Button("Done") {
-                                focusState = nil
-                            }
-                        }
-                    }
                 
                 Button {
                     buttonPressed()
+                    
                 } label: {
                     
                     HStack {
-                        Text("택배사 선택")
+                        Text(text ?? "택배사 선택")
                             .font(FontManager.body1)
+                            .foregroundColor(text == nil ? ColorManager.foreground2 : ColorManager.defaultForeground)
                         
                         Spacer()
                         
@@ -55,34 +53,88 @@ struct AddTrackingNumberView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 17.6, height: 10.1)
+                            .foregroundColor(ColorManager.foreground2)
                     }
-                    .foregroundColor(ColorManager.foreground2)
                     .frame(maxWidth: .infinity)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 18)
                     .background(
                         ColorManager.background2
                             .cornerRadius(10)
-                            
                     )
                 }
+
+                GeometryReader { geo in
+                    self.content(proxy: geo)
+                }
                 
-                Spacer()                
+                Spacer()
                 
                 Button {
                     buttonPressed()
                 } label: {
                     ButtonView(text: "운송장 등록")
                 }
-
-                
+                .padding(.bottom, 16)
                 
             }
             .padding(.horizontal, 20)
             .padding(.top, 41)
+            
+            ZStack {
+                if showSelectCompanyView {
+                    Color.black.opacity(0.5)
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                            showSelectCompanyView = false
+                        }
+                    
+                    SelectCompanyView(show: $showSelectCompanyView, selected: $text)
+                        .padding(.top, 100)
+                        .transition(.move(edge: .bottom))
+                }
+            }
+            .animation(.spring(), value: showSelectCompanyView)
+            .zIndex(2.0)
         }
+    }
+    
+    private func content(proxy: GeometryProxy) -> some View {
         
-        
+        let names = ["롯데택배", "CJ 대한통운", "CJ 대한통운1", "DHL Express Delivery", "CU PostBox", "GS"]
+        var width = CGFloat.zero
+        var height = CGFloat.zero
+        return ZStack(alignment: .topLeading) {
+            
+            ForEach(names, id: \.self) { name in
+                Button(action: {
+                    capsulePressed(name)
+                }, label: {
+                    CompanyCapsuleView(color: Color.red, logoImage: Image("CJ_logo"), logoName: name, nameColor: Color.white)
+                })
+                  .padding([.horizontal, .vertical], 3)
+                  .alignmentGuide(.leading, computeValue: { value in
+                        if abs(width - value.width) > proxy.size.width {
+                          width = 0
+                          height -= value.height
+                        }
+                        let result = width
+                      if name == names.last! {
+                          width = 0
+                        } else {
+                          width -= value.width
+                        }
+                        return result
+                  })
+                  .alignmentGuide(.top, computeValue: { _ in
+                        let result = height
+                        if name == names.last! {
+                          height = 0
+                        }
+                        return result
+                  })
+            }
+        }
     }
     
     func toggleFocus() {
@@ -93,6 +145,11 @@ struct AddTrackingNumberView: View {
     
     func buttonPressed() {
         focusState = nil
+        showSelectCompanyView = true
+    }
+    
+    func capsulePressed(_ name: String) {
+        self.text = name
     }
 }
 

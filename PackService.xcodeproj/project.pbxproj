@@ -22,6 +22,7 @@
 		7E8724D62959818E00C0B1C9 /* TrackingInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8724D52959818E00C0B1C9 /* TrackingInfoModel.swift */; };
 		7E8724D82959C0AE00C0B1C9 /* TrackingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8724D72959C0AE00C0B1C9 /* TrackingInfoView.swift */; };
 		7EADB95F2966C8E0004E4216 /* InputTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EADB95E2966C8E0004E4216 /* InputTextFieldView.swift */; };
+		7EEBC850297143F5004936D2 /* CompanyCapsuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEBC84F297143F5004936D2 /* CompanyCapsuleView.swift */; };
 		7EF5DE4B295ECA600064E4D1 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF5DE4A295ECA600064E4D1 /* FontManager.swift */; };
 		7EF5DE4F295ED7470064E4D1 /* LoginUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF5DE4E295ED7470064E4D1 /* LoginUIView.swift */; };
 		7EF5DE51295EEFFC0064E4D1 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF5DE50295EEFFC0064E4D1 /* ButtonView.swift */; };
@@ -100,6 +101,7 @@
 		7E8724D52959818E00C0B1C9 /* TrackingInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingInfoModel.swift; sourceTree = "<group>"; };
 		7E8724D72959C0AE00C0B1C9 /* TrackingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingInfoView.swift; sourceTree = "<group>"; };
 		7EADB95E2966C8E0004E4216 /* InputTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextFieldView.swift; sourceTree = "<group>"; };
+		7EEBC84F297143F5004936D2 /* CompanyCapsuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCapsuleView.swift; sourceTree = "<group>"; };
 		7EF5DE4A295ECA600064E4D1 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		7EF5DE4E295ED7470064E4D1 /* LoginUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUIView.swift; sourceTree = "<group>"; };
 		7EF5DE50295EEFFC0064E4D1 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
@@ -292,6 +294,7 @@
 				AD583059296AB06100099836 /* SelectCompanyView.swift */,
 				7E088714296BC77C0011819D /* TextFieldType.swift */,
 				7E088716296BCAC90011819D /* TextFieldView.swift */,
+				7EEBC84F297143F5004936D2 /* CompanyCapsuleView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				AD1ADDD029531EC600545DB7 /* SignUpView.swift in Sources */,
 				AD1ADE1E295E030100545DB7 /* ColorManager.swift in Sources */,
 				AD1ADE24295EAC5F00545DB7 /* PersonAgreeDescriptView.swift in Sources */,
+				7EEBC850297143F5004936D2 /* CompanyCapsuleView.swift in Sources */,
 				AD583054296A97FB00099836 /* MainTabView.swift in Sources */,
 				AD1ADE20295E1AC800545DB7 /* ButtonStyle.swift in Sources */,
 				7E16336F295E9C1000EBFB87 /* OnBoardingView.swift in Sources */,
