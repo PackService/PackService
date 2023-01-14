@@ -101,18 +101,20 @@ struct AddTrackingNumberView: View {
     
     private func content(proxy: GeometryProxy) -> some View {
         
-        let names = ["롯데택배", "CJ 대한통운", "CJ 대한통운1", "DHL Express Delivery", "CU PostBox", "GS"]
+        let names = ["04", "46", "13", "01", "21", "53", "23"]
         var width = CGFloat.zero
         var height = CGFloat.zero
         return ZStack(alignment: .topLeading) {
             
             ForEach(names, id: \.self) { name in
+                let company = LogoType(rawValue: name) ?? LogoType.cj
+                
                 Button(action: {
                     capsulePressed(name)
                 }, label: {
-                    CompanyCapsuleView(color: Color.red, logoImage: Image("CJ_logo"), logoName: name, nameColor: Color.white)
+                    CompanyCapsuleView(color: company.logo.bgColor, logoImage: company.logo.image, logoName: "\(company.self)", nameColor: company.logo.fgColor)
                 })
-                  .padding([.horizontal, .vertical], 3)
+                  .padding([.horizontal, .vertical], 4)
                   .alignmentGuide(.leading, computeValue: { value in
                         if abs(width - value.width) > proxy.size.width {
                           width = 0

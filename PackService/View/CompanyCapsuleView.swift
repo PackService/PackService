@@ -20,17 +20,22 @@ struct CompanyCapsuleView: View {
         HStack(spacing: 4) {
             logoImage
                 .resizable()
-                .frame(width: 19, height: 16.3)
+                .frame(width: 32, height: 32)
             
             Text(logoName)
                 .font(FontManager.caption2)
                 .foregroundColor(nameColor)
         }
         .frame(height: 32)
-        .padding(.horizontal, 10)
+        .padding(.leading, 4)
+        .padding(.trailing, 10)
         .background(
             Capsule()
                 .fill(color)
+                .overlay (Capsule().stroke(.black, lineWidth: 0.1))
+                
+                
+                
         )
         
     }
@@ -38,7 +43,7 @@ struct CompanyCapsuleView: View {
 
 struct CompanyCapsuleView_Previews: PreviewProvider {
     static var previews: some View {
-        CompanyCapsuleView(color: Color.red, logoImage: Image("CJ_logo"), logoName: "대한asdfasdf통운", nameColor: Color.white)
+        CompanyCapsuleView(color: Color.red, logoImage: Image("logo_koreapost"), logoName: "대한asdfasdf통운", nameColor: Color.white)
             .previewLayout(.sizeThatFits)
     }
 }
