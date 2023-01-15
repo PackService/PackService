@@ -15,20 +15,38 @@ struct PackLogoButtonView: View {
     var body: some View {
         VStack(spacing: 4) {
             ZStack {
-                Circle()
-                    .fill(circleColor)
-                    .frame(width: 54, height: 54)
+                background
                 
-                logoImage
-                    .resizable()
-                    .frame(width: 35, height: 32)
-                    .foregroundColor(.black)
+                image
             }
             
-            Text(logoName)
-                .font(FontManager.body2)
-                .foregroundColor(ColorManager.defaultForeground)
+            name
         }
+    }
+    
+}
+
+extension PackLogoButtonView {    
+    //MARK: - Background
+    var background: some View {
+        Circle()
+            .fill(circleColor)
+            .frame(width: 54, height: 54)
+    }
+    
+    //MARK: - Image
+    var image: some View {
+        logoImage
+            .resizable()
+            .frame(width: 54, height: 54)
+            .foregroundColor(.black)
+    }
+    
+    //MARK: - Name
+    var name: some View {
+        Text(logoName)
+            .font(FontManager.body2)
+            .foregroundColor(ColorManager.defaultForeground)
     }
 }
 

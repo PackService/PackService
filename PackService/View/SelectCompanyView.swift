@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SelectCompanyView: View { // 택배사 이미지 사용법을 위한 view
+struct SelectCompanyView: View {
     
     @Environment(\.presentationMode) var presentationMode
     @Binding var show: Bool
@@ -21,39 +21,30 @@ struct SelectCompanyView: View { // 택배사 이미지 사용법을 위한 view
     
     var body: some View {        
         ZStack {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(ColorManager.background)
-                .ignoresSafeArea(.all, edges: .bottom)
+            background
             
             VStack {
                 header
                 
-                ScrollView {
-                    LazyVGrid(columns: columns, spacing: 24) {
-                        ForEach(1..<16) { index in
-                            Button {
-                                selected = "\(index)"
-                                show = false
-                            } label: {
-                                PackLogoButtonView(circleColor: .gray, logoImage: Image("CJ_logo"), logoName: "CJ대한통운")
-                            }
-
-                        }
-                    }
-//                    .padding(.top, 16)
-                }
+                companyGrid
+                
                 Spacer()
             }
-            
         }
-        
-
-//                PackLogoButtonView(circleColor: .gray, logoImage: Image("cj_logo"), logoName: "CJ대한통운")
-
     }
+    
 }
 
 extension SelectCompanyView {
+    
+    //MARK: - Background
+    var background: some View {
+        RoundedRectangle(cornerRadius: 10)
+            .fill(ColorManager.background)
+            .ignoresSafeArea(.all, edges: .bottom)
+    }
+    
+    //MARK: - Header
     var header: some View {
         ZStack {
             Color.red.opacity(0)
@@ -77,12 +68,26 @@ extension SelectCompanyView {
                             .foregroundColor(ColorManager.defaultForeground)
                     }
                     .padding(.trailing, 16)
+                }
+            }
+        }
+    }
+    
+    //MARK: - Company Grid
+    var companyGrid: some View {
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 24) {
+                ForEach(1..<16) { index in
+                    Button {
+                        selected = "\(index)"
+                        show = false
+                    } label: {
+                        PackLogoButtonView(circleColor: .gray, logoImage: Image("CJ_logo"), logoName: "CJ대한통운")
+                    }
 
                 }
             }
-            
         }
-        
     }
 }
 

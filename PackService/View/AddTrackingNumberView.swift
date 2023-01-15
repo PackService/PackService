@@ -38,7 +38,6 @@ struct AddTrackingNumberView: View {
                 
                 Button {
                     buttonPressed()
-                    
                 } label: {
                     
                     HStack {
@@ -109,11 +108,13 @@ struct AddTrackingNumberView: View {
             ForEach(names, id: \.self) { name in
                 let company = LogoType(rawValue: name) ?? LogoType.cj
                 
+                // Custom Button Style 재정의 해야함
                 Button(action: {
                     capsulePressed(name)
                 }, label: {
                     CompanyCapsuleView(color: company.logo.bgColor, logoImage: company.logo.image, logoName: "\(company.self)", nameColor: company.logo.fgColor)
                 })
+                .buttonStyle(CapsuleButtonStyle())
                   .padding([.horizontal, .vertical], 4)
                   .alignmentGuide(.leading, computeValue: { value in
                         if abs(width - value.width) > proxy.size.width {
@@ -155,50 +156,59 @@ struct AddTrackingNumberView: View {
     }
 }
 
+struct CapsuleButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .brightness(configuration.isPressed ? -0.1 : 0.0)
+    }
+}
+
+
 struct AddTrackingNumberView_Previews: PreviewProvider {
     static var previews: some View {
         AddTrackingNumberView()
     }
 }
 
-//let columns: [GridItem] = [
-//    GridItem(.flexible(), spacing: nil, alignment: nil),
-//    GridItem(.flexible(), spacing: nil, alignment: nil),
-//    GridItem(.flexible(), spacing: nil, alignment: nil)
-//]
-//
-//let numpads: [String] = [
-//    "1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "back"
-//]
-//
-//LazyVGrid(columns: columns) {
-//    ForEach(numpads, id: \.self) { content in
-//        Button {
-//            buttonPressed(content)
-//        } label: {
-//            if content == "back" {
-//                Image(systemName: "arrow.left")
-//                    .renderingMode(.template)
-//                    .resizable()
-//                    .frame(width: 25, height: 20.7)
-//                    .font(Font.custom("Pretendard-SemiBold", size: 32.0))
-//                    .foregroundColor(ColorManager.defaultForeground)
-//            } else {
-//                Text(content)
-//                    .frame(maxWidth: .infinity)
-//                    .frame(height: 52)
-//                    .font(Font.custom("Pretendard-SemiBold", size: 32.0))
-//                    .foregroundColor(ColorManager.defaultForeground)
-//                    .padding(.vertical, 12)
-////                                .background(Color.red)
-//            }
-//
-//        }
-//        .disabled(content.isEmpty)
-//    }
-//}
-//.padding(.horizontal, -20)
+// Grid Numpads
+/*
+let columns: [GridItem] = [
+    GridItem(.flexible(), spacing: nil, alignment: nil),
+    GridItem(.flexible(), spacing: nil, alignment: nil),
+    GridItem(.flexible(), spacing: nil, alignment: nil)
+]
 
+let numpads: [String] = [
+    "1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "back"
+]
+
+LazyVGrid(columns: columns) {
+    ForEach(numpads, id: \.self) { content in
+        Button {
+            buttonPressed(content)
+        } label: {
+            if content == "back" {
+                Image(systemName: "arrow.left")
+                    .renderingMode(.template)
+                    .resizable()
+                    .frame(width: 25, height: 20.7)
+                    .font(Font.custom("Pretendard-SemiBold", size: 32.0))
+                    .foregroundColor(ColorManager.defaultForeground)
+            } else {
+                Text(content)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 52)
+                    .font(Font.custom("Pretendard-SemiBold", size: 32.0))
+                    .foregroundColor(ColorManager.defaultForeground)
+                    .padding(.vertical, 12)
+//                                .background(Color.red)
+            }
+
+        }
+        .disabled(content.isEmpty)
+    }
+}
+ */
 
 //@StateObject var companyVM = CompanyService()
 //
