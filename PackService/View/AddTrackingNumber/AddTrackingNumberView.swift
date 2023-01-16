@@ -18,63 +18,21 @@ struct AddTrackingNumberView: View {
     @State var text: String? = nil
     
     @State var showSelectCompanyView: Bool = false
-    
-    @State var width = CGFloat.zero
-    @State var height = CGFloat.zero
-    
+
     var body: some View {
         ZStack {
-            ColorManager.background
-                .onTapGesture {
-                    focusState = nil
-                }
+            background
             
             VStack(alignment: .leading, spacing: 16) {
-                TextFieldView(title: "운송장 번호를 입력하세요", input: $trackingNumber, wrongAttempt: $isValid, isFocused: $focusState, animationTrigger: $animationTrigger, type: .trackingNumber)
-                    .keyboardType(.numberPad)
-                    .onSubmit {
-                        toggleFocus()
-                    }
+                trackingNumberTextField
                 
-                Button {
-                    buttonPressed()
-                } label: {
-                    
-                    HStack {
-                        Text(text ?? "택배사 선택")
-                            .font(FontManager.body1)
-                            .foregroundColor(text == nil ? ColorManager.foreground2 : ColorManager.defaultForeground)
-                        
-                        Spacer()
-                        
-                        Image(systemName: "chevron.down")
-                            .renderingMode(.template)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 17.6, height: 10.1)
-                            .foregroundColor(ColorManager.foreground2)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 18)
-                    .background(
-                        ColorManager.background2
-                            .cornerRadius(10)
-                    )
-                }
+                selectCompanyButton
 
-                GeometryReader { geo in
-                    self.content(proxy: geo)
-                }
+                companyCapsuleList
                 
                 Spacer()
                 
-                Button {
-                    buttonPressed()
-                } label: {
-                    ButtonView(text: "운송장 등록")
-                }
-                .padding(.bottom, 16)
+                addTrackingNumberButton
                 
             }
             .padding(.horizontal, 20)
@@ -82,15 +40,9 @@ struct AddTrackingNumberView: View {
             
             ZStack {
                 if showSelectCompanyView {
-                    Color.black.opacity(0.5)
-                        .edgesIgnoringSafeArea(.all)
-                        .onTapGesture {
-                            showSelectCompanyView = false
-                        }
+                    selectCompanyViewBackground
                     
-                    SelectCompanyView(show: $showSelectCompanyView, selected: $text)
-                        .padding(.top, 100)
-                        .transition(.move(edge: .bottom))
+                    selectCompanyView
                 }
             }
             .animation(.spring(), value: showSelectCompanyView)
@@ -156,13 +108,80 @@ struct AddTrackingNumberView: View {
     }
 }
 
-struct CapsuleButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .brightness(configuration.isPressed ? -0.1 : 0.0)
+extension AddTrackingNumberView {
+    var background: some View {
+        ColorManager.background
+            .onTapGesture {
+                focusState = nil
+            }
+    }
+    
+    var trackingNumberTextField: some View {
+        TextFieldView(title: "운송장 번호를 입력하세요", input: $trackingNumber, wrongAttempt: $isValid, isFocused: $focusState, animationTrigger: $animationTrigger, type: .trackingNumber)
+            .keyboardType(.numberPad)
+            .onSubmit {
+                toggleFocus()
+            }
+    }
+    
+    var selectCompanyButton: some View {
+        Button {
+            buttonPressed()
+        } label: {
+            
+            HStack {
+                Text(text ?? "택배사 선택")
+                    .font(FontManager.body1)
+                    .foregroundColor(text == nil ? ColorManager.foreground2 : ColorManager.defaultForeground)
+                
+                Spacer()
+                
+                Image(systemName: "chevron.down")
+                    .renderingMode(.template)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 17.6, height: 10.1)
+                    .foregroundColor(ColorManager.foreground2)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 18)
+            .background(
+                ColorManager.background2
+                    .cornerRadius(10)
+            )
+        }
+    }
+    
+    var companyCapsuleList: some View {
+        GeometryReader { geo in
+            self.content(proxy: geo)
+        }
+    }
+    
+    var addTrackingNumberButton: some View {
+        Button {
+            buttonPressed()
+        } label: {
+            ButtonView(text: "운송장 등록")
+        }
+        .padding(.bottom, 16)
+    }
+    
+    var selectCompanyViewBackground: some View {
+        Color.black.opacity(0.5)
+            .edgesIgnoringSafeArea(.all)
+            .onTapGesture {
+                showSelectCompanyView = false
+            }
+    }
+    
+    var selectCompanyView: some View {
+        SelectCompanyView(show: $showSelectCompanyView, selected: $text)
+            .padding(.top, 100)
+            .transition(.move(edge: .bottom))
     }
 }
-
 
 struct AddTrackingNumberView_Previews: PreviewProvider {
     static var previews: some View {

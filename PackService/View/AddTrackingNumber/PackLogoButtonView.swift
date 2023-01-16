@@ -19,11 +19,9 @@ struct PackLogoButtonView: View {
                 
                 image
             }
-            
             name
         }
-    }
-    
+    }    
 }
 
 extension PackLogoButtonView {    

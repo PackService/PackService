@@ -20,7 +20,12 @@
 		7E3B49F3295D9FFF0020036C /* ExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B49F2295D9FFF0020036C /* ExampleView.swift */; };
 		7E53B7D6295C6B2E00555967 /* AnimatedCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53B7D5295C6B2E00555967 /* AnimatedCircle.swift */; };
 		7E8724D62959818E00C0B1C9 /* TrackingInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8724D52959818E00C0B1C9 /* TrackingInfoModel.swift */; };
-		7E8724D82959C0AE00C0B1C9 /* TrackingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8724D72959C0AE00C0B1C9 /* TrackingInfoView.swift */; };
+		7E8724D82959C0AE00C0B1C9 /* TrackingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8724D72959C0AE00C0B1C9 /* TrackingDetailView.swift */; };
+		7E8E7DD12974F6570035759A /* TrackingProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E7DD02974F6570035759A /* TrackingProgressView.swift */; };
+		7E8E7DD42974F6C50035759A /* TrackingPositionListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E7DD32974F6C50035759A /* TrackingPositionListCellView.swift */; };
+		7E8E7DD62974F7490035759A /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E7DD52974F7490035759A /* MenuView.swift */; };
+		7E8E7DD82974F88C0035759A /* TrackingDetailCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E7DD72974F88C0035759A /* TrackingDetailCardView.swift */; };
+		7E8E7DDA2974F9090035759A /* TrackingPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E7DD92974F9090035759A /* TrackingPositionView.swift */; };
 		7EADB95F2966C8E0004E4216 /* InputTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EADB95E2966C8E0004E4216 /* InputTextFieldView.swift */; };
 		7EEBC850297143F5004936D2 /* CompanyCapsuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEBC84F297143F5004936D2 /* CompanyCapsuleView.swift */; };
 		7EF5DE4B295ECA600064E4D1 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF5DE4A295ECA600064E4D1 /* FontManager.swift */; };
@@ -99,7 +104,12 @@
 		7E3B49F2295D9FFF0020036C /* ExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleView.swift; sourceTree = "<group>"; };
 		7E53B7D5295C6B2E00555967 /* AnimatedCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCircle.swift; sourceTree = "<group>"; };
 		7E8724D52959818E00C0B1C9 /* TrackingInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingInfoModel.swift; sourceTree = "<group>"; };
-		7E8724D72959C0AE00C0B1C9 /* TrackingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingInfoView.swift; sourceTree = "<group>"; };
+		7E8724D72959C0AE00C0B1C9 /* TrackingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingDetailView.swift; sourceTree = "<group>"; };
+		7E8E7DD02974F6570035759A /* TrackingProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingProgressView.swift; sourceTree = "<group>"; };
+		7E8E7DD32974F6C50035759A /* TrackingPositionListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingPositionListCellView.swift; sourceTree = "<group>"; };
+		7E8E7DD52974F7490035759A /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		7E8E7DD72974F88C0035759A /* TrackingDetailCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingDetailCardView.swift; sourceTree = "<group>"; };
+		7E8E7DD92974F9090035759A /* TrackingPositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingPositionView.swift; sourceTree = "<group>"; };
 		7EADB95E2966C8E0004E4216 /* InputTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextFieldView.swift; sourceTree = "<group>"; };
 		7EEBC84F297143F5004936D2 /* CompanyCapsuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCapsuleView.swift; sourceTree = "<group>"; };
 		7EF5DE4A295ECA600064E4D1 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
@@ -197,6 +207,30 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		7E8E7DD22974F6A60035759A /* TrackingDetail */ = {
+			isa = PBXGroup;
+			children = (
+				7E8724D72959C0AE00C0B1C9 /* TrackingDetailView.swift */,
+				7E8E7DD72974F88C0035759A /* TrackingDetailCardView.swift */,
+				7E8E7DD52974F7490035759A /* MenuView.swift */,
+				7E8E7DD02974F6570035759A /* TrackingProgressView.swift */,
+				7E8E7DD92974F9090035759A /* TrackingPositionView.swift */,
+				7E8E7DD32974F6C50035759A /* TrackingPositionListCellView.swift */,
+			);
+			path = TrackingDetail;
+			sourceTree = "<group>";
+		};
+		7E8E7DDB2974F9610035759A /* AddTrackingNumber */ = {
+			isa = PBXGroup;
+			children = (
+				7E043514295446F5005187E8 /* AddTrackingNumberView.swift */,
+				AD583059296AB06100099836 /* SelectCompanyView.swift */,
+				AD583057296AA78800099836 /* PackLogoButtonView.swift */,
+				7EEBC84F297143F5004936D2 /* CompanyCapsuleView.swift */,
+			);
+			path = AddTrackingNumber;
+			sourceTree = "<group>";
+		};
 		AD1ADE08295DCED400545DB7 /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,15 +300,15 @@
 		ADE0F3B1293455C1005D2732 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7E8E7DDB2974F9610035759A /* AddTrackingNumber */,
+				7E8E7DD22974F6A60035759A /* TrackingDetail */,
 				ADE0F38E2934515F005D2732 /* ContentView.swift */,
 				ADE0F3BA2934683D005D2732 /* LoginView.swift */,
 				7E04351629544845005187E8 /* CompanyView.swift */,
 				ADE0F3CE2935F97D005D2732 /* HomeView.swift */,
 				AD1ADDCF29531EC600545DB7 /* SignUpView.swift */,
 				AD1ADDD1295331C800545DB7 /* ProfileView.swift */,
-				7E043514295446F5005187E8 /* AddTrackingNumberView.swift */,
 				AD1ADDE12959A94700545DB7 /* RecommendTrackView.swift */,
-				7E8724D72959C0AE00C0B1C9 /* TrackingInfoView.swift */,
 				7E53B7D5295C6B2E00555967 /* AnimatedCircle.swift */,
 				7E3B49F2295D9FFF0020036C /* ExampleView.swift */,
 				AD1ADDCD2952477300545DB7 /* MemberShipAgreementView.swift */,
@@ -290,11 +324,8 @@
 				AD583053296A97FB00099836 /* MainTabView.swift */,
 				AD58305B296BFBA800099836 /* SystemTabView.swift */,
 				AD583055296A9A1700099836 /* PromotionView.swift */,
-				AD583057296AA78800099836 /* PackLogoButtonView.swift */,
-				AD583059296AB06100099836 /* SelectCompanyView.swift */,
 				7E088714296BC77C0011819D /* TextFieldType.swift */,
 				7E088716296BCAC90011819D /* TextFieldView.swift */,
-				7EEBC84F297143F5004936D2 /* CompanyCapsuleView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -462,11 +493,13 @@
 				7EF5DE4B295ECA600064E4D1 /* FontManager.swift in Sources */,
 				ADE0F3B729345618005D2732 /* AppDelegate.swift in Sources */,
 				7EF5DE53295EF3960064E4D1 /* ThirdPartyButtonView.swift in Sources */,
+				7E8E7DD62974F7490035759A /* MenuView.swift in Sources */,
 				AD5830522967EAC600099836 /* MainView.swift in Sources */,
 				7EF5DE51295EEFFC0064E4D1 /* ButtonView.swift in Sources */,
 				7E043515295446F5005187E8 /* AddTrackingNumberView.swift in Sources */,
 				7E088715296BC77C0011819D /* TextFieldType.swift in Sources */,
 				7E53B7D6295C6B2E00555967 /* AnimatedCircle.swift in Sources */,
+				7E8E7DD42974F6C50035759A /* TrackingPositionListCellView.swift in Sources */,
 				ADE0F3CF2935F97D005D2732 /* HomeView.swift in Sources */,
 				AD1ADDE42959B57500545DB7 /* RecommendModel.swift in Sources */,
 				7E088717296BCAC90011819D /* TextFieldView.swift in Sources */,
@@ -484,8 +517,10 @@
 				AD1ADE20295E1AC800545DB7 /* ButtonStyle.swift in Sources */,
 				7E16336F295E9C1000EBFB87 /* OnBoardingView.swift in Sources */,
 				ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */,
+				7E8E7DDA2974F9090035759A /* TrackingPositionView.swift in Sources */,
 				AD58305C296BFBA800099836 /* SystemTabView.swift in Sources */,
 				ADC1407229604ABE0067CDE3 /* ToggleButtonView.swift in Sources */,
+				7E8E7DD12974F6570035759A /* TrackingProgressView.swift in Sources */,
 				AD1ADDD2295331C800545DB7 /* ProfileView.swift in Sources */,
 				7E04351129544648005187E8 /* CompanyService.swift in Sources */,
 				ADE0F3D12935F99F005D2732 /* AppleAuthVM.swift in Sources */,
@@ -493,11 +528,12 @@
 				ADE0F38D2934515F005D2732 /* PackServiceApp.swift in Sources */,
 				ADE0F3BB2934683D005D2732 /* LoginView.swift in Sources */,
 				ADE0F3BD2935BCC1005D2732 /* KakaoAuthVM.swift in Sources */,
-				7E8724D82959C0AE00C0B1C9 /* TrackingInfoView.swift in Sources */,
+				7E8724D82959C0AE00C0B1C9 /* TrackingDetailView.swift in Sources */,
 				ADFBE39A293679F000D45B42 /* EmailAuthVM.swift in Sources */,
 				AD58305A296AB06100099836 /* SelectCompanyView.swift in Sources */,
 				AD1ADDE22959A94700545DB7 /* RecommendTrackView.swift in Sources */,
 				ADE0F3B92934588C005D2732 /* SceneDelegate.swift in Sources */,
+				7E8E7DD82974F88C0035759A /* TrackingDetailCardView.swift in Sources */,
 				AD1ADDCE2952477300545DB7 /* MemberShipAgreementView.swift in Sources */,
 				7E3B49F3295D9FFF0020036C /* ExampleView.swift in Sources */,
 				7EADB95F2966C8E0004E4216 /* InputTextFieldView.swift in Sources */,

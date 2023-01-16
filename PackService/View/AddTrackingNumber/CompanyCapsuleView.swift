@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct CompanyCapsuleView: View {
-    
+struct CompanyCapsuleView: View {    
     var color: Color
     var logoImage: Image
     var logoName: String
@@ -33,11 +32,15 @@ struct CompanyCapsuleView: View {
             Capsule()
                 .fill(color)
                 .overlay (Capsule().stroke(.black, lineWidth: 0.1))
-                
-                
-                
         )
         
+    }
+}
+
+struct CapsuleButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .brightness(configuration.isPressed ? -0.1 : 0.0)
     }
 }
 
