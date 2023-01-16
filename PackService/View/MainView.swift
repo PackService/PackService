@@ -57,33 +57,56 @@ extension MainView {
             // 검색 텍스트필드 해야함
             SearchTextField(title: "검색")
             
-//            Button(action: { // 닫기 버튼
-//                signUpScreen.toggle()
-//            }, label: {
-//                Image(systemName: "xmark")
-//                    .resizable()
-//                    .foregroundColor(.black)
-//                    .frame(width: 25, height: 25)
-//                    .font(.largeTitle)
-//                    .padding(.bottom, 20)
-//            })
-            
             List {
                 ForEach(packInfoModel, id: \.packageNumber) { packInfo in
                     // 배송 진행중인 목록 보여주는 곳
-                    CurrentPackageCell(packInfoModel: packInfo)
-                        .listRowSeparator(.hidden)
-                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                            Button("삭제") {
-                                
+                    SwipeItem(content: {
+                        HStack {
+                            Spacer()
+                            VStack {
+                                HStack {
+                                    Image(systemName: "circle.fill")
+                                        .resizable()
+                                        .frame(width: 44, height: 44)
+                                    VStack(alignment: .leading) {
+                                        Text(packInfo.packageName)
+                                            .font(FontManager.title3)
+                                            .padding(.bottom, 2)
+                                        HStack {
+                                            Text(packInfo.packageNumber)
+                                                .font(FontManager.caption1)
+                                                .foregroundColor(ColorManager.foreground1)
+                                            Spacer()
+                                            Text(packInfo.packageArrvieTime)
+                                                .font(FontManager.caption1)
+                                                .foregroundColor(ColorManager.foreground1)
+                                                .padding(.trailing, 8)
+                                            Text(packInfo.packageState)
+                                                .font(FontManager.caption2)
+                                                .foregroundColor(ColorManager.primaryColor)
+                                        }
+                                    }
+                                    .padding(.leading, 16)
+                                    Spacer()
+                                }
+                                .padding(16)
                             }
+                            Spacer()
                         }
+                        
+                    }, right: {
+                        ZStack {
+                            Rectangle()
+                                .fill(Color.red)
+                        }
+                    }, itemHeight: 50)
+                    .listRowSeparator(.hidden)
                 }
                 .frame(height: 100)
                 Spacer()
             }
-            .padding(.leading, -20)
-            .padding(-20)
+            .padding(.trailing, 20)
+//            .padding(.leading, -20)
             .listRowInsets(EdgeInsets())
             .listStyle(PlainListStyle())
             
@@ -99,7 +122,77 @@ extension MainView {
 }
 
 
-
+struct SwipeItem<Content: View, Right:View>: View {
+    var packInfoModel: PackInfoModel?
+    var content: () -> Content
+    var right: () -> Right
+    var itemHeight: CGFloat
+    
+    init(content: @escaping () -> Content, right: @escaping () -> Right, itemHeight: CGFloat) {
+        self.content = content
+        self.right = right
+        self.itemHeight = itemHeight
+    }
+    
+    @State var hoffset: CGFloat = 0
+    @State var anchor: CGFloat = 0
+    
+    let screenWidth = UIScreen.main.bounds.width
+    var anchorWidth: CGFloat { screenWidth / 3 }
+    var swipeTreshold:CGFloat { screenWidth / 15 }
+    
+    @State var rightPast = false
+    
+    var drag: some Gesture {
+        DragGesture()
+            .onChanged { value in
+                withAnimation {
+                    hoffset = anchor + value.translation.width
+                    
+                    if abs(hoffset) > anchorWidth {
+                        if rightPast {
+                            hoffset = -anchorWidth
+                        }
+                    }
+                    
+                    if anchor < 0 {
+                        rightPast = hoffset < -anchorWidth + swipeTreshold
+                    } else {
+                        rightPast = hoffset < -swipeTreshold
+                    }
+                }
+            }
+            .onEnded { value in
+                withAnimation {
+                    if rightPast {
+                        anchor = -anchorWidth
+                    } else {
+                        anchor = 0
+                    }
+                    hoffset = anchor
+                }
+            }
+    }
+    
+    var body: some View {
+        GeometryReader { geo in
+            HStack(spacing: 0) {
+                
+                content()
+                    .frame(width: geo.size.width + 20 )
+                right()
+                    .frame(width: anchorWidth)
+                    .zIndex(1)
+                    .clipped()
+            }
+            .offset(x: hoffset)
+            .frame(maxHeight: itemHeight)
+            .contentShape(Rectangle())
+            .gesture(drag)
+            .clipped()
+        }
+    }
+}
 
 
 
@@ -188,9 +281,6 @@ struct CurrentPackageCell: View {
 //            ColorManager.background
 //                .cornerRadius(10)
 //                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 2)
-//                .onTapGesture {
-//                    ColorManager.primaryColor
-//                }
 //        )
 //        .padding(8)
 //        .frame(height: 76)
