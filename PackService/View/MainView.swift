@@ -10,26 +10,9 @@ import SwiftUI
 // MARK: - MainView
 struct MainView: View {
     @State var tapped = false
-
-    var tap: some Gesture {
-        TapGesture(count: 1)
-            .onEnded { tapped.toggle() }
-    }
     
     @State var serviceAgreeScreen: Bool = false
-    @State var packInfoModel = [ // 모델에서 받아올때 이부분 수정해야될듯
-        PackInfoModel(packageNumber: "1213214234", packageName: "첫번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
-        PackInfoModel(packageNumber: "94894899834", packageName: "두번째 택배", packageArrvieTime: "12/29", packageState: "배송 완료"),
-        PackInfoModel(packageNumber: "493048234", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
-        PackInfoModel(packageNumber: "49304823422", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
-        PackInfoModel(packageNumber: "49304823454", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
-        PackInfoModel(packageNumber: "4930482344", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
-        PackInfoModel(packageNumber: "4930483234", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
-        PackInfoModel(packageNumber: "4930483134", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
-        PackInfoModel(packageNumber: "4930413234", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
-        PackInfoModel(packageNumber: "4930383234", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
-        PackInfoModel(packageNumber: "49383234", packageName: "세번째 택배", packageArrvieTime: "12/29", packageState: "배송중")
-    ]
+    @StateObject var packInfoDatas = PackInfoViewModel()
     
     var body: some View {
         TabView {
@@ -65,57 +48,9 @@ extension MainView {
             SearchTextField(title: "검색")
             
             List {
-                ForEach(packInfoModel, id: \.packageNumber) { packInfo in
+                ForEach(packInfoDatas.packInfoModels) { packInfo in
                     // 배송 진행중인 목록 보여주는 곳
-                    SwipeItem(content: {
-                        HStack {
-                            Spacer()
-                            VStack {
-                                HStack {
-                                    Image(systemName: "circle.fill")
-                                        .resizable()
-                                        .frame(width: 44, height: 44)
-                                    VStack(alignment: .leading) {
-                                        Text(packInfo.packageName)
-                                            .font(FontManager.title3)
-                                            .padding(.bottom, 2)
-                                        HStack {
-                                            Text(packInfo.packageNumber)
-                                                .font(FontManager.caption1)
-                                                .foregroundColor(ColorManager.foreground1)
-                                            Spacer()
-                                            Text(packInfo.packageArrvieTime)
-                                                .font(FontManager.caption1)
-                                                .foregroundColor(ColorManager.foreground1)
-                                                .padding(.trailing, 8)
-                                            Text(packInfo.packageState)
-                                                .font(FontManager.caption2)
-                                                .foregroundColor(ColorManager.primaryColor)
-                                        }
-                                    }
-                                    .padding(.leading, 16)
-                                    Spacer()
-                                }
-                                .padding(16)
-                            }
-                            Spacer()
-                        }
-                    }, right: {
-                        VStack {
-                            Button(action: {
-                                debugPrint("wfeawef")
-                            }, label: {
-                                Rectangle()
-                                    .fill(self.tapped ? Color.blue : Color.red)
-                                    .cornerRadius(10)
-                            })
-                            .buttonStyle(CapsuleButtonStyle())
-                            Spacer()
-                        }
-                        .padding(.trailing, 20)
-                        
-                    }, itemHeight: 76)
-                    .listRowSeparator(.hidden)
+                    PackListItemView(packInfoModel: $packInfoDatas.packInfoModels[getIndex(packInfoModel: packInfo)], packInfoModels: $packInfoDatas.packInfoModels)
                 } // packinfo 끝
                 
                 .background(
@@ -132,77 +67,15 @@ extension MainView {
             Spacer()
         }
     }
+    
+    func getIndex(packInfoModel: PackInfoModel) -> Int {
+        
+        return packInfoDatas.packInfoModels.firstIndex { (packInfoModel1) -> Bool in
+            return packInfoModel.id == packInfoModel1.id
+        } ?? 0
+    }
 }
 
-struct SwipeItem<Content: View, Right:View>: View {
-    var content: () -> Content
-    var right: () -> Right
-    var itemHeight: CGFloat
-    
-    init(content: @escaping () -> Content, right: @escaping () -> Right, itemHeight: CGFloat) {
-        self.content = content
-        self.right = right
-        self.itemHeight = itemHeight
-    }
-    
-    @State var hoffset: CGFloat = 0
-    @State var anchor: CGFloat = 0
-    
-    let screenWidth = UIScreen.main.bounds.width
-    var anchorWidth: CGFloat { screenWidth / 3 }
-    var swipeTreshold: CGFloat { screenWidth / 15 }
-    
-    @State var rightPast = false
-    
-    var drag: some Gesture {
-        DragGesture()
-            .onChanged { value in
-                withAnimation {
-                    hoffset = anchor + value.translation.width
-                    
-                    if abs(hoffset) > anchorWidth {
-                        if rightPast {
-                            hoffset = -anchorWidth
-                        }
-                    }
-                    
-                    if anchor < 0 {
-                        rightPast = hoffset < -anchorWidth + swipeTreshold
-                    } else {
-                        rightPast = hoffset < -swipeTreshold
-                    }
-                }
-            }
-            .onEnded { value in
-                withAnimation {
-                    if rightPast {
-                        anchor = -anchorWidth
-                    } else {
-                        anchor = 0
-                    }
-                    hoffset = anchor
-                }
-            }
-    }
-    
-    var body: some View {
-        GeometryReader { geo in
-            HStack(spacing: 0) {
-                content()
-                    .frame(width: geo.size.width + 20)
-                right()
-                    .frame(width: anchorWidth)
-                    .zIndex(1)
-                    .clipped()
-            }
-            .offset(x: hoffset)
-            .frame(maxHeight: 76)
-            .contentShape(Rectangle())
-            .gesture(drag)
-            .clipped()
-        }
-    }
-}
 
 // 배송정보, 배송이름, 배송상태 구조체
 struct PackInfoModel: Identifiable {
@@ -215,10 +88,11 @@ struct PackInfoModel: Identifiable {
 
 class PackInfoViewModel: ObservableObject {
     @Published var packInfoModels = [
-        PackInfoModel(packageNumber: "123432", packageName: "1번이요", packageArrvieTime: "23:34", packageState: "배송중")
-        PackInfoModel(packageNumber: "122332", packageName: "2번이요", packageArrvieTime: "23:34", packageState: "배송중")
-        PackInfoModel(packageNumber: "167732", packageName: "3번이요", packageArrvieTime: "23:34", packageState: "배송중")
-        PackInfoModel(packageNumber: "88832", packageName: "4번이요", packageArrvieTime: "23:34", packageState: "배송중")PackInfoModel(packageNumber: "773432", packageName: "1번이요", packageArrvieTime: "23:34", packageState: "배송중")
+        PackInfoModel(packageNumber: "123432", packageName: "1번이요", packageArrvieTime: "23:34", packageState: "배송중"),
+        PackInfoModel(packageNumber: "122332", packageName: "2번이요", packageArrvieTime: "23:34", packageState: "배송중"),
+        PackInfoModel(packageNumber: "167732", packageName: "3번이요", packageArrvieTime: "23:34", packageState: "배송중"),
+        PackInfoModel(packageNumber: "88832", packageName: "4번이요", packageArrvieTime: "23:34", packageState: "배송중"),
+        PackInfoModel(packageNumber: "773432", packageName: "1번이요", packageArrvieTime: "23:34", packageState: "배송중")
     ]
 }
    
