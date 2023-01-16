@@ -75,8 +75,6 @@ struct SwipeItem<Content: View, Right:View>: View {
             .clipped()
         }
     }
-    
-    
 }
 
 struct PackListItemView: View {
@@ -84,48 +82,64 @@ struct PackListItemView: View {
     @Binding var packInfoModels: [PackInfoModel]
     var body: some View {
         SwipeItem(content: {
-            HStack {
-                Spacer()
-                VStack {
-                    HStack {
-                        Image(systemName: "circle.fill")
-                            .resizable()
-                            .frame(width: 44, height: 44)
-                        VStack(alignment: .leading) {
-                            Text(packInfoModel.packageName)
-                                .font(FontManager.title3)
-                                .padding(.bottom, 2)
-                            HStack {
-                                Text(packInfoModel.packageNumber)
-                                    .font(FontManager.caption1)
-                                    .foregroundColor(ColorManager.foreground1)
-                                Spacer()
-                                Text(packInfoModel.packageArrvieTime)
-                                    .font(FontManager.caption1)
-                                    .foregroundColor(ColorManager.foreground1)
-                                    .padding(.trailing, 8)
-                                Text(packInfoModel.packageState)
-                                    .font(FontManager.caption2)
-                                    .foregroundColor(ColorManager.primaryColor)
+            Button(action: {
+                
+            }, label: {
+                HStack {
+                    Spacer()
+                    VStack {
+                        HStack {
+                            Image(systemName: "circle.fill")
+                                .resizable()
+                                .frame(width: 44, height: 44)
+                            VStack(alignment: .leading) {
+                                Text(packInfoModel.packageName)
+                                    .font(FontManager.title3)
+                                    .padding(.bottom, 2)
+                                HStack {
+                                    Text(packInfoModel.packageNumber)
+                                        .font(FontManager.caption1)
+                                        .foregroundColor(ColorManager.foreground1)
+                                    Spacer()
+                                    Text(packInfoModel.packageArrvieTime)
+                                        .font(FontManager.caption1)
+                                        .foregroundColor(ColorManager.foreground1)
+                                        .padding(.trailing, 8)
+                                    Text(packInfoModel.packageState)
+                                        .font(FontManager.caption2)
+                                        .foregroundColor(ColorManager.primaryColor)
+                                }
                             }
+                            .padding(.leading, 16)
+                            Spacer()
                         }
-                        .padding(.leading, 16)
-                        Spacer()
+                        .padding(16)
                     }
-                    .padding(16)
+                    Spacer()
                 }
-                Spacer()
-            }
+            })
+            .buttonStyle(CapsuleButtonStyle())
         }, right: {
             VStack {
                 Button(action: {
                     deletePackInfoModel()
                 }, label: {
-                    Rectangle()
-                        .cornerRadius(10)
+                    ZStack {
+                        Rectangle()
+                            .fill(.red)
+                        HStack {
+                            Text("삭제하기")
+                                .font(FontManager.body2)
+                                .foregroundColor(.white)
+                            Image(systemName: "trash.fill")
+                                .resizable()
+                                .frame(width: 20, height: 24)
+                                .foregroundColor(.white)
+                        }
+                    }
                 })
                 .buttonStyle(CapsuleButtonStyle())
-                Spacer()
+                .cornerRadius(10)
             }
             .padding(.trailing, 20)
             
