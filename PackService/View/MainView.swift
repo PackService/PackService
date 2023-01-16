@@ -9,6 +9,13 @@ import SwiftUI
 
 // MARK: - MainView
 struct MainView: View {
+    @State var tapped = false
+
+    var tap: some Gesture {
+        TapGesture(count: 1)
+            .onEnded { _ in self.tapped = !self.tapped }
+    }
+    
     @State var serviceAgreeScreen: Bool = false
     @State var packInfoModel = [ // 모델에서 받아올때 이부분 수정해야될듯
         PackInfoModel(packageNumber: "1213214234", packageName: "첫번째 택배", packageArrvieTime: "12/29", packageState: "배송중"),
@@ -93,34 +100,42 @@ extension MainView {
                             }
                             Spacer()
                         }
-                        
                     }, right: {
                         ZStack {
                             Rectangle()
                                 .fill(Color.red)
+                                .cornerRadius(10)
+                            Button(action: { //이것도 탭 제스쳐로 해
+                                
+                            }, label: {
+                                Text("삭제하기")
+                            })
+                            
                         }
-                    }, itemHeight: 50)
+                        .padding(.trailing, 20)
+                    }, itemHeight: 76)
                     .listRowSeparator(.hidden)
                 }
-                .frame(height: 100)
+                // 탭 했을 때 색 변경 추가해야됨
+//                .background(self.tapped ? Color.blue : Color.red)
+//                            .gesture(tap)
+                
+                .background( // slideTabView 그림자 넣기
+                    ColorManager.background
+                        .cornerRadius(10)
+                        .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 2)
+                )
+                .frame(height: 80)
                 Spacer()
             }
-            .padding(.trailing, 20)
-//            .padding(.leading, -20)
+            .padding(.leading, -17)
             .listRowInsets(EdgeInsets())
             .listStyle(PlainListStyle())
-            
-            
             
             Spacer()
         }
     }
-    
-    func removeRows(at offsets: IndexSet) {
-      packInfoModel.remove(atOffsets: offsets)
-    }
 }
-
 
 struct SwipeItem<Content: View, Right:View>: View {
     var packInfoModel: PackInfoModel?
@@ -174,19 +189,19 @@ struct SwipeItem<Content: View, Right:View>: View {
             }
     }
     
+    
     var body: some View {
         GeometryReader { geo in
             HStack(spacing: 0) {
-                
                 content()
-                    .frame(width: geo.size.width + 20 )
+                    .frame(width: geo.size.width + 20)
                 right()
                     .frame(width: anchorWidth)
                     .zIndex(1)
                     .clipped()
             }
             .offset(x: hoffset)
-            .frame(maxHeight: itemHeight)
+            .frame(maxHeight: 76)
             .contentShape(Rectangle())
             .gesture(drag)
             .clipped()
@@ -205,89 +220,7 @@ struct PackInfoModel {
     var packageArrvieTime: String
     var packageState: String
 }
-
-struct CurrentPackageCell: View {
-    var packInfoModel: PackInfoModel
-    @State private var didTap: Bool = false
-    var body: some View {
-        Button(action: {
-            self.didTap = true
-        }, label: {
-            HStack {
-                Image(systemName: "circle")
-                    .font(.system(size: 50))
-                    .foregroundColor(.white)
-                    .frame(width: 90)
-                    .padding()
-                
-                
-                VStack(alignment: .leading, spacing: 0){
-                    Divider().opacity(0)
-                    Text("hi")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding(.bottom, 10)
-                        .lineLimit(1)
-                    
-                    Text("예상 소요 시간")
-                        .font(.footnote)
-                        .foregroundColor(.white)
-                }
-            }
-            .onAppear(perform: {
-                // 뷰가 나타날떄 수행 할 코드
-                self.didTap = false
-            })
-            .frame(height: 100, alignment: .center)
-            .background(didTap ? Color.blue : Color.yellow)
-        })
-    }
-}
-//    var body: some View {
-//        HStack {
-//            Spacer()
-//            VStack {
-//                HStack {
-//                    Image(systemName: "circle.fill")
-//                        .resizable()
-//                        .frame(width: 44, height: 44)
-//                    VStack(alignment: .leading) {
-//                        Text(packInfoModel.packageName)
-//                            .font(FontManager.title3)
-//                            .padding(.bottom, 2)
-//                        HStack {
-//                            Text(packInfoModel.packageNumber)
-//                                .font(FontManager.caption1)
-//                                .foregroundColor(ColorManager.foreground1)
-//                            Spacer()
-//                            Text(packInfoModel.packageArrvieTime)
-//                                .font(FontManager.caption1)
-//                                .foregroundColor(ColorManager.foreground1)
-//                                .padding(.trailing, 8)
-//                            Text(packInfoModel.packageState)
-//                                .font(FontManager.caption2)
-//                                .foregroundColor(ColorManager.primaryColor)
-//                        }
-//                    }
-//                    .padding(.leading, 16)
-//                    Spacer()
-//                }
-//                .padding(16)
-//            }
-//            Spacer()
-//        }
-//        .background(
-//            ColorManager.background
-//                .cornerRadius(10)
-//                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 2)
-//        )
-//        .padding(8)
-//        .frame(height: 76)
-        
-//    }
-//}
-
+   
 struct SearchTextField: View {
     @State var title: String = ""
     @State private var searchInput = ""
