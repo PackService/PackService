@@ -13,7 +13,7 @@ struct MainView: View {
 
     var tap: some Gesture {
         TapGesture(count: 1)
-            .onEnded { _ in self.tapped = !self.tapped }
+            .onEnded { tapped.toggle() }
     }
     
     @State var serviceAgreeScreen: Bool = false
@@ -101,35 +101,32 @@ extension MainView {
                             Spacer()
                         }
                     }, right: {
-                        ZStack {
-                            Rectangle()
-                                .fill(Color.red)
-                                .cornerRadius(10)
-                            Button(action: { //이것도 탭 제스쳐로 해
-                                
+                        VStack {
+                            Button(action: {
+                                debugPrint("wfeawef")
                             }, label: {
-                                Text("삭제하기")
+                                Rectangle()
+                                    .fill(self.tapped ? Color.blue : Color.red)
+                                    .cornerRadius(10)
                             })
-                            
+                            .buttonStyle(CapsuleButtonStyle())
+                            Spacer()
                         }
                         .padding(.trailing, 20)
+                        
                     }, itemHeight: 76)
                     .listRowSeparator(.hidden)
-                }
-                // 탭 했을 때 색 변경 추가해야됨
-//                .background(self.tapped ? Color.blue : Color.red)
-//                            .gesture(tap)
+                } // packinfo 끝
                 
-                .background( // slideTabView 그림자 넣기
+                .background(
                     ColorManager.background
                         .cornerRadius(10)
                         .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 2)
                 )
-                .frame(height: 80)
+                .frame(height: 76)
                 Spacer()
             }
             .padding(.leading, -17)
-            .listRowInsets(EdgeInsets())
             .listStyle(PlainListStyle())
             
             Spacer()
@@ -138,7 +135,6 @@ extension MainView {
 }
 
 struct SwipeItem<Content: View, Right:View>: View {
-    var packInfoModel: PackInfoModel?
     var content: () -> Content
     var right: () -> Right
     var itemHeight: CGFloat
@@ -154,7 +150,7 @@ struct SwipeItem<Content: View, Right:View>: View {
     
     let screenWidth = UIScreen.main.bounds.width
     var anchorWidth: CGFloat { screenWidth / 3 }
-    var swipeTreshold:CGFloat { screenWidth / 15 }
+    var swipeTreshold: CGFloat { screenWidth / 15 }
     
     @State var rightPast = false
     
@@ -189,7 +185,6 @@ struct SwipeItem<Content: View, Right:View>: View {
             }
     }
     
-    
     var body: some View {
         GeometryReader { geo in
             HStack(spacing: 0) {
@@ -209,16 +204,22 @@ struct SwipeItem<Content: View, Right:View>: View {
     }
 }
 
-
-
-
-
 // 배송정보, 배송이름, 배송상태 구조체
-struct PackInfoModel {
+struct PackInfoModel: Identifiable {
+    var id = UUID().uuidString
     var packageNumber: String
     var packageName: String
     var packageArrvieTime: String
     var packageState: String
+}
+
+class PackInfoViewModel: ObservableObject {
+    @Published var packInfoModels = [
+        PackInfoModel(packageNumber: "123432", packageName: "1번이요", packageArrvieTime: "23:34", packageState: "배송중")
+        PackInfoModel(packageNumber: "122332", packageName: "2번이요", packageArrvieTime: "23:34", packageState: "배송중")
+        PackInfoModel(packageNumber: "167732", packageName: "3번이요", packageArrvieTime: "23:34", packageState: "배송중")
+        PackInfoModel(packageNumber: "88832", packageName: "4번이요", packageArrvieTime: "23:34", packageState: "배송중")PackInfoModel(packageNumber: "773432", packageName: "1번이요", packageArrvieTime: "23:34", packageState: "배송중")
+    ]
 }
    
 struct SearchTextField: View {
