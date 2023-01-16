@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 /*
  
@@ -57,3 +58,68 @@ struct Company: Hashable, Identifiable, Codable {
         case name = "Name"
     }
 }
+
+struct Logo {
+    let image: Image
+    let bgColor: Color
+    let fgColor: Color
+}
+
+/*
+cj 04, cupost 46, daesin 22, dhl 13, ems 12, fedex 21, gsi 41, gspostbox 24, hanjin 05, hapdong 32, ilyana 11, koreapost 01, kyeongdong 23, logen 06, lotte 08, lxpantos 37, nonghyup 53, tnt 25, ups 14, usps 26
+*/
+
+enum LogoType: String {
+    
+    case cj = "04"
+    case cupost = "46"
+    case daesin = "22"
+    case dhl = "13"
+    case ems = "12"
+    case fedex = "21"
+    case gsi = "41"
+    case gspostbox = "24"
+    case hanjin = "05"
+    case hapdong = "32"
+    case ilyana = "11"
+    case koreapost = "01"
+    case kyeongdong = "23"
+    case logen = "06"
+    case lotte = "08"
+    case lxpantos = "37"
+    case nonghyup = "53"
+    case tnt = "25"
+    case ups = "14"
+    case usps = "26"
+
+    var logo: Logo {
+        switch self {
+        case .cj, .cupost, .daesin, .dhl, .ems, .fedex, .gsi, .gspostbox, .hanjin, .hapdong, .ilyana, .koreapost, .kyeongdong, .logen, .lotte, .lxpantos, .nonghyup, .tnt, .ups, .usps:
+            return Logo(image: Image("logo_\(self)"), bgColor: Color("bgcolor_\(self)"), fgColor: Color("fgcolor_\(self)"))
+        }
+    }
+}
+
+
+//case .cj, .cupost, .daesin, .dhl, .ems, .fedex, .gsi, .gspostbox, .hanjin, .hapdong, .ilyana, .koreapost, .kyeongdong, .logen, .lotte, .lxpantos, .nonghyup, .tnt, .ups, .usps
+
+//case  = "cj",
+//case "46" = "cupost",
+//case "22" = "daesin",
+//case "13" = "dhl",
+//case "12" = "ems",
+//case "21" = "fedex",
+//case "41" = "gsi",
+//case "24" = "gspostbox",
+//case "05" = "hanjin",
+//case "32" = "hapdong",
+//case "11" = "ilyana",
+//case "01" = "koreapost",
+//case "23" = "kyeongdong",
+//case "06" = "logen",
+//case "08" = "lotte",
+//case "37" = "lxpantos",
+//case "53" = "nonghyup",
+//case "25" = "tnt",
+//case "14" = "ups",
+//case "26" = "usps"

@@ -1,56 +1,78 @@
-//
-//  ExampleView.swift
-//  PackService
-//
-//  Created by 박윤환 on 2022/12/29.
-//
-
 import SwiftUI
-import UIKit
 
-struct ExampleParentView: View {
+// MARK: - MainView
+
+struct ExampleView: View {
     var body: some View {
-        NavigationView {
-            VStack {
-                
-                Spacer()
-                ExampleView()
+        VStack {
+            
+            Text("리스트 테스트")
+                .frame(width: 350)
+                .background(Color.red)
+            List {
+                ForEach(1..<16) { item in
+                    PackageListRowCellView()
+                        .listRowSeparator(.hidden)
+                        
+                }
+                .onDelete { index in
+                    delete(index: index)
+                }
             }
-            .navigationTitle("This is Parent View")
+            .listStyle(InsetListStyle())
         }
+    }
+    
+    func delete(index: IndexSet) {
+        // DO NOTHING
     }
 }
 
-struct ExampleView: View {
-    
-    @State var showList = false
-    
+struct PackageListRowCellView: View {
     var body: some View {
-        VStack {
-            Button {
-                showList.toggle()
-            } label: {
-                Text("리스트 보기")
-            }
-
-            Spacer()
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(ColorManager.background2)
+                .frame(width: .infinity, height: 76)
+//                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 2)
             
-//            VStack {
-                if showList {
-                    List(1..<10) { index in
-                        TrackingPositionListCellView(status: "집화처리", position: "군포직영", deliveryMan: "홍길동", time: "07:48", date: "2022.11.22", isCurrent: true)
-                            .listRowSeparator(.hidden)
+            HStack(spacing: 16) {
+                Circle()
+                    .fill(ColorManager.foreground2)
+                    .frame(width:44 , height: 44)
+                    .overlay(
+                        Image("CJ_logo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 27)
+                    )
+                
+                VStack(alignment: .leading) {
+                    Text("토리든 다이브인 저분자 히알루론산 클렌징 폼 150ml")
+                        .font(FontManager.title2)
+                        .foregroundColor(ColorManager.defaultForeground)
+                        .lineLimit(1)
+                    HStack {
+                        Text("123456789012")
+                            .font(FontManager.caption1)
+                            .foregroundColor(ColorManager.foreground1)
+                        Spacer()
+                        Text("12/29")
+                            .font(FontManager.caption1)
+                            .foregroundColor(ColorManager.foreground1)
+                        Text("배송완료")
+                            .font(FontManager.caption2)
+                            .foregroundColor(ColorManager.primaryColor)
                     }
-                    .listStyle(InsetListStyle())
                 }
-//            }
+            }
         }
-        
     }
 }
 
 struct ExampleView_Previews: PreviewProvider {
     static var previews: some View {
-        ExampleParentView()
+        ExampleView()
+//        PackageListRowCellView()
     }
 }
