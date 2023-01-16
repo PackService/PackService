@@ -43,7 +43,7 @@ struct MemberShipAgreementView: View {
             .edgesIgnoringSafeArea(.all)
         HStack {
             VStack(alignment: .leading, spacing: 0) {
-                Button(action: {
+                Button(action: { // 닫기 버튼
                     signUpScreen.toggle()
                 }, label: {
                     Image(systemName: "xmark")
@@ -57,65 +57,12 @@ struct MemberShipAgreementView: View {
                 Text("계정을\n만들어주세요")
                     .font(FontManager.title1)
                 
-                HStack(spacing: 0) {
-                    Button(action: {
-                        allAgree.toggle()
-                        ageAgree = allAgree
-                        serviceAgree = allAgree
-                        personInfoAgree = allAgree
-                    }, label: {
-                        ToggleButtonView(agree: allAgree)
-                    })
-                    .padding(.top, 25)
-                    Text("전체 동의하기")
-                        .padding(.top, 24)
-                        .padding(.leading, 16)
-                        .font(FontManager.body1)
-                }
-                
-                if !ageAgree || !serviceAgree || !personInfoAgree { // 전체 동의하기 안 눌렸을 경우
-                    
-                    HStack(spacing: 0) {
-                        Button(action: {
-                            ageAgree.toggle()
-                        }, label: {
-                            ToggleButtonView(agree: ageAgree)
-                        })
-                        .padding(.top, 16)
-                        ToggleTextView(text: "만 14세 이상입니다")
-                    }
+                allAgreeView // 전체 동의하기 view
 
-                    // 서비스 이용약관 동의
-                    HStack(spacing: 0) {
-                        Button(action: {
-                            serviceAgree.toggle()
-                        }, label: {
-                            ToggleButtonView(agree: serviceAgree)
-                        })
-                        .padding(.top, 16)
-                        ToggleTextView(text: "서비스 이용 약관")
-                        Button(action: {
-                            serviceAgreeScreen.toggle()
-                        }, label: {
-                            ToggleDetailTextView()
-                        })
-                    }
-                    
-                    // 개인정보 동의
-                    HStack(spacing: 0) {
-                        Button(action: {
-                            personInfoAgree.toggle()
-                        }, label: {
-                            ToggleButtonView(agree: personInfoAgree)
-                        })
-                        .padding(.top, 16)
-                        ToggleTextView(text: "개인정보 수집 및 이용 동의")
-                        Button(action: {
-                            personAgreeScreen.toggle()
-                        }, label: {
-                            ToggleDetailTextView()
-                        })
-                    }
+                if !ageAgree || !serviceAgree || !personInfoAgree { // 전체 동의하기 안 눌렸을 경우
+                    ageAgreeView
+                    serviceAgreeView
+                    personInfoAgreeView
                 } else { // 전체 동의하기가 눌렸을 경우
                     VStack {
                         TextFieldView(title: "이메일", input: $emailInput, wrongAttempt: $emailAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .email)
@@ -175,12 +122,12 @@ struct MemberShipAgreementView: View {
                 .padding(.trailing, 20)
             }
         }
-        if serviceAgreeScreen {
+        if serviceAgreeScreen { // 서비스 약관 내용 보기
             NoSafeAreaServiceAgreeView(serviceAgreeScreen: $serviceAgreeScreen)
                 .transition(.move(edge: .bottom))
                 .animation(.spring())
         }
-        if personAgreeScreen {
+        if personAgreeScreen { // 개인정보 처리방침 내용 보기
             PersonAgreeDescriptView(personAgreeScreen: $personAgreeScreen)
                 .transition(.move(edge: .bottom))
                 .animation(.spring())
@@ -218,7 +165,75 @@ struct MemberShipAgreementView: View {
     }
 }
 
-struct ToggleTextView: View { // "만 14세 이상입니다" 글씨 함수
+// 동의하기 버튼들
+extension MemberShipAgreementView {
+    var allAgreeView: some View {
+        HStack(spacing: 0) {
+            Button(action: {
+                allAgree.toggle()
+                ageAgree = allAgree
+                serviceAgree = allAgree
+                personInfoAgree = allAgree
+            }, label: {
+                ToggleButtonView(agree: allAgree)
+            })
+            .padding(.top, 25)
+            Text("전체 동의하기")
+                .padding(.top, 24)
+                .padding(.leading, 16)
+                .font(FontManager.body1)
+        }
+    }
+    
+    var ageAgreeView: some View {
+        HStack(spacing: 0) {
+            Button(action: {
+                ageAgree.toggle()
+            }, label: {
+                ToggleButtonView(agree: ageAgree)
+            })
+            .padding(.top, 16)
+            ToggleTextView(text: "만 14세 이상입니다")
+        }
+    }
+    
+    var serviceAgreeView: some View {
+        HStack(spacing: 0) {
+            Button(action: {
+                serviceAgree.toggle()
+            }, label: {
+                ToggleButtonView(agree: serviceAgree)
+            })
+            .padding(.top, 16)
+            ToggleTextView(text: "서비스 이용 약관")
+            Button(action: {
+                serviceAgreeScreen.toggle()
+            }, label: {
+                ToggleDetailTextView()
+            })
+        }
+    }
+    
+    var personInfoAgreeView: some View {
+        HStack(spacing: 0) {
+            Button(action: {
+                personInfoAgree.toggle()
+            }, label: {
+                ToggleButtonView(agree: personInfoAgree)
+            })
+            .padding(.top, 16)
+            ToggleTextView(text: "개인정보 수집 및 이용 동의")
+            Button(action: {
+                personAgreeScreen.toggle()
+            }, label: {
+                ToggleDetailTextView()
+            })
+        }
+    }
+}
+
+// "만 14세 이상입니다" 글씨 구조체
+struct ToggleTextView: View {
     var text: String
     var body: some View {
         Text(text)
@@ -228,7 +243,8 @@ struct ToggleTextView: View { // "만 14세 이상입니다" 글씨 함수
     }
 }
 
-struct ToggleDetailTextView: View { // "보기" 글씨 함수
+// "보기" 글씨 구조체
+struct ToggleDetailTextView: View {
     var body: some View {
         Text("보기")
             .overlay(
