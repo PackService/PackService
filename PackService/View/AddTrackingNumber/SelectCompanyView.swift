@@ -12,7 +12,7 @@ struct SelectCompanyView: View {
     @Environment(\.presentationMode) var presentationMode
     @Binding var show: Bool
     @Binding var selected: String?
-    
+    let names = ["04", "46", "22", "13", "12", "21", "41", "24", "05", "32", "11", "01", "23", "06", "08", "37", "53", "25", "14", "26"]
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 0, alignment: nil),
         GridItem(.flexible(), spacing: 0, alignment: nil),
@@ -72,19 +72,19 @@ extension SelectCompanyView {
             }
         }
     }
-    
+
     //MARK: - Company Grid
     var companyGrid: some View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 24) {
-                ForEach(1..<16) { index in
+                ForEach(names, id: \.self) { name in
+                    let company = LogoType(rawValue: name) ?? LogoType.cj
                     Button {
-                        selected = "\(index)"
+                        selected = "\(name)"
                         show = false
                     } label: {
-                        PackLogoButtonView(circleColor: .gray, logoImage: Image("CJ_logo"), logoName: "CJ대한통운")
+                        PackLogoButtonView(circleColor: .gray, logoImage: company.logo.image, logoName: "\(company.simpleDescription())")
                     }
-
                 }
             }
         }
