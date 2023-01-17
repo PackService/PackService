@@ -14,7 +14,7 @@ struct PackListItemView: View {
         SwipeItemView(content: {
             VStack {
                 Button(action: {
-                    deletePackInfoModel()
+                    
                 }, label: {
                     HStack {
                         Spacer()
@@ -89,7 +89,7 @@ struct PackListItemView: View {
 struct ListButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .background(configuration.isPressed ? ColorManager.primaryColor : .clear )
+            .background(configuration.isPressed ? ColorManager.secondaryColor : .clear )
             .cornerRadius(10)
             .padding(.trailing, 20)
     }

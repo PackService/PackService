@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PackListTabView: View {
     
-    @State var serviceAgreeScreen: Bool = false
     @StateObject var packInfoDatas = PackInfoViewModel()
     
     var body: some View {
