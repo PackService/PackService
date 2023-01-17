@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SelectCompanyView: View {
     
+    @StateObject var companyVM = CompanyService()
     @Environment(\.presentationMode) var presentationMode
     @Binding var show: Bool
     @Binding var selected: String?
@@ -77,13 +78,21 @@ extension SelectCompanyView {
     var companyGrid: some View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 24) {
-                ForEach(names, id: \.self) { name in
-                    let company = LogoType(rawValue: name) ?? LogoType.cj
+//                ForEach(names, id: \.self) { name in
+//                    let company = LogoType(rawValue: name) ?? LogoType.cj
+//                    Button {
+//                        selected = "\(name)"
+//                        show = false
+//                    } label: {
+//                        PackLogoButtonView(circleColor: .gray, logoImage: company.logo.image, logoName: "\(company.simpleDescription())")
+//                    }
+//                }
+                ForEach(companyVM.allCompanies.company) { company in
+                    let logo = LogoType(rawValue: company.id) ?? LogoType.etc
                     Button {
-                        selected = "\(name)"
-                        show = false
+                        
                     } label: {
-                        PackLogoButtonView(circleColor: .gray, logoImage: company.logo.image, logoName: "\(company.simpleDescription())")
+                        PackLogoButtonView(circleColor: .gray, logoImage: logo.logo.image, logoName: company.name)
                     }
                 }
             }
