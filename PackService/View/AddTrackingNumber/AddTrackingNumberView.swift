@@ -12,10 +12,11 @@ struct AddTrackingNumberView: View {
     @StateObject var recommendVM = RecommendService("")
     @State var selectedCompany = Recommend(id: "", international: "", name: "")
     @State var trackingNumber: String = ""
-    @State var isValid: Bool = false
+    @State var isValid: Bool = true
     @State var isSubmitted: Bool = false
     @FocusState var focusState: TextFieldType?
     @State var animationTrigger: Bool = false
+    @State var trackAttempt: Bool = false
     
     
     @State var text: String? = nil
@@ -55,13 +56,12 @@ struct AddTrackingNumberView: View {
     
     private func content(proxy: GeometryProxy) -> some View {
         
-        let names = ["04", "46", "13", "01", "21", "53", "23"]
+        let sortedRecommend = recommendVM.allRecommend.recommend.sorted(by: {$0.id < $1.id})
         var width = CGFloat.zero
         var height = CGFloat.zero
         return ZStack(alignment: .topLeading) {
             
-            
-            ForEach(recommendVM.allRecommend.recommend) { name in
+            ForEach(sortedRecommend) { name in
                 let company = LogoType(rawValue: name.id) ?? LogoType.etc
                 
                 // Custom Button Style 재정의 해야함
@@ -78,7 +78,7 @@ struct AddTrackingNumberView: View {
                           height -= value.height
                       }
                       let result = width
-                      if name.id == names.last! {
+                      if name.id == sortedRecommend.last!.id {
                           width = 0
                       } else {
                           width -= value.width
@@ -87,7 +87,7 @@ struct AddTrackingNumberView: View {
                   })
                   .alignmentGuide(.top, computeValue: { _ in
                       let result = height
-                      if name.id == names.last! {
+                      if name.id == sortedRecommend.last!.id {
                           height = 0
                       }
                       return result
@@ -101,23 +101,25 @@ struct AddTrackingNumberView: View {
             focusState = nil
         }
     }
-    
+        
     func buttonPressed() {
         focusState = nil
         isSubmitted = true
         validationCheck()
         
-//        emailAttempt = (isSubmitted && !isEmailValid)
-//        passwordAttempt = (isSubmitted && !isPasswordValid)
-//        
-//        if !(isEmailValid && isPasswordValid) {
-//            withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
-//                animationTrigger = true
-//            }
+        trackAttempt = (isSubmitted && !isValid)
+
+//        if !(isValid) {
+            withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
+                animationTrigger = true
+            }
 //        }
         
         animationTrigger = false
-//        showSelectCompanyView = true
+    }
+    
+    func selectButtonPressed() {
+        showSelectCompanyView = true
     }
     
     func capsulePressed(_ name: String) {
@@ -140,8 +142,10 @@ extension AddTrackingNumberView {
             }
     }
     
+    
     var trackingNumberTextField: some View {
-        TextFieldView(title: "운송장 번호를 입력하세요", input: $trackingNumber, wrongAttempt: $isValid, isFocused: $focusState, animationTrigger: $animationTrigger, type: .trackingNumber)
+        
+        TextFieldView(title: "운송장 번호를 입력하세요", input: $trackingNumber, wrongAttempt: $trackAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .trackingNumber)
             .keyboardType(.numberPad)
             .onSubmit {
                 toggleFocus()
@@ -153,7 +157,7 @@ extension AddTrackingNumberView {
     
     var selectCompanyButton: some View {
         Button {
-            buttonPressed()
+            selectButtonPressed()
         } label: {
             
             HStack {
