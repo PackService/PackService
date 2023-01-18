@@ -9,11 +9,14 @@ import SwiftUI
 
 struct AddTrackingNumberView: View {
     
+    @StateObject var recommendVM = RecommendService("")
+    @State var selectedCompany = Recommend(id: "", international: "", name: "")
     @State var trackingNumber: String = ""
     @State var isValid: Bool = false
     @State var isSubmitted: Bool = false
     @FocusState var focusState: TextFieldType?
     @State var animationTrigger: Bool = false
+    
     
     @State var text: String? = nil
     
@@ -57,36 +60,37 @@ struct AddTrackingNumberView: View {
         var height = CGFloat.zero
         return ZStack(alignment: .topLeading) {
             
-            ForEach(names, id: \.self) { name in
-                let company = LogoType(rawValue: name) ?? LogoType.cj
+            
+            ForEach(recommendVM.allRecommend.recommend) { name in
+                let company = LogoType(rawValue: name.id) ?? LogoType.etc
                 
                 // Custom Button Style 재정의 해야함
                 Button(action: {
-                    capsulePressed(name)
+                    capsulePressed(name.name)
                 }, label: {
-                    CompanyCapsuleView(color: company.logo.bgColor, logoImage: company.logo.image, logoName: "\(company.self)", nameColor: company.logo.fgColor)
+                    CompanyCapsuleView(color: company.logo.bgColor, logoImage: company.logo.image, logoName: name.name, nameColor: company.logo.fgColor)
                 })
                 .buttonStyle(CapsuleButtonStyle())
                   .padding([.horizontal, .vertical], 4)
                   .alignmentGuide(.leading, computeValue: { value in
-                        if abs(width - value.width) > proxy.size.width {
+                      if abs(width - value.width) > proxy.size.width {
                           width = 0
                           height -= value.height
-                        }
-                        let result = width
-                      if name == names.last! {
+                      }
+                      let result = width
+                      if name.id == names.last! {
                           width = 0
-                        } else {
+                      } else {
                           width -= value.width
-                        }
-                        return result
+                      }
+                      return result
                   })
                   .alignmentGuide(.top, computeValue: { _ in
-                        let result = height
-                        if name == names.last! {
+                      let result = height
+                      if name.id == names.last! {
                           height = 0
-                        }
-                        return result
+                      }
+                      return result
                   })
             }
         }
@@ -100,12 +104,32 @@ struct AddTrackingNumberView: View {
     
     func buttonPressed() {
         focusState = nil
-        showSelectCompanyView = true
+        isSubmitted = true
+        validationCheck()
+        
+//        emailAttempt = (isSubmitted && !isEmailValid)
+//        passwordAttempt = (isSubmitted && !isPasswordValid)
+//        
+//        if !(isEmailValid && isPasswordValid) {
+//            withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
+//                animationTrigger = true
+//            }
+//        }
+        
+        animationTrigger = false
+//        showSelectCompanyView = true
     }
     
     func capsulePressed(_ name: String) {
         self.text = name
     }
+    
+    func validationCheck() {
+        if trackingNumber == "12345" {
+            self.isValid = true
+        }
+    }
+    
 }
 
 extension AddTrackingNumberView {
@@ -121,6 +145,9 @@ extension AddTrackingNumberView {
             .keyboardType(.numberPad)
             .onSubmit {
                 toggleFocus()
+            }
+            .onChange(of: trackingNumber) { _ in
+                recommendVM.getRecommendCompanies(trackingNumber)
             }
     }
     

@@ -9,10 +9,9 @@ import SwiftUI
 
 struct RecommendTrackView: View {
     @StateObject var recommendVM = RecommendService("")
-    
-    @State var trackingNumber = ""
     @State var selectedCompany = Recommend(id: "", international: "", name: "")
 
+    @State var trackingNumber = ""
     var body: some View {
         VStack(spacing: 20) {
             Form {

@@ -91,14 +91,20 @@ enum LogoType: String {
     case tnt = "25"
     case ups = "14"
     case usps = "26"
-    case etc = "000"
+    case etc = "998"
+    
     
     var logo: Logo {
         switch self {
         case .cj, .cupost, .daesin, .dhl, .ems, .fedex, .gsi, .gspostbox, .hanjin, .hapdong, .ilyana, .koreapost, .kyeongdong, .logen, .lotte, .lxpantos, .nonghyup, .tnt, .ups, .usps:
             return Logo(image: Image("logo_\(self)"), bgColor: Color("bgcolor_\(self)"), fgColor: Color("fgcolor_\(self)"))
-        default:
-            return Logo(image: Image(systemName: "box.truck.fill"), bgColor: ColorManager.background2, fgColor: ColorManager.black)
+        case .etc:
+            return Logo(image: truckImage(), bgColor: ColorManager.background2, fgColor: ColorManager.black)
+        }
+        
+        func truckImage() -> Image {
+            return Image(systemName: "box.truck")
+                .resizable()
         }
     }
 }
