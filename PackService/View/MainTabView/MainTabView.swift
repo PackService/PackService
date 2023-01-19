@@ -80,6 +80,7 @@ extension MainTabView {
 
 // MARK: - MainTabView의 SliderTabView
 struct SliderTabView: View {
+    @State var step: Double = 1
     init() {
         UIPageControl.appearance().currentPageIndicatorTintColor = .black
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.1)
@@ -119,35 +120,74 @@ struct SliderTabView: View {
                                             .font(FontManager.caption1)
                                     }
                                 }
+                                Button {
+                                    step += 1
+                                } label: {
+                                    Image(systemName: "arrow.clockwise.circle.fill")
+                                        .renderingMode(.template)
+                                        .resizable()
+                                        .frame(width: 24, height: 24)
+                                        .foregroundColor(ColorManager.primaryColor)
+                                }
                                 Spacer()
                             }
                             .padding(.top, 24)
                             .padding(.leading, 16)
                             .padding(.trailing, 34)
                             
-                            HStack {
-                                ZStack(alignment: .leading) {
-                                    Rectangle()
-                                        .frame(width: 250, height: 12)
-                                        .foregroundColor(ColorManager.background2)
-                                    Image(systemName: "house.circle.fill")
-                                        .resizable()
-                                        .frame(width: 32, height: 32)
-                                        .foregroundColor(ColorManager.background2)
-                                        .background(ColorManager.foreground2)
-                                        .clipShape(Circle())
-                                        .padding(.leading, 232)
-                                    OrderButton()
-                                    Image(systemName: "shippingbox.circle.fill")
-                                        .resizable()
-                                        .frame(width: 32, height: 32)
-                                        .foregroundColor(ColorManager.primaryColor)
-                                        .background(ColorManager.background)
-                                        .clipShape(Circle())
-                                        .padding(.leading, -17)
+//                            HStack {
+//                                ZStack(alignment: .leading) {
+//                                    Rectangle()
+//                                        .frame(width: 250, height: 12)
+//                                        .foregroundColor(ColorManager.background2)
+//                                    Image(systemName: "house.circle.fill")
+//                                        .resizable()
+//                                        .frame(width: 32, height: 32)
+//                                        .foregroundColor(ColorManager.background2)
+//                                        .background(ColorManager.foreground2)
+//                                        .clipShape(Circle())
+//                                        .padding(.leading, 232)
+//                                    OrderButton()
+//                                    Image(systemName: "shippingbox.circle.fill")
+//                                        .resizable()
+//                                        .frame(width: 32, height: 32)
+//                                        .foregroundColor(ColorManager.primaryColor)
+//                                        .background(ColorManager.background)
+//                                        .clipShape(Circle())
+//                                        .padding(.leading, -17)
+//                                }
+//                            }
+//                            Spacer()
+                            VStack {
+                                Group {
+                                    TrackingProgressView2(currentStep: $step)
+                                        .frame(height: 32)
+                                        .padding(.top, 24)
+                                        .padding(.horizontal, 12)
+                                        .animation(Animation.easeIn(duration: 1.0), value: step)
+                                        .onAppear {
+                                            step = 0
+                                        }
+                                    //                        .background(Color.red)
+                                    
+                                    var arr = ["군포", "기흥", nil, "죽전"]
+                                    
+                                    HStack {
+                                        ForEach(arr, id: \.self) { item in
+                                            Text(item ?? "(정보없음)")
+                                                .font(FontManager.caption1)
+                                                .foregroundColor(item != arr[Int(step)] ? ColorManager.foreground1 : ColorManager.primaryColor)
+                                            //                        Text((dict[key] ?? "(정보없음)") ?? "(정보없음)")
+                                            if item != arr.last! {
+                                                Spacer()
+                                            }
+                                            
+                                        }
+                                    }
+                                    .padding(.horizontal, 20)
+                                    .padding(.bottom, 8)
                                 }
                             }
-                            Spacer()
                         }
                         .background( // slideTabView 그림자 넣기
                             ColorManager.background

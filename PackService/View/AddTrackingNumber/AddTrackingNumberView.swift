@@ -11,12 +11,12 @@ struct AddTrackingNumberView: View {
     
     @StateObject var recommendVM = RecommendService("")
     @State var selectedCompany = Recommend(id: "", international: "", name: "")
-    @State var trackingNumber: String = ""
-    @State var isValid: Bool = true
-    @State var isSubmitted: Bool = false
+    @State var trackingNumber: String = "" //emailInput
+    @State var isValid: Bool = true //isemailVaild
+    @State var isSubmitted: Bool = false //
+    @State var trackAttempt: Bool = false
     @FocusState var focusState: TextFieldType?
     @State var animationTrigger: Bool = false
-    @State var trackAttempt: Bool = false
     
     
     @State var text: String? = nil
@@ -103,20 +103,22 @@ struct AddTrackingNumberView: View {
     }
         
     func buttonPressed() {
-        focusState = nil
+//        focusState = nil
         isSubmitted = true
         validationCheck()
         
         trackAttempt = (isSubmitted && !isValid)
 
-//        if !(isValid) {
+        if !(isValid) {
             withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
                 animationTrigger = true
             }
-//        }
+        }
         
         animationTrigger = false
     }
+
+    
     
     func selectButtonPressed() {
         showSelectCompanyView = true
