@@ -11,13 +11,12 @@ struct AddTrackingNumberView: View {
     
     @StateObject var recommendVM = RecommendService("")
     @State var selectedCompany = Recommend(id: "", international: "", name: "")
-    @State var trackingNumber: String = "" //emailInput
-    @State var isValid: Bool = true //isemailVaild
+    @State var trackingNumber: String = ""
+    @State var isValid: Bool = false
     @State var isSubmitted: Bool = false //
     @State var trackAttempt: Bool = false
     @FocusState var focusState: TextFieldType?
     @State var animationTrigger: Bool = false
-    
     
     @State var text: String? = nil
     
@@ -35,9 +34,8 @@ struct AddTrackingNumberView: View {
                 companyCapsuleList
                 
                 Spacer()
-                
+                Text(trackAttempt.description)
                 addTrackingNumberButton
-                
             }
             .padding(.horizontal, 20)
             .padding(.top, 41)
@@ -52,11 +50,13 @@ struct AddTrackingNumberView: View {
             .animation(.spring(), value: showSelectCompanyView)
             .zIndex(2.0)
         }
+//        .onDisappear() 이거 12345 송장번호 통과되면 textfield변수들 다시 초기로 돌려줘야 함
     }
     
     private func content(proxy: GeometryProxy) -> some View {
         
-        let sortedRecommend = recommendVM.allRecommend.recommend.sorted(by: {$0.id < $1.id})
+        let sortedRecommend = recommendVM.allRecommend.recommend.sorted(by: {$0.id < $1.id}).prefix(6)
+        
         var width = CGFloat.zero
         var height = CGFloat.zero
         return ZStack(alignment: .topLeading) {
@@ -101,15 +101,16 @@ struct AddTrackingNumberView: View {
             focusState = nil
         }
     }
-        
+    
+    // MARK: - buttonPressed()
     func buttonPressed() {
 //        focusState = nil
         isSubmitted = true
         validationCheck()
         
-        trackAttempt = (isSubmitted && !isValid)
+        trackAttempt = !(isSubmitted && isValid)
 
-        if !(isValid) {
+        if trackAttempt {
             withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
                 animationTrigger = true
             }

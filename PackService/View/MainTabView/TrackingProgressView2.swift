@@ -30,9 +30,9 @@ struct TrackingProgressViewStyle2: ProgressViewStyle {
                     ZStack(alignment: .leading) {
                         RoundedRectangle(cornerRadius: 32)
                             .fill(ColorManager.background2)
-                            .frame(width: geometry.size.width, height: 12)
+                            .frame(width: geometry.size.width, height: 8)
                         RoundedRectangle(cornerRadius: 32)
-                            .frame(width: value == 0 ? 40 : CGFloat(configuration.fractionCompleted ?? 0) * geometry.size.width, height: 12)
+                            .frame(width: value == 0 ? 40 : CGFloat(configuration.fractionCompleted ?? 0) * geometry.size.width, height: 8)
                             .foregroundColor(ColorManager.primaryColor)
                         Image(systemName: "shippingbox.circle.fill")
                             .resizable()
