@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 import KakaoSDKAuth
 import KakaoSDKUser
-import FirebaseAuth
+import Firebase
 
 class KakaoAuthVM: ObservableObject {
     
@@ -74,16 +74,19 @@ class KakaoAuthVM: ObservableObject {
                         if let error = error {
                             print(error)
                         } else {
-//                            Auth.auth().createUser(withEmail: (kuser?.kakaoAccount?.email)!, password: "\(String(describing: kuser?.id))") { fuser, error in
-//                                if let error = error {
-//                                    print("FB : signup failed")
-//                                    print(error)
-//                                    Auth.auth().signIn(withEmail: (kuser?.kakaoAccount?.email)!, password: "\(String(describing: kuser?.id))", completion: nil)
-//                                } else {
-//                                    print("FB : signup success")
-//                                }
-//                            }
-                            print(kuser)
+                            Auth.auth().createUser(withEmail: (kuser?.kakaoAccount?.email)!, password: "\(String(describing: kuser?.id))") { fuser, error in //회원가입 실행
+                                if let error = error { // 아이디가 있으면 로그인
+                                    print("FB : signup failed")
+                                    print(error)
+                                    Auth.auth().signIn(withEmail: (kuser?.kakaoAccount?.email)!, password: "\(String(describing: kuser?.id))", completion: nil)
+                                } else { // 아이디가 없으니까 firbase 연동
+                                    guard let user = fuser?.user else { return } // 파이어베이스 유저 객체를 가져옴
+                                    print("FB : signup success")
+                                    let db = Firestore.firestore()
+                                    db.collection("users").document(user.uid).setData(["email": kuser?.kakaoAccount?.email])
+                                    print(user.uid)
+                                }
+                            }
                         }
                     }
                     continuation.resume(returning: true)
@@ -92,6 +95,7 @@ class KakaoAuthVM: ObservableObject {
         }
     }
     
+    // 2554604922
     @MainActor
     func handleKakaoLogin() {
         Task {
