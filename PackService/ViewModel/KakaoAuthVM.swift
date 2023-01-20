@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 import KakaoSDKAuth
 import KakaoSDKUser
+import FirebaseAuth
 
 class KakaoAuthVM: ObservableObject {
     
@@ -52,14 +53,14 @@ class KakaoAuthVM: ObservableObject {
                     _ = oauthToken
                     continuation.resume(returning: true)
                     print(oauthToken)
-                    // 뭐 client id 이런걸로 택배 그거 해야겄네
+                    
                 }
             }
         }
     }
-    
+
     func handleLoginWithKakaoAccount() async -> Bool {
-        await withCheckedContinuation{ continuation in
+        await withCheckedContinuation { continuation in
             UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
                 if let error = error {
                     print(error)
@@ -68,6 +69,23 @@ class KakaoAuthVM: ObservableObject {
                 else {
                     print("loginWithKakaoAccount() success.")
                     _ = oauthToken
+//                    registerUser(email: <#T##String#>, password: <#T##String#>)
+                    UserApi.shared.me { kuser, error in
+                        if let error = error {
+                            print(error)
+                        } else {
+//                            Auth.auth().createUser(withEmail: (kuser?.kakaoAccount?.email)!, password: "\(String(describing: kuser?.id))") { fuser, error in
+//                                if let error = error {
+//                                    print("FB : signup failed")
+//                                    print(error)
+//                                    Auth.auth().signIn(withEmail: (kuser?.kakaoAccount?.email)!, password: "\(String(describing: kuser?.id))", completion: nil)
+//                                } else {
+//                                    print("FB : signup success")
+//                                }
+//                            }
+                            print(kuser)
+                        }
+                    }
                     continuation.resume(returning: true)
                 }
             }
@@ -85,6 +103,19 @@ class KakaoAuthVM: ObservableObject {
                 //카카오 웹뷰로 로그인
                 logStatus = await handleLoginWithKakaoAccount()
             }
+        }
+    }
+    
+    func registerUser(email: String, password: String) {
+        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+            if let error = error {
+                print("Error : \(error.localizedDescription)")
+                return
+            }
+            
+            guard let user = result?.user else { return }
+            
+            print(user.uid)
         }
     }
     

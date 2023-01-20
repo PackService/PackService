@@ -11,11 +11,14 @@ import Firebase
 struct HomeView: View {
     @AppStorage("log_status") var logStatus = false
     @StateObject var kakaoAuthVM = KakaoAuthVM()
+    @State var currentUser: String = ""
+    @State var name: String = ""
     
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
                 Text("Logged in successFully")
+                
                 Button(action: {
                     // logout
                     DispatchQueue.global(qos: .background).async {
@@ -36,6 +39,9 @@ struct HomeView: View {
                         .background(Color.pink)
                         .clipShape(Capsule())
                 })
+                
+                Text(currentUser)
+                Text(name)
                 
                 Spacer()
                 

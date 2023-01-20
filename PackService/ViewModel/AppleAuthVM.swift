@@ -10,7 +10,7 @@ import CryptoKit
 import AuthenticationServices
 import Firebase
 
-class AppleAuthVM: ObservableObject {
+class AppleAuthVM: ObservableObject { // 사용자 Create 완료
     @Published var nonce = ""
     @AppStorage("log_status") var logStatus = false
     
@@ -33,7 +33,12 @@ class AppleAuthVM: ObservableObject {
                 print("error")
                 return
             }
-            
+            guard let user = result?.user else { return } // 파이어베이스 유저 객체를 가져옴
+   
+            if err == nil { // firebase db에 저장하는 방법
+                let db = Firestore.firestore()
+                db.collection("users").document(user.uid).setData(["email": user.email])
+            }
             // usr succesfully logged into firebase
             print("login firebase")
             print(firebaseCredential)

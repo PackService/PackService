@@ -32,13 +32,13 @@ struct LoginView: View {
                         emailAuthVM.login(email: emailInput, password: passwordInput)
                         print("로그인 버튼 클릭되었음")
                     }, label: {
-                        Text("가나다라마바사아자차카타파하")
+                        Text("로그인")
                             .font(.system(size: 20))
                     })
                     Button {
                         emailAuthVM.logout()
                     } label: {
-                        Text("가나다라마바사아자차카타파하")
+                        Text("로그아웃")
                             .font(.custom("Pretendard-Bold", size: 20))
                     }
                     .onAppear {
@@ -51,9 +51,9 @@ struct LoginView: View {
                         }
                     }
                     
-                    
                     Text(emailAuthVM.currentUser?.uid ?? "비로그인")
                         .padding()
+                    
                     Button(action: {kakaoAuthVM.handleKakaoLogin()}){
                         Image("kakao_login_large_wide")
                             .resizable()
