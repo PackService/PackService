@@ -35,7 +35,7 @@
 		AD1ADDCE2952477300545DB7 /* MemberShipAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDCD2952477300545DB7 /* MemberShipAgreementView.swift */; };
 		AD1ADDD029531EC600545DB7 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDCF29531EC600545DB7 /* SignUpView.swift */; };
 		AD1ADDD2295331C800545DB7 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDD1295331C800545DB7 /* ProfileView.swift */; };
-		AD1ADDD42953326C00545DB7 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDD32953326C00545DB7 /* UserData.swift */; };
+		AD1ADDD42953326C00545DB7 /* TrackInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDD32953326C00545DB7 /* TrackInfo.swift */; };
 		AD1ADDDE29598F0A00545DB7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = AD1ADDDD29598F0A00545DB7 /* .swiftlint.yml */; };
 		AD1ADDE02959A79800545DB7 /* RecommendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDDF2959A79800545DB7 /* RecommendService.swift */; };
 		AD1ADDE22959A94700545DB7 /* RecommendTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1ADDE12959A94700545DB7 /* RecommendTrackView.swift */; };
@@ -127,7 +127,7 @@
 		AD1ADDCD2952477300545DB7 /* MemberShipAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberShipAgreementView.swift; sourceTree = "<group>"; };
 		AD1ADDCF29531EC600545DB7 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		AD1ADDD1295331C800545DB7 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		AD1ADDD32953326C00545DB7 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		AD1ADDD32953326C00545DB7 /* TrackInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackInfo.swift; sourceTree = "<group>"; };
 		AD1ADDDD29598F0A00545DB7 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		AD1ADDDF2959A79800545DB7 /* RecommendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendService.swift; sourceTree = "<group>"; };
 		AD1ADDE12959A94700545DB7 /* RecommendTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendTrackView.swift; sourceTree = "<group>"; };
@@ -399,7 +399,7 @@
 		ADE0F3B3293455D4005D2732 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AD1ADDD32953326C00545DB7 /* UserData.swift */,
+				AD1ADDD32953326C00545DB7 /* TrackInfo.swift */,
 				7E04350A2954454C005187E8 /* CompanyModel.swift */,
 				7E8724D52959818E00C0B1C9 /* TrackingInfoModel.swift */,
 				AD1ADDE32959B57500545DB7 /* RecommendModel.swift */,
@@ -546,7 +546,7 @@
 				AD1ADDE02959A79800545DB7 /* RecommendService.swift in Sources */,
 				AD583058296AA78800099836 /* PackLogoButtonView.swift in Sources */,
 				ADA959A02979229600308009 /* TrackingProgressView2.swift in Sources */,
-				AD1ADDD42953326C00545DB7 /* UserData.swift in Sources */,
+				AD1ADDD42953326C00545DB7 /* TrackInfo.swift in Sources */,
 				7EF5DE4B295ECA600064E4D1 /* FontManager.swift in Sources */,
 				ADE0F3B729345618005D2732 /* AppDelegate.swift in Sources */,
 				7EF5DE53295EF3960064E4D1 /* ThirdPartyButtonView.swift in Sources */,

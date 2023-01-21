@@ -11,8 +11,10 @@ import Firebase
 struct HomeView: View {
     @AppStorage("log_status") var logStatus = false
     @StateObject var kakaoAuthVM = KakaoAuthVM()
+    @StateObject var emailAuthVM = EmailAuthVM()
     @State var currentUser: String = ""
-    @State var name: String = ""
+    
+    @State var testTrackNumber: String = ""
     
     var body: some View {
         NavigationView {
@@ -40,8 +42,14 @@ struct HomeView: View {
                         .clipShape(Capsule())
                 })
                 
+                TextField("배송번호", text: $testTrackNumber)
                 Text(currentUser)
-                Text(name)
+                Text(testTrackNumber)
+                Button(action: {
+                    emailAuthVM.addTrackNumber(trackNumber: testTrackNumber, trackCompany: testTrackNumber)
+                }, label: {
+                    Text("test버튼")
+                })
                 
                 Spacer()
                 

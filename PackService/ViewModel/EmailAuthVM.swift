@@ -24,22 +24,33 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
                 return
             }
             
-            guard let user = result?.user else { return } // 파이어베이스 유저 객체를 가져옴
-                    
-            if error == nil { //firebase db에 저장하는 방법
-                self.currentUser = result?.user
-                self.logStatus = true // contentview에서 home으로 갈지 login으로 갈지 결정해줌. 로그인 누르면 homeview로 넘어가도록 함
-                let db = Firestore.firestore()
-                db.collection("users").document(user.uid).setData(["email": email])
-            }
+            self.logStatus = true // contentview에서 home으로 갈지 login으로 갈지 결정해줌. 로그인 누르면 homeview로 넘어가도록 함
         }
     }
     
-//    func addTrackNumber(TrackNumber: String) {
-//        let db = Firestore.firestore()
-////        guard let user = currentUser?.uid else { return }
-//        db.collection("users").document(currentUser?.uid ?? "").setData(["track_number": TrackNumber])
-//    }
+    func addTrackNumber(trackNumber: String, trackCompany: String) {
+        let db = Firestore.firestore()
+       
+//        let city = City(email: nil, name: "Los Angeles",
+//                        state: "CA"
+//        )
+//
+//        do {
+//            try db.collection("users").document(currentUser?.uid ?? "").setData(city.dataToPass)
+//        } catch let error {
+//            print("Error writing city to Firestore: \(error)")
+//        }
+        
+        
+        do {
+            try db.collection("users").document(currentUser?.uid ?? "").updateData([
+                "trackNumber": FieldValue.arrayUnion([trackNumber]),
+                "trackCompany": FieldValue.arrayUnion([trackCompany]),
+            ])
+        } catch let error {
+            print("\(error)")
+        }
+    }
     
     
     func logout() {
@@ -54,9 +65,15 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
                 return
             }
             
-            guard let user = result?.user else { return }
+            guard let user = result?.user else { return } // 파이어베이스 유저 객체를 가져옴
+            let trackInfo = TrackInfo(email: email, trackNumber: nil)
             
-            print(user.uid)
+            if error == nil { //firebase db에 저장하는 방법
+                self.currentUser = result?.user
+                let db = Firestore.firestore()
+                db.collection("users").document(user.uid).setData(trackInfo.setEmail)
+            }
         }
     }
 }
+

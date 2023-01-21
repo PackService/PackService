@@ -90,9 +90,9 @@ struct MemberShipAgreementView: View {
         
         VStack {
             Spacer()
-            if ageAgree && serviceAgree && personInfoAgree { //버튼 활성화 조건
+            if ageAgree && serviceAgree && personInfoAgree && emailInput.count > 5 && passwordInput.count > 8 && passwordInput == passwordConfirmInput { // 버튼 활성화 조건(예외처리 해야함) 이메일 형식, 비밀번호 형식, 비밀번호랑 비밀번호 확인 다를 때
                 Button(action: {
-//                    viewModel.registerUser(email: emailInput, password: passwordInput)
+                    viewModel.registerUser(email: emailInput, password: passwordInput)
                     isSubmitted = true
                     validationCheck()
                     

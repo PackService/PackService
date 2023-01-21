@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ProfileView: View {
-    @State var userData: UserData? = nil
+//    @State var userData: UserData? = nil
     @State var emailInput : String = ""
     @State var passwordInput: String = ""
     
