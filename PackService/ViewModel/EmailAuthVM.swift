@@ -28,29 +28,33 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
         }
     }
     
-    func addTrackNumber(trackNumber: String, trackCompany: String) {
+    func addTrackNumber(trackNumber: String, trackCompany: String) { // 택배 create
         let db = Firestore.firestore()
-       
-//        let city = City(email: nil, name: "Los Angeles",
-//                        state: "CA"
-//        )
-//
-//        do {
-//            try db.collection("users").document(currentUser?.uid ?? "").setData(city.dataToPass)
-//        } catch let error {
-//            print("Error writing city to Firestore: \(error)")
-//        }
         
+        let packages = Packages(trackNumber: trackNumber, trackCompany: "대한통운")
         
         do {
             try db.collection("users").document(currentUser?.uid ?? "").updateData([
-                "trackNumber": FieldValue.arrayUnion([trackNumber]),
-                "trackCompany": FieldValue.arrayUnion([trackCompany]),
+                "userTracksInfo": FieldValue.arrayUnion([packages.setTrackNumber])
             ])
         } catch let error {
             print("\(error)")
         }
     }
+    
+//    func readTrackNumber() {
+//        let db = Firestore.firestore()
+//        let docRef = db.collection("users").document(currentUser?.uid ?? "")
+//        
+//        docRef.getDocument { (document, error) in
+//            if let document = document, document.exists {
+//                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+//                print("Document data: \(dataDescription)")
+//            } else {
+//                print("Document does not exist")
+//            }
+//        }
+//    }
     
     
     func logout() {
@@ -66,7 +70,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
             }
             
             guard let user = result?.user else { return } // 파이어베이스 유저 객체를 가져옴
-            let trackInfo = TrackInfo(email: email, trackNumber: nil)
+            let trackInfo = TrackInfo(email: email, tracks: nil)
             
             if error == nil { //firebase db에 저장하는 방법
                 self.currentUser = result?.user
@@ -75,5 +79,5 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
             }
         }
     }
+    
 }
-

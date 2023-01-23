@@ -11,8 +11,8 @@ import Foundation
 public struct TrackInfo: Codable {
     
     let email: String?
-    let trackNumber: [Packages]?
-        
+    let tracks: [Packages]?
+    
     var setEmail : [String:Any] {
         return [
             "email" : self.email
