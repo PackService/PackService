@@ -11,11 +11,11 @@ import Foundation
 public struct TrackInfo: Codable {
     
     let email: String?
-    let tracks: [Packages]?
+    let userTracksInfo: [Packages]?
     
-    var setEmail : [String:Any] {
+    var setEmail: [String:Any] {
         return [
-            "email" : self.email
+            "email": self.email
         ]
     }
 }
@@ -24,10 +24,10 @@ public struct Packages: Codable {
     let trackNumber: String?
     let trackCompany: String?
     
-    var setTrackNumber : [String:Any] {
+    var setTrackNumber: [String:Any] {
         return [
-            "trackNumber" : self.trackNumber,
-            "trackCompany" : self.trackCompany
+            "trackNumber": self.trackNumber,
+            "trackCompany": self.trackCompany
         ]
     }
 }

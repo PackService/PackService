@@ -42,20 +42,39 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
         }
     }
     
-//    func readTrackNumber() {
-//        let db = Firestore.firestore()
-//        let docRef = db.collection("users").document(currentUser?.uid ?? "")
-//        
-//        docRef.getDocument { (document, error) in
-//            if let document = document, document.exists {
-//                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-//                print("Document data: \(dataDescription)")
-//            } else {
-//                print("Document does not exist")
-//            }
-//        }
-//    }
+    func readTrackNumber() {
+        let db = Firestore.firestore()
+        let docRef = db.collection("users").document(currentUser?.uid ?? "")
+
+        docRef.getDocument{ (document, error) in
+            guard error == nil else {
+                print("error", error ?? "")
+                return
+            }
+
+            if let document = document, document.exists {
+                let data = document.data()
+                if let data = data {
+                    print("data", data)
+//                    self.freeboardTitle = data["title"] as? String ?? ""
+//                    self.freeboardNickName = data["nickname"] as? String ?? ""
+                }
+            }
+        }
+    }
     
+    func deleteUser() {
+        let user = Auth.auth().currentUser
+        user?.delete { error in
+          if let error = error {
+            // An error happened.
+              print(error)
+          } else {
+            // Account deleted.
+              print("현재 회원 삭제")
+          }
+        }
+    }
     
     func logout() {
         currentUser = nil
@@ -70,7 +89,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
             }
             
             guard let user = result?.user else { return } // 파이어베이스 유저 객체를 가져옴
-            let trackInfo = TrackInfo(email: email, tracks: nil)
+            let trackInfo = TrackInfo(email: email, userTracksInfo: nil)
             
             if error == nil { //firebase db에 저장하는 방법
                 self.currentUser = result?.user
