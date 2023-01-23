@@ -71,7 +71,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
     func readTrackNumber() {
         let db = Firestore.firestore()
         let docRef = db.collection("users").document(currentUser?.uid ?? "")
-
+        print("송장 읽기 버튼 눌림")
         docRef.getDocument{ (document, error) in
             guard error == nil else {
                 print("error", error ?? "")

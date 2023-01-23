@@ -48,14 +48,14 @@ struct HomeView: View {
                 Button(action: {
                     emailAuthVM.addTrackNumber(trackNumber: testTrackNumber, trackCompany: testTrackNumber)
                 }, label: {
-                    Text("test버튼")
+                    Text("송장 추가 버튼")
                 })
                 
                 
                 Button(action: {
                     emailAuthVM.readTrackNumber()
                 }, label: {
-                    Text("firebase read 버튼")
+                    Text("송장 읽기 버튼")
                 })
                 
                 Button(action: {

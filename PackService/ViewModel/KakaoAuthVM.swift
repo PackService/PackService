@@ -13,7 +13,13 @@ import Firebase
 
 class KakaoAuthVM: ObservableObject {
     
+    @Published var currentUser: Firebase.User?
     @AppStorage("log_status") var logStatus = false
+    
+    
+    init() {
+        currentUser = Auth.auth().currentUser
+    }
     @MainActor
     func kakaoLogout() {
         Task {
