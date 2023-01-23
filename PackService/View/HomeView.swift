@@ -59,6 +59,12 @@ struct HomeView: View {
                 })
                 
                 Button(action: {
+                    emailAuthVM.deleteTrackNumber(trackNumber: testTrackNumber)
+                }, label: {
+                    Text("송장번호 하나 삭제")
+                })
+                
+                Button(action: {
                     emailAuthVM.deleteUser()
                 }, label: {
                     Text("회원탈퇴")
@@ -66,17 +72,17 @@ struct HomeView: View {
                  
                 Spacer()
                 
-                NavigationLink {
-                    AddTrackingNumberView()
-                } label: {
-                    Text("운송장 번호 등록")
-                        .bold()
-                        .foregroundColor(.white)
-                        .padding(.vertical, 12)
-                        .frame(width: UIScreen.main.bounds.width / 2)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                }
+//                NavigationLink {
+//                    AddTrackingNumberView()
+//                } label: {
+//                    Text("운송장 번호 등록")
+//                        .bold()
+//                        .foregroundColor(.white)
+//                        .padding(.vertical, 12)
+//                        .frame(width: UIScreen.main.bounds.width / 2)
+//                        .background(Color.blue)
+//                        .cornerRadius(10)
+//                }
                 
 //                NavigationLink {
 //                    RecommendTrackView()

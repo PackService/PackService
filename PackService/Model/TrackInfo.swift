@@ -30,4 +30,8 @@ public struct Packages: Codable {
             "trackCompany": self.trackCompany
         ]
     }
+    
+    var setPackages: Any {
+        return self
+    }
 }

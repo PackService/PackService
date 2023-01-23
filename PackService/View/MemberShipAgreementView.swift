@@ -138,6 +138,8 @@ struct MemberShipAgreementView: View {
         if focusState == .email {
             focusState = .password
         } else if focusState == .password {
+            focusState = .passwordConfirm
+        } else if focusState == .passwordConfirm {
             focusState = nil
         }
     }

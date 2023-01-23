@@ -17,6 +17,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
         currentUser = Auth.auth().currentUser
     }
     
+    //로그인
     func login(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if let error = error {
@@ -28,6 +29,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
         }
     }
     
+    //송장번호 추가
     func addTrackNumber(trackNumber: String, trackCompany: String) { // 택배 create
         let db = Firestore.firestore()
         
@@ -42,6 +44,30 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
         }
     }
     
+    
+    //송장번호 하나 삭제
+    func deleteTrackNumber(trackNumber: String) {
+        let db = Firestore.firestore()
+        let trackInfoData: [String: Any] = [
+            "trackNumber" : trackNumber,
+            "trackCompany" : "대한통운"
+        ]
+        
+        DispatchQueue.main.async {
+            db.collection("users").document(self.currentUser?.uid ?? "").updateData([
+                "userTracksInfo" : FieldValue.arrayRemove([trackInfoData])
+            ]) { error in
+                if let error = error {
+                    print("Unable to delete userTracksInfo: \(error.localizedDescription)")
+                }  else {
+                    print("Successfully deleted userTracksInfo")
+                }
+            }
+        }
+        
+    }
+    
+    //송장번호 읽어오기
     func readTrackNumber() {
         let db = Firestore.firestore()
         let docRef = db.collection("users").document(currentUser?.uid ?? "")
@@ -63,6 +89,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
         }
     }
     
+    // 회원탈퇴
     func deleteUser() {
         let user = Auth.auth().currentUser
         user?.delete { error in
@@ -76,11 +103,13 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
         }
     }
     
+    // 로그아웃
     func logout() {
         currentUser = nil
         try? Auth.auth().signOut()
     }
     
+    // 회원가입
     func registerUser(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
             if let error = error {
