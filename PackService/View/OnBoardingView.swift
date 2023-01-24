@@ -6,9 +6,15 @@
 //
 
 import SwiftUI
+import AuthenticationServices
+
 
 struct OnBoardingView: View {
-    var body: some View {        
+    @State var signUpScreen: Bool = false // 회원가입 진행 bool 변수
+    @StateObject var kakaoAuthVM = KakaoAuthVM()
+    @StateObject var appleAuthVM = AppleAuthVM()
+    var body: some View {
+        
         NavigationView {
             VStack(alignment: .center) {
                 Text("내 소중한 택배의\n우당탕탕 대모험 📦")
@@ -19,20 +25,43 @@ struct OnBoardingView: View {
                 Spacer()
                 
                 VStack(spacing: 16) {
-                    Button {
-                        
-                    } label: {
-                        ThirdPartyButtonView(type: .apple)
+//                    Button {
+//
+//                    } label: {
+//                        ThirdPartyButtonView(type: .apple)
+//                    }
+                    SignInWithAppleButton { (request) in
+                        appleAuthVM.nonce = randomNonceString()
+                        request.requestedScopes = [.email,.fullName]
+                        request.nonce = sha256(appleAuthVM.nonce)
+                    } onCompletion: { (result) in
+                        //getting error or success
+                        switch result {
+                        case .success(let user):
+                            print("apple login success")
+                            guard let credential = user.credential as? ASAuthorizationAppleIDCredential else {
+                                print("error with firebase")
+                                return
+                            }
+                            appleAuthVM.authenticate(credential: credential)
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        }
                     }
+                    .cornerRadius(26)
+                    .foregroundColor(Color.white)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 52)
+                    .background(Color.black.cornerRadius(26))
                     
                     Button {
-                        
+                        kakaoAuthVM.handleKakaoLogin()
                     } label: {
                         ThirdPartyButtonView(type: .kakao)
                     }
                     
                     Button {
-                        
+                        signUpScreen.toggle()
                     } label: {
                         ThirdPartyButtonView(type: .email)
                     }
@@ -61,6 +90,11 @@ struct OnBoardingView: View {
             }
             .padding(.vertical, 41)
         }
+//        if signUpScreen { // 회원가입 화면 이동
+//            MemberShipAgreementView(signUpScreen: $signUpScreen)
+//                .transition(.move(edge: .bottom))
+//                .animation(.spring())
+//        }
     }
 }
 
