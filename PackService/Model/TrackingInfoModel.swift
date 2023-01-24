@@ -86,19 +86,32 @@ import Foundation
          }
  */
 
-
 // MARK: - TrackingInfo
 struct TrackingInfoModel: Codable {
-    let complete: Bool
-    let level: Int
-    let invoiceNo: String
-    let isValidInvoice: String
-    let itemImage, itemName: String
-    let receiverAddr, receiverName, recipient: String
-    let senderName: String
-    let trackingDetails: [TrackingDetailsModel]
+//    let complete: Bool
+//    let level: Int
+//    let invoiceNo: String
+//    let isValidInvoice: String
+//    let itemImage, itemName: String
+//    let receiverAddr, receiverName, recipient: String
+//    let senderName: String
+//    let trackingDetails: [TrackingDetailsModel]
+//    let estimate: String?
+//    let productInfo: String?
+    
+    let complete: Bool?
+    let level: Int?
+    let invoiceNo: String?
+    let isValidInvoice: String?
+    let itemImage, itemName: String?
+    let receiverAddr, receiverName, recipient: String?
+    let senderName: String?
+    let trackingDetails: [TrackingDetailsModel]?
     let estimate: String?
     let productInfo: String?
+    let status: Bool?
+    let msg: String?
+    let code: String?
     
     enum CodingKeys: String, CodingKey {
         case complete
@@ -111,6 +124,35 @@ struct TrackingInfoModel: Codable {
         case estimate
         case productInfo
         case isValidInvoice = "result"
+        case status
+        case msg
+        case code        
+    }
+    
+    var positionArray: [String?] {
+        var positions: [String?] = Array(repeating: nil, count: 4)
+        var removeStr = "HUB|Hub|hub|물류센터|직영.*|집배점|우체국|우편집중국"
+        
+        positions[0] = self.trackingDetails?.first?.detailWhere ?? "배달 전"
+        positions[1] = self.trackingDetails?.filter { $0.level <= 4 }.last?.detailWhere
+        positions[2] = self.trackingDetails?.filter { $0.level == 5 }.last?.detailWhere
+        positions[3] = self.trackingDetails?.filter { $0.level == 6 }.last?.detailWhere
+
+        for (index, position) in positions.enumerated() {
+            if let position = position {
+                var trimmed = position.replacingOccurrences(of: removeStr, with: "", options: .regularExpression)
+                
+                if trimmed.count == 4 {
+                    trimmed = String(trimmed.suffix(2))
+                } else if trimmed.count == 5 {
+                    trimmed = String(trimmed.suffix(3))
+                }
+                
+                positions[index] = trimmed
+            }
+        }
+
+        return positions
     }
 }
 
@@ -129,4 +171,13 @@ struct TrackingDetailsModel: Identifiable, Codable {
         case timeString
         case detailWhere = "where"
     }
+    
+    var timeAndDateTuple: (date: String, time: String) {
+        var timeArr = self.timeString.split(separator: " ").map { String($0) }
+        var date = timeArr[0].replacingOccurrences(of: "-", with: ".")
+        var time = String(timeArr[1].dropLast(3))
+        
+        return (date: date, time: time)
+    }
+    
 }

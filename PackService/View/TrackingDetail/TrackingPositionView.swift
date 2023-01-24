@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TrackingPositionView: View {
+    @EnvironmentObject var trackingDetailVM: TrackingInfoViewModel
+    
     @State var step: Double = 1
     @State var showList: Bool = false
 //    @State var listSize: CGSize = .zero
@@ -51,17 +53,14 @@ struct TrackingPositionView: View {
                             .onAppear {
                                 step = 0
                             }
-    //                        .background(Color.red)
-                        
-                        var arr = ["군포", "기흥", nil, "죽전"]
-
+                    
                         HStack {
-                            ForEach(arr, id: \.self) { item in
+                            ForEach(Array(zip(trackingDetailVM.positions.indices, trackingDetailVM.positions)), id: \.0) { index, item in
                                 Text(item ?? "(정보없음)")
                                     .font(FontManager.caption1)
-                                    .foregroundColor(item != arr[Int(step)] ? ColorManager.foreground1 : ColorManager.primaryColor)
+                                    .foregroundColor(item != trackingDetailVM.positions[Int(step)] ? ColorManager.foreground1 : ColorManager.primaryColor)
         //                        Text((dict[key] ?? "(정보없음)") ?? "(정보없음)")
-                                if item != arr.last! {
+                                if index != (trackingDetailVM.positions.count - 1) {
                                     Spacer()
                                 }
                                 
@@ -77,8 +76,14 @@ struct TrackingPositionView: View {
                     //MARK: - List
                     if showList {
                         VStack {
-                            ForEach(1..<16) { index in
-                                TrackingPositionListCellView(status: "집화처리", position: "군포직영", deliveryMan: "홍길동", time: "\(index)", date: "2022.11.22", isCurrent: true)
+                            ForEach(trackingDetailVM.trackingDetails) { detail in
+                                TrackingPositionListCellView(
+                                    status: detail.kind,
+                                    position: detail.detailWhere,
+                                    deliveryMan: detail.manName,
+                                    time: detail.timeAndDateTuple.time,
+                                    date: detail.timeAndDateTuple.date,
+                                    isCurrent: detail.id == trackingDetailVM.trackingDetails.last!.id)
                                     .padding(.vertical, 8)
                             }
                         }

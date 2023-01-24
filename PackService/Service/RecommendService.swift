@@ -17,7 +17,7 @@ class RecommendService: ObservableObject {
     }
     
     func getRecommendCompanies(_ invoice: String) {
-        guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/recommend?t_invoice=\(invoice)&t_key=eVPJb8troT0cn5eY15H6yw") else { return }
+        guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/recommend?t_invoice=\(invoice)&t_key=1DsMXGyjhh0tW8MAmxC1gw") else { return }
         
         recommendSubscription = NetworkingManager.download(url: url)
             .decode(type: RecommendModel.self, decoder: JSONDecoder())

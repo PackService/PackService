@@ -54,7 +54,9 @@ extension TrackingPositionListCellView {
                 Text(position)
                     
                 if let deliveryMan = deliveryMan {
-                    Text("(\(deliveryMan))" )
+                    if !deliveryMan.isEmpty {
+                        Text("(\(deliveryMan))" )
+                    }                    
                 }
             }
             .font(FontManager.caption1)

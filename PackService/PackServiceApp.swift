@@ -17,7 +17,8 @@ struct PackServiceApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TrackingDetailLoadingView(companyId: .constant("04"), invoiceNumber: .constant("555578838834"))
+//            555578838834
         }
     }
 }
