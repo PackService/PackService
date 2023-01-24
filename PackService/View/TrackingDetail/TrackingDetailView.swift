@@ -7,13 +7,30 @@
 
 import SwiftUI
 
+struct TrackingDetailLoadingView: View {
+    @Binding var companyId: String
+    @Binding var invoiceNumber: String
+
+    var body: some View {
+        TrackingDetailView(companyId: companyId, invoiceNumber: invoiceNumber)
+    }
+
+}
+
 struct TrackingDetailView: View {
+    @StateObject private var trackingDetailVM: TrackingInfoViewModel
+    
     @State var showMenu: Bool? = false
+    @State var showToast: Bool = false
+    
+    init(companyId: String, invoiceNumber: String) {
+        _trackingDetailVM = StateObject(wrappedValue: TrackingInfoViewModel(code: companyId, invoice: invoiceNumber))
+    }
     
     var body: some View {
         ZStack {
             ScrollView {
-                ZStack {
+                ZStack(alignment: .bottom) {
                     VStack(spacing: 16) {
                         header
                         
@@ -28,17 +45,29 @@ struct TrackingDetailView: View {
                         
                     }
                     .padding(.horizontal, 20)
-                        
+                    
                 }
                 .frame(maxHeight: .infinity)
+                
             }
             
             if showMenu ?? false {
-                MenuView(show: $showMenu)
+                MenuView(show: $showMenu, showToast: $showToast, tel: trackingDetailVM.deliveryManContact)
                     .animation(Animation.easeIn(duration: 2), value: showMenu)
             }
-        } 
+            
+            
+            
+        }
+        .environmentObject(trackingDetailVM)
+        .alert("오류", isPresented: $trackingDetailVM.showAlert) {
+                    Button("Ok") {}
+        } message: {
+            Text("[\(trackingDetailVM.alertTitle)] " + trackingDetailVM.alertMessage)
+        }
+        
     }
+    
 }
 
 extension TrackingDetailView {
@@ -48,20 +77,20 @@ extension TrackingDetailView {
                 .fill(ColorManager.defaultForegroundDisabled)
                 .frame(width: 54, height: 54)
                 .overlay(
-                    Image("CJ_logo")
+                    LogoType(rawValue: trackingDetailVM.code)?.logo.image
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 39.7, height: 34.1)
+                        .frame(width: 54, height: 54)
                 )
             
             VStack(alignment: .leading, spacing: 8) {
-                Text("토리든 다이브인 저분자 히알루론산 클렌징 폼 150ml")
+                Text(!trackingDetailVM.item.isEmpty ? trackingDetailVM.item :  "\(trackingDetailVM.invoice) 물품")
                     .font(FontManager.title2)
                     .frame(maxWidth: 233, alignment: .leading)
 //                        .background(Color.red)
                 HStack(spacing: 8) {
-                    Text("CJ 대한통운")
-                    Text("123456789012")
+                    Text(trackingDetailVM.name ?? "택배사 이름")
+                    Text(trackingDetailVM.invoice)
                 }
                 .font(FontManager.caption1)
                 .foregroundColor(ColorManager.foreground1)
@@ -74,13 +103,13 @@ extension TrackingDetailView {
     var cardView: some View {
         VStack(spacing: 10) {
             HStack(spacing: 10) {
-                TrackingDetailCardView(title: "받는 분", content: "박*환")
-                TrackingDetailCardView(title: "보내는 분", content: "토*든")
+                TrackingDetailCardView(title: "받는 분", content: trackingDetailVM.receiver)
+                TrackingDetailCardView(title: "보내는 분", content: trackingDetailVM.sender)
             }
             
             HStack(spacing: 10) {
-                TrackingDetailCardView(title: "배송기사", content: "홍길동", deliveryman: true, show: $showMenu)
-                TrackingDetailCardView(title: "예상 완료 시간", content: nil)
+                TrackingDetailCardView(title: "배송기사", content: trackingDetailVM.deliveryMan, deliveryman: true, show: $showMenu)
+                TrackingDetailCardView(title: "예상 완료 시간", content: trackingDetailVM.estimate ?? "", isComplete: trackingDetailVM.isComplete)
             }
         }
     }
@@ -94,32 +123,23 @@ struct TrackingDetailView_Previews: PreviewProvider {
 
     static var previews: some View {
         
-        Group {
-            TrackingDetailView()
-            TrackingPositionListCellView(status: "집화처리", position: "군포직영", deliveryMan: "홍길동", time: "07:48", date: "2022.11.22", isCurrent: true)
-        }
+        TrackingDetailView(companyId: "04", invoiceNumber: "1111111111")
+//        Group {
+//
+//            TrackingPositionListCellView(status: "집화처리", position: "군포직영", deliveryMan: "홍길동", time: "07:48", date: "2022.11.22", isCurrent: true)
+//        }
         
 //        TrackingInfoCardView(title: "받는 분", content: "박*환")
     }
 }
 
-//struct TrackingInfoLoadingView: View {
-//    @Binding var companyId: String
-//    @Binding var invoiceNumber: String
-//
-//    var body: some View {
-//        TrackingInfoView(companyId: companyId, invoiceNumber: invoiceNumber)
-//    }
-//
-//}
+
 
 //struct TrackingInfoView: View {
 //
-//    @StateObject private var trackingInfoVM: TrackingInfoService
 //
-//    init(companyId: String, invoiceNumber: String) {
-//        _trackingInfoVM = StateObject(wrappedValue: TrackingInfoService(companyId, invoiceNumber))
-//    }
+//
+    
 //
 //    var body: some View {
 //        VStack(spacing: 20) {

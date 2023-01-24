@@ -19,7 +19,7 @@ class CompanyService: ObservableObject {
     }
     
     func getCompanies() {
-        guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/companylist?t_key=eVPJb8troT0cn5eY15H6yw") else { return }
+        guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/companylist?t_key=1DsMXGyjhh0tW8MAmxC1gw") else { return }
         
         companySubscription = NetworkingManager.download(url: url)
             .decode(type: CompanyModel.self, decoder: JSONDecoder())

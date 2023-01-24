@@ -9,15 +9,17 @@ import SwiftUI
 
 struct TrackingDetailCardView: View {
     var title: String
-    var content: String?
+    var content: String = ""
     var deliveryman: Bool = false
+    var isComplete: Bool = false
     @Binding var show: Bool?
     
-    init(title: String, content: String? = nil, deliveryman: Bool = false, show: Binding<Bool?> = .constant(nil)) {
+    init(title: String, content: String = "", deliveryman: Bool = false, show: Binding<Bool?> = .constant(nil), isComplete: Bool = false) {
         self.title = title
         self.content = content
         self.deliveryman = deliveryman
         self._show = show
+        self.isComplete = isComplete
     }
     
     var body: some View {
@@ -32,11 +34,11 @@ struct TrackingDetailCardView: View {
                     .foregroundColor(ColorManager.foreground1)
                 
                 HStack {
-                    Text(content ?? "정보 없음")
+                    Text(!isComplete ? (!content.isEmpty ? content : "정보 없음") : "배송 완료")
                         .font(FontManager.body1)
-                        .foregroundColor(content != nil ? .black : ColorManager.foreground2)
+                        .foregroundColor(!isComplete ? (!content.isEmpty ? .black : ColorManager.foreground2) : ColorManager.primaryColor)
                     
-                    if deliveryman {
+                    if deliveryman && !content.isEmpty {
                         Button {
                             withAnimation(Animation.easeIn(duration: 0.2)) {
                                 show?.toggle()

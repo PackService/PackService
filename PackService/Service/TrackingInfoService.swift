@@ -10,10 +10,8 @@ import Combine
 
 class TrackingInfoService: ObservableObject {
     
-    
-    
-    
     @Published var trackingInfo: TrackingInfoModel? = nil
+    @Published var error: ErrorModel? = nil
     
 //    TrackingInfoModel(
 //        complete: false,
@@ -29,20 +27,21 @@ class TrackingInfoService: ObservableObject {
     
     var trackingInfoSubscription: AnyCancellable?
 
-    init(_ code: String, _ invoice: String) {
+    init(code: String, invoice: String) {
         getTrackingInfo(code, invoice)
     }
     
     func getTrackingInfo(_ code: String, _ invoice: String) {
-        guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=\(code)&t_invoice=\(invoice)&t_key=eVPJb8troT0cn5eY15H6yw") else { return }
-        
-        trackingInfoSubscription = NetworkingManager.download(url: url)
-            .decode(type: TrackingInfoModel.self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedTrackingInfo) in
-                self?.trackingInfo = returnedTrackingInfo
-                print(returnedTrackingInfo)
-                self?.trackingInfoSubscription?.cancel()
-            })
+            guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=\(code)&t_invoice=\(invoice)&t_key=1DsMXGyjhh0tW8MAmxC1gw") else { return }
+            
+            trackingInfoSubscription = NetworkingManager.download(url: url)
+                .decode(type: TrackingInfoModel.self, decoder: JSONDecoder())
+                .receive(on: DispatchQueue.main)
+                .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedTrackingInfo) in
+                    self?.trackingInfo = returnedTrackingInfo
+                    print(returnedTrackingInfo)
+                    self?.trackingInfoSubscription?.cancel()
+                })
     }
+
 }

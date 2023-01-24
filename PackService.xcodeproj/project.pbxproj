@@ -26,6 +26,7 @@
 		7E8E7DD62974F7490035759A /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E7DD52974F7490035759A /* MenuView.swift */; };
 		7E8E7DD82974F88C0035759A /* TrackingDetailCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E7DD72974F88C0035759A /* TrackingDetailCardView.swift */; };
 		7E8E7DDA2974F9090035759A /* TrackingPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E7DD92974F9090035759A /* TrackingPositionView.swift */; };
+		7EA8B0A329769A4B0056D73D /* TrackingInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA8B0A229769A4B0056D73D /* TrackingInfoViewModel.swift */; };
 		7EADB95F2966C8E0004E4216 /* InputTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EADB95E2966C8E0004E4216 /* InputTextFieldView.swift */; };
 		7EEBC850297143F5004936D2 /* CompanyCapsuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEBC84F297143F5004936D2 /* CompanyCapsuleView.swift */; };
 		7EF5DE4B295ECA600064E4D1 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF5DE4A295ECA600064E4D1 /* FontManager.swift */; };
@@ -118,6 +119,7 @@
 		7E8E7DD52974F7490035759A /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		7E8E7DD72974F88C0035759A /* TrackingDetailCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingDetailCardView.swift; sourceTree = "<group>"; };
 		7E8E7DD92974F9090035759A /* TrackingPositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingPositionView.swift; sourceTree = "<group>"; };
+		7EA8B0A229769A4B0056D73D /* TrackingInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingInfoViewModel.swift; sourceTree = "<group>"; };
 		7EADB95E2966C8E0004E4216 /* InputTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextFieldView.swift; sourceTree = "<group>"; };
 		7EEBC84F297143F5004936D2 /* CompanyCapsuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCapsuleView.swift; sourceTree = "<group>"; };
 		7EF5DE4A295ECA600064E4D1 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 				ADE0F3BC2935BCC1005D2732 /* KakaoAuthVM.swift */,
 				ADE0F3D02935F99F005D2732 /* AppleAuthVM.swift */,
 				ADFBE399293679F000D45B42 /* EmailAuthVM.swift */,
+				7EA8B0A229769A4B0056D73D /* TrackingInfoViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -564,6 +567,7 @@
 				ADA959A2297A777800308009 /* FirebaseTest.swift in Sources */,
 				7E04350B2954454C005187E8 /* CompanyModel.swift in Sources */,
 				7EF5DE4F295ED7470064E4D1 /* LoginUIView.swift in Sources */,
+				7EA8B0A329769A4B0056D73D /* TrackingInfoViewModel.swift in Sources */,
 				7E04351229544648005187E8 /* TrackingInfoService.swift in Sources */,
 				7E8724D62959818E00C0B1C9 /* TrackingInfoModel.swift in Sources */,
 				AD1ADE22295E9C0600545DB7 /* ServiceAgreeDescriptView.swift in Sources */,

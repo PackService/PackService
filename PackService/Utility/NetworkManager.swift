@@ -5,19 +5,20 @@
 //  Created by 박윤환 on 2022/12/21.
 //
 
-
 import Foundation
 import Combine
 
 class NetworkingManager {
     
-    enum NetworkingError: LocalizedError {
+    enum NetworkingError: Error {
         case badURLResponse(url: URL)
+        case decoding(message: String)
         case unknown
         
         var errorDescription: String? {
             switch self {
             case .badURLResponse(url: let url): return "[🔥] Bad response from URL: \(url)"
+            case .decoding(message: let msg): return "Decoding ERROR: \(msg)"
             case .unknown: return "[⚠️] Unknown error occured"
             }
         }
@@ -26,7 +27,6 @@ class NetworkingManager {
     static func download(url: URL) -> AnyPublisher<Data, Error> {
         return URLSession.shared.dataTaskPublisher(for: url)
             .tryMap({ try handleURLResponse(output: $0, url: url) })
-//            .retry(3)
             .eraseToAnyPublisher()
     }
     
@@ -44,6 +44,7 @@ class NetworkingManager {
         case .finished:
             break
         case .failure(let error):
+            print("Error")
             print(error.localizedDescription)
         }
     }
