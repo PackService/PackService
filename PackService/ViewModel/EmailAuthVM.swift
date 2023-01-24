@@ -12,12 +12,12 @@ import Combine
 class EmailAuthVM: ObservableObject { // 사용자 Create 완료
     @AppStorage("log_status") var logStatus = false
     @Published var currentUser: Firebase.User?
-    
+    let db = Firestore.firestore()
     init() {
         currentUser = Auth.auth().currentUser
     }
     
-    //로그인
+    // 로그인
     func login(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if let error = error {
@@ -29,9 +29,9 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
         }
     }
     
-    //송장번호 추가
+    // 송장번호 추가
     func addTrackNumber(trackNumber: String, trackCompany: String) { // 택배 create
-        let db = Firestore.firestore()
+//        let db = Firestore.firestore()
         
         let packages = Packages(trackNumber: trackNumber, trackCompany: "대한통운")
         
@@ -45,7 +45,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
     }
     
     
-    //송장번호 하나 삭제
+    // 송장번호 하나 삭제
     func deleteTrackNumber(trackNumber: String) {
         let db = Firestore.firestore()
         let trackInfoData: [String: Any] = [
@@ -67,11 +67,10 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
         
     }
     
-    //송장번호 읽어오기
+    // 송장번호 읽어오기
     func readTrackNumber() {
-        let db = Firestore.firestore()
+//        let db = Firestore.firestore()
         let docRef = db.collection("users").document(currentUser?.uid ?? "")
-        print("송장 읽기 버튼 눌림")
         docRef.getDocument{ (document, error) in
             guard error == nil else {
                 print("error", error ?? "")
@@ -97,7 +96,14 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
             // An error happened.
               print(error)
           } else {
-            // Account deleted.
+            // Account deleted. 데이터베이스에서 해당 회원 정보들 다 삭제해줘야 함.
+              self.db.collection("users").document(self.currentUser?.uid ?? "").delete() { err in
+                  if let err = err {
+                      print("Error removing document: \(err)")
+                  } else {
+                      print("Document successfully removed!")
+                  }
+              }
               print("현재 회원 삭제")
           }
         }
@@ -120,10 +126,10 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
             guard let user = result?.user else { return } // 파이어베이스 유저 객체를 가져옴
             let trackInfo = TrackInfo(email: email, userTracksInfo: nil)
             
-            if error == nil { //firebase db에 저장하는 방법
+            if error == nil { // firebase db에 저장하는 방법
                 self.currentUser = result?.user
-                let db = Firestore.firestore()
-                db.collection("users").document(user.uid).setData(trackInfo.setEmail)
+//                let db = Firestore.firestore()
+                self.db.collection("users").document(user.uid).setData(trackInfo.setEmail)
             }
         }
     }
