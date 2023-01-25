@@ -13,7 +13,11 @@ class TrackingInfoViewModel: ObservableObject {
     @Published var code: String
     @Published var invoice: String
     private var companyService: CompanyService
-    private var trackingInfoService: TrackingInfoService
+    private var trackingInfoService: TrackingInfoService {
+        didSet {
+            addSubscribers()
+        }
+    }
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -25,7 +29,7 @@ class TrackingInfoViewModel: ObservableObject {
     @Published var deliveryMan: String = ""
     @Published var deliveryManContact: String = ""
     @Published var estimate: String?
-    @Published var positions: [String?] = []
+    @Published var currentStep: Double = 0.0
     @Published var trackingDetails: [TrackingDetailsModel] = []
     
     @Published var showAlert = false
@@ -69,7 +73,7 @@ class TrackingInfoViewModel: ObservableObject {
                     self?.sender = trackingDetailModel.senderName ?? ""
                     self?.trackingDetails = trackingDetailModel.trackingDetails ?? []
                     self?.estimate = trackingDetailModel.estimate
-                    self?.positions = trackingDetailModel.positionArray
+                    self?.currentStep = trackingDetailModel.currentStep
                     
                     if let trackingDetails = trackingDetailModel.trackingDetails?.first(where: { trackingDetail in
                         trackingDetail.level >= 5
@@ -86,5 +90,10 @@ class TrackingInfoViewModel: ObservableObject {
                 
             }
             .store(in: &cancellables)
+    }
+    
+    func reloadData(code: String, invoice: String) {
+        companyService.getCompanies()
+        trackingInfoService.getTrackingInfo(code, invoice)
     }
 }

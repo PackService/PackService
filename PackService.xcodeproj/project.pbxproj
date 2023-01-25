@@ -27,6 +27,7 @@
 		7E8E7DD82974F88C0035759A /* TrackingDetailCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E7DD72974F88C0035759A /* TrackingDetailCardView.swift */; };
 		7E8E7DDA2974F9090035759A /* TrackingPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8E7DD92974F9090035759A /* TrackingPositionView.swift */; };
 		7EA8B0A329769A4B0056D73D /* TrackingInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA8B0A229769A4B0056D73D /* TrackingInfoViewModel.swift */; };
+		7EA91CDB297FEAC8007F2B5C /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA91CDA297FEAC8007F2B5C /* ToastView.swift */; };
 		7EADB95F2966C8E0004E4216 /* InputTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EADB95E2966C8E0004E4216 /* InputTextFieldView.swift */; };
 		7EEBC850297143F5004936D2 /* CompanyCapsuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEBC84F297143F5004936D2 /* CompanyCapsuleView.swift */; };
 		7EF5DE4B295ECA600064E4D1 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF5DE4A295ECA600064E4D1 /* FontManager.swift */; };
@@ -120,6 +121,7 @@
 		7E8E7DD72974F88C0035759A /* TrackingDetailCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingDetailCardView.swift; sourceTree = "<group>"; };
 		7E8E7DD92974F9090035759A /* TrackingPositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingPositionView.swift; sourceTree = "<group>"; };
 		7EA8B0A229769A4B0056D73D /* TrackingInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingInfoViewModel.swift; sourceTree = "<group>"; };
+		7EA91CDA297FEAC8007F2B5C /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		7EADB95E2966C8E0004E4216 /* InputTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextFieldView.swift; sourceTree = "<group>"; };
 		7EEBC84F297143F5004936D2 /* CompanyCapsuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCapsuleView.swift; sourceTree = "<group>"; };
 		7EF5DE4A295ECA600064E4D1 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				7E8E7DD02974F6570035759A /* TrackingProgressView.swift */,
 				7E8E7DD92974F9090035759A /* TrackingPositionView.swift */,
 				7E8E7DD32974F6C50035759A /* TrackingPositionListCellView.swift */,
+				7EA91CDA297FEAC8007F2B5C /* ToastView.swift */,
 			);
 			path = TrackingDetail;
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 				AD58305A296AB06100099836 /* SelectCompanyView.swift in Sources */,
 				AD1ADDE22959A94700545DB7 /* RecommendTrackView.swift in Sources */,
 				ADE0F3B92934588C005D2732 /* SceneDelegate.swift in Sources */,
+				7EA91CDB297FEAC8007F2B5C /* ToastView.swift in Sources */,
 				7E8E7DD82974F88C0035759A /* TrackingDetailCardView.swift in Sources */,
 				ADA9599E2977CF2000308009 /* TrackInfoTestView.swift in Sources */,
 				ADA9599A29766F9A00308009 /* SwipeItemView.swift in Sources */,

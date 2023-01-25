@@ -22,9 +22,13 @@ struct TrackingDetailView: View {
     
     @State var showMenu: Bool? = false
     @State var showToast: Bool = false
+    var code: String = "111"
+    var invoice: String = "111"
     
     init(companyId: String, invoiceNumber: String) {
         _trackingDetailVM = StateObject(wrappedValue: TrackingInfoViewModel(code: companyId, invoice: invoiceNumber))
+        self.code = companyId
+        self.invoice = invoiceNumber
     }
     
     var body: some View {
@@ -38,8 +42,8 @@ struct TrackingDetailView: View {
                         
                         PromotionView(promotionTitle: "광고란", promotionContent: "광고입니다.")
                             .padding(.vertical, 8)
-                        
-                        TrackingPositionView()
+
+                        TrackingPositionView(code: code, invoice: invoice)
                         
                         Spacer()
                         
@@ -57,15 +61,18 @@ struct TrackingDetailView: View {
             }
             
             
-            
         }
         .environmentObject(trackingDetailVM)
         .alert("오류", isPresented: $trackingDetailVM.showAlert) {
-                    Button("Ok") {}
+                    Button("OK") {}
         } message: {
             Text("[\(trackingDetailVM.alertTitle)] " + trackingDetailVM.alertMessage)
         }
-        
+        .toast(isShowing: $showToast)
+//        .onAppear {
+//            code = trackingDetailVM.invoice
+//
+//        }
     }
     
 }

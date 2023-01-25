@@ -11,7 +11,6 @@ import Combine
 class TrackingInfoService: ObservableObject {
     
     @Published var trackingInfo: TrackingInfoModel? = nil
-//    @Published var error: ErrorModel? = nil
     
 //    TrackingInfoModel(
 //        complete: false,

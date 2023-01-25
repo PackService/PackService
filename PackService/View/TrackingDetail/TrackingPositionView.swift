@@ -10,11 +10,17 @@ import SwiftUI
 struct TrackingPositionView: View {
     @EnvironmentObject var trackingDetailVM: TrackingInfoViewModel
     
-    @State var step: Double = 1
+    var code: String
+    var invoice: String
+    
+    @State var step: Double = 0
     @State var showList: Bool = false
-//    @State var listSize: CGSize = .zero
     @Environment(\.defaultMinListRowHeight) var minRowHeight
 
+    init(code: String, invoice: String) {
+        self.code = code
+        self.invoice = invoice
+    }
     
     var body: some View {
         
@@ -24,9 +30,13 @@ struct TrackingPositionView: View {
                     .font(FontManager.title1)
                 
                 Spacer()
-                
+
                 Button {
-                    step += 1
+                    step = 0.0
+                    trackingDetailVM.reloadData(code: self.code, invoice: self.invoice)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        step = trackingDetailVM.currentStep
+                    }
                 } label: {
                     Image(systemName: "arrow.clockwise.circle.fill")
                         .renderingMode(.template)
@@ -41,29 +51,33 @@ struct TrackingPositionView: View {
                     .cornerRadius(10)
 //                    .frame(width: 350, height: 152)
                     .shadow(color: Color.black.opacity(0.05), radius: 10, x: 0, y: 2)
-                    
                 
                 VStack {
                     Group {
+                        Text("\(trackingDetailVM.currentStep)")
+                        
                         TrackingProgressView(currentStep: $step)
                             .frame(height: 32)
                             .padding(.top, 24)
                             .padding(.horizontal, 12)
                             .animation(Animation.easeIn(duration: 1.0), value: step)
                             .onAppear {
-                                step = 0
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                    step = trackingDetailVM.currentStep
+                                }
                             }
                     
+                        let arr = ["출발", "이동중", "배송출발", "도착"]
+                        
                         HStack {
-                            ForEach(Array(zip(trackingDetailVM.positions.indices, trackingDetailVM.positions)), id: \.0) { index, item in
-                                Text(item ?? "(정보없음)")
+                            ForEach(Array(arr.enumerated()), id: \.offset) { index, item in
+                                Text(item)
                                     .font(FontManager.caption1)
-                                    .foregroundColor(item != trackingDetailVM.positions[Int(step)] ? ColorManager.foreground1 : ColorManager.primaryColor)
-        //                        Text((dict[key] ?? "(정보없음)") ?? "(정보없음)")
-                                if index != (trackingDetailVM.positions.count - 1) {
+                                    .foregroundColor(index != Int(trackingDetailVM.currentStep) ? ColorManager.foreground1 : ColorManager.primaryColor)
+                                
+                                if item != "도착" {
                                     Spacer()
                                 }
-                                
                             }
                         }
                         .padding(.horizontal, 20)
@@ -125,6 +139,6 @@ struct TrackingPositionView: View {
 
 struct TrackingPositionView_Previews: PreviewProvider {
     static var previews: some View {
-        TrackingPositionView()
+        TrackingPositionView(code: "04", invoice: "1111111111")
     }
 }

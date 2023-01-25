@@ -126,34 +126,60 @@ struct TrackingInfoModel: Codable {
         case isValidInvoice = "result"
         case status
         case msg
-        case code        
+        case code
     }
     
-    var positionArray: [String?] {
-        var positions: [String?] = Array(repeating: nil, count: 4)
-        var removeStr = "HUB|Hub|hub|물류센터|직영.*|집배점|우체국|우편집중국"
+//    var positionArray: [String?] {
+//        var positions: [String?] = Array(repeating: nil, count: 4)
+//        var removeStr = "HUB|Hub|hub|물류센터|직영.*|집배점|우체국|우편집중국"
+//
+//        positions[0] = self.trackingDetails?.first?.detailWhere ?? "배달 전"
+//        positions[1] = self.trackingDetails?.filter { $0.level <= 4 }.last?.detailWhere
+//        positions[2] = self.trackingDetails?.filter { $0.level == 5 }.last?.detailWhere
+//        positions[3] = self.trackingDetails?.filter { $0.level == 6 }.last?.detailWhere
+//
+//        for (index, position) in positions.enumerated() {
+//            if let position = position {
+//                var trimmed = position.replacingOccurrences(of: removeStr, with: "", options: .regularExpression)
+//
+//                if trimmed.count == 4 {
+//                    trimmed = String(trimmed.suffix(2))
+//                } else if trimmed.count == 5 {
+//                    trimmed = String(trimmed.suffix(3))
+//                }
+//
+//                positions[index] = trimmed
+//            }
+//        }
+//
+//        return positions
+//    }
+    
+    var currentStep: Double {
         
-        positions[0] = self.trackingDetails?.first?.detailWhere ?? "배달 전"
-        positions[1] = self.trackingDetails?.filter { $0.level <= 4 }.last?.detailWhere
-        positions[2] = self.trackingDetails?.filter { $0.level == 5 }.last?.detailWhere
-        positions[3] = self.trackingDetails?.filter { $0.level == 6 }.last?.detailWhere
-
-        for (index, position) in positions.enumerated() {
-            if let position = position {
-                var trimmed = position.replacingOccurrences(of: removeStr, with: "", options: .regularExpression)
-                
-                if trimmed.count == 4 {
-                    trimmed = String(trimmed.suffix(2))
-                } else if trimmed.count == 5 {
-                    trimmed = String(trimmed.suffix(3))
-                }
-                
-                positions[index] = trimmed
-            }
+        guard let details = self.trackingDetails else { return 0 }
+        
+        var current = -1
+        var result = 0.0
+        
+        for detail in details {
+            current = max(detail.level, current)
         }
-
-        return positions
+        
+        print(current)
+        
+        if 0 <= current && current <= 4 {
+            result = 1
+        } else if current == 5 {
+            result = 2
+        } else {
+            result = 3
+        }
+        
+        print("Result:\(result)")
+        return result
     }
+    
 }
 
 // MARK: - TrackingDetail
