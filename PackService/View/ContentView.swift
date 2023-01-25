@@ -14,7 +14,7 @@ struct ContentView: View {
             if logStatus {
                 HomeView()
             } else {
-                LoginView()
+                LoginUIView()
             }
         }
     }

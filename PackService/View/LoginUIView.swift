@@ -9,6 +9,11 @@ import SwiftUI
 
 struct LoginUIView: View {
     
+    @State var signUpScreen: Bool = false // 회원가입 진행 bool 변수
+    @StateObject var kakaoAuthVM = KakaoAuthVM()
+    @StateObject var appleAuthVM = AppleAuthVM()
+    @ObservedObject var emailAuthVM = EmailAuthVM()
+    // ------
     @State var emailInput: String = ""
     @State var passwordInput: String = ""
     
@@ -50,6 +55,9 @@ struct LoginUIView: View {
                                 withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
                                     animationTrigger = true
                                 }
+                            } else {
+                                emailAuthVM.login(email: emailInput, password: passwordInput)
+                                print("로그인 되었음")
                             }
                             
                             animationTrigger = false
@@ -87,7 +95,7 @@ struct LoginUIView: View {
                         }
                         
                         Button {
-                            
+                            kakaoAuthVM.handleKakaoLogin()
                         } label: {
                             ThirdPartyButtonView(type: .kakao)
                         }
@@ -112,15 +120,15 @@ struct LoginUIView: View {
     }
     
     func validationCheck() {
-        if emailInput == "abc" {
+        if checkEmail(str: emailInput) {
             self.isEmailValid = true
             
-            if passwordInput == "1234" {
+            if checkPassword(str: passwordInput) {
                 self.isPasswordValid = true
                 self.focusState = .password
                 return
             }
-        } else if emailInput != "abc" && passwordInput.isEmpty {
+        } else if !checkEmail(str: emailInput) && passwordInput.isEmpty {
             self.isEmailValid = false
             self.focusState = .email
             return
@@ -133,6 +141,16 @@ struct LoginUIView: View {
         self.focusState = .password
         
     }
+}
+
+func checkEmail(str: String) -> Bool {
+    let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
+    return  NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: str)
+}
+
+func checkPassword(str: String) -> Bool {
+    let passwordRegex = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=-]).{8,50}"
+    return  NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: str)
 }
 
 struct LoginUIView_Previews: PreviewProvider {

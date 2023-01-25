@@ -41,19 +41,7 @@ struct LoginView: View {
                         Text("로그아웃")
                             .font(.custom("Pretendard-Bold", size: 20))
                     }
-                    .onAppear {
-                        for family: String in UIFont.familyNames {
-                            print(family)
-                            for names: String in
-                                    UIFont.fontNames(forFamilyName: family){
-                                print("===\(names)")
-                            }
-                        }
-                    }
-                    
-                    Text(emailAuthVM.currentUser?.uid ?? "비로그인")
-                        .padding()
-                    
+
                     Button(action: {kakaoAuthVM.handleKakaoLogin()}){
                         Image("kakao_login_large_wide")
                             .resizable()

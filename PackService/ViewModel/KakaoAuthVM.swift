@@ -85,6 +85,7 @@ class KakaoAuthVM: ObservableObject {
                                     print("FB : signup failed")
                                     print(error)
                                     Auth.auth().signIn(withEmail: (kuser?.kakaoAccount?.email)!, password: "\(String(describing: kuser?.id))", completion: nil)
+                                    print(fuser?.user.uid)
                                 } else { // 아이디가 없으니까 firbase 연동
                                     guard let user = fuser?.user else { return } // 파이어베이스 유저 객체를 가져옴
                                     print("FB : signup success")
