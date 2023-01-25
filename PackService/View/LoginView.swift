@@ -24,10 +24,7 @@ struct LoginView: View {
                 VStack(spacing: 20) {
                     TextField("이메일", text: $emailInput).keyboardType(.emailAddress).autocapitalization(.none)
                     SecureField("비밀번호", text: $passwordInput).keyboardType(.default)
-                    // 추후에 카카오 로그아웃 할 때 참고
-                    //            Button("카카오 로그아웃", action: {
-                    //                kakaoAuthVM.kakaoLogout()
-                    //            })
+    
                     Button(action: {
                         emailAuthVM.login(email: emailInput, password: passwordInput)
                         print("로그인 버튼 클릭되었음")
@@ -41,7 +38,7 @@ struct LoginView: View {
                         Text("로그아웃")
                             .font(.custom("Pretendard-Bold", size: 20))
                     }
-
+                    
                     Button(action: {kakaoAuthVM.handleKakaoLogin()}){
                         Image("kakao_login_large_wide")
                             .resizable()
@@ -75,19 +72,19 @@ struct LoginView: View {
                     .offset(y: 0)
                 }
                 .padding()
-            
+                
                 Button(action: {
                     print("아이디/비밀번호 찾기 버튼 클릭되었음")
                 }, label: {
                     Text("아이디/비밀번호 찾기")
                 })
                 .offset(x: -70, y: 150)
-               
+                
                 Button("회원가입") {
                     signUpScreen.toggle()
                 }
                 if signUpScreen {
-                    MemberShipAgreementView(signUpScreen: $signUpScreen)
+                    MemberShipAgreementView(stateSignUp: .constant(true), signUpScreen: $signUpScreen)
                         .transition(.move(edge: .bottom))
                         .animation(.spring())
                 }
@@ -101,3 +98,9 @@ struct LoginView_Previews: PreviewProvider {
         LoginView()
     }
 }
+
+
+// 추후에 카카오 로그아웃 할 때 참고
+//            Button("카카오 로그아웃", action: {
+//                kakaoAuthVM.kakaoLogout()
+//            })

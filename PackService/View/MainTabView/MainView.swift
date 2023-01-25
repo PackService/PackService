@@ -9,6 +9,7 @@ import SwiftUI
 
 // MARK: - MainView
 struct MainView: View {
+//    @AppStorage("log_status") var logStatus = false
     var body: some View {
         TabView {
             MainTabView()

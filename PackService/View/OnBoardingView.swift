@@ -10,6 +10,7 @@ import AuthenticationServices
 
 
 struct OnBoardingView: View {
+    @Binding var isFirstLaunching: Bool //1회만 실행되도록 하는 변수
     @State var signUpScreen: Bool = false // 회원가입 진행 bool 변수
     @StateObject var kakaoAuthVM = KakaoAuthVM()
     @StateObject var appleAuthVM = AppleAuthVM()
@@ -62,17 +63,19 @@ struct OnBoardingView: View {
                 }
                 .padding(.vertical, 41)
                 if signUpScreen { // 회원가입 화면 이동
-                    MemberShipAgreementView(signUpScreen: $signUpScreen)
+                    MemberShipAgreementView(stateSignUp: .constant(false), signUpScreen: $signUpScreen)
                         .transition(.move(edge: .bottom))
                         .animation(.spring())
                 }
             }
+            //.onDisappear(perform: {isFirstLaunching.toggle()})
+            // 한번만 실행되고 없어지도록 해야함
         }
     }
 }
 
 struct OnBoardingView_Previews: PreviewProvider {
     static var previews: some View {
-        OnBoardingView()        
+        OnBoardingView(isFirstLaunching: .constant(true))        
     }
 }

@@ -9,6 +9,9 @@ import SwiftUI
 
 struct MemberShipAgreementView: View {
 
+    // 온보딩에서 회원가입시 false, 로그인화면에서 회원가입시 true
+    @Binding var stateSignUp: Bool
+    
     @ObservedObject var viewModel = EmailAuthVM() 
     @Binding var signUpScreen: Bool
     @State var serviceAgreeScreen: Bool = false // servceAgreeDescriptView 화면 전환 변수
@@ -89,42 +92,15 @@ struct MemberShipAgreementView: View {
             Spacer()
         }
         .padding(.leading, 20)
-        
-        VStack {
+
+        VStack { // 가입하기 버튼
             Spacer()
-            if ageAgree && serviceAgree && personInfoAgree && emailInput.count > 5 && passwordInput.count > 8 && passwordInput == passwordConfirmInput { // 버튼 활성화 조건(예외처리 해야함) 이메일 형식, 비밀번호 형식, 비밀번호랑 비밀번호 확인 다를 때 {
+            if !stateSignUp { // onboardingView에서 가입하기
                 NavigationLink (destination: LoginUIView(), isActive: $isLoginButtonActive) {
-                    Button(action: {
-                        viewModel.registerUser(email: emailInput, password: passwordInput)
-                        isSubmitted = true
-                        validationCheck()
-                        
-                        emailAttempt = (isSubmitted && !isEmailValid)
-                        passwordAttempt = (isSubmitted && !isPasswordValid)
-                        passwordConfirmAttempt = (isSubmitted && !isPasswordConfirmValid)
-                        
-                        if !(isEmailValid && isPasswordValid) {
-                            withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
-                                animationTrigger = true
-                            }
-                        }
-                        
-                        animationTrigger = false
-                        isLoginButtonActive = true
-                    }, label: {
-                        ButtonView(text: "계정 만들기")
-                    })
-                    .padding(.leading, 20)
-                    .padding(.trailing, 20)
+                    signUpButtonView
                 }
-            } else {
-                Button(action: {
-                }, label: {
-                    DisabledButtonView(text: "계정 만들기")
-                })
-                .disabled(true)
-                .padding(.leading, 20)
-                .padding(.trailing, 20)
+            } else { // loginUIView에서 가입하기
+                signUpButtonView
             }
         }
                 
@@ -237,6 +213,42 @@ extension MemberShipAgreementView {
                 ToggleDetailTextView()
             })
         }
+    }
+    
+    var signUpButtonView: some View {
+        Button(action: {
+            isSubmitted = true
+            validationCheck()
+            
+            emailAttempt = (isSubmitted && !isEmailValid)
+            passwordAttempt = (isSubmitted && !isPasswordValid)
+            passwordConfirmAttempt = (isSubmitted && !isPasswordConfirmValid)
+            
+            if !(isEmailValid && isPasswordValid) {
+                withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
+                    animationTrigger = true
+                }
+            }
+//            else { 아니면 등록 안되고 애니메이션만 되게 수정해야함
+                viewModel.registerUser(email: emailInput, password: passwordInput)
+//            }
+            
+            if !stateSignUp {
+                isLoginButtonActive = true
+            } else {
+                signUpScreen.toggle()
+            }
+            animationTrigger = false
+        }, label: {
+            if checkEmail(str: emailInput) {
+                ButtonView(text: "계정 만들기")
+            } else {
+                DisabledButtonView(text: "계정 만들기")
+            }
+        })
+        .disabled(checkEmail(str: emailInput) ? false: true)
+        .padding(.leading, 20)
+        .padding(.trailing, 20)
     }
 }
 

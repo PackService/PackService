@@ -29,86 +29,92 @@ struct LoginUIView: View {
     @FocusState private var focusState: TextFieldType?
 
     var body: some View {
-        NavigationView {
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack {
-                    Spacer()
-                    
-                    VStack(spacing: 16) {
-                        VStack {
-                            TextFieldView(title: "이메일", input: $emailInput, wrongAttempt: $emailAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .email)
-                            
-                            TextFieldView(title: "비밀번호", input: $passwordInput, wrongAttempt: $passwordAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .password, isSecure: true)
-                        }
-                        .onSubmit {
-                            toggleFocus()
-                        }
-                        
-                        Button {
-                            isSubmitted = true
-                            validationCheck()
-                            
-                            emailAttempt = (isSubmitted && !isEmailValid)
-                            passwordAttempt = (isSubmitted && !isPasswordValid)
-                            
-                            if !(isEmailValid && isPasswordValid) {
-                                withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
-                                    animationTrigger = true
+            NavigationView {
+                ZStack {
+                    if signUpScreen {
+                        MemberShipAgreementView(stateSignUp: .constant(true), signUpScreen: $signUpScreen)
+                            .transition(.move(edge: .bottom))
+                            .animation(.spring())
+                    } else {
+                        Color.white
+                            .edgesIgnoringSafeArea(.all)
+                        ScrollView(.vertical, showsIndicators: false) {
+                            VStack {
+                                Spacer()
+                                VStack(spacing: 16) {
+                                    VStack {
+                                        TextFieldView(title: "이메일", input: $emailInput, wrongAttempt: $emailAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .email)
+                                        
+                                        TextFieldView(title: "비밀번호", input: $passwordInput, wrongAttempt: $passwordAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .password, isSecure: true)
+                                    }
+                                    .onSubmit {
+                                        toggleFocus()
+                                    }
+                                    
+                                    Button {
+                                        isSubmitted = true
+                                        validationCheck()
+                                        
+                                        emailAttempt = (isSubmitted && !isEmailValid)
+                                        passwordAttempt = (isSubmitted && !isPasswordValid)
+                                        
+                                        if !(isEmailValid && isPasswordValid) {
+                                            withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
+                                                animationTrigger = true
+                                            }
+                                        } else {
+                                            emailAuthVM.login(email: emailInput, password: passwordInput)
+                                            print("로그인 되었음")
+                                        }
+                                        
+                                        animationTrigger = false
+                                    } label: {
+                                        ButtonView(text: "로그인")
+                                    }
+                                    .padding(.top, 40)
+                                    
+                                    HStack {
+                                        Text("계정이 없으신가요?")
+                                            .foregroundColor(ColorManager.foreground1)
+                                        Button {
+                                            signUpScreen.toggle()
+                                        } label: {
+                                            Text("회원가입")
+                                                .foregroundColor(ColorManager.primaryColor)
+                                                .overlay(
+                                                    Rectangle()
+                                                        .frame(height: 1)
+                                                        .offset(y: 2)
+                                                        .foregroundColor(ColorManager.primaryColor)
+                                                    , alignment: .bottom)
+                                        }
+                                    }
+                                    .font(FontManager.body2)
+                                    
+                                    Divider()
+                                        .padding(.vertical, 24)
+                                    Button {
+                                        
+                                    } label: {
+                                        ThirdPartyButtonView(type: .apple)
+                                    }
+                                    
+                                    Button {
+                                        kakaoAuthVM.handleKakaoLogin()
+                                    } label: {
+                                        ThirdPartyButtonView(type: .kakao)
+                                    }
+                                    
                                 }
-                            } else {
-                                emailAuthVM.login(email: emailInput, password: passwordInput)
-                                print("로그인 되었음")
+                                .padding(.horizontal, 20)
                             }
-                            
-                            animationTrigger = false
-                        } label: {
-                            ButtonView(text: "로그인")
+                            .padding(.vertical, 41)
                         }
-                        .padding(.top, 40)
-
-                        HStack {
-                            Text("계정이 없으신가요?")
-                                .foregroundColor(ColorManager.foreground1)
-                            
-                            Button {
-                                
-                            } label: {
-                                Text("회원가입")
-                                    .foregroundColor(ColorManager.primaryColor)
-                                    .overlay(
-                                        Rectangle()
-                                            .frame(height: 1)
-                                            .offset(y: 2)
-                                            .foregroundColor(ColorManager.primaryColor)
-                                        , alignment: .bottom)
-                            }
-                        }
-                        .font(FontManager.body2)
-
-                        Divider()
-                            .padding(.vertical, 24)
-
-                        Button {
-                            
-                        } label: {
-                            ThirdPartyButtonView(type: .apple)
-                        }
-                        
-                        Button {
-                            kakaoAuthVM.handleKakaoLogin()
-                        } label: {
-                            ThirdPartyButtonView(type: .kakao)
-                        }
-                        
+                        .ignoresSafeArea(.keyboard, edges: .all)
                     }
-                    .padding(.horizontal, 20)
                 }
-                .padding(.vertical, 41)
             }
-            .ignoresSafeArea(.keyboard, edges: .all)
-        }
-        .navigationBarHidden(true)
-                
+            .navigationBarHidden(true)
     }
     
     func toggleFocus() {
