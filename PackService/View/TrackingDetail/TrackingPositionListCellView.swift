@@ -16,28 +16,19 @@ struct TrackingPositionListCellView: View {
     var time: String
     var date: String
     var isCurrent: Bool = false
+    
     @State var scale = 1.0
     
     var body: some View {
         HStack(alignment: .top) {
-            Circle()
-                .fill(ColorManager.primaryColor)
-                .frame(width: 8, height: 8, alignment: .top)
-                .scaleEffect(scale)
-                .padding(.top, 8)
-                .padding(.horizontal, 4)
-                .onAppear {
-                    if isCurrent {
-                        withAnimation(Animation.easeIn(duration: 0.7).repeatForever(autoreverses: true)) {
-                            scale = 1.3
-                        }
-                    }
-                }
+            circle
             
+            // status + location
             leftColumn
             
             Spacer()
             
+            // date + time
             rightColumn
         }
         
@@ -45,6 +36,25 @@ struct TrackingPositionListCellView: View {
 }
 
 extension TrackingPositionListCellView {
+    
+    //MARK: - Circle
+    var circle: some View {
+        Circle()
+            .fill(ColorManager.primaryColor)
+            .frame(width: 8, height: 8, alignment: .top)
+            .scaleEffect(scale)
+            .padding(.top, 8)
+            .padding(.horizontal, 4)
+            .onAppear {
+                if isCurrent {
+                    withAnimation(Animation.easeIn(duration: 0.7).repeatForever(autoreverses: true)) {
+                        scale = 1.3
+                    }
+                }
+            }
+    }
+    
+    //MARK: - Left
     var leftColumn: some View {
         VStack(alignment: .leading) {
             Text(status)
@@ -65,6 +75,7 @@ extension TrackingPositionListCellView {
         }
     }
     
+    //MARK: - Right
     var rightColumn: some View {
         VStack(alignment: .trailing) {
             Text(time)
@@ -74,23 +85,6 @@ extension TrackingPositionListCellView {
                 .font(FontManager.caption1)
                 .foregroundColor(ColorManager.foreground1)
         }
-    }
-}
-
-extension View {
-    
-    func updateListGeoSize(_ size: CGSize) -> some View {
-        preference(key: ListGeometryPreferenceKey.self, value: size)
-    }
-}
-
-//MARK: - Preference Key
-struct ListGeometryPreferenceKey: PreferenceKey {
-    
-    static var defaultValue: CGSize = .zero
-    
-    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
-        value = nextValue()
     }
 }
 

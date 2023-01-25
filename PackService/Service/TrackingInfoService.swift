@@ -8,10 +8,6 @@
 import Foundation
 import Combine
 
-class TrackingInfoService: ObservableObject {
-    
-    @Published var trackingInfo: TrackingInfoModel? = nil
-    
 //    TrackingInfoModel(
 //        complete: false,
 //        level: 0,
@@ -23,7 +19,11 @@ class TrackingInfoService: ObservableObject {
 //        trackingDetails: [],
 //        estimate: "",
 //        productInfo: "")
+
+class TrackingInfoService: ObservableObject {
     
+    @Published var trackingInfo: TrackingInfoModel? = nil
+
     var trackingInfoSubscription: AnyCancellable?
 
     init(code: String, invoice: String) {
@@ -31,16 +31,16 @@ class TrackingInfoService: ObservableObject {
     }
     
     func getTrackingInfo(_ code: String, _ invoice: String) {
-            guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=\(code)&t_invoice=\(invoice)&t_key=1DsMXGyjhh0tW8MAmxC1gw") else { return }
-            
-            trackingInfoSubscription = NetworkingManager.download(url: url)
-                .decode(type: TrackingInfoModel.self, decoder: JSONDecoder())
-                .receive(on: DispatchQueue.main)
-                .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedTrackingInfo) in
-                    self?.trackingInfo = returnedTrackingInfo
-                    print(returnedTrackingInfo)
-                    self?.trackingInfoSubscription?.cancel()
-                })
+        
+        guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=\(code)&t_invoice=\(invoice)&t_key=1DsMXGyjhh0tW8MAmxC1gw") else { return }
+        
+        trackingInfoSubscription = NetworkingManager.download(url: url)
+            .decode(type: TrackingInfoModel.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedTrackingInfo) in
+                self?.trackingInfo = returnedTrackingInfo
+                print(returnedTrackingInfo)
+                self?.trackingInfoSubscription?.cancel()
+            })
     }
-
 }

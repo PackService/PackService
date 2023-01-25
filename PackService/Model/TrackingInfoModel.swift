@@ -157,7 +157,7 @@ struct TrackingInfoModel: Codable {
     
     var currentStep: Double {
         
-        guard let details = self.trackingDetails else { return 0 }
+        guard let details = self.trackingDetails, !details.isEmpty else { return 0 }
         
         var current = -1
         var result = 0.0
