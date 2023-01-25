@@ -17,8 +17,7 @@ struct PackServiceApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            OnBoardingView()
         }
     }
 }
-

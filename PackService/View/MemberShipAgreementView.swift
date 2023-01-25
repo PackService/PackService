@@ -38,6 +38,8 @@ struct MemberShipAgreementView: View {
     @FocusState private var focusState: TextFieldType?
     // ----------
     
+    @State private var isLoginButtonActive = false
+    
     var body: some View {
         Color.white
             .edgesIgnoringSafeArea(.all)
@@ -90,28 +92,31 @@ struct MemberShipAgreementView: View {
         
         VStack {
             Spacer()
-            if ageAgree && serviceAgree && personInfoAgree && emailInput.count > 5 && passwordInput.count > 8 && passwordInput == passwordConfirmInput { // 버튼 활성화 조건(예외처리 해야함) 이메일 형식, 비밀번호 형식, 비밀번호랑 비밀번호 확인 다를 때
-                Button(action: {
-                    viewModel.registerUser(email: emailInput, password: passwordInput)
-                    isSubmitted = true
-                    validationCheck()
-                    
-                    emailAttempt = (isSubmitted && !isEmailValid)
-                    passwordAttempt = (isSubmitted && !isPasswordValid)
-                    passwordConfirmAttempt = (isSubmitted && !isPasswordConfirmValid)
-                    
-                    if !(isEmailValid && isPasswordValid) {
-                        withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
-                            animationTrigger = true
+            if ageAgree && serviceAgree && personInfoAgree && emailInput.count > 5 && passwordInput.count > 8 && passwordInput == passwordConfirmInput { // 버튼 활성화 조건(예외처리 해야함) 이메일 형식, 비밀번호 형식, 비밀번호랑 비밀번호 확인 다를 때 {
+                NavigationLink (destination: LoginUIView(), isActive: $isLoginButtonActive) {
+                    Button(action: {
+                        viewModel.registerUser(email: emailInput, password: passwordInput)
+                        isSubmitted = true
+                        validationCheck()
+                        
+                        emailAttempt = (isSubmitted && !isEmailValid)
+                        passwordAttempt = (isSubmitted && !isPasswordValid)
+                        passwordConfirmAttempt = (isSubmitted && !isPasswordConfirmValid)
+                        
+                        if !(isEmailValid && isPasswordValid) {
+                            withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
+                                animationTrigger = true
+                            }
                         }
-                    }
-                    
-                    animationTrigger = false
-                }, label: {
-                    ButtonView(text: "계정 만들기")
-                })
-                .padding(.leading, 20)
-                .padding(.trailing, 20)
+                        
+                        animationTrigger = false
+                        isLoginButtonActive = true
+                    }, label: {
+                        ButtonView(text: "계정 만들기")
+                    })
+                    .padding(.leading, 20)
+                    .padding(.trailing, 20)
+                }
             } else {
                 Button(action: {
                 }, label: {
@@ -122,6 +127,7 @@ struct MemberShipAgreementView: View {
                 .padding(.trailing, 20)
             }
         }
+                
         if serviceAgreeScreen { // 서비스 약관 내용 보기
             NoSafeAreaServiceAgreeView(serviceAgreeScreen: $serviceAgreeScreen)
                 .transition(.move(edge: .bottom))
