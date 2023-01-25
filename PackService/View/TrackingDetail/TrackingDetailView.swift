@@ -25,6 +25,7 @@ struct TrackingDetailView: View {
     var code: String = "111"
     var invoice: String = "111"
     
+    //MARK: - Initializer
     init(companyId: String, invoiceNumber: String) {
         _trackingDetailVM = StateObject(wrappedValue: TrackingInfoViewModel(code: companyId, invoice: invoiceNumber))
         self.code = companyId
@@ -32,53 +33,57 @@ struct TrackingDetailView: View {
     }
     
     var body: some View {
-        ZStack {
-            ScrollView {
-                ZStack(alignment: .bottom) {
-                    VStack(spacing: 16) {
-                        header
-                        
-                        cardView
-                        
-                        PromotionView(promotionTitle: "광고란", promotionContent: "광고입니다.")
-                            .padding(.vertical, 8)
+        if trackingDetailVM.isLoading {
+            LoadingView()
+        } else {
+            ZStack {
+                ScrollView {
+                    ZStack(alignment: .bottom) {
+                        VStack(spacing: 16) {
+                            //header
+                            headerView
+                            
+                            //infos on card
+                            cardView
+                            
+                            //promotion
+                            PromotionView(promotionTitle: "광고란", promotionContent: "광고입니다.")
+                                .padding(.vertical, 8)
 
-                        TrackingPositionView(code: code, invoice: invoice)
-                        
-                        Spacer()
+                            //tracking position
+                            TrackingPositionView(code: code, invoice: invoice)
+                            
+                            Spacer()
+                            
+                        }
+                        .padding(.horizontal, 20)
                         
                     }
-                    .padding(.horizontal, 20)
+                    .frame(maxHeight: .infinity)
                     
                 }
-                .frame(maxHeight: .infinity)
+                
+                if showMenu ?? false {
+                    MenuView(show: $showMenu, showToast: $showToast, tel: trackingDetailVM.deliveryManContact)
+                        .animation(Animation.easeIn(duration: 2), value: showMenu)
+                }
+                
                 
             }
-            
-            if showMenu ?? false {
-                MenuView(show: $showMenu, showToast: $showToast, tel: trackingDetailVM.deliveryManContact)
-                    .animation(Animation.easeIn(duration: 2), value: showMenu)
+            .environmentObject(trackingDetailVM)
+            .alert("오류", isPresented: $trackingDetailVM.showAlert) {
+                        Button("OK") {}
+            } message: {
+                Text("[\(trackingDetailVM.alertTitle)] " + trackingDetailVM.alertMessage)
             }
-            
-            
+            .toast(isShowing: $showToast)
         }
-        .environmentObject(trackingDetailVM)
-        .alert("오류", isPresented: $trackingDetailVM.showAlert) {
-                    Button("OK") {}
-        } message: {
-            Text("[\(trackingDetailVM.alertTitle)] " + trackingDetailVM.alertMessage)
-        }
-        .toast(isShowing: $showToast)
-//        .onAppear {
-//            code = trackingDetailVM.invoice
-//
-//        }
     }
-    
 }
 
 extension TrackingDetailView {
-    var header: some View {
+    //MARK: - Header
+    var headerView: some View {
         HStack(spacing: 16) {
             Circle()
                 .fill(ColorManager.defaultForegroundDisabled)
@@ -107,6 +112,7 @@ extension TrackingDetailView {
         }
     }
     
+    //MARK: - Card View
     var cardView: some View {
         VStack(spacing: 10) {
             HStack(spacing: 10) {
@@ -129,62 +135,6 @@ struct TrackingDetailView_Previews: PreviewProvider {
     static let invoiceNumberPreview = "1111111111"
 
     static var previews: some View {
-        
         TrackingDetailView(companyId: "04", invoiceNumber: "1111111111")
-//        Group {
-//
-//            TrackingPositionListCellView(status: "집화처리", position: "군포직영", deliveryMan: "홍길동", time: "07:48", date: "2022.11.22", isCurrent: true)
-//        }
-        
-//        TrackingInfoCardView(title: "받는 분", content: "박*환")
     }
 }
-
-
-
-//struct TrackingInfoView: View {
-//
-//
-//
-    
-//
-//    var body: some View {
-//        VStack(spacing: 20) {
-////            Text(trackingInfoVM.trackingInfo.complete)
-//            if let trackingInfo = trackingInfoVM.trackingInfo {
-//                HStack {
-//                    Text("배송 완료 여부 : ")
-//                    Spacer()
-//                    Text(trackingInfo.complete ? "Y" : "N")
-//                }
-//                .padding(.horizontal, 20)
-//
-//                HStack {
-//                    Text("운송장 번호 : ")
-//                    Spacer()
-//                    Text(trackingInfo.invoiceNo)
-//                }
-//                .padding(.horizontal, 20)
-//
-//                List {
-//                    // Identifiable 프로토콜 지우기
-//                    // (ForEach(trackingInfo.trackingDetails.indices))
-//                    // LazyVStack & LazyHStack 사용
-//                    ForEach(trackingInfo.trackingDetails) { detail in
-//                        VStack(alignment: .leading, spacing: 5) {
-//                            Text("\(detail.level)")
-//                            Text("\(detail.kind)")
-//                                .bold()
-//                        }
-//                    }
-//                }
-//            } else {
-//                Text("입력된 운송장 번호와 일치하는 정보를 찾을 수 없습니다.")
-//            }
-//
-//        }
-//
-//    }
-//}
-
-

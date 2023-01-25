@@ -12,6 +12,7 @@ class TrackingInfoViewModel: ObservableObject {
     
     @Published var code: String
     @Published var invoice: String
+    @Published var isLoading: Bool = true
     private var companyService: CompanyService
     private var trackingInfoService: TrackingInfoService {
         didSet {
@@ -80,7 +81,6 @@ class TrackingInfoViewModel: ObservableObject {
                     }) {
 
                         self?.deliveryMan = trackingDetails.manName
-    //                    debugPrint(self?.deliveryMan)
                         self?.deliveryManContact = trackingDetails.telno2
                     } else {
                         self?.deliveryMan = ""
@@ -88,12 +88,13 @@ class TrackingInfoViewModel: ObservableObject {
                     }
                 }
                 
+                self?.isLoading = false
             }
             .store(in: &cancellables)
     }
     
     func reloadData(code: String, invoice: String) {
-        companyService.getCompanies()
+        isLoading = true
         trackingInfoService.getTrackingInfo(code, invoice)
     }
 }

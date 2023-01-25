@@ -13,7 +13,7 @@ struct ColorManager {
     static let secondaryColor = Color("secondary_color")
     static let negativeColor = Color("negative_color")
     static let background = Color("background")
-    static let black = Color("background")
+    static let black = Color("black")
     static let background1 = Color("background1")
     static let background2 = Color("background2")
     static let defaultForegroundDisabled = Color("default_foreground_disabled")
