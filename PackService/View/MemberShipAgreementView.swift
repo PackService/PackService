@@ -10,7 +10,8 @@ import SwiftUI
 struct MemberShipAgreementView: View {
 
     // 온보딩에서 회원가입시 false, 로그인화면에서 회원가입시 true
-    @Binding var stateSignUp: Bool
+//    @Binding var stateSignUp: Bool
+    @Binding var isFirstLaunching: Bool //1회만 실행되도록 하는 변수
     
     @ObservedObject var viewModel = EmailAuthVM() 
     @Binding var signUpScreen: Bool
@@ -95,13 +96,14 @@ struct MemberShipAgreementView: View {
 
         VStack { // 가입하기 버튼
             Spacer()
-            if !stateSignUp { // onboardingView에서 가입하기
-                NavigationLink (destination: LoginUIView(), isActive: $isLoginButtonActive) {
-                    signUpButtonView
-                }
-            } else { // loginUIView에서 가입하기
-                signUpButtonView
-            }
+//            if isFirstLaunching { // onboardingView에서 가입하기
+//                NavigationLink (destination: LoginUIView(), isActive: $isLoginButtonActive) {
+//                    signUpButtonView
+//                }
+//            } else { // loginUIView에서 가입하기
+//                signUpButtonView
+//            }
+            signUpButtonView
         }
                 
         if serviceAgreeScreen { // 서비스 약관 내용 보기
@@ -233,8 +235,8 @@ extension MemberShipAgreementView {
                 viewModel.registerUser(email: emailInput, password: passwordInput)
 //            }
             
-            if !stateSignUp {
-                isLoginButtonActive = true
+            if isFirstLaunching {
+                isFirstLaunching.toggle()
             } else {
                 signUpScreen.toggle()
             }

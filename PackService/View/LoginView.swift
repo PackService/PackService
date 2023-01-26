@@ -84,7 +84,7 @@ struct LoginView: View {
                     signUpScreen.toggle()
                 }
                 if signUpScreen {
-                    MemberShipAgreementView(stateSignUp: .constant(true), signUpScreen: $signUpScreen)
+                    MemberShipAgreementView(isFirstLaunching: .constant(false), signUpScreen: $signUpScreen)
                         .transition(.move(edge: .bottom))
                         .animation(.spring())
                 }

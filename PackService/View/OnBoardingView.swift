@@ -28,6 +28,7 @@ struct OnBoardingView: View {
                     VStack(spacing: 16) {
                         Button {
                             kakaoAuthVM.handleKakaoLogin()
+                            isFirstLaunching.toggle()
                         } label: {
                             ThirdPartyButtonView(type: .kakao)
                         }
@@ -46,9 +47,9 @@ struct OnBoardingView: View {
                         Text("이미 계정이 있나요?")
                             .foregroundColor(Color("foreground1"))
                         
-                        NavigationLink {
-                            LoginUIView()
-                        } label: {
+                        Button(action: {
+                            isFirstLaunching.toggle()
+                        }, label: {
                             Text("로그인")
                                 .foregroundColor(Color("primary_color"))
                                 .overlay(
@@ -57,19 +58,17 @@ struct OnBoardingView: View {
                                         .offset(y: 2)
                                         .foregroundColor(Color("primary_color"))
                                     , alignment: .bottom)
-                        }
+                        })
                     }
                     .font(FontManager.body2)
                 }
                 .padding(.vertical, 41)
                 if signUpScreen { // 회원가입 화면 이동
-                    MemberShipAgreementView(stateSignUp: .constant(false), signUpScreen: $signUpScreen)
+                    MemberShipAgreementView(isFirstLaunching: $isFirstLaunching, signUpScreen: $signUpScreen)
                         .transition(.move(edge: .bottom))
                         .animation(.spring())
                 }
             }
-            //.onDisappear(perform: {isFirstLaunching.toggle()})
-            // 한번만 실행되고 없어지도록 해야함
         }
     }
 }
