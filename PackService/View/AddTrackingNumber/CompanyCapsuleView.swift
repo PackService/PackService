@@ -31,13 +31,13 @@ struct CompanyCapsuleView: View {
         .background(
             Capsule()
                 .fill(color)
-                .overlay (Capsule().stroke(.black, lineWidth: 0.1))
+                .overlay(Capsule().stroke(.black, lineWidth: 0.1))
         )
         
     }
 }
 
-struct CapsuleButtonStyle: ButtonStyle {
+struct ContainerButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .brightness(configuration.isPressed ? -0.1 : 0.0)
