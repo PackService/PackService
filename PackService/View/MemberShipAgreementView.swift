@@ -9,10 +9,9 @@ import SwiftUI
 
 struct MemberShipAgreementView: View {
 
-    // 온보딩에서 회원가입시 false, 로그인화면에서 회원가입시 true
-//    @Binding var stateSignUp: Bool
-    @Binding var isFirstLaunching: Bool //1회만 실행되도록 하는 변수
     
+    @Binding var isFirstLaunching: Bool // 온보딩 1회만 실행되도록 하는 변수
+    @State var signUpErrorMessage: String = "회원가입 에러"
     @ObservedObject var viewModel = EmailAuthVM() 
     @Binding var signUpScreen: Bool
     @State var serviceAgreeScreen: Bool = false // servceAgreeDescriptView 화면 전환 변수
@@ -75,6 +74,12 @@ struct MemberShipAgreementView: View {
                         
                         TextFieldView(title: "비밀번호", input: $passwordInput, wrongAttempt: $passwordAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .password, isSecure: true)
                         TextFieldView(title: "비밀번호 확인", input: $passwordConfirmInput, wrongAttempt: $passwordConfirmAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .passwordConfirm, isSecure: true)
+                        
+//                        if !checkEmail(str: emailInput) {
+//                            signUpErrorMessage = "이메일이 이상해요"
+//                        } else if !checkPassword(str: passwordInput) {
+//    
+//                        }
                         Spacer()
                     }
                     .onAppear(perform: {
@@ -148,6 +153,17 @@ struct MemberShipAgreementView: View {
         self.isPasswordValid = false
         self.focusState = .password
         
+    }
+    
+    func signUpErrorMessages() {
+        if checkEmail(str: emailInput) {
+            self.signUpErrorMessage = "이메일이 이상해요"
+        } else if checkPassword(str: passwordInput) {
+            self.signUpErrorMessage = "비밀번호가 이상해요"
+        } else if self.passwordInput != passwordConfirmInput {
+            self.signUpErrorMessage = "비밀번호랑 확인이랑 달라요"
+        }
+        //이메일이 존재합니다
     }
 }
 
@@ -281,6 +297,8 @@ struct ToggleDetailTextView: View {
             .foregroundColor(ColorManager.foreground2)
     }
 }
+
+
 
 struct MemberShipAgreementView_Previews: PreviewProvider {
     static var previews: some View {
