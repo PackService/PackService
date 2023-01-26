@@ -44,7 +44,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
         }
     }
     
-    
+
     // 송장번호 하나 삭제
     func deleteTrackNumber(trackNumber: String) {
         let db = Firestore.firestore()
@@ -111,8 +111,10 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
     
     // 로그아웃
     func logout() {
+        print("아직 로그인임\(currentUser)")
         currentUser = nil
         try? Auth.auth().signOut()
+        print("로그아웃되었습니다\(currentUser)")
     }
     
     // 회원가입

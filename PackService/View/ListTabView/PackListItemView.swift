@@ -70,7 +70,7 @@ struct PackListItemView: View {
                         }
                     }
                 })
-                .buttonStyle(CapsuleButtonStyle())
+                .buttonStyle(ContainerButtonStyle())
                 .cornerRadius(10)
             }
             .padding(.trailing, 20)

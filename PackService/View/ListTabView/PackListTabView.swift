@@ -10,29 +10,36 @@ import SwiftUI
 struct PackListTabView: View {
     
     @StateObject var packInfoDatas = PackInfoViewModel()
-    
     var body: some View {
-        VStack {
-            TopOfTabView(title: "배송 목록")
-            
-            SearchTextFieldView(title: "검색")
-            
-            List {
-                ForEach(packInfoDatas.packInfoModels) { packInfo in
-                    PackListItemView(packInfoModel: $packInfoDatas.packInfoModels[getIndex(packInfoModel: packInfo)], packInfoModels: $packInfoDatas.packInfoModels)
-                }
-                .background(
-                    ColorManager.background
-                        .cornerRadius(10)
-                        .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 2)
-                )
-                .frame(height: 76)
-                Spacer()
-            }
-            .padding(.leading, -17)
-            .listStyle(PlainListStyle())
-            Spacer()
-        }
+//        VStack {
+//            TopOfTabView(title: "배송 목록")
+//
+//            SearchTextFieldView(title: "검색")
+//
+//            // 테스트용 버튼
+//            Button(action: {
+//                test = true
+//            }, label: {
+//                Text("파이어베이스 연동 테스트")
+//            })
+//            //
+//            List {
+//                ForEach(packInfoDatas.packInfoModels) { packInfo in
+//                    PackListItemView(packInfoModel: $packInfoDatas.packInfoModels[getIndex(packInfoModel: packInfo)], packInfoModels: $packInfoDatas.packInfoModels)
+//                }
+//                .background(
+//                    ColorManager.background
+//                        .cornerRadius(10)
+//                        .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 2)
+//                )
+//                .frame(height: 76)
+//                Spacer()
+//            }
+//            .padding(.leading, -17)
+//            .listStyle(PlainListStyle())
+//            Spacer()
+//        }
+        HomeView()
     }
     
     func getIndex(packInfoModel: PackInfoModel) -> Int {

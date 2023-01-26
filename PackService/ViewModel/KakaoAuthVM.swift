@@ -80,12 +80,12 @@ class KakaoAuthVM: ObservableObject {
                         if let error = error {
                             print(error)
                         } else {
-                            Auth.auth().createUser(withEmail: (kuser?.kakaoAccount?.email)!, password: "\(String(describing: kuser?.id))") { fuser, error in //회원가입 실행
+                            Auth.auth().signIn(withEmail: (kuser?.kakaoAccount?.email)!, password: "\(String(describing: kuser?.id))") { fuser, error in //회원가입 실행
                                 if let error = error { // 아이디가 있으면 로그인
                                     print("FB : signup failed")
                                     print(error)
                                     Auth.auth().signIn(withEmail: (kuser?.kakaoAccount?.email)!, password: "\(String(describing: kuser?.id))", completion: nil)
-                                    print(fuser?.user.uid)
+                                    print(kuser?.kakaoAccount?.email ?? "없음")
                                 } else { // 아이디가 없으니까 firbase 연동
                                     guard let user = fuser?.user else { return } // 파이어베이스 유저 객체를 가져옴
                                     print("FB : signup success")

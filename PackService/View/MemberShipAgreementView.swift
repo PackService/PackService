@@ -11,7 +11,8 @@ struct MemberShipAgreementView: View {
 
     
     @Binding var isFirstLaunching: Bool // 온보딩 1회만 실행되도록 하는 변수
-    @State var signUpErrorMessage: String = "회원가입 에러"
+    @State var checkSignupError: Bool = true
+    @State var signUpErrorMessage: String = ""
     @ObservedObject var viewModel = EmailAuthVM() 
     @Binding var signUpScreen: Bool
     @State var serviceAgreeScreen: Bool = false // servceAgreeDescriptView 화면 전환 변수
@@ -74,12 +75,12 @@ struct MemberShipAgreementView: View {
                         
                         TextFieldView(title: "비밀번호", input: $passwordInput, wrongAttempt: $passwordAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .password, isSecure: true)
                         TextFieldView(title: "비밀번호 확인", input: $passwordConfirmInput, wrongAttempt: $passwordConfirmAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .passwordConfirm, isSecure: true)
-                        
-//                        if !checkEmail(str: emailInput) {
-//                            signUpErrorMessage = "이메일이 이상해요"
-//                        } else if !checkPassword(str: passwordInput) {
-//    
-//                        }
+                        HStack {
+                            Text(signUpErrorMessage)
+                                .font(FontManager.caption2)
+                                .foregroundColor(ColorManager.negativeColor)
+                            Spacer()
+                        }
                         Spacer()
                     }
                     .onAppear(perform: {
@@ -101,13 +102,6 @@ struct MemberShipAgreementView: View {
 
         VStack { // 가입하기 버튼
             Spacer()
-//            if isFirstLaunching { // onboardingView에서 가입하기
-//                NavigationLink (destination: LoginUIView(), isActive: $isLoginButtonActive) {
-//                    signUpButtonView
-//                }
-//            } else { // loginUIView에서 가입하기
-//                signUpButtonView
-//            }
             signUpButtonView
         }
                 
@@ -156,12 +150,14 @@ struct MemberShipAgreementView: View {
     }
     
     func signUpErrorMessages() {
-        if checkEmail(str: emailInput) {
-            self.signUpErrorMessage = "이메일이 이상해요"
-        } else if checkPassword(str: passwordInput) {
-            self.signUpErrorMessage = "비밀번호가 이상해요"
-        } else if self.passwordInput != passwordConfirmInput {
-            self.signUpErrorMessage = "비밀번호랑 확인이랑 달라요"
+        if !checkEmail(str: emailInput) {
+            self.signUpErrorMessage = "올바른 이메일 주소를 입력하세요"
+        } else if !checkPassword(str: passwordInput) {
+            self.signUpErrorMessage = "비밀번호는 8이상의 영어,숫자,특수문자를 입력하세요"
+        } else if passwordInput != passwordConfirmInput {
+            self.signUpErrorMessage = "비밀번호와 비밀번호 확인이 일치하지 않습니다"
+        } else {
+            self.checkSignupError.toggle()
         }
         //이메일이 존재합니다
     }
@@ -237,7 +233,7 @@ extension MemberShipAgreementView {
         Button(action: {
             isSubmitted = true
             validationCheck()
-            
+            signUpErrorMessages() // 회원가입 정보 에러 없는지 확인
             emailAttempt = (isSubmitted && !isEmailValid)
             passwordAttempt = (isSubmitted && !isPasswordValid)
             passwordConfirmAttempt = (isSubmitted && !isPasswordConfirmValid)
@@ -247,14 +243,14 @@ extension MemberShipAgreementView {
                     animationTrigger = true
                 }
             }
-//            else { 아니면 등록 안되고 애니메이션만 되게 수정해야함
+
+            if checkSignupError == false {// 회원가입 시 에러 없어야지 파이어베이스 등록
                 viewModel.registerUser(email: emailInput, password: passwordInput)
-//            }
-            
-            if isFirstLaunching {
-                isFirstLaunching.toggle()
-            } else {
-                signUpScreen.toggle()
+                if isFirstLaunching { // 로그인 화면으로 이동
+                    isFirstLaunching.toggle()
+                } else { // 로그인 화면으로 이동
+                    signUpScreen.toggle()
+                }
             }
             animationTrigger = false
         }, label: {

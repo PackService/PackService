@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SystemTabView: View {
     @AppStorage("log_status") var logStatus = false
+    @StateObject var emailAuthVM = EmailAuthVM()
     var body: some View {
         NavigationView {
             VStack {
@@ -28,6 +29,7 @@ struct SystemTabView: View {
                     SystemButtonView(buttonType: .version, text: "현재 버전")
                     SystemButtonView(buttonType: .arrow, text: "피드백 보내기")
                     Button(action: {
+                        emailAuthVM.logout()
                         withAnimation(.easeInOut) {
                             logStatus = false
                         }

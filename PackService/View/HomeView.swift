@@ -12,7 +12,6 @@ struct HomeView: View {
     @AppStorage("log_status") var logStatus = false
     @StateObject var kakaoAuthVM = KakaoAuthVM()
     @StateObject var emailAuthVM = EmailAuthVM()
-    @State var currentUser: String = ""
     
     @State var testTrackNumber: String = ""
     
@@ -27,6 +26,7 @@ struct HomeView: View {
                         try? Auth.auth().signOut()
                         // 카카오 로그인 했을 경우에만 아래 실행되도록 수정 필요
                         try? kakaoAuthVM.kakaoLogout()
+                        print("로그아웃")
                     }
                     // back view to loginview
                     withAnimation(.easeInOut) {
@@ -43,7 +43,8 @@ struct HomeView: View {
                 })
                 
                 TextField("배송번호", text: $testTrackNumber)
-                Text(currentUser)
+                Text(emailAuthVM.currentUser?.email ?? "이메일 로그인 없음")
+                Text(kakaoAuthVM.currentUser?.email ?? "카카오 로그인 없음")
                 Text(testTrackNumber)
                 Button(action: {
                     emailAuthVM.addTrackNumber(trackNumber: testTrackNumber, trackCompany: testTrackNumber)
@@ -70,7 +71,7 @@ struct HomeView: View {
                     Text("회원탈퇴")
                 })
                  
-                Spacer()
+//                Spacer()
                 
 //                NavigationLink {
 //                    AddTrackingNumberView()
