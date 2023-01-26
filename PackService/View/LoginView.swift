@@ -13,9 +13,12 @@ struct LoginView: View {
     @State var passwordInput: String = ""
     @State var signUpScreen: Bool = false // 회원가입 진행 bool 변수
     @StateObject var kakaoAuthVM = KakaoAuthVM()
-    @StateObject var appleAuthVM = AppleAuthVM()
+    @StateObject var apple = AppleAuthVM()
     @ObservedObject var emailAuthVM = EmailAuthVM()
     @State var firstNaviLinkActive = false
+    
+    @Environment(\.window) var window: UIWindow?
+    @State private var appleAuthVM: AppleAuthViewModel?
     
     var body: some View {
         NavigationView {
@@ -47,29 +50,36 @@ struct LoginView: View {
                             .padding(.horizontal,30)
                     }
                     
-                    SignInWithAppleButton { (request) in
-                        appleAuthVM.nonce = randomNonceString()
-                        request.requestedScopes = [.email,.fullName]
-                        request.nonce = sha256(appleAuthVM.nonce)
-                    } onCompletion: { (result) in
-                        //getting error or success
-                        switch result {
-                        case .success(let user):
-                            print("apple login success")
-                            guard let credential = user.credential as? ASAuthorizationAppleIDCredential else {
-                                print("error with firebase")
-                                return
-                            }
-                            appleAuthVM.authenticate(credential: credential)
-                        case .failure(let error):
-                            print(error.localizedDescription)
-                        }
+                    Button {
+                        appleLogin()
+                    } label: {
+                        ThirdPartyButtonView(type: .apple)
                     }
-                    .signInWithAppleButtonStyle(.black)
-                    .frame(height: 45)
-                    .clipShape(Rectangle())
-                    .padding(.horizontal, 30)
-                    .offset(y: 0)
+
+                    
+//                    SignInWithAppleButton { (request) in
+//                        appleAuthVM.nonce = randomNonceString()
+//                        request.requestedScopes = [.email,.fullName]
+//                        request.nonce = sha256(appleAuthVM.nonce)
+//                    } onCompletion: { (result) in
+//                        //getting error or success
+//                        switch result {
+//                        case .success(let user):
+//                            print("apple login success")
+//                            guard let credential = user.credential as? ASAuthorizationAppleIDCredential else {
+//                                print("error with firebase")
+//                                return
+//                            }
+//                            appleAuthVM.authenticate(credential: credential)
+//                        case .failure(let error):
+//                            print(error.localizedDescription)
+//                        }
+//                    }
+//                    .signInWithAppleButtonStyle(.black)
+//                    .frame(height: 45)
+//                    .clipShape(Rectangle())
+//                    .padding(.horizontal, 30)
+//                    .offset(y: 0)
                 }
                 .padding()
                 
@@ -90,6 +100,11 @@ struct LoginView: View {
                 }
             }
         }
+    }
+    
+    func appleLogin() {
+        appleAuthVM = AppleAuthViewModel(window: window)
+        appleAuthVM?.startAppleLogin()
     }
 }
 

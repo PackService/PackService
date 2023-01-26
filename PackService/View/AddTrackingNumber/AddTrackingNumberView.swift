@@ -70,7 +70,7 @@ struct AddTrackingNumberView: View {
                 }, label: {
                     CompanyCapsuleView(color: company.logo.bgColor, logoImage: company.logo.image, logoName: name.name, nameColor: company.logo.fgColor)
                 })
-                .buttonStyle(CapsuleButtonStyle())
+                .buttonStyle(ContainerButtonStyle())
                   .padding([.horizontal, .vertical], 4)
                   .alignmentGuide(.leading, computeValue: { value in
                       if abs(width - value.width) > proxy.size.width {

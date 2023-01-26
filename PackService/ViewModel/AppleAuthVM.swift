@@ -5,6 +5,7 @@
 //  Created by 이범준 on 11/29/22.
 //
 
+import Foundation
 import SwiftUI
 import CryptoKit
 import AuthenticationServices

@@ -17,11 +17,11 @@ struct ThirdPartyButtonView: View {
     init(type: LoginType) {
         switch type {
         case .apple:
-            self.icon = Image(systemName: "apple.logo")
+            self.icon = Image("apple_logo")
             self.text = "Apple"
             self.fgColor = Color.white
             self.bgColor = Color.black
-            self.size = (18, 22)
+            self.size = (20.8, 40)
         case .kakao:
             self.icon = Image("kakao_logo")
             self.text = "카카오"

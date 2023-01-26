@@ -11,7 +11,7 @@ struct LoginUIView: View {
     
     @State var signUpScreen: Bool = false // 회원가입 진행 bool 변수
     @StateObject var kakaoAuthVM = KakaoAuthVM()
-    @StateObject var appleAuthVM = AppleAuthVM()
+    @StateObject var apple = AppleAuthVM()
     @ObservedObject var emailAuthVM = EmailAuthVM()
     // ------
     @State var emailInput: String = ""
@@ -27,6 +27,9 @@ struct LoginUIView: View {
     
     @State var animationTrigger: Bool = false
     @FocusState private var focusState: TextFieldType?
+    
+    @Environment(\.window) var window: UIWindow?
+    @State private var appleAuthVM: AppleAuthViewModel?
 
     var body: some View {
             NavigationView {
@@ -93,17 +96,20 @@ struct LoginUIView: View {
                                     
                                     Divider()
                                         .padding(.vertical, 24)
+                                    
                                     Button {
-                                        
+                                        handleAppleLogin()
                                     } label: {
                                         ThirdPartyButtonView(type: .apple)
                                     }
+                                    .buttonStyle(ContainerButtonStyle())
                                     
                                     Button {
                                         kakaoAuthVM.handleKakaoLogin()
                                     } label: {
                                         ThirdPartyButtonView(type: .kakao)
                                     }
+                                    .buttonStyle(ContainerButtonStyle())
                                     
                                 }
                                 .padding(.horizontal, 20)
@@ -146,6 +152,11 @@ struct LoginUIView: View {
         self.isPasswordValid = false
         self.focusState = .password
         
+    }
+    
+    func handleAppleLogin() {
+        appleAuthVM = AppleAuthViewModel(window: window)
+        appleAuthVM?.startAppleLogin()
     }
 }
 
