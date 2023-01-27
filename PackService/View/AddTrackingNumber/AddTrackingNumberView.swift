@@ -104,7 +104,7 @@ struct AddTrackingNumberView: View {
             focusState = nil
         }
     }
-    
+
     // MARK: - buttonPressed()
     func buttonPressed() {
 //        focusState = nil
@@ -117,6 +117,8 @@ struct AddTrackingNumberView: View {
             withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
                 animationTrigger = true
             }
+        } else {
+            emailAuthVM.addTrackNumber(trackNumber: trackingNumber, trackCompany: selectedCompany.name)
         }
         
         animationTrigger = false

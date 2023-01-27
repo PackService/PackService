@@ -72,7 +72,6 @@
 		ADA9599C297670D500308009 /* SystemButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA9599B297670D500308009 /* SystemButtonView.swift */; };
 		ADA9599E2977CF2000308009 /* TrackInfoTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA9599D2977CF2000308009 /* TrackInfoTestView.swift */; };
 		ADA959A02979229600308009 /* TrackingProgressView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA9599F2979229600308009 /* TrackingProgressView2.swift */; };
-		ADA959A2297A777800308009 /* FirebaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA959A1297A777800308009 /* FirebaseTest.swift */; };
 		ADC1407229604ABE0067CDE3 /* ToggleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC1407129604ABE0067CDE3 /* ToggleButtonView.swift */; };
 		ADE0F38D2934515F005D2732 /* PackServiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38C2934515F005D2732 /* PackServiceApp.swift */; };
 		ADE0F38F2934515F005D2732 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE0F38E2934515F005D2732 /* ContentView.swift */; };
@@ -171,7 +170,6 @@
 		ADA9599B297670D500308009 /* SystemButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemButtonView.swift; sourceTree = "<group>"; };
 		ADA9599D2977CF2000308009 /* TrackInfoTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackInfoTestView.swift; sourceTree = "<group>"; };
 		ADA9599F2979229600308009 /* TrackingProgressView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingProgressView2.swift; sourceTree = "<group>"; };
-		ADA959A1297A777800308009 /* FirebaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTest.swift; sourceTree = "<group>"; };
 		ADC1407129604ABE0067CDE3 /* ToggleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButtonView.swift; sourceTree = "<group>"; };
 		ADE0F3892934515F005D2732 /* PackService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PackService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADE0F38C2934515F005D2732 /* PackServiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackServiceApp.swift; sourceTree = "<group>"; };
@@ -399,7 +397,6 @@
 				7E088714296BC77C0011819D /* TextFieldType.swift */,
 				7E088716296BCAC90011819D /* TextFieldView.swift */,
 				ADA9599D2977CF2000308009 /* TrackInfoTestView.swift */,
-				ADA959A1297A777800308009 /* FirebaseTest.swift */,
 				7E0900842980E5BF00D9B1F3 /* LoadingView.swift */,
 			);
 			path = View;
@@ -584,7 +581,6 @@
 				ADE0F3CF2935F97D005D2732 /* HomeView.swift in Sources */,
 				AD1ADDE42959B57500545DB7 /* RecommendModel.swift in Sources */,
 				7E088717296BCAC90011819D /* TextFieldView.swift in Sources */,
-				ADA959A2297A777800308009 /* FirebaseTest.swift in Sources */,
 				7E04350B2954454C005187E8 /* CompanyModel.swift in Sources */,
 				7EF5DE4F295ED7470064E4D1 /* LoginUIView.swift in Sources */,
 				7EA8B0A329769A4B0056D73D /* TrackingInfoViewModel.swift in Sources */,
