@@ -18,9 +18,9 @@ struct ContentView: View {
                 MainView()
             } else {
                 LoginUIView()
-                    .fullScreenCover(isPresented: $isFirstLaunching) {
-                        OnBoardingView(isFirstLaunching: $isFirstLaunching)
-                    }
+//                    .fullScreenCover(isPresented: $isFirstLaunching) {
+//                        OnBoardingView(isFirstLaunching: $isFirstLaunching)
+//                    }
             }
         }
     }

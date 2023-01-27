@@ -20,11 +20,13 @@ class KakaoAuthVM: ObservableObject {
     init() {
         currentUser = Auth.auth().currentUser
     }
+    
     @MainActor
     func kakaoLogout() {
         Task {
             if await handleKakaoLogout() {
                 logStatus = false
+                try? Auth.auth().signOut()
             }
         }
     }
@@ -54,12 +56,10 @@ class KakaoAuthVM: ObservableObject {
                 }
                 else {
                     print("loginWithKakaoTalk() success.")
-                    
-                    //do something
-                    _ = oauthToken
-                    continuation.resume(returning: true)
-                    print(oauthToken)
-                    
+                    if let token = oauthToken {
+                        self.loginInFirebase()
+                        continuation.resume(returning: true)
+                    }
                 }
             }
         }
@@ -73,30 +73,12 @@ class KakaoAuthVM: ObservableObject {
                     continuation.resume(returning: false)
                 }
                 else {
-                    print("loginWithKakaoAccount() success.")
-                    _ = oauthToken
-//                    registerUser(email: <#T##String#>, password: <#T##String#>)
-                    UserApi.shared.me { kuser, error in
-                        if let error = error {
-                            print(error)
-                        } else {
-                            Auth.auth().signIn(withEmail: (kuser?.kakaoAccount?.email)!, password: "\(String(describing: kuser?.id))") { fuser, error in //회원가입 실행
-                                if let error = error { // 아이디가 있으면 로그인
-                                    print("FB : signup failed")
-                                    print(error)
-                                    Auth.auth().signIn(withEmail: (kuser?.kakaoAccount?.email)!, password: "\(String(describing: kuser?.id))", completion: nil)
-                                    print(kuser?.kakaoAccount?.email ?? "없음")
-                                } else { // 아이디가 없으니까 firbase 연동
-                                    guard let user = fuser?.user else { return } // 파이어베이스 유저 객체를 가져옴
-                                    print("FB : signup success")
-                                    let db = Firestore.firestore()
-                                    db.collection("users").document(user.uid).setData(["email": kuser?.kakaoAccount?.email])
-                                    print(user.uid)
-                                }
-                            }
-                        }
+                    print("DEBUG: 카카오톡 로그인 Success")
+                    if let token = oauthToken {
+                        print("DEBUG: 카카오톡 토큰 \(token)")
+                        self.loginInFirebase()
+                        continuation.resume(returning: true)
                     }
-                    continuation.resume(returning: true)
                 }
             }
         }
@@ -117,16 +99,36 @@ class KakaoAuthVM: ObservableObject {
         }
     }
     
-    func registerUser(email: String, password: String) {
-        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+    func loginInFirebase() {
+        UserApi.shared.me() { user, error in
             if let error = error {
-                print("Error : \(error.localizedDescription)")
-                return
+                print("DEBUG: 카카오톡 사용자 정보가져오기 에러 \(error.localizedDescription)")
+            } else {
+                print("DEBUG: 카카오톡 사용자 정보가져오기 success.")
+
+                // 파이어베이스 유저 생성 (이메일로 회원가입)
+                Auth.auth().createUser(withEmail: (user?.kakaoAccount?.email)!,
+                                       password: "\(String(describing: user?.id))") { result, error in
+                    if let error = error {
+                        print("DEBUG: 파이어베이스 사용자 생성 실패 \(error.localizedDescription)")
+                        Auth.auth().signIn(withEmail: (user?.kakaoAccount?.email)!,
+                                           password: "\(String(describing: user?.id))")
+                        print("로그인되었음")
+                        guard let user = result?.user else { return } // 파이어베이스 유저 객체를 가져옴
+                        let db = Firestore.firestore()
+                        db.collection("users").document(user.uid).setData(["email": user.email])
+                        
+//                        self.currentUser = result?.user
+//                        print(self.currentUser)
+//                        self.didSendEventClosure?(.close)
+                    } else {
+                        print("DEBUG: 파이어베이스 사용자 생성")
+//                        self.currentUser = result?.user
+//                        self.didSendEventClosure?(.showSignUp) // 회원가입 화면으로 이동
+//                        self.dismiss(animated: true) // 창닫기
+                    }
+                }
             }
-            
-            guard let user = result?.user else { return }
-            
-            print(user.uid)
         }
     }
     

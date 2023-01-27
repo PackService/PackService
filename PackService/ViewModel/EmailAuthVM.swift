@@ -115,6 +115,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
         currentUser = nil
         try? Auth.auth().signOut()
         print("로그아웃되었습니다\(currentUser)")
+        logStatus = false
     }
     
     // 회원가입

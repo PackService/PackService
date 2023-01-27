@@ -30,9 +30,9 @@ struct SystemTabView: View {
                     SystemButtonView(buttonType: .arrow, text: "피드백 보내기")
                     Button(action: {
                         emailAuthVM.logout()
-                        withAnimation(.easeInOut) {
-                            logStatus = false
-                        }
+//                        withAnimation(.easeInOut) {
+//                            logStatus = false
+//                        }
                     }, label: {
                         Text("로그아웃")
                     })
