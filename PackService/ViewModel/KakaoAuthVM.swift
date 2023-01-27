@@ -15,7 +15,7 @@ class KakaoAuthVM: ObservableObject {
     
     @Published var currentUser: Firebase.User?
     @AppStorage("log_status") var logStatus = false
-    
+    let db = Firestore.firestore()
     
     init() {
         currentUser = Auth.auth().currentUser
@@ -26,7 +26,6 @@ class KakaoAuthVM: ObservableObject {
         Task {
             if await handleKakaoLogout() {
                 logStatus = false
-                try? Auth.auth().signOut()
             }
         }
     }
@@ -114,18 +113,12 @@ class KakaoAuthVM: ObservableObject {
                         Auth.auth().signIn(withEmail: (user?.kakaoAccount?.email)!,
                                            password: "\(String(describing: user?.id))")
                         print("로그인되었음")
-                        guard let user = result?.user else { return } // 파이어베이스 유저 객체를 가져옴
-                        let db = Firestore.firestore()
-                        db.collection("users").document(user.uid).setData(["email": user.email])
-                        
-//                        self.currentUser = result?.user
-//                        print(self.currentUser)
-//                        self.didSendEventClosure?(.close)
                     } else {
                         print("DEBUG: 파이어베이스 사용자 생성")
-//                        self.currentUser = result?.user
-//                        self.didSendEventClosure?(.showSignUp) // 회원가입 화면으로 이동
-//                        self.dismiss(animated: true) // 창닫기
+                        print(result?.user)
+                        guard let user = self.currentUser else { return } // 파이어베이스 유저 객체를 가져옴
+                        let db = Firestore.firestore()
+                        db.collection("users").document(user.uid).setData(["email": user.email])
                     }
                 }
             }

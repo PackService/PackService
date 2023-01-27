@@ -9,6 +9,9 @@ import SwiftUI
 
 struct AddTrackingNumberView: View {
     
+//    @StateObject var kakaoAuthVM = KakaoAuthVM()
+//    @StateObject var emailAuthVM = EmailAuthVM()
+    
     @StateObject var recommendVM = RecommendService("")
     @State var selectedCompany = Recommend(id: "", international: "", name: "")
     @State var trackingNumber: String = ""

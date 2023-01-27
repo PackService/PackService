@@ -23,7 +23,7 @@ struct HomeView: View {
                 Button(action: {
                     // logout
                     DispatchQueue.global(qos: .background).async {
-                        try? Auth.auth().signOut()
+//                        try? Auth.auth().signOut()
                         // 카카오 로그인 했을 경우에만 아래 실행되도록 수정 필요
                         try? kakaoAuthVM.kakaoLogout()
                         print("로그아웃")
