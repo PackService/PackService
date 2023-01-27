@@ -8,73 +8,182 @@
 import SwiftUI
 
 struct MainTabView: View {
+    
+    @State var step: Double = 0.0
+    @State var currentIndex: Int = 0
+    @State var items: [TrackingInfoModel] = []
+    
     var body: some View {
-        VStack {
+        VStack(spacing: 8) {
             TopOfTabView(title: "지금 배송중")
-            
-            SliderTabView() // 슬라이더 탭 뷰
+                .padding(.bottom, 8)
+
+            carousel
             
             HStack {
                 Text("인사이트")
                     .font(FontManager.title1)
                 Spacer()
             }
-            .padding(.top, -60) // 인사이트와 슬라이더 탭뷰와의 간격
-            
-            insightInfoView
-            
+            .padding(.top, 16)
+
             VStack {
+                insightInfoView
+            
                 HStack {
                     PackInfoCell(title: "일일 최대 배송 개수", content: "5개")
                     PackInfoCell(title: "평균 배송 소요 시간", content: "1일 19시간 28분")
                 }
                 HStack {
                     PackInfoCell(title: "가장 빠른 지역", content: "용인시 수지구")
-                    PackInfoCell(title: "가장 빠른 택배사", content: "CJ대한통운")
+                    PackInfoCell(title: "가장 빠른 택배사", content: "CJ 대한통운")
                 }
-                
             }
-            .frame(height: 196)
-            .padding(.trailing, 20)
-            .padding(.top, 10)
             
             PromotionView(promotionTitle: "광고 제목", promotionContent: "광고 내용")
-                .padding(.trailing, 20)
+                .padding(.top, 8)
+            
             Spacer()
         }
+        .onAppear {
+            for index in 1...3 {
+                items.append(TrackingInfoModel(complete: false, level: index, invoiceNo: "11111111", isValidInvoice: "Y", itemImage: "", itemName: "아이템\(index)", receiverAddr: "", receiverName: "", recipient: "", senderName: "", trackingDetails: [], estimate: "", productInfo: "", status: nil, msg: nil, code: nil))
+            }
+        }
+        .padding(.horizontal, 20)
     }
 }
 
 extension MainTabView {
+    
+    var carousel: some View {
+        VStack(spacing: 0) {
+            Carousel(index: $currentIndex, items: items) { item in
+                if items.isEmpty {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(ColorManager.background)
+                            .shadow(color: Color.black.opacity(0.05), radius: 20, x: 0, y: 2)
+                        
+                        VStack(spacing: 12) {
+                            Text("배송 추적할 운송장 번호을 등록해주세요")
+                                .font(FontManager.title2)
+                                .foregroundColor(ColorManager.foreground2)
+                            
+                            Button {
+                                
+                            } label: {
+                                Text("등록")
+                                    .font(FontManager.title2)
+                                .foregroundColor(ColorManager.primaryColor)
+                                .overlay(
+                                        Rectangle()
+                                            .frame(height: 1.2)
+                                            .offset(y: 2)
+                                            .foregroundColor(ColorManager.primaryColor)
+                                        , alignment: .bottom)
+                            }
+                        }
+                    }
+                } else {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(ColorManager.background)
+                            .shadow(color: Color.black.opacity(0.05), radius: 20, x: 0, y: 2)
+                        
+                        VStack {
+                            HStack(spacing: 12) {
+                                Circle()
+                                    .fill(ColorManager.defaultForegroundDisabled)
+                                    .frame(width: 44, height: 44)
+                                    .overlay(
+                                        Image("logo_cj")
+                                            .resizable()
+                                            .frame(width: 44, height: 44)
+    //                                    LogoType(rawValue: trackingDetailVM.code)?.logo.image
+    //                                        .resizable()
+    //                                        .scaledToFit()
+    //                                        .frame(width: 54, height: 54)
+                                    )
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("유세린 더머토 클린 리프레싱 클렌징폼 200ml 1+1 기획")
+                                        .font(FontManager.title2)
+                                        .frame(maxWidth: 233, alignment: .leading)
+                    //                        .background(Color.red)
+                                    HStack(spacing: 8) {
+                                        Text("012345678912")
+                                        Spacer()
+                                        Text("용인HUB")
+                                    }
+                                    .font(FontManager.caption1)
+                                    .foregroundColor(ColorManager.foreground1)
+                                }
+                            }
+                            
+                            TrackingProgressView2(currentStep: $step)
+                                .padding(.top, 10)
+                        }
+                        .padding(.vertical, 24)
+                        .padding(.horizontal, 16)
+                    }
+                    .onAppear {
+                        step = 3.0
+                    }
+                }
+                
+            }
+            
+            HStack(spacing: 8) {
+                ForEach(items.indices, id: \.self) { index in
+                    Circle()
+                        .fill(Color.black.opacity(currentIndex == index ? 1 : 0.1))
+                        .frame(width: 8, height: 8)
+                        .animation(.spring(), value: currentIndex == index)
+                }
+            }
+        }
+        .frame(height: 180)
+    }
+    
     var insightInfoView: some View {
-        VStack { // 인사이트 정보
-            HStack {
-                Text("최단 시간 배송 완료")
-                    .font(FontManager.caption1)
-                    .padding(.leading, 20)
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(ColorManager.background2)
+                .shadow(color: Color.black.opacity(0.05), radius: 20, x: 0, y: 2)
+            
+            VStack { // 인사이트 정보
+                HStack {
+                    Text("최단 시간 배송 완료")
+                        .font(FontManager.caption1)
+                        .foregroundColor(ColorManager.foreground1)
+                    Spacer()
+                    Text("신기록")
+                        .font(FontManager.caption2)
+                        .frame(width: 54, height: 20)
+                        .foregroundColor(.white)
+                        .background(ColorManager.primaryColor)
+                        .cornerRadius(10)
+                }
+                .padding(.top, 16)
+                HStack {
+                    Text("1일 3시간 32분")
+                        .font(FontManager.body1)
+                    Spacer()
+                }
                 Spacer()
-                Text("신기록")
-                    .font(FontManager.caption2)
-                    .frame(width: 54, height: 20)
-                    .foregroundColor(.white)
-                    .background(ColorManager.primaryColor)
-                    .cornerRadius(10)
-                    .padding(.trailing, 20)
             }
-            .padding(.top, 16)
-            HStack {
-                Text("1일 3시간 32분")
-                    .font(FontManager.body1)
-                    .padding(.leading, 20)
-                Spacer()
-            }
-            Spacer()
+            .padding(.horizontal, 20)
         }
         .frame(height: 88)
-        .background(ColorManager.background2)
-        .cornerRadius(10)
-        .padding(.trailing, 20)
-        .padding(.top, -40) // 인사이트 글씨와 인사이트 정보 간격
+        
+        
+       
+
+        
+        
+        
+//        .padding(.top, -40) // 인사이트 글씨와 인사이트 정보 간격
     }
 }
 
@@ -221,14 +330,16 @@ struct PackInfoCell: View {
     var content: String
     var body: some View {
         
-        ZStack(alignment: .leading) {
-            Rectangle()
+        ZStack(alignment: .topLeading) {
+            RoundedRectangle(cornerRadius: 10)
                 .foregroundColor(ColorManager.background)
-                .padding(3)
+                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 2)
+            
             VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 4) {
                     Text(title)
                         .font(FontManager.caption1)
+                        .foregroundColor(ColorManager.foreground1)
                     Image(systemName: "n.circle.fill")
                         .resizable()
                         .frame(width: 16, height: 16)
@@ -237,13 +348,15 @@ struct PackInfoCell: View {
                 Text(content)
                     .font(FontManager.body1)
             }
-            .frame(height: 40)
-            .padding(.leading, 20)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 16)
+            
         }
+        .frame(height: 88)
         .background( // slideTabView 그림자 넣기
             ColorManager.background
                 .cornerRadius(10)
-                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 2)
+                
         )
     }
     
@@ -348,9 +461,10 @@ struct TopOfTabView: View {
             }, label: {
                 Image(systemName: "plus.circle.fill")
                     .resizable()
+                    .foregroundColor(ColorManager.primaryColor)
                     .frame(width: 32, height: 32)
             })
-            .padding(.trailing, 20)
+//            .padding(.trailing, 20)
         }
     }
 }

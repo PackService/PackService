@@ -19,7 +19,9 @@
 		7E0900852980E5BF00D9B1F3 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0900842980E5BF00D9B1F3 /* LoadingView.swift */; };
 		7E090087298100DE00D9B1F3 /* Code.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E090086298100DE00D9B1F3 /* Code.swift */; };
 		7E09008B298233F200D9B1F3 /* AppleAuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E09008A298233F200D9B1F3 /* AppleAuthViewModel.swift */; };
+		7E09008D29826DBB00D9B1F3 /* Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E09008C29826DBB00D9B1F3 /* Carousel.swift */; };
 		7E16336F295E9C1000EBFB87 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E16336E295E9C1000EBFB87 /* OnBoardingView.swift */; };
+		7E27167E2982B33A001DD5EF /* StatusBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E27167D2982B33A001DD5EF /* StatusBarView.swift */; };
 		7E3B49F3295D9FFF0020036C /* ExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B49F2295D9FFF0020036C /* ExampleView.swift */; };
 		7E53B7D6295C6B2E00555967 /* AnimatedCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53B7D5295C6B2E00555967 /* AnimatedCircle.swift */; };
 		7E8724D62959818E00C0B1C9 /* TrackingInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8724D52959818E00C0B1C9 /* TrackingInfoModel.swift */; };
@@ -116,7 +118,9 @@
 		7E0900842980E5BF00D9B1F3 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		7E090086298100DE00D9B1F3 /* Code.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Code.swift; sourceTree = "<group>"; };
 		7E09008A298233F200D9B1F3 /* AppleAuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthViewModel.swift; sourceTree = "<group>"; };
+		7E09008C29826DBB00D9B1F3 /* Carousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carousel.swift; sourceTree = "<group>"; };
 		7E16336E295E9C1000EBFB87 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
+		7E27167D2982B33A001DD5EF /* StatusBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarView.swift; sourceTree = "<group>"; };
 		7E3B49F2295D9FFF0020036C /* ExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleView.swift; sourceTree = "<group>"; };
 		7E53B7D5295C6B2E00555967 /* AnimatedCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCircle.swift; sourceTree = "<group>"; };
 		7E8724D52959818E00C0B1C9 /* TrackingInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingInfoModel.swift; sourceTree = "<group>"; };
@@ -288,6 +292,8 @@
 				AD5830512967EAC600099836 /* MainView.swift */,
 				AD583053296A97FB00099836 /* MainTabView.swift */,
 				ADA9599F2979229600308009 /* TrackingProgressView2.swift */,
+				7E09008C29826DBB00D9B1F3 /* Carousel.swift */,
+				7E27167D2982B33A001DD5EF /* StatusBarView.swift */,
 			);
 			path = MainTabView;
 			sourceTree = "<group>";
@@ -563,6 +569,7 @@
 				7E09008B298233F200D9B1F3 /* AppleAuthViewModel.swift in Sources */,
 				ADA959A02979229600308009 /* TrackingProgressView2.swift in Sources */,
 				AD1ADDD42953326C00545DB7 /* TrackInfo.swift in Sources */,
+				7E27167E2982B33A001DD5EF /* StatusBarView.swift in Sources */,
 				7EF5DE4B295ECA600064E4D1 /* FontManager.swift in Sources */,
 				ADE0F3B729345618005D2732 /* AppDelegate.swift in Sources */,
 				7EF5DE53295EF3960064E4D1 /* ThirdPartyButtonView.swift in Sources */,
@@ -585,6 +592,7 @@
 				7E8724D62959818E00C0B1C9 /* TrackingInfoModel.swift in Sources */,
 				AD1ADE22295E9C0600545DB7 /* ServiceAgreeDescriptView.swift in Sources */,
 				ADA9598F2975579E00308009 /* PackListItemView.swift in Sources */,
+				7E09008D29826DBB00D9B1F3 /* Carousel.swift in Sources */,
 				7E04351729544845005187E8 /* CompanyView.swift in Sources */,
 				AD1ADDD029531EC600545DB7 /* SignUpView.swift in Sources */,
 				7E0900852980E5BF00D9B1F3 /* LoadingView.swift in Sources */,
