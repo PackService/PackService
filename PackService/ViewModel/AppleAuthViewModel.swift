@@ -36,7 +36,7 @@ class AppleAuthViewModel: NSObject, ObservableObject {
     }
     
     func logout() {
-        try? Auth.auth().signOut()
+//        try? Auth.auth().signOut()
         self.logStatus = false
         
     }

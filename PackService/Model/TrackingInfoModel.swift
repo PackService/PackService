@@ -87,7 +87,7 @@ import Foundation
  */
 
 // MARK: - TrackingInfo
-struct TrackingInfoModel: Codable {
+struct TrackingInfoModel: Codable, Identifiable {
 //    let complete: Bool
 //    let level: Int
 //    let invoiceNo: String
@@ -98,7 +98,7 @@ struct TrackingInfoModel: Codable {
 //    let trackingDetails: [TrackingDetailsModel]
 //    let estimate: String?
 //    let productInfo: String?
-    
+    let id = UUID().uuidString
     let complete: Bool?
     let level: Int?
     let invoiceNo: String?

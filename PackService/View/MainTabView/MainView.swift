@@ -28,7 +28,7 @@ struct MainView: View {
                         .environment(\.symbolVariants, .none)
                 }
         }
-        .padding(.leading, 20)
+//        .padding(.leading, 20)
         .padding(.top, 20)
         .accentColor(ColorManager.primaryColor)
     }
