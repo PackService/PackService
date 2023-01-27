@@ -62,7 +62,7 @@ extension SelectCompanyView {
                     
                     Button {
                         show = false
-                        presentationMode.wrappedValue.dismiss()
+//                        presentationMode.wrappedValue.dismiss()
                     } label: {
                         Text("취소")
                             .font(FontManager.body2)
@@ -83,7 +83,7 @@ extension SelectCompanyView {
                     Button {
                         selected = company.name
                         show = false
-                        presentationMode.wrappedValue.dismiss()
+//                        presentationMode.wrappedValue.dismiss()
                     } label: {
                         PackLogoButtonView(circleColor: .gray, logoImage: logo.logo.image, logoName: company.name)
                     }

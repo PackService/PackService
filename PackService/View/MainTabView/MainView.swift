@@ -11,26 +11,28 @@ import SwiftUI
 struct MainView: View {
 //    @AppStorage("log_status") var logStatus = false
     var body: some View {
-        TabView {
-            MainTabView()
-                .tabItem {
-                    Image(systemName: "house")
-                        .environment(\.symbolVariants, .none)
-                }
-            PackListTabView()
-                .tabItem {
-                    Image(systemName: "shippingbox")
-                        .environment(\.symbolVariants, .none)
-                }
-            SystemTabView()
-                .tabItem {
-                    Image(systemName: "gearshape")
-                        .environment(\.symbolVariants, .none)
-                }
+        NavigationView {
+            TabView {
+                MainTabView()
+                    .tabItem {
+                        Image(systemName: "house")
+                            .environment(\.symbolVariants, .none)
+                    }
+                PackListTabView()
+                    .tabItem {
+                        Image(systemName: "shippingbox")
+                            .environment(\.symbolVariants, .none)
+                    }
+                SystemTabView()
+                    .tabItem {
+                        Image(systemName: "gearshape")
+                            .environment(\.symbolVariants, .none)
+                    }
+            }
+            //        .padding(.leading, 20)
+            .padding(.top, 20)
+            .accentColor(ColorManager.primaryColor)
         }
-//        .padding(.leading, 20)
-        .padding(.top, 20)
-        .accentColor(ColorManager.primaryColor)
     }
 }
 

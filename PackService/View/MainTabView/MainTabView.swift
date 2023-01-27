@@ -14,45 +14,67 @@ struct MainTabView: View {
     @State var items: [TrackingInfoModel] = []
     
     var body: some View {
-        VStack(spacing: 8) {
-            TopOfTabView(title: "지금 배송중")
-                .padding(.bottom, 8)
+            VStack(spacing: 8) {
+                TopOfTabView(title: "지금 배송중")
+                    .padding(.bottom, 8)
 
-            carousel
-            
-            HStack {
-                Text("인사이트")
-                    .font(FontManager.title1)
+                carousel
+                
+                HStack {
+                    Text("인사이트")
+                        .font(FontManager.title1)
+                    Spacer()
+                }
+                .padding(.top, 16)
+
+                VStack {
+                    insightInfoView
+                
+                    HStack {
+                        PackInfoCell(title: "일일 최대 배송 개수", content: "5개")
+                        PackInfoCell(title: "평균 배송 소요 시간", content: "1일 19시간 28분")
+                    }
+                    HStack {
+                        PackInfoCell(title: "가장 빠른 지역", content: "용인시 수지구")
+                        PackInfoCell(title: "가장 빠른 택배사", content: "CJ 대한통운")
+                    }
+                }
+                
+                PromotionView(promotionTitle: "광고 제목", promotionContent: "광고 내용")
+                    .padding(.top, 8)
+                
                 Spacer()
             }
-            .padding(.top, 16)
-
-            VStack {
-                insightInfoView
-            
-                HStack {
-                    PackInfoCell(title: "일일 최대 배송 개수", content: "5개")
-                    PackInfoCell(title: "평균 배송 소요 시간", content: "1일 19시간 28분")
-                }
-                HStack {
-                    PackInfoCell(title: "가장 빠른 지역", content: "용인시 수지구")
-                    PackInfoCell(title: "가장 빠른 택배사", content: "CJ 대한통운")
+            .onAppear {
+                items = []
+                for index in 1...3 {
+                    items.append(TrackingInfoModel(complete: false, level: index, invoiceNo: "11111111", isValidInvoice: "Y", itemImage: "", itemName: "아이템\(index)", receiverAddr: "", receiverName: "", recipient: "", senderName: "", trackingDetails: [], estimate: "", productInfo: "", status: nil, msg: nil, code: nil))
                 }
             }
-            
-            PromotionView(promotionTitle: "광고 제목", promotionContent: "광고 내용")
-                .padding(.top, 8)
-            
-            Spacer()
-        }
-        .onAppear {
-            for index in 1...3 {
-                items.append(TrackingInfoModel(complete: false, level: index, invoiceNo: "11111111", isValidInvoice: "Y", itemImage: "", itemName: "아이템\(index)", receiverAddr: "", receiverName: "", recipient: "", senderName: "", trackingDetails: [], estimate: "", productInfo: "", status: nil, msg: nil, code: nil))
-            }
-        }
         .padding(.horizontal, 20)
+        
     }
 }
+
+struct TopOfTabView: View {
+    var title: String
+    var body: some View {
+        HStack {
+            Text(title)
+                .font(FontManager.title1)
+            Spacer()
+            
+            NavigationLink(destination: AddTrackingNumberView()) {
+                Image(systemName: "plus.circle.fill")
+                    .resizable()
+                    .foregroundColor(ColorManager.primaryColor)
+                    .frame(width: 32, height: 32)
+            }
+
+        }
+    }
+}
+
 
 extension MainTabView {
     
@@ -176,14 +198,6 @@ extension MainTabView {
             .padding(.horizontal, 20)
         }
         .frame(height: 88)
-        
-        
-       
-
-        
-        
-        
-//        .padding(.top, -40) // 인사이트 글씨와 인사이트 정보 간격
     }
 }
 
@@ -442,29 +456,6 @@ struct TruckView: View {
                 .foregroundColor(.white)
                 .symbolVariant(.fill)
                 .frame(width: 20.8, height: 14.9)
-        }
-    }
-}
-
-
-struct TopOfTabView: View {
-    var title: String
-    var body: some View {
-        HStack {
-            Text(title)
-                .font(FontManager.title1)
-            Spacer()
-            
-            // 버튼 모양 수정 필요
-            Button(action: {
-                
-            }, label: {
-                Image(systemName: "plus.circle.fill")
-                    .resizable()
-                    .foregroundColor(ColorManager.primaryColor)
-                    .frame(width: 32, height: 32)
-            })
-//            .padding(.trailing, 20)
         }
     }
 }
