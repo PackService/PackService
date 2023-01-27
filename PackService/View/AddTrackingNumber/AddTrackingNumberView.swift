@@ -9,9 +9,7 @@ import SwiftUI
 
 struct AddTrackingNumberView: View {
     
-//    @StateObject var kakaoAuthVM = KakaoAuthVM()
-//    @StateObject var emailAuthVM = EmailAuthVM()
-    
+    @Environment(\.dismiss) private var dismissAddTrackingNumberView
     @StateObject var recommendVM = RecommendService("")
     @State var selectedCompany = Recommend(id: "", international: "", name: "")
     @State var trackingNumber: String = ""
@@ -37,7 +35,7 @@ struct AddTrackingNumberView: View {
                 companyCapsuleList
                 
                 Spacer()
-                Text(trackAttempt.description)
+                
                 addTrackingNumberButton
             }
             .padding(.horizontal, 20)
@@ -52,6 +50,22 @@ struct AddTrackingNumberView: View {
             }
             .animation(.spring(), value: showSelectCompanyView)
             .zIndex(2.0)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitle("운송장 등록")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        dismissAddTrackingNumberView()
+                    } label: {
+                        Image(systemName: "chevron.backward")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(ColorManager.defaultForeground)
+                    }
+                }
+            }
         }
 //        .onDisappear() 이거 12345 송장번호 통과되면 textfield변수들 다시 초기로 돌려줘야 함
     }
