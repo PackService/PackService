@@ -62,6 +62,7 @@ struct TopOfTabView: View {
         HStack {
             Text(title)
                 .font(FontManager.title1)
+            
             Spacer()
             
             NavigationLink(destination: AddTrackingNumberView()) {
@@ -92,9 +93,9 @@ extension MainTabView {
                                 .font(FontManager.title2)
                                 .foregroundColor(ColorManager.foreground2)
                             
-                            Button {
-                                
-                            } label: {
+                            //Navigation Link
+                            
+                            NavigationLink(destination: AddTrackingNumberView()) {
                                 Text("등록")
                                     .font(FontManager.title2)
                                 .foregroundColor(ColorManager.primaryColor)
@@ -105,6 +106,7 @@ extension MainTabView {
                                             .foregroundColor(ColorManager.primaryColor)
                                         , alignment: .bottom)
                             }
+                            
                         }
                     }
                 } else {
