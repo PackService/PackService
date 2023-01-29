@@ -140,9 +140,6 @@ extension TrackingPositionView {
     //MARK: - Refresh Button
     var refreshButton: some View {
         Button {
-            if trackingDetailVM.isLoading {
-                step = 0.0
-            }
             trackingDetailVM.reloadData(code: self.code, invoice: self.invoice)
         } label: {
             Image(systemName: "arrow.clockwise.circle.fill")
@@ -162,14 +159,14 @@ extension TrackingPositionView {
     
     //MARK: - Progress View
     var progressView: some View {
-        TrackingProgressView(currentStep: $step)
+        TrackingProgressView(currentStep: $trackingDetailVM.currentStep)
             .frame(height: 32)
             .padding(.top, 24)
             .padding(.horizontal, 12)
-            .animation(Animation.easeIn(duration: 1.0), value: step)
-            .onAppear {
-                step = trackingDetailVM.currentStep
-            }
+            .animation(Animation.easeIn(duration: 1.0), value: trackingDetailVM.currentStep)
+//            .onAppear {
+//                step = trackingDetailVM.currentStep
+//            }
     }
 }
 

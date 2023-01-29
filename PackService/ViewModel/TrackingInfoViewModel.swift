@@ -88,13 +88,15 @@ class TrackingInfoViewModel: ObservableObject {
                     }
                 }
                 
-                self?.isLoading = false
+//                self?.isLoading = false
+                
             }
             .store(in: &cancellables)
     }
     
     func reloadData(code: String, invoice: String) {
         isLoading = true
+        currentStep = 0.0
         trackingInfoService.getTrackingInfo(code, invoice)
     }
 }

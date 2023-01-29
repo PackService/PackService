@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct TrackingDetailLoadingView: View {
     @Binding var companyId: String
@@ -33,9 +34,7 @@ struct TrackingDetailView: View {
     }
     
     var body: some View {
-        if trackingDetailVM.isLoading {
-            LoadingView()
-        } else {
+//         else {
             ZStack {
                 ScrollView {
                     ZStack(alignment: .bottom) {
@@ -53,6 +52,7 @@ struct TrackingDetailView: View {
                             //tracking position
                             TrackingPositionView(code: code, invoice: invoice)
                             
+                            Text("\(trackingDetailVM.currentStep)")
                             Spacer()
                             
                         }
@@ -68,16 +68,26 @@ struct TrackingDetailView: View {
                         .animation(Animation.easeIn(duration: 2), value: showMenu)
                 }
                 
-                
+                if trackingDetailVM.isLoading {
+                    LoadingView()
+                        .onAppear {
+                            // 만약 1.5초보다 많은 로딩 시간이 걸린다면??
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                trackingDetailVM.isLoading = false
+                            }
+                        }
+                }
+     
             }
             .environmentObject(trackingDetailVM)
             .alert("오류", isPresented: $trackingDetailVM.showAlert) {
-                        Button("OK") {}
+                Button("OK") {}
             } message: {
                 Text("[\(trackingDetailVM.alertTitle)] " + trackingDetailVM.alertMessage)
             }
             .toast(isShowing: $showToast)
-        }
+//        }
+        
     }
 }
 
@@ -135,6 +145,6 @@ struct TrackingDetailView_Previews: PreviewProvider {
     static let invoiceNumberPreview = "1111111111"
 
     static var previews: some View {
-        TrackingDetailView(companyId: "04", invoiceNumber: "1111111111")
+        TrackingDetailView(companyId: "01", invoiceNumber: "6096353177732")
     }
 }
