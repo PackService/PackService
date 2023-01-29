@@ -26,8 +26,8 @@ struct MainTabView: View {
                 }, label: {
                     Text("파베 데이터 읽어오기")
                 })
-                Text(emailAuthVM.freeboardTitle)
-                Text(emailAuthVM.freeboardNickName)
+//                Text(emailAuthVM.freeboardTitle)
+//                Text(emailAuthVM.freeboardNickName)
                 //MARK: -test중
                 //
                 
