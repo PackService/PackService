@@ -8,8 +8,12 @@
 import SwiftUI
 import Firebase
 import Combine
+import FirebaseFirestoreSwift
 
 class EmailAuthVM: ObservableObject { // 사용자 Create 완료
+    @Published var freeboardTitle: String = ""
+    @Published var trackInfo: TrackInfo?
+    @Published var pack = [Packages]()
     @AppStorage("log_status") var logStatus = false
     @Published var currentUser: Firebase.User?
     let db = Firestore.firestore()
@@ -33,7 +37,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
     func addTrackNumber(trackNumber: String, trackCompany: String) { // 택배 create
 //        let db = Firestore.firestore()
         print(currentUser?.uid ?? "")
-        let packages = Packages(trackNumber: trackNumber, trackCompany: "대한통운")
+        let packages = Packages(trackCompany: trackCompany, trackNumber: trackNumber)
         
         do {
             try db.collection("users").document(currentUser?.uid ?? "").updateData([
@@ -69,24 +73,73 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
     
     // 송장번호 읽어오기
     func readTrackNumber() {
-//        let db = Firestore.firestore()
-        let docRef = db.collection("users").document(currentUser?.uid ?? "")
-        docRef.getDocument{ (document, error) in
-            guard error == nil else {
-                print("error", error ?? "")
-                return
-            }
+        //        let db = Firestore.firestore()
+//        let docRef = db.collection("users").document(currentUser?.uid ?? "")
 
-            if let document = document, document.exists {
-                let data = document.data()
-                if let data = data {
-                    print("data", data)
-//                    self.freeboardTitle = data["title"] as? String ?? ""
-//                    self.freeboardNickName = data["nickname"] as? String ?? ""
+//        docRef.getDocument { document, error in
+//              if let error = error as NSError? {
+//              }
+//              else {
+//                if let document = document {
+//                  do {
+//                    let userTracksInfoDoc = try document.data(as: TrackInfo.self)
+////                      self.pacakge = userTracksInfoDoc["userTracksInfo"]
+////                      self.pacakge = userTracksInfoDoc
+////                      print("tqlfkdk")
+//                      self.pack = userTracksInfoDoc.pack
+//                      print(userTracksInfoDoc)
+//                  }
+//                  catch {
+//                    print(error)
+//                  }
+//                }
+//              }
+//            }
+        
+            let docRef = Firestore.firestore()
+              .collection("users")
+              .document(currentUser?.uid ?? "")
+
+
+            docRef.getDocument { document, error in
+              if let error = error as NSError? {
+//                self.errorMessage = "Error getting document: \(error.localizedDescription)"
+              }
+              else {
+                if let document = document {
+                  do {
+                    let citiesDocument = try document.data(as: TrackInfo.self)
+                      self.trackInfo = citiesDocument
+                  }
+                  catch {
+                    print(error)
+                  }
                 }
+              }
             }
-        }
     }
+//    func readTrackNumber() {
+//        //        let db = Firestore.firestore()
+//        let docRef = db.collection("users").document(currentUser?.uid ?? "")
+//
+//        docRef.getDocument { (document, error) in
+//            guard error == nil else {
+//                print("error", error ?? "")
+//                return
+//            }
+//            if let document = document, document.exists {
+//                let data = document.data()
+//                if let data = data {
+//                    self.freeboardTitle = data["email"] as? String ?? ""
+//                    let sibal = data["userTracksInfo"] as? Packages ?? ""
+////                    print(data["userTracksInfo"])
+//                    print(sibal)
+//                    print(data["email"])
+//                }
+//            }
+//        }
+//    }
+  
     
     // 회원탈퇴
     func deleteUser() {

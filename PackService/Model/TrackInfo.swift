@@ -6,32 +6,47 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
+
+struct City: Codable, Hashable {
+  var name: String
+  var latitude: String
+  var longitude: String
+}
 // 서버에서 넘어올 사용자 데이터
-public struct TrackInfo: Codable {
-    
-    let email: String?
-    let userTracksInfo: [Packages]?
-    
+struct TrackInfo: Codable, Identifiable {
+    @DocumentID var id: String?
+    let email: String
+    var userTracksInfo: [Packages]?
     var setEmail: [String:Any] {
         return [
             "email": self.email
         ]
     }
+    enum CodingKeys: String, CodingKey {
+        case email = "email"
+        case userTracksInfo = "userTracksInfo"
+    }
+
 }
 
-public struct Packages: Codable {
-    let trackNumber: String?
-    let trackCompany: String?
+struct Packages: Codable, Hashable {
+    var trackCompany: String
+    var trackNumber: String
     
     var setTrackNumber: [String:Any] {
         return [
-            "trackNumber": self.trackNumber,
-            "trackCompany": self.trackCompany
+            "trackCompany": self.trackCompany,
+            "trackNumber": self.trackNumber
         ]
     }
     
-    var setPackages: Any {
-        return self
+    enum CodingKeys: String, CodingKey {
+        case trackCompany = "trackCompany"
+        case trackNumber = "trackNumber"
     }
+//    var setPackages: Any {
+//        return self
+//    }
 }

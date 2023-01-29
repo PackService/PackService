@@ -65,6 +65,7 @@
 		AD583058296AA78800099836 /* PackLogoButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD583057296AA78800099836 /* PackLogoButtonView.swift */; };
 		AD58305A296AB06100099836 /* SelectCompanyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD583059296AB06100099836 /* SelectCompanyView.swift */; };
 		AD58305C296BFBA800099836 /* SystemTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD58305B296BFBA800099836 /* SystemTabView.swift */; };
+		AD5A73652986A32C00C1320A /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AD5A73642986A32C00C1320A /* FirebaseFirestoreSwift */; };
 		ADA9598F2975579E00308009 /* PackListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA9598E2975579E00308009 /* PackListItemView.swift */; };
 		ADA9599629766BB800308009 /* PackListTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA9599529766BB800308009 /* PackListTabView.swift */; };
 		ADA9599829766EA400308009 /* SearchTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA9599729766EA400308009 /* SearchTextFieldView.swift */; };
@@ -198,6 +199,7 @@
 				ADE0F3A229345269005D2732 /* KakaoSDKCommonCore in Frameworks */,
 				ADE0F3A429345269005D2732 /* KakaoSDKNavi in Frameworks */,
 				ADE0F3A829345269005D2732 /* KakaoSDKStory in Frameworks */,
+				AD5A73652986A32C00C1320A /* FirebaseFirestoreSwift in Frameworks */,
 				ADFBE396293677E900D45B42 /* FirebaseFirestore in Frameworks */,
 				ADFBE39C29367BF200D45B42 /* FirebaseDatabase in Frameworks */,
 				ADE0F3C82935CEBE005D2732 /* GoogleSignInSwift in Frameworks */,
@@ -468,6 +470,7 @@
 				ADFBE395293677E900D45B42 /* FirebaseFirestore */,
 				ADFBE397293677F700D45B42 /* FirebaseStorage */,
 				ADFBE39B29367BF200D45B42 /* FirebaseDatabase */,
+				AD5A73642986A32C00C1320A /* FirebaseFirestoreSwift */,
 			);
 			productName = PackService;
 			productReference = ADE0F3892934515F005D2732 /* PackService.app */;
@@ -864,6 +867,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		AD5A73642986A32C00C1320A /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ADE0F3C12935CE13005D2732 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
 		ADE0F39B29345269005D2732 /* KakaoSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = ADE0F39A29345269005D2732 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
