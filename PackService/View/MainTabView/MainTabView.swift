@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainTabView: View {
     
+    @StateObject var emailAuthVM = EmailAuthVM()
     @State var step: Double = 0.0
     @State var currentIndex: Int = 0
     @State var items: [TrackingInfoModel] = []
@@ -19,6 +20,16 @@ struct MainTabView: View {
                     .padding(.bottom, 8)
 
                 carousel
+                
+                Button(action: {
+                    emailAuthVM.readTrackNumber()
+                }, label: {
+                    Text("파베 데이터 읽어오기")
+                })
+                Text(emailAuthVM.freeboardTitle)
+                Text(emailAuthVM.freeboardNickName)
+                //MARK: -test중
+                //
                 
                 HStack {
                     Text("인사이트")
@@ -129,7 +140,7 @@ extension MainTabView {
                                     )
                                 
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text("유세린 더머토 클린 리프레싱 클렌징폼 200ml 1+1 기획")
+                                    Text(item.invoiceNo!)
                                         .font(FontManager.title2)
                                         .frame(maxWidth: 233, alignment: .leading)
                     //                        .background(Color.red)

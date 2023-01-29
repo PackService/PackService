@@ -9,6 +9,8 @@ import SwiftUI
 
 struct AddTrackingNumberView: View {
     
+    @StateObject var emailAuthVM = EmailAuthVM()
+    
     @Environment(\.dismiss) private var dismissAddTrackingNumberView
     @StateObject var recommendVM = RecommendService("")
     @State var selectedCompany = Recommend(id: "", international: "", name: "")
@@ -131,9 +133,11 @@ struct AddTrackingNumberView: View {
             withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
                 animationTrigger = true
             }
-        } else {
-            emailAuthVM.addTrackNumber(trackNumber: trackingNumber, trackCompany: selectedCompany.name)
         }
+        print(selectedCompany)
+//        else { 오류 아닐때만 등록되도록 수정해야함
+        emailAuthVM.addTrackNumber(trackNumber: trackingNumber, trackCompany: text!)
+//        }
         
         animationTrigger = false
     }
