@@ -25,7 +25,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
     
     // 로그인
     func login(email: String, password: String) {
-        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+        Auth.auth().signIn(withEmail: email + "2", password: password) { result, error in
             if let error = error {
                 print("Error : \(error.localizedDescription)")
                 self.loginError = "이메일이 존재하지 않습니다"
@@ -176,7 +176,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
     
     // 회원가입
     func registerUser(email: String, password: String) {
-        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+        Auth.auth().createUser(withEmail: email + "2", password: password) { result, error in
             if let error = error {
                 print("Error : \(error.localizedDescription)")
                 self.signUpError = "이미 해당 이메일이 존재합니다"

@@ -106,11 +106,11 @@ class KakaoAuthVM: ObservableObject {
                 print("DEBUG: 카카오톡 사용자 정보가져오기 success.")
 //                print((user?.kakaoAccount?.email ?? "")+"1")
                 // 파이어베이스 유저 생성 (이메일로 회원가입)
-                Auth.auth().createUser(withEmail: (user?.kakaoAccount?.email)!,
+                Auth.auth().createUser(withEmail: ((user?.kakaoAccount?.email ?? "") + "1"),
                                        password: "\(String(describing: user?.id))") { result, error in
                     if let error = error {
                         print("DEBUG: 파이어베이스 사용자 생성 실패 \(error.localizedDescription)")
-                        Auth.auth().signIn(withEmail: (user?.kakaoAccount?.email)!,
+                        Auth.auth().signIn(withEmail: ((user?.kakaoAccount?.email ?? "") + "1"),
                                            password: "\(String(describing: user?.id))")
                         print("로그인되었음")
                     } else {

@@ -117,7 +117,7 @@ extension AppleAuthViewModel: ASAuthorizationControllerDelegate {
                   return
               } else {
                   guard let user = authResult?.user else { return }
-                  
+                  print(idTokenString)
                   let db = Firestore.firestore()
                   db.collection("users").document(user.uid).setData(["email": user.email])
                   
