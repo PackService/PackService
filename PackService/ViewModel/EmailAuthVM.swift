@@ -13,6 +13,8 @@ import FirebaseFirestoreSwift
 class EmailAuthVM: ObservableObject { // 사용자 Create 완료
     @Published var freeboardTitle: String = ""
     @Published var trackInfo: TrackInfo?
+    @Published var loginError: String = ""
+    @Published var signUpError: String = ""
     @Published var pack = [Packages]()
     @AppStorage("log_status") var logStatus = false
     @Published var currentUser: Firebase.User?
@@ -26,9 +28,10 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if let error = error {
                 print("Error : \(error.localizedDescription)")
+                self.loginError = "이메일이 존재하지 않습니다"
                 return
             }
-            
+            self.loginError = ""
             self.logStatus = true // contentview에서 home으로 갈지 login으로 갈지 결정해줌. 로그인 누르면 homeview로 넘어가도록 함
         }
     }
@@ -176,6 +179,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
             if let error = error {
                 print("Error : \(error.localizedDescription)")
+                self.signUpError = "이미 해당 이메일이 존재합니다"
                 return
             }
             
@@ -183,6 +187,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
             let trackInfo = TrackInfo(email: email, userTracksInfo: nil)
             
             if error == nil { // firebase db에 저장하는 방법
+                self.signUpError = ""
                 self.currentUser = result?.user
 //                let db = Firestore.firestore()
                 self.db.collection("users").document(user.uid).setData(trackInfo.setEmail)
@@ -190,4 +195,6 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
         }
     }
     
+//    func checkID(email: String)
+//    
 }

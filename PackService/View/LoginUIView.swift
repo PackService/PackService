@@ -10,10 +10,14 @@ import SwiftUI
 struct LoginUIView: View {
     
     @State var signUpScreen: Bool = false // 회원가입 진행 bool 변수
+    @State var count = 0
+    @AppStorage("log_status") var logStatus = false
     @StateObject var kakaoAuthVM = KakaoAuthVM()
     @StateObject var apple = AppleAuthVM()
     @ObservedObject var emailAuthVM = EmailAuthVM()
     // ------
+    @State var signUpErrorMessage: String = ""
+    
     @State var emailInput: String = ""
     @State var passwordInput: String = ""
     
@@ -53,11 +57,24 @@ struct LoginUIView: View {
                                     .onSubmit {
                                         toggleFocus()
                                     }
+                                    HStack { // 이메일 존재할 때
+                                        if emailAuthVM.loginError == nil {
+                                            Text(signUpErrorMessage)
+                                                .font(FontManager.caption2)
+                                                .foregroundColor(ColorManager.negativeColor)
+                                        } else { // 이메일 존재하지 않을때
+                                            Text(emailAuthVM.loginError)
+                                                .font(FontManager.caption2)
+                                                .foregroundColor(ColorManager.negativeColor)
+                                        }
+                                        Spacer()
+                                    }
                                     
                                     Button {
+                                        count += 1
                                         isSubmitted = true
-                                        validationCheck()
-                                        
+//                                        validationCheck()
+                                        signUpErrorMessages()
                                         emailAttempt = (isSubmitted && !isEmailValid)
                                         passwordAttempt = (isSubmitted && !isPasswordValid)
                                         
@@ -67,15 +84,15 @@ struct LoginUIView: View {
                                             }
                                         } else {
                                             emailAuthVM.login(email: emailInput, password: passwordInput)
-                                            print("로그인 되었음")
                                         }
                                         
                                         animationTrigger = false
                                     } label: {
                                         ButtonView(text: "로그인")
                                     }
-                                    .padding(.top, 40)
                                     
+                                    .padding(.top, 40)
+                
                                     HStack {
                                         Text("계정이 없으신가요?")
                                             .foregroundColor(ColorManager.foreground1)
@@ -121,15 +138,58 @@ struct LoginUIView: View {
                 }
             }
             .navigationBarHidden(true)
+        
     }
     
     func toggleFocus() {
         if focusState == .email {
-            focusState = .password
+            if checkEmail(str: emailInput) {
+                focusState = .email
+            } /*else if checkEmail(str: emailInput) && notEmail()*/
+//            else if checkEmail(str: emailInput) {
+//                focusState = .password
+//            }
         } else if focusState == .password {
-            focusState = nil
+            if checkPassword(str: passwordInput) {
+                focusState = .password
+            } else {
+                focusState = nil
+            }
         }
     }
+    
+    func signUpErrorMessages() {
+        if !checkEmail(str: emailInput) {
+            self.signUpErrorMessage = "올바른 이메일 주소를 입력하세요"
+            self.isEmailValid = false
+            self.focusState = .email
+        } else if !checkPassword(str: passwordInput) {
+            self.signUpErrorMessage = "비밀번호는 8이상의 영어,숫자,특수문자를 입력하세요"
+            self.isPasswordValid = false
+            self.focusState = .password
+        } else {
+            self.isEmailValid = true
+            self.isPasswordValid = true
+        }
+        //이메일이 존재합니다
+    }
+    
+    //func toggleFocus() {
+    //        if focusState == .email {
+    //            if 이메일 형식이 아니면  {
+    //                focusState = .email
+    //            } else if 이메일 형식은 맞는데 이메일이 존재하지 않음 {
+    //                return
+    //            } else if 이메일 형식도 맞고 이메일이 존재함 {
+    //                focusState = .password
+    //            }
+    //        } else if focusState == .password {
+    //            if 비밀번호 조합이 아니면 {
+    //                focusState = .password
+    //            } else if
+    //            focusState = nil
+    //        }
+    //    }
     
     func validationCheck() {
         if checkEmail(str: emailInput) {
@@ -137,20 +197,19 @@ struct LoginUIView: View {
             
             if checkPassword(str: passwordInput) {
                 self.isPasswordValid = true
-                self.focusState = .password
+//                self.focusState = .password
                 return
             }
         } else if !checkEmail(str: emailInput) && passwordInput.isEmpty {
             self.isEmailValid = false
-            self.focusState = .email
+//            self.focusState = .email
             return
         } else {
             self.isEmailValid = false
         }
         
-//        self.isEmailValid = false
         self.isPasswordValid = false
-        self.focusState = .password
+//        self.focusState = .password
         
     }
     
@@ -169,6 +228,7 @@ func checkPassword(str: String) -> Bool {
     let passwordRegex = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=-]).{8,50}"
     return  NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: str)
 }
+
 
 struct LoginUIView_Previews: PreviewProvider {
     

@@ -76,9 +76,15 @@ struct MemberShipAgreementView: View {
                         TextFieldView(title: "비밀번호", input: $passwordInput, wrongAttempt: $passwordAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .password, isSecure: true)
                         TextFieldView(title: "비밀번호 확인", input: $passwordConfirmInput, wrongAttempt: $passwordConfirmAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .passwordConfirm, isSecure: true)
                         HStack {
-                            Text(signUpErrorMessage)
-                                .font(FontManager.caption2)
-                                .foregroundColor(ColorManager.negativeColor)
+                            if viewModel.signUpError == "" {
+                                Text(signUpErrorMessage)
+                                    .font(FontManager.caption2)
+                                    .foregroundColor(ColorManager.negativeColor)
+                            } else {
+                                Text(viewModel.signUpError)
+                                    .font(FontManager.caption2)
+                                    .foregroundColor(ColorManager.negativeColor)
+                            }
                             Spacer()
                         }
                         Spacer()
@@ -127,36 +133,48 @@ struct MemberShipAgreementView: View {
         }
     }
     
-    func validationCheck() {
-        if emailInput == "abc" {
-            self.isEmailValid = true
-            
-            if passwordInput == "1234" {
-                self.isPasswordValid = true
-                self.focusState = .password
-                return
-            }
-        } else if emailInput != "abc" && passwordInput.isEmpty {
-            self.isEmailValid = false
-            self.focusState = .email
-            return
-        } else {
-            self.isEmailValid = false
-        }
-        
-        self.isPasswordValid = false
-        self.focusState = .password
-        
-    }
+//    func validationCheck() {
+//        if checkEmail(str: emailInput) { // 이메일 옳을때
+//            self.isEmailValid = true
+//
+//            if checkPassword(str: passwordInput) { // 비밀번호도 옳을때
+//                self.isPasswordValid = true
+//                self.focusState = .password
+//                return
+//            }
+//        } else if !checkEmail(str: emailInput) && checkPassword(str: passwordInput){ // 이메일도 틀리고 패스워드도 틀리면
+//            self.isEmailValid = false
+//            self.focusState = .email
+//            return
+//        } else {
+//            self.isEmailValid = false
+//        }
+//
+//        self.isPasswordValid = false
+//        self.focusState = .password
+//
+//    }
+//    func validationCheck() {
+//        if !checkEmail(str: emailInput) {
+//            self.isEmailValid = false
+//            self.focusState = .email
+//        }
+//    }
     
     func signUpErrorMessages() {
         if !checkEmail(str: emailInput) {
             self.signUpErrorMessage = "올바른 이메일 주소를 입력하세요"
+            self.isEmailValid = false
+            self.focusState = .email
         } else if !checkPassword(str: passwordInput) {
             self.signUpErrorMessage = "비밀번호는 8이상의 영어,숫자,특수문자를 입력하세요"
+            self.isPasswordValid = false
+            self.focusState = .password
         } else if passwordInput != passwordConfirmInput {
             self.signUpErrorMessage = "비밀번호와 비밀번호 확인이 일치하지 않습니다"
-        } else {
+            self.isPasswordConfirmValid = false
+            self.focusState = .passwordConfirm
+        } else if signUpErrorMessage == "" {
             self.checkSignupError.toggle()
         }
         //이메일이 존재합니다
@@ -232,13 +250,13 @@ extension MemberShipAgreementView {
     var signUpButtonView: some View {
         Button(action: {
             isSubmitted = true
-            validationCheck()
+//            validationCheck()
             signUpErrorMessages() // 회원가입 정보 에러 없는지 확인
             emailAttempt = (isSubmitted && !isEmailValid)
             passwordAttempt = (isSubmitted && !isPasswordValid)
             passwordConfirmAttempt = (isSubmitted && !isPasswordConfirmValid)
             
-            if !(isEmailValid && isPasswordValid) {
+            if (isEmailValid) {
                 withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
                     animationTrigger = true
                 }
@@ -254,13 +272,13 @@ extension MemberShipAgreementView {
             }
             animationTrigger = false
         }, label: {
-            if checkEmail(str: emailInput) {
+            if emailInput != "" && passwordInput != "" && passwordConfirmInput != "" {
                 ButtonView(text: "계정 만들기")
             } else {
                 DisabledButtonView(text: "계정 만들기")
             }
         })
-        .disabled(checkEmail(str: emailInput) ? false: true)
+//        .disabled(checkEmail(str: emailInput) ? false: true)
         .padding(.leading, 20)
         .padding(.trailing, 20)
     }
