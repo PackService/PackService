@@ -18,7 +18,8 @@ struct MainView: View {
                         Image(systemName: "house")
                             .environment(\.symbolVariants, .none)
                     }
-                PackListTabView()
+//                PackListTabView()
+                HomeView()
                     .tabItem {
                         Image(systemName: "shippingbox")
                             .environment(\.symbolVariants, .none)

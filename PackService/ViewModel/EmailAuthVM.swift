@@ -39,7 +39,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
     // 송장번호 추가
     func addTrackNumber(trackNumber: String, trackCompany: String) { // 택배 create
 //        let db = Firestore.firestore()
-        print(currentUser?.uid ?? "")
+        print("현재 아이디: \(currentUser?.uid ?? "")")
         let packages = Packages(trackCompany: trackCompany, trackNumber: trackNumber)
         
         do {

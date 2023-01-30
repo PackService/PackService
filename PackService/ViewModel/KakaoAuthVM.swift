@@ -104,7 +104,7 @@ class KakaoAuthVM: ObservableObject {
                 print("DEBUG: 카카오톡 사용자 정보가져오기 에러 \(error.localizedDescription)")
             } else {
                 print("DEBUG: 카카오톡 사용자 정보가져오기 success.")
-
+//                print((user?.kakaoAccount?.email ?? "")+"1")
                 // 파이어베이스 유저 생성 (이메일로 회원가입)
                 Auth.auth().createUser(withEmail: (user?.kakaoAccount?.email)!,
                                        password: "\(String(describing: user?.id))") { result, error in
@@ -115,10 +115,9 @@ class KakaoAuthVM: ObservableObject {
                         print("로그인되었음")
                     } else {
                         print("DEBUG: 파이어베이스 사용자 생성")
-                        print(result?.user)
+                        self.currentUser = result?.user // 이거 안하면 uid 달라짐
                         guard let user = self.currentUser else { return } // 파이어베이스 유저 객체를 가져옴
-                        let db = Firestore.firestore()
-                        db.collection("users").document(user.uid).setData(["email": user.email])
+                        self.db.collection("users").document(user.uid).setData(["email": user.email ])
                     }
                 }
             }

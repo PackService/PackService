@@ -10,7 +10,6 @@ import SwiftUI
 struct LoginUIView: View {
     
     @State var signUpScreen: Bool = false // 회원가입 진행 bool 변수
-    @State var count = 0
     @AppStorage("log_status") var logStatus = false
     @StateObject var kakaoAuthVM = KakaoAuthVM()
     @StateObject var apple = AppleAuthVM()
@@ -71,7 +70,6 @@ struct LoginUIView: View {
                                     }
                                     
                                     Button {
-                                        count += 1
                                         isSubmitted = true
 //                                        validationCheck()
                                         signUpErrorMessages()

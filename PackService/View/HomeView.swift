@@ -43,8 +43,8 @@ struct HomeView: View {
                 })
                 
                 TextField("배송번호", text: $testTrackNumber)
-                Text(emailAuthVM.currentUser?.email ?? "이메일 로그인 없음")
-                Text(kakaoAuthVM.currentUser?.email ?? "카카오 로그인 없음")
+                Text(emailAuthVM.currentUser?.uid ?? "이메일 로그인 없음")
+                Text(kakaoAuthVM.currentUser?.uid ?? "카카오 로그인 없음")
                 Text(testTrackNumber)
                 Button(action: {
                     emailAuthVM.addTrackNumber(trackNumber: testTrackNumber, trackCompany: testTrackNumber)
