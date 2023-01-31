@@ -9,11 +9,10 @@ import SwiftUI
 
 struct MemberShipAgreementView: View {
 
-    
     @Binding var isFirstLaunching: Bool // 온보딩 1회만 실행되도록 하는 변수
     @State var checkSignupError: Bool = true
     @State var signUpErrorMessage: String = ""
-    @ObservedObject var viewModel = EmailAuthVM() 
+    @ObservedObject var viewModel = EmailAuthVM()
     @Binding var signUpScreen: Bool
     @State var serviceAgreeScreen: Bool = false // servceAgreeDescriptView 화면 전환 변수
     @State var personAgreeScreen: Bool = false // personAgreeDescriptView 화면 전환 변수
@@ -80,10 +79,15 @@ struct MemberShipAgreementView: View {
                                 Text(signUpErrorMessage)
                                     .font(FontManager.caption2)
                                     .foregroundColor(ColorManager.negativeColor)
-                            } else {
+                            } else if viewModel.signUpError == "이미 해당 이메일이 존재합니다" {
                                 Text(viewModel.signUpError)
                                     .font(FontManager.caption2)
                                     .foregroundColor(ColorManager.negativeColor)
+                            } else if viewModel.signUpError == "회원가입이 완료되었습니다"{
+                                Text(viewModel.signUpError)
+                                    .font(FontManager.caption2)
+                                    .foregroundColor(ColorManager.negativeColor)
+                                    .onAppear(perform: { signUpScreen.toggle() })
                             }
                             Spacer()
                         }
@@ -235,13 +239,6 @@ extension MemberShipAgreementView {
             
             if checkSignupError == false {// 회원가입 시 에러 없어야지 파이어베이스 등록
                 viewModel.registerUser(email: emailInput, password: passwordInput)
-                if viewModel.signUpError == "" {
-                    if isFirstLaunching { // 로그인 화면으로 이동
-                        isFirstLaunching.toggle()
-                    } else { // 로그인 화면으로 이동
-//                        signUpScreen.toggle()
-                    }
-                }
             }
             animationTrigger = false
         }, label: {

@@ -180,18 +180,18 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
             if let error = error {
                 print("Error : \(error.localizedDescription)")
                 self.signUpError = "이미 해당 이메일이 존재합니다"
-                print(self.signUpError)
+                return
             }
             
             guard let user = result?.user else { return } // 파이어베이스 유저 객체를 가져옴
             let trackInfo = TrackInfo(email: email, userTracksInfo: nil)
             
             if error == nil { // firebase db에 저장하는 방법
-                self.signUpError = ""
+                self.signUpError = "회원가입이 완료되었습니다"
+                
                 self.currentUser = result?.user
 //                let db = Firestore.firestore()
                 self.db.collection("users").document(user.uid).setData(trackInfo.setEmail)
-                self.logStatus = false
             }
         }
     }

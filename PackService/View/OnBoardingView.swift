@@ -28,7 +28,6 @@ struct OnBoardingView: View {
                     VStack(spacing: 16) {
                         Button {
                             kakaoAuthVM.handleKakaoLogin()
-                            isFirstLaunching.toggle()
                         } label: {
                             ThirdPartyButtonView(type: .kakao)
                         }
@@ -47,9 +46,19 @@ struct OnBoardingView: View {
                         Text("이미 계정이 있나요?")
                             .foregroundColor(Color("foreground1"))
                         
-                        Button(action: {
-                            isFirstLaunching.toggle()
-                        }, label: {
+//                        Button(action: {
+//                            isFirstLaunching.toggle()
+//                        }, label: {
+//                            Text("로그인")
+//                                .foregroundColor(Color("primary_color"))
+//                                .overlay(
+//                                    Rectangle()
+//                                        .frame(height: 1)
+//                                        .offset(y: 2)
+//                                        .foregroundColor(Color("primary_color"))
+//                                    , alignment: .bottom)
+//                        })
+                        NavigationLink(destination: LoginUIView()) {
                             Text("로그인")
                                 .foregroundColor(Color("primary_color"))
                                 .overlay(
@@ -58,7 +67,7 @@ struct OnBoardingView: View {
                                         .offset(y: 2)
                                         .foregroundColor(Color("primary_color"))
                                     , alignment: .bottom)
-                        })
+                        }
                     }
                     .font(FontManager.body2)
                 }

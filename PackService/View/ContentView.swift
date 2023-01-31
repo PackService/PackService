@@ -16,8 +16,11 @@ struct ContentView: View {
         ZStack {
             if logStatus {
                 MainView()
+            } else if !logStatus && isFirstLaunching {
+                OnBoardingView(isFirstLaunching: $isFirstLaunching)
             } else {
                 LoginUIView()
+//                LoginUIView()
 //                    .fullScreenCover(isPresented: $isFirstLaunching) {
 //                        OnBoardingView(isFirstLaunching: $isFirstLaunching)
 //                    }
