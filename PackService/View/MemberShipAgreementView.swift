@@ -59,7 +59,7 @@ struct MemberShipAgreementView: View {
                         .font(.largeTitle)
                         .padding(.bottom, 20)
                 })
-                
+        
                 Text("계정을\n만들어주세요")
                     .font(FontManager.title1)
                 
@@ -133,34 +133,6 @@ struct MemberShipAgreementView: View {
         }
     }
     
-//    func validationCheck() {
-//        if checkEmail(str: emailInput) { // 이메일 옳을때
-//            self.isEmailValid = true
-//
-//            if checkPassword(str: passwordInput) { // 비밀번호도 옳을때
-//                self.isPasswordValid = true
-//                self.focusState = .password
-//                return
-//            }
-//        } else if !checkEmail(str: emailInput) && checkPassword(str: passwordInput){ // 이메일도 틀리고 패스워드도 틀리면
-//            self.isEmailValid = false
-//            self.focusState = .email
-//            return
-//        } else {
-//            self.isEmailValid = false
-//        }
-//
-//        self.isPasswordValid = false
-//        self.focusState = .password
-//
-//    }
-//    func validationCheck() {
-//        if !checkEmail(str: emailInput) {
-//            self.isEmailValid = false
-//            self.focusState = .email
-//        }
-//    }
-    
     func signUpErrorMessages() {
         if !checkEmail(str: emailInput) {
             self.signUpErrorMessage = "올바른 이메일 주소를 입력하세요"
@@ -174,10 +146,9 @@ struct MemberShipAgreementView: View {
             self.signUpErrorMessage = "비밀번호와 비밀번호 확인이 일치하지 않습니다"
             self.isPasswordConfirmValid = false
             self.focusState = .passwordConfirm
-        } else if signUpErrorMessage == "" {
+        } else if viewModel.signUpError == "" {
             self.checkSignupError.toggle()
         }
-        //이메일이 존재합니다
     }
 }
 
@@ -255,19 +226,21 @@ extension MemberShipAgreementView {
             emailAttempt = (isSubmitted && !isEmailValid)
             passwordAttempt = (isSubmitted && !isPasswordValid)
             passwordConfirmAttempt = (isSubmitted && !isPasswordConfirmValid)
-            
+
             if (isEmailValid) {
                 withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
                     animationTrigger = true
                 }
             }
-
+            
             if checkSignupError == false {// 회원가입 시 에러 없어야지 파이어베이스 등록
                 viewModel.registerUser(email: emailInput, password: passwordInput)
-                if isFirstLaunching { // 로그인 화면으로 이동
-                    isFirstLaunching.toggle()
-                } else { // 로그인 화면으로 이동
-                    signUpScreen.toggle()
+                if viewModel.signUpError == "" {
+                    if isFirstLaunching { // 로그인 화면으로 이동
+                        isFirstLaunching.toggle()
+                    } else { // 로그인 화면으로 이동
+//                        signUpScreen.toggle()
+                    }
                 }
             }
             animationTrigger = false
@@ -319,3 +292,33 @@ struct MemberShipAgreementView_Previews: PreviewProvider {
         LoginView()
     }
 }
+
+
+//    func validationCheck() {
+//        if checkEmail(str: emailInput) { // 이메일 옳을때
+//            self.isEmailValid = true
+//
+//            if checkPassword(str: passwordInput) { // 비밀번호도 옳을때
+//                self.isPasswordValid = true
+//                self.focusState = .password
+//                return
+//            }
+//        } else if !checkEmail(str: emailInput) && checkPassword(str: passwordInput){ // 이메일도 틀리고 패스워드도 틀리면
+//            self.isEmailValid = false
+//            self.focusState = .email
+//            return
+//        } else {
+//            self.isEmailValid = false
+//        }
+//
+//        self.isPasswordValid = false
+//        self.focusState = .password
+//
+//    }
+//    func validationCheck() {
+//        if !checkEmail(str: emailInput) {
+//            self.isEmailValid = false
+//            self.focusState = .email
+//        }
+//    }
+    

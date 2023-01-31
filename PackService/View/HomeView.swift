@@ -10,6 +10,7 @@ import Firebase
 
 struct HomeView: View {
     @AppStorage("log_status") var logStatus = false
+    @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = false
     @StateObject var kakaoAuthVM = KakaoAuthVM()
     @StateObject var emailAuthVM = EmailAuthVM()
     

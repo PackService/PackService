@@ -28,7 +28,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
         Auth.auth().signIn(withEmail: email + "2", password: password) { result, error in
             if let error = error {
                 print("Error : \(error.localizedDescription)")
-                self.loginError = "이메일이 존재하지 않습니다"
+                self.loginError = loginErrorhandler(error: error.localizedDescription)
                 return
             }
             self.loginError = ""
@@ -180,7 +180,7 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
             if let error = error {
                 print("Error : \(error.localizedDescription)")
                 self.signUpError = "이미 해당 이메일이 존재합니다"
-                return
+                print(self.signUpError)
             }
             
             guard let user = result?.user else { return } // 파이어베이스 유저 객체를 가져옴
@@ -191,10 +191,18 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
                 self.currentUser = result?.user
 //                let db = Firestore.firestore()
                 self.db.collection("users").document(user.uid).setData(trackInfo.setEmail)
+                self.logStatus = false
             }
         }
     }
-    
 //    func checkID(email: String)
 //    
+}
+
+func loginErrorhandler(error: String) -> String {
+    if error == "There is no user record corresponding to this identifier. The user may have been deleted." {
+        return "이메일이 존재하지 않습니다"
+    } else {
+        return ""
+    }
 }
