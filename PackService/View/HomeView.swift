@@ -100,6 +100,7 @@ struct HomeView: View {
             }
             .navigationTitle("Home")
         }
+        .onAppear(perform: { isFirstLaunching.toggle() })
     }
 }
 

@@ -10,6 +10,8 @@ import SwiftUI
 struct SystemTabView: View {
     @AppStorage("log_status") var logStatus = false
     @StateObject var emailAuthVM = EmailAuthVM()
+    
+    
     var body: some View {
         NavigationView {
             VStack {

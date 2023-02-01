@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MemberShipAgreementView: View {
-
+    
     @Binding var isFirstLaunching: Bool // 온보딩 1회만 실행되도록 하는 변수
     @State var checkSignupError: Bool = true
     @State var signUpErrorMessage: String = ""
@@ -116,7 +116,7 @@ struct MemberShipAgreementView: View {
         }
                 
         if serviceAgreeScreen { // 서비스 약관 내용 보기
-            NoSafeAreaServiceAgreeView(serviceAgreeScreen: $serviceAgreeScreen)
+            ServiceAgreeDescriptView(serviceAgreeScreen: $serviceAgreeScreen)
                 .transition(.move(edge: .bottom))
                 .animation(.spring())
         }

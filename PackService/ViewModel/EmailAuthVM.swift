@@ -10,8 +10,7 @@ import Firebase
 import Combine
 import FirebaseFirestoreSwift
 
-class EmailAuthVM: ObservableObject { // 사용자 Create 완료
-    @Published var freeboardTitle: String = ""
+class EmailAuthVM: ObservableObject {
     @Published var trackInfo: TrackInfo?
     @Published var loginError: String = ""
     @Published var signUpError: String = ""
@@ -195,8 +194,6 @@ class EmailAuthVM: ObservableObject { // 사용자 Create 완료
             }
         }
     }
-//    func checkID(email: String)
-//    
 }
 
 func loginErrorhandler(error: String) -> String {
