@@ -57,8 +57,8 @@ struct SystemTabView: View {
     }
 }
 
-struct SystemTabView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView()
-    }
-}
+//struct SystemTabView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MainView()
+//    }
+//}

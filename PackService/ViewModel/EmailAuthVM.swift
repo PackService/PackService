@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 import Firebase
 import Combine
 import FirebaseFirestoreSwift
@@ -18,11 +19,21 @@ class EmailAuthVM: ObservableObject {
     @Published var pack = [Packages]()
     @AppStorage("log_status") var logStatus = false
     @Published var currentUser: Firebase.User?
+    
+    private var cancellables = Set<AnyCancellable>()
     let db = Firestore.firestore()
     init() {
         currentUser = Auth.auth().currentUser
-    }
-    
+        
+        $trackInfo
+            .sink { [weak self] info in
+                guard let info = info else { return }
+                
+                self?.pack = info.userTracksInfo ?? []
+            }
+            .store(in: &cancellables)
+    }    
+  
     // 로그인
     func login(email: String, password: String) {
         Auth.auth().signIn(withEmail: email + "2", password: password) { result, error in
@@ -32,7 +43,8 @@ class EmailAuthVM: ObservableObject {
                 return
             }
             self.loginError = ""
-            self.logStatus = true // contentview에서 home으로 갈지 login으로 갈지 결정해줌. 로그인 누르면 homeview로 넘어가도록 함
+            self.readTrackNumber()
+             // contentview에서 home으로 갈지 login으로 갈지 결정해줌. 로그인 누르면 homeview로 넘어가도록 함
         }
     }
     
@@ -113,6 +125,7 @@ class EmailAuthVM: ObservableObject {
                   do {
                     let citiesDocument = try document.data(as: TrackInfo.self)
                       self.trackInfo = citiesDocument
+                      self.logStatus = true
                   }
                   catch {
                     print(error)

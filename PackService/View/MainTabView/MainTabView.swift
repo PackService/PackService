@@ -9,28 +9,31 @@ import SwiftUI
 
 struct MainTabView: View {
     
-    @StateObject var emailAuthVM = EmailAuthVM()
+    @EnvironmentObject var emailAuthVM: EmailAuthVM
+    @EnvironmentObject var vm: MainViewModel
     @State var step: Double = 0.0
     @State var currentIndex: Int = 0
     @State var items: [TrackingInfoModel] = []
+    @State var text: String = ""
     
     var body: some View {
+        if !vm.isLoading {
             VStack(spacing: 8) {
                 TopOfTabView(title: "지금 배송중")
                     .padding(.bottom, 8)
-
-                carousel
                 
+                carousel
+
                 HStack {
                     Text("인사이트")
                         .font(FontManager.title1)
                     Spacer()
                 }
                 .padding(.top, 16)
-
+                
                 VStack {
                     insightInfoView
-                
+                    
                     HStack {
                         PackInfoCell(title: "일일 최대 배송 개수", content: "5개")
                         PackInfoCell(title: "평균 배송 소요 시간", content: "1일 19시간 28분")
@@ -46,14 +49,12 @@ struct MainTabView: View {
                 
                 Spacer()
             }
-            .onAppear {
-                items = []
-                for index in 1...3 {
-                    items.append(TrackingInfoModel(complete: false, level: index, invoiceNo: "11111111", isValidInvoice: "Y", itemImage: "", itemName: "아이템\(index)", receiverAddr: "", receiverName: "", recipient: "", senderName: "", trackingDetails: [], estimate: "", productInfo: "", status: nil, msg: nil, code: nil))
-                }
-            }
-        .padding(.horizontal, 20)
-        
+            //            .onAppear {
+            //                items.append(contentsOf: )
+            ////                text = vm.trackingModels.debugDescription
+            //            }
+            .padding(.horizontal, 20)
+        }
     }
 }
 
@@ -82,8 +83,8 @@ extension MainTabView {
     
     var carousel: some View {
         VStack(spacing: 0) {
-            Carousel(index: $currentIndex, items: items) { item in
-                if items.isEmpty {
+            Carousel(index: $currentIndex, items: vm.carouselItems) { item in
+                if item.company.isEmpty {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(ColorManager.background)
@@ -122,24 +123,21 @@ extension MainTabView {
                                     .fill(ColorManager.defaultForegroundDisabled)
                                     .frame(width: 44, height: 44)
                                     .overlay(
-                                        Image("logo_cj")
+                                        LogoType(rawValue: item.company ?? "00")?.logo.image
                                             .resizable()
+                                            .scaledToFit()
                                             .frame(width: 44, height: 44)
-    //                                    LogoType(rawValue: trackingDetailVM.code)?.logo.image
-    //                                        .resizable()
-    //                                        .scaledToFit()
-    //                                        .frame(width: 54, height: 54)
                                     )
                                 
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text(item.invoiceNo!)
+                                    Text(item.name)
                                         .font(FontManager.title2)
                                         .frame(maxWidth: 233, alignment: .leading)
                     //                        .background(Color.red)
                                     HStack(spacing: 8) {
-                                        Text("012345678912")
+                                        Text(item.invoice)
                                         Spacer()
-                                        Text("용인HUB")
+                                        Text(item.itemWhere)
                                     }
                                     .font(FontManager.caption1)
                                     .foregroundColor(ColorManager.foreground1)
@@ -153,14 +151,14 @@ extension MainTabView {
                         .padding(.horizontal, 16)
                     }
                     .onAppear {
-                        step = 3.0
+                        step = item.currentStep
                     }
                 }
                 
             }
             
             HStack(spacing: 8) {
-                ForEach(items.indices, id: \.self) { index in
+                ForEach(vm.carouselItems.indices, id: \.self) { index in
                     Circle()
                         .fill(Color.black.opacity(currentIndex == index ? 1 : 0.1))
                         .frame(width: 8, height: 8)

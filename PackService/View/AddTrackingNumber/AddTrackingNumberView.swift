@@ -22,6 +22,7 @@ struct AddTrackingNumberView: View {
     @State var animationTrigger: Bool = false
     
     @State var text: String? = nil
+    @State var selected: String? = nil
     
     @State var showSelectCompanyView: Bool = false
 
@@ -86,6 +87,7 @@ struct AddTrackingNumberView: View {
                 // Custom Button Style 재정의 해야함
                 Button(action: {
                     capsulePressed(name.name)
+                    selected = name.id
                 }, label: {
                     CompanyCapsuleView(color: company.logo.bgColor, logoImage: company.logo.image, logoName: name.name, nameColor: company.logo.fgColor)
                 })
@@ -136,7 +138,10 @@ struct AddTrackingNumberView: View {
         }
         print(selectedCompany)
 //        else { 오류 아닐때만 등록되도록 수정해야함
-        emailAuthVM.addTrackNumber(trackNumber: trackingNumber, trackCompany: text!)
+        if let selected = selected {
+            emailAuthVM.addTrackNumber(trackNumber: trackingNumber, trackCompany: selected)
+        }
+        
 //        }
         
         animationTrigger = false
@@ -234,7 +239,7 @@ extension AddTrackingNumberView {
     }
     
     var selectCompanyView: some View {
-        SelectCompanyView(show: $showSelectCompanyView, selected: $text)
+        SelectCompanyView(show: $showSelectCompanyView, text: $text, selected: $selected)
             .padding(.top, 100)
             .transition(.move(edge: .bottom))
     }

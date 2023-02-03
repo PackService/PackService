@@ -9,7 +9,16 @@ import SwiftUI
 
 // MARK: - MainView
 struct MainView: View {
-    @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
+//    @AppStorage("log_status") var logStatus = false
+    @EnvironmentObject var emailAuthVM: EmailAuthVM
+    var trackInfo: TrackInfo?
+    @StateObject var vm: MainViewModel
+    
+    init(trackInfo: TrackInfo?) {
+        self.trackInfo = trackInfo
+        _vm = StateObject(wrappedValue: MainViewModel(info: trackInfo))
+    }
+    
     var body: some View {
         NavigationView {
             TabView {
@@ -18,12 +27,14 @@ struct MainView: View {
                         Image(systemName: "house")
                             .environment(\.symbolVariants, .none)
                     }
+                    .environmentObject(vm)
 //                PackListTabView()
-                HomeView()
+                PackListTabView()
                     .tabItem {
                         Image(systemName: "shippingbox")
                             .environment(\.symbolVariants, .none)
                     }
+                    .environmentObject(vm)
                 SystemTabView()
                     .tabItem {
                         Image(systemName: "gearshape")
@@ -38,8 +49,8 @@ struct MainView: View {
     }
 }
 
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView()
-    }
-}
+//struct MainView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MainView()
+//    }
+//}

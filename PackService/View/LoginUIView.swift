@@ -13,7 +13,8 @@ struct LoginUIView: View {
     @AppStorage("log_status") var logStatus = false
     @StateObject var kakaoAuthVM = KakaoAuthVM()
     @StateObject var apple = AppleAuthVM()
-    @ObservedObject var emailAuthVM = EmailAuthVM()
+    @EnvironmentObject var emailAuthVM: EmailAuthVM
+//    @ObservedObject var emailAuthVM = EmailAuthVM()
     // ------
     @State var signUpErrorMessage: String = ""
     

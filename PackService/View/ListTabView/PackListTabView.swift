@@ -10,7 +10,8 @@ import Combine
 
 struct PackListTabView: View {
     
-    @StateObject var packInfoDatas = PackInfoViewModel()
+    @EnvironmentObject var vm: MainViewModel
+//    @StateObject var packInfoDatas = PackInfoViewModel()
     @FocusState var isFocused: Bool
     
     var body: some View {
@@ -21,16 +22,16 @@ struct PackListTabView: View {
                     isFocused = false
                 }
 
-            SearchTextFieldView(title: "검색", searchInput: $packInfoDatas.searchText, isFocused: $isFocused)
+            SearchTextFieldView(title: "검색", searchInput: $vm.searchText, isFocused: $isFocused)
 
             ScrollView {
                 LazyVStack {
-                    if !packInfoDatas.searchModels.isEmpty {
-                        ForEach(packInfoDatas.searchModels) { packInfo in
-                            PackListItemView(item: $packInfoDatas.searchModels[getIndex(packInfoModel: packInfo)], items: $packInfoDatas.searchModels)
-                                .environmentObject(packInfoDatas)
+                    if !vm.searchModels.isEmpty {
+                        ForEach(vm.searchModels) { item in
+                            PackListItemView(item: $vm.searchModels[getIndex(model: item)], items: $vm.searchModels)
+                                .environmentObject(vm)
                         }
-                    } else if packInfoDatas.searchModels.isEmpty && !packInfoDatas.searchText.isEmpty {
+                    } else if vm.searchModels.isEmpty && !vm.searchText.isEmpty {
                         ZStack {
                             Rectangle()
                                 .fill(ColorManager.background)
@@ -82,9 +83,9 @@ struct PackListTabView: View {
 //        HomeView()
     }
     
-    func getIndex(packInfoModel: PackInfoModel) -> Int {
-        return packInfoDatas.searchModels.firstIndex { (packInfoModel1) -> Bool in
-            return packInfoModel.id == packInfoModel1.id
+    func getIndex(model: InfoModel) -> Int {
+        return vm.searchModels.firstIndex { (returnedModel) -> Bool in
+            return model.id == returnedModel.id
         } ?? 0
     }
 }

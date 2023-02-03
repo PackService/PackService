@@ -12,6 +12,7 @@ struct SelectCompanyView: View {
     @StateObject var companyVM = CompanyService()
     @Environment(\.presentationMode) var presentationMode
     @Binding var show: Bool
+    @Binding var text: String?
     @Binding var selected: String?
     let names = ["04", "46", "22", "13", "12", "21", "41", "24", "05", "32", "11", "01", "23", "06", "08", "37", "53", "25", "14", "26"]
     let columns: [GridItem] = [
@@ -81,7 +82,8 @@ extension SelectCompanyView {
                 ForEach(companyVM.allCompanies.company) { company in
                     let logo = LogoType(rawValue: company.id) ?? LogoType.etc
                     Button {
-                        selected = company.name
+                        text = company.name
+                        selected = company.id
                         show = false
 //                        presentationMode.wrappedValue.dismiss()
                     } label: {
@@ -95,7 +97,7 @@ extension SelectCompanyView {
 
 struct SelectCompanyView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectCompanyView(show: .constant(true), selected: .constant("CJ 대한통운"))
+        SelectCompanyView(show: .constant(true), text: .constant("CJ 대한통운"), selected: .constant("04"))
 //        HeaderView()
 //            .previewLayout(.sizeThatFits)
     }
