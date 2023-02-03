@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct PackListItemView: View {
-    @Binding var item: PackInfoModel
-    @Binding var items: [PackInfoModel]
+    @Binding var item: InfoModel
+    @Binding var items: [InfoModel]
 //    @Binding var items1: [PackInfoModel]
-    @EnvironmentObject var pack: PackInfoViewModel
+    @EnvironmentObject var vm: MainViewModel
     
     @State var offset: CGFloat = 0
     @State var isSwiped: Bool = false
@@ -30,7 +30,7 @@ struct PackListItemView: View {
                     
                     Button {
                         withAnimation(.easeIn) {
-                            deletePackInfoModel()
+                            deleteModel()
                         }
                     } label: {
                         HStack(spacing: 8) {
@@ -79,7 +79,7 @@ struct PackListItemView: View {
             if value.translation.width < 0 {
                 if -value.translation.width > UIScreen.main.bounds.width / 2 {
                     offset = -1000
-                    deletePackInfoModel()
+                    deleteModel()
                 } else if -offset > 50 {
                     isSwiped = true
                     offset = -120
@@ -94,12 +94,12 @@ struct PackListItemView: View {
         }        
     }
     
-    func deletePackInfoModel() {
-        items.removeAll { (packInfoModel) -> Bool in
-            pack.models1.removeAll { (model) -> Bool in
-                return self.item.id == model.id
+    func deleteModel() {
+        items.removeAll { (model1) -> Bool in
+            vm.trackingModels.removeAll { (model2) -> Bool in
+                return self.item.id == model2.id
             }
-            return self.item.id == packInfoModel.id
+            return self.item.id == model1.id
         }
         
     }
@@ -117,25 +117,24 @@ extension PackListItemView {
                     .fill(ColorManager.defaultForegroundDisabled)
                     .frame(width: 44, height: 44)
                     .overlay(
-    //                    LogoType(rawValue: trackingDetailVM.code)?.logo.image
-                        Image("logo_cj")
+                        LogoType(rawValue: item.company ?? "00")?.logo.image
                             .resizable()
                             .scaledToFit()
                             .frame(width: 44, height: 44)
                 )
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(item.packageName)
+                    Text(item.name)
                         .lineLimit(1)
                         .font(FontManager.title2)
                         .frame(maxWidth: 233, alignment: .leading)
                     
                     HStack {
-                        Text(item.packageNumber)
+                        Text(item.invoice)
                         Spacer()
                         HStack(spacing: 8) {
-                            Text(item.packageArrvieTime)
-                            Text(item.packageState)
+                            Text(item.time)
+                            Text(Step(rawValue: Int(item.currentStep))?.status ?? "배송전")
                                 .font(FontManager.caption2)
                                 .foregroundColor(ColorManager.primaryColor)
                         }
@@ -162,17 +161,17 @@ struct ListButtonStyle: ButtonStyle {
 
 // 만약 화면에서는 데이터 지워지는데 백 쪽에서 안지워진다면 https://www.youtube.com/watch?v=jXVQDmeNb8A 14분 확인해보기
 
-struct PackListItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            PackListItemView(item: .constant(PackInfoModel(packageNumber: "1111111111", packageName: "유세린 더머토 클린 리프레싱 클렌징젤 200ml 1+1", packageArrvieTime: "12:48", packageState: "간선상차", isComplete: false)), items: .constant([]))
-                .previewLayout(.sizeThatFits)
-            
-//            PackListItemView(item: .constant(PackInfoModel(packageNumber: "1111111111", packageName: "유세린 더머토 클린 리프레싱 클렌징젤 200ml 1+1", packageArrvieTime: "12:48", packageState: "배송완료", isComplete: true)))
+//struct PackListItemView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+//            PackListItemView(item: .constant(PackInfoModel(packageNumber: "1111111111", packageName: "유세린 더머토 클린 리프레싱 클렌징젤 200ml 1+1", packageArrvieTime: "12:48", packageState: "간선상차", isComplete: false)), items: .constant([]))
 //                .previewLayout(.sizeThatFits)
-        }
-    }
-}
+//            
+////            PackListItemView(item: .constant(PackInfoModel(packageNumber: "1111111111", packageName: "유세린 더머토 클린 리프레싱 클렌징젤 200ml 1+1", packageArrvieTime: "12:48", packageState: "배송완료", isComplete: true)))
+////                .previewLayout(.sizeThatFits)
+//        }
+//    }
+//}
 
 
 //SwipeItemView(content: {

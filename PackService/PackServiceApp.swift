@@ -12,12 +12,15 @@ import Firebase
 struct PackServiceApp: App {
     
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
+    
+    @StateObject var emailAuthVM = EmailAuthVM()
     init() {
         FirebaseApp.configure()
     }
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(emailAuthVM)
         }
     }
 }

@@ -109,6 +109,7 @@ struct TrackingInfoModel: Codable, Identifiable {
     let trackingDetails: [TrackingDetailsModel]?
     let estimate: String?
     let productInfo: String?
+    var company: String? = nil
     let status: Bool?
     let msg: String?
     let code: String?
@@ -166,7 +167,7 @@ struct TrackingInfoModel: Codable, Identifiable {
             current = max(detail.level, current)
         }
         
-        print(current)
+//        print(current)
         
         if 0 <= current && current <= 4 {
             result = 1
@@ -176,7 +177,7 @@ struct TrackingInfoModel: Codable, Identifiable {
             result = 3
         }
         
-        print("Result:\(result)")
+//        print("Result:\(result)")
         return result
     }
     
@@ -206,4 +207,13 @@ struct TrackingDetailsModel: Identifiable, Codable {
         return (date: date, time: time)
     }
     
+}
+
+extension String {
+    func mapInfo(_ info: String) -> String {
+        if self.isEmpty {
+            return info
+        }
+        return self
+    }
 }
