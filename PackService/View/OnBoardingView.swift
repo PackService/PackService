@@ -8,12 +8,15 @@
 import SwiftUI
 import AuthenticationServices
 
-
 struct OnBoardingView: View {
+    
     @Binding var isFirstLaunching: Bool //1회만 실행되도록 하는 변수
     @State var signUpScreen: Bool = false // 회원가입 진행 bool 변수
     @StateObject var kakaoAuthVM = KakaoAuthVM()
-    @StateObject var appleAuthVM = AppleAuthVM()
+//    @StateObject var appleAuthVM = AppleAuthVM()
+    @State private var appleAuthVM: AppleAuthViewModel?
+    @Environment(\.window) var window: UIWindow?
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -26,6 +29,13 @@ struct OnBoardingView: View {
                     Spacer()
                     
                     VStack(spacing: 16) {
+                        Button {
+                            handleAppleLogin()
+                        } label: {
+                            ThirdPartyButtonView(type: .apple)
+                        }
+                        .buttonStyle(ContainerButtonStyle())
+                        
                         Button {
                             kakaoAuthVM.handleKakaoLogin()
                         } label: {
@@ -46,18 +56,6 @@ struct OnBoardingView: View {
                         Text("이미 계정이 있나요?")
                             .foregroundColor(Color("foreground1"))
                         
-//                        Button(action: {
-//                            isFirstLaunching.toggle()
-//                        }, label: {
-//                            Text("로그인")
-//                                .foregroundColor(Color("primary_color"))
-//                                .overlay(
-//                                    Rectangle()
-//                                        .frame(height: 1)
-//                                        .offset(y: 2)
-//                                        .foregroundColor(Color("primary_color"))
-//                                    , alignment: .bottom)
-//                        })
                         NavigationLink(destination: LoginUIView()) {
                             Text("로그인")
                                 .foregroundColor(Color("primary_color"))
@@ -79,6 +77,11 @@ struct OnBoardingView: View {
                 }
             }
         }
+    }
+    
+    func handleAppleLogin() {
+        appleAuthVM = AppleAuthViewModel(window: window)
+        appleAuthVM?.startAppleLogin()
     }
 }
 

@@ -21,17 +21,6 @@ struct MainTabView: View {
 
                 carousel
                 
-                Button(action: {
-                    emailAuthVM.readTrackNumber()
-                }, label: {
-                    Text("파베 데이터 읽어오기")
-                })
-                //Text(emailAuthVM.freeboardTitle)
-                Text(emailAuthVM.trackInfo?.email ?? "")
-                Text(emailAuthVM.trackInfo?.userTracksInfo![0].trackNumber ?? "")
-                //MARK: -test중
-                //
-                
                 HStack {
                     Text("인사이트")
                         .font(FontManager.title1)

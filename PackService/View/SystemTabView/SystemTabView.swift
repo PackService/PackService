@@ -11,14 +11,13 @@ struct SystemTabView: View {
     @AppStorage("log_status") var logStatus = false
     @StateObject var emailAuthVM = EmailAuthVM()
     
-    
     var body: some View {
         NavigationView {
             VStack {
                 Text("설정")
                     .font(FontManager.title2)
                 VStack(spacing: 10) {
-                    SystemButtonView(buttonType: .arrow, text: "계정", email: "abc@naver.com")
+                    SystemButtonView(buttonType: .arrow, text: "계정", email: modifyEmail(emailAuthVM.currentUser?.email ?? ""))
                     SystemButtonView(buttonType: .toggle, text: "알림설정")
                     NavigationLink(destination: NavigationServiceAgreeView()) {
                         SystemButtonView(buttonType: .arrow, text: "이용약관")
@@ -43,6 +42,17 @@ struct SystemTabView: View {
                 Spacer()
             }
             .padding(.trailing, 20)
+        }
+    }
+    
+    func modifyEmail(_ email: String) -> String {
+        var modifyEmail: String = ""
+        if email.last == "1" || email.last == "2" {
+            modifyEmail = email
+            print(modifyEmail)
+            return String(modifyEmail.dropLast())
+        } else {
+            return email
         }
     }
 }

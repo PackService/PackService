@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - MainView
 struct MainView: View {
-//    @AppStorage("log_status") var logStatus = false
+    @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
     var body: some View {
         NavigationView {
             TabView {
@@ -34,6 +34,7 @@ struct MainView: View {
             .padding(.top, 20)
             .accentColor(ColorManager.primaryColor)
         }
+        .onAppear(perform: { isFirstLaunching.toggle() })
     }
 }
 

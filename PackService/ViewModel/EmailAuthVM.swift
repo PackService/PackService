@@ -12,6 +12,7 @@ import FirebaseFirestoreSwift
 
 class EmailAuthVM: ObservableObject {
     @Published var trackInfo: TrackInfo?
+    @State var userEmail: String = ""
     @Published var loginError: String = ""
     @Published var signUpError: String = ""
     @Published var pack = [Packages]()
@@ -187,8 +188,9 @@ class EmailAuthVM: ObservableObject {
             
             if error == nil { // firebase db에 저장하는 방법
                 self.signUpError = "회원가입이 완료되었습니다"
-                
+                self.userEmail = email
                 self.currentUser = result?.user
+                print(self.userEmail)
 //                let db = Firestore.firestore()
                 self.db.collection("users").document(user.uid).setData(trackInfo.setEmail)
             }
