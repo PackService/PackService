@@ -12,9 +12,10 @@ struct OnBoardingView: View {
     
     @Binding var isFirstLaunching: Bool //1회만 실행되도록 하는 변수
     @State var signUpScreen: Bool = false // 회원가입 진행 bool 변수
-    @StateObject var kakaoAuthVM = KakaoAuthVM()
+//    @StateObject var kakaoAuthVM = KakaoAuthVM()
+    @EnvironmentObject var emailService: EmailService
 //    @StateObject var appleAuthVM = AppleAuthVM()
-    @State private var appleAuthVM: AppleAuthViewModel?
+//    @State private var appleAuthVM: AppleAuthViewModel?
     @Environment(\.window) var window: UIWindow?
     
     var body: some View {
@@ -37,7 +38,7 @@ struct OnBoardingView: View {
                         .buttonStyle(ContainerButtonStyle())
                         
                         Button {
-                            kakaoAuthVM.handleKakaoLogin()
+                            emailService.handleKakaoLogin()
                         } label: {
                             ThirdPartyButtonView(type: .kakao)
                         }

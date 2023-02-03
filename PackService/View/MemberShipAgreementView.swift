@@ -12,7 +12,7 @@ struct MemberShipAgreementView: View {
     @Binding var isFirstLaunching: Bool // 온보딩 1회만 실행되도록 하는 변수
     @State var checkSignupError: Bool = true
     @State var signUpErrorMessage: String = ""
-    @ObservedObject var viewModel = EmailAuthVM()
+    @EnvironmentObject var emailService: EmailService
     @Binding var signUpScreen: Bool
     @State var serviceAgreeScreen: Bool = false // servceAgreeDescriptView 화면 전환 변수
     @State var personAgreeScreen: Bool = false // personAgreeDescriptView 화면 전환 변수
@@ -75,16 +75,16 @@ struct MemberShipAgreementView: View {
                         TextFieldView(title: "비밀번호", input: $passwordInput, wrongAttempt: $passwordAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .password, isSecure: true)
                         TextFieldView(title: "비밀번호 확인", input: $passwordConfirmInput, wrongAttempt: $passwordConfirmAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .passwordConfirm, isSecure: true)
                         HStack {
-                            if viewModel.signUpError == "" {
+                            if emailService.signUpError == "" {
                                 Text(signUpErrorMessage)
                                     .font(FontManager.caption2)
                                     .foregroundColor(ColorManager.negativeColor)
-                            } else if viewModel.signUpError == "이미 해당 이메일이 존재합니다" {
-                                Text(viewModel.signUpError)
+                            } else if emailService.signUpError == "이미 해당 이메일이 존재합니다" {
+                                Text(emailService.signUpError)
                                     .font(FontManager.caption2)
                                     .foregroundColor(ColorManager.negativeColor)
-                            } else if viewModel.signUpError == "회원가입이 완료되었습니다"{
-                                Text(viewModel.signUpError)
+                            } else if emailService.signUpError == "회원가입이 완료되었습니다"{
+                                Text(emailService.signUpError)
                                     .font(FontManager.caption2)
                                     .foregroundColor(ColorManager.negativeColor)
                                     .onAppear(perform: { signUpScreen.toggle() })
@@ -150,7 +150,7 @@ struct MemberShipAgreementView: View {
             self.signUpErrorMessage = "비밀번호와 비밀번호 확인이 일치하지 않습니다"
             self.isPasswordConfirmValid = false
             self.focusState = .passwordConfirm
-        } else if viewModel.signUpError == "" {
+        } else if emailService.signUpError == "" {
             self.checkSignupError.toggle()
         }
     }
@@ -238,7 +238,7 @@ extension MemberShipAgreementView {
             }
             
             if checkSignupError == false {// 회원가입 시 에러 없어야지 파이어베이스 등록
-                viewModel.registerUser(email: emailInput, password: passwordInput)
+                emailService.registerUser(email: emailInput, password: passwordInput)
             }
             animationTrigger = false
         }, label: {
@@ -283,12 +283,12 @@ struct ToggleDetailTextView: View {
 }
 
 
-
-struct MemberShipAgreementView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
-    }
-}
+//
+//struct MemberShipAgreementView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LoginView()
+//    }
+//}
 
 
 //    func validationCheck() {

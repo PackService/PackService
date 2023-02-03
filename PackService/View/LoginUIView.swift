@@ -10,10 +10,11 @@ import SwiftUI
 struct LoginUIView: View {
     
     @State var signUpScreen: Bool = false // 회원가입 진행 bool 변수
+    @Environment(\.window) var window: UIWindow?
     @AppStorage("log_status") var logStatus = false
+    @EnvironmentObject var emailService: EmailService
     @StateObject var kakaoAuthVM = KakaoAuthVM()
     @StateObject var apple = AppleAuthVM()
-    @EnvironmentObject var emailAuthVM: EmailAuthVM
 //    @ObservedObject var emailAuthVM = EmailAuthVM()
     // ------
     @State var signUpErrorMessage: String = ""
@@ -31,9 +32,7 @@ struct LoginUIView: View {
     
     @State var animationTrigger: Bool = false
     @FocusState private var focusState: TextFieldType?
-    
-    @Environment(\.window) var window: UIWindow?
-    @State private var appleAuthVM: AppleAuthViewModel?
+    @State private var appleAuthVM: EmailService?
 
     var body: some View {
             NavigationView {
@@ -58,12 +57,12 @@ struct LoginUIView: View {
                                         toggleFocus()
                                     }
                                     HStack { // 이메일 존재할 때
-                                        if emailAuthVM.loginError == nil {
+                                        if emailService.loginError == nil {
                                             Text(signUpErrorMessage)
                                                 .font(FontManager.caption2)
                                                 .foregroundColor(ColorManager.negativeColor)
                                         } else { // 이메일 존재하지 않을때
-                                            Text(emailAuthVM.loginError)
+                                            Text(emailService.loginError)
                                                 .font(FontManager.caption2)
                                                 .foregroundColor(ColorManager.negativeColor)
                                         }
@@ -82,7 +81,7 @@ struct LoginUIView: View {
                                                 animationTrigger = true
                                             }
                                         } else {
-                                            emailAuthVM.login(email: emailInput, password: passwordInput)
+                                            emailService.login(email: emailInput, password: passwordInput)
                                         }
                                         
                                         animationTrigger = false
@@ -121,7 +120,7 @@ struct LoginUIView: View {
                                     .buttonStyle(ContainerButtonStyle())
                                     
                                     Button {
-                                        kakaoAuthVM.handleKakaoLogin()
+                                        emailService.handleKakaoLogin()
                                     } label: {
                                         ThirdPartyButtonView(type: .kakao)
                                     }
@@ -213,7 +212,7 @@ struct LoginUIView: View {
     }
     
     func handleAppleLogin() {
-        appleAuthVM = AppleAuthViewModel(window: window)
+        appleAuthVM = emailService(window: window)
         appleAuthVM?.startAppleLogin()
     }
 }

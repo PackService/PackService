@@ -12,8 +12,9 @@ import Firebase
 struct PackServiceApp: App {
     
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
+    @Environment(\.window) var window: UIWindow?
+    @StateObject var emailAuthVM = EmailService()
     
-    @StateObject var emailAuthVM = EmailAuthVM()
     init() {
         FirebaseApp.configure()
     }

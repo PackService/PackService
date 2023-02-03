@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddTrackingNumberView: View {
     
-    @StateObject var emailAuthVM = EmailAuthVM()
+    @StateObject var emailService = EmailService()
     
     @Environment(\.dismiss) private var dismissAddTrackingNumberView
     @StateObject var recommendVM = RecommendService("")
@@ -139,7 +139,7 @@ struct AddTrackingNumberView: View {
         print(selectedCompany)
 //        else { 오류 아닐때만 등록되도록 수정해야함
         if let selected = selected {
-            emailAuthVM.addTrackNumber(trackNumber: trackingNumber, trackCompany: selected)
+            emailService.addTrackNumber(trackNumber: trackingNumber, trackCompany: selected)
         }
         
 //        }

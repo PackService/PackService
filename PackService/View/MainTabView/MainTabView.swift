@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainTabView: View {
     
-    @EnvironmentObject var emailAuthVM: EmailAuthVM
+    @EnvironmentObject var emailAuthVM: EmailService
     @EnvironmentObject var vm: MainViewModel
     @State var step: Double = 0.0
     @State var currentIndex: Int = 0

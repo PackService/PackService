@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SystemTabView: View {
     @AppStorage("log_status") var logStatus = false
-    @StateObject var emailAuthVM = EmailAuthVM()
+    @EnvironmentObject var emailService: EmailService
     
     var body: some View {
         NavigationView {
@@ -17,7 +17,7 @@ struct SystemTabView: View {
                 Text("설정")
                     .font(FontManager.title2)
                 VStack(spacing: 10) {
-                    SystemButtonView(buttonType: .arrow, text: "계정", email: modifyEmail(emailAuthVM.currentUser?.email ?? ""))
+                    SystemButtonView(buttonType: .arrow, text: "계정", email: modifyEmail(emailService.currentUser?.email ?? ""))
                     SystemButtonView(buttonType: .toggle, text: "알림설정")
                     NavigationLink(destination: NavigationServiceAgreeView()) {
                         SystemButtonView(buttonType: .arrow, text: "이용약관")
@@ -30,7 +30,7 @@ struct SystemTabView: View {
                     SystemButtonView(buttonType: .version, text: "현재 버전")
                     SystemButtonView(buttonType: .arrow, text: "피드백 보내기")
                     Button(action: {
-                        emailAuthVM.logout()
+                        emailService.logout()
 //                        withAnimation(.easeInOut) {
 //                            logStatus = false
 //                        }

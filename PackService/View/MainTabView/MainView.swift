@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - MainView
 struct MainView: View {
 //    @AppStorage("log_status") var logStatus = false
-    @EnvironmentObject var emailAuthVM: EmailAuthVM
+    @EnvironmentObject var emailService: EmailService
     var trackInfo: TrackInfo?
     @StateObject var vm: MainViewModel
     
@@ -45,7 +45,7 @@ struct MainView: View {
             .padding(.top, 20)
             .accentColor(ColorManager.primaryColor)
         }
-        .onAppear(perform: { isFirstLaunching.toggle() })
+//        .onAppear(perform: { isFirstLaunching.toggle() })
     }
 }
 
