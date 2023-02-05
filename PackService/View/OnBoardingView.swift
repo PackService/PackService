@@ -15,7 +15,7 @@ struct OnBoardingView: View {
 //    @StateObject var kakaoAuthVM = KakaoAuthVM()
     @EnvironmentObject var emailService: EmailService
 //    @StateObject var appleAuthVM = AppleAuthVM()
-//    @State private var appleAuthVM: AppleAuthViewModel?
+    @State private var appleAuthVM: AppleAuthViewModel?
     @Environment(\.window) var window: UIWindow?
     
     var body: some View {
@@ -86,8 +86,8 @@ struct OnBoardingView: View {
     }
 }
 
-struct OnBoardingView_Previews: PreviewProvider {
-    static var previews: some View {
-        OnBoardingView(isFirstLaunching: .constant(true))        
-    }
-}
+//struct OnBoardingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        OnBoardingView(isFirstLaunching: .constant(true))        
+//    }
+//}

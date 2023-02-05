@@ -16,7 +16,7 @@ import CryptoKit
 import FirebaseAuth
 import AuthenticationServices
 
-class EmailService: NSObject, ObservableObject {
+class EmailService: ObservableObject {
     @Published var trackInfo: TrackInfo?
     @State var userEmail: String = ""
     @Published var loginError: String = ""
@@ -25,12 +25,12 @@ class EmailService: NSObject, ObservableObject {
     @AppStorage("log_status") var logStatus = false
     @Published var currentUser: Firebase.User?
     var currentNonce: String?
-    let window: UIWindow?
+    var window: UIWindow?
     
     private var cancellables = Set<AnyCancellable>()
     let db = Firestore.firestore()
-    init(window: UIWindow?) {
-        self.window = window
+    
+    init() {
         currentUser = Auth.auth().currentUser
         
         $trackInfo
@@ -41,7 +41,7 @@ class EmailService: NSObject, ObservableObject {
             }
             .store(in: &cancellables)
     }    
-  
+    
     // 로그인
     func login(email: String, password: String) {
         Auth.auth().signIn(withEmail: email + "2", password: password) { result, error in
@@ -52,13 +52,13 @@ class EmailService: NSObject, ObservableObject {
             }
             self.loginError = ""
             self.readTrackNumber()
-             // contentview에서 home으로 갈지 login으로 갈지 결정해줌. 로그인 누르면 homeview로 넘어가도록 함
+            // contentview에서 home으로 갈지 login으로 갈지 결정해줌. 로그인 누르면 homeview로 넘어가도록 함
         }
     }
     
     // 송장번호 추가
     func addTrackNumber(trackNumber: String, trackCompany: String) { // 택배 create
-//        let db = Firestore.firestore()
+        //        let db = Firestore.firestore()
         print("현재 아이디: \(currentUser?.uid ?? "")")
         let packages = Packages(trackCompany: trackCompany, trackNumber: trackNumber)
         
@@ -71,7 +71,7 @@ class EmailService: NSObject, ObservableObject {
         }
     }
     
-
+    
     // 송장번호 하나 삭제
     func deleteTrackNumber(trackNumber: String) {
         let db = Firestore.firestore()
@@ -111,6 +111,7 @@ class EmailService: NSObject, ObservableObject {
                         let citiesDocument = try document.data(as: TrackInfo.self)
                         self.trackInfo = citiesDocument
                         self.logStatus = true
+                        print(self.trackInfo)
                     }
                     catch {
                         print(error)
@@ -119,25 +120,25 @@ class EmailService: NSObject, ObservableObject {
             }
         }
     }
-  
+    
     // 회원탈퇴
     func deleteUser() {
         let user = Auth.auth().currentUser
         user?.delete { error in
-          if let error = error {
-            // An error happened.
-              print(error)
-          } else {
-            // Account deleted. 데이터베이스에서 해당 회원 정보들 다 삭제해줘야 함.
-              self.db.collection("users").document(self.currentUser?.uid ?? "").delete() { err in
-                  if let err = err {
-                      print("Error removing document: \(err)")
-                  } else {
-                      print("Document successfully removed!")
-                  }
-              }
-              print("현재 회원 삭제")
-          }
+            if let error = error {
+                // An error happened.
+                print(error)
+            } else {
+                // Account deleted. 데이터베이스에서 해당 회원 정보들 다 삭제해줘야 함.
+                self.db.collection("users").document(self.currentUser?.uid ?? "").delete() { err in
+                    if let err = err {
+                        print("Error removing document: \(err)")
+                    } else {
+                        print("Document successfully removed!")
+                    }
+                }
+                print("현재 회원 삭제")
+            }
         }
     }
     
@@ -167,7 +168,7 @@ class EmailService: NSObject, ObservableObject {
                 self.userEmail = email
                 self.currentUser = result?.user
                 print(self.userEmail)
-//                let db = Firestore.firestore()
+                //                let db = Firestore.firestore()
                 self.db.collection("users").document(user.uid).setData(trackInfo.setEmail)
             }
         }
@@ -217,7 +218,7 @@ class EmailService: NSObject, ObservableObject {
             }
         }
     }
-
+    
     func handleLoginWithKakaoAccount() async -> Bool {
         await withCheckedContinuation { continuation in
             UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
@@ -257,7 +258,7 @@ class EmailService: NSObject, ObservableObject {
                 print("DEBUG: 카카오톡 사용자 정보가져오기 에러 \(error.localizedDescription)")
             } else {
                 print("DEBUG: 카카오톡 사용자 정보가져오기 success.")
-//                print((user?.kakaoAccount?.email ?? "")+"1")
+                //                print((user?.kakaoAccount?.email ?? "")+"1")
                 // 파이어베이스 유저 생성 (이메일로 회원가입)
                 Auth.auth().createUser(withEmail: ((user?.kakaoAccount?.email ?? "") + "1"),
                                        password: "\(String(describing: user?.id))") { result, error in
@@ -277,9 +278,25 @@ class EmailService: NSObject, ObservableObject {
         }
     }
     
-    //MARK: -apple Login
-//    @AppStorage("log_status") var logStatus = false
-    
+}
+
+func loginErrorhandler(error: String) -> String {
+    if error == "There is no user record corresponding to this identifier. The user may have been deleted." {
+        return "이메일이 존재하지 않습니다"
+    } else {
+        return ""
+    }
+}
+
+class AppleAuthViewModel: NSObject, ObservableObject {
+    var currentNonce: String?
+    let window: UIWindow?
+    @AppStorage("log_status") var logStatus = false
+
+    init(window: UIWindow?) {
+        self.window = window
+    }
+
     func startAppleLogin() {
         let nonce = randomNonceString()
         currentNonce = nonce
@@ -287,23 +304,29 @@ class EmailService: NSObject, ObservableObject {
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
         request.nonce = sha256(nonce)
-        
+
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
     }
-    
+
+    func logout() {
+//        try? Auth.auth().signOut()
+        self.logStatus = false
+
+    }
+
     private func sha256(_ input: String) -> String {
         let inputData = Data(input.utf8)
         let hashedData = SHA256.hash(data: inputData)
         let hashString = hashedData.compactMap {
             return String(format: "%02x", $0)
         }.joined()
-        
+
         return hashString
     }
-    
+
     // Adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
     private func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
@@ -311,25 +334,25 @@ class EmailService: NSObject, ObservableObject {
           Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
         var result = ""
         var remainingLength = length
-        
+
         while remainingLength > 0 {
             let randoms: [UInt8] = (0 ..< 16).map { _ in
                 var random: UInt8 = 0
                 let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
                 if errorCode != errSecSuccess {
                     fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
-                    
+
                 }
                 return random
-                
+
             }
 
             randoms.forEach { random in
                 if remainingLength == 0 {
                     return
-                    
+
                 }
-                
+
                 if random < charset.count {
                     result.append(charset[Int(random)])
                     remainingLength -= 1
@@ -340,7 +363,7 @@ class EmailService: NSObject, ObservableObject {
     }
 }
 
-extension EmailService: ASAuthorizationControllerDelegate {
+extension AppleAuthViewModel: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
           guard let nonce = currentNonce else {
@@ -373,7 +396,7 @@ extension EmailService: ASAuthorizationControllerDelegate {
                   print(idTokenString)
                   let db = Firestore.firestore()
                   db.collection("users").document(user.uid).setData(["email": user.email])
-                  
+
                   self.logStatus = true
               }
             // User is signed in to Firebase with Apple.
@@ -383,7 +406,7 @@ extension EmailService: ASAuthorizationControllerDelegate {
       }
 }
 
-extension EmailService: ASAuthorizationControllerPresentationContextProviding {
+extension AppleAuthViewModel: ASAuthorizationControllerPresentationContextProviding {
     public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         window!
     }
@@ -393,7 +416,7 @@ struct WindowKey: EnvironmentKey {
     struct Value {
         weak var value: UIWindow?
     }
-    
+
     static let defaultValue: Value = .init(value: nil)
 }
 
@@ -408,10 +431,3 @@ extension EnvironmentValues {
     }
 }
 
-func loginErrorhandler(error: String) -> String {
-    if error == "There is no user record corresponding to this identifier. The user may have been deleted." {
-        return "이메일이 존재하지 않습니다"
-    } else {
-        return ""
-    }
-}

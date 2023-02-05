@@ -13,7 +13,7 @@ struct PackServiceApp: App {
     
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
     @Environment(\.window) var window: UIWindow?
-    @StateObject var emailAuthVM = EmailService()
+    @StateObject var emailService = EmailService()
     
     init() {
         FirebaseApp.configure()
@@ -21,7 +21,7 @@ struct PackServiceApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(emailAuthVM)
+                .environmentObject(emailService)
         }
     }
 }

@@ -13,9 +13,7 @@ struct LoginUIView: View {
     @Environment(\.window) var window: UIWindow?
     @AppStorage("log_status") var logStatus = false
     @EnvironmentObject var emailService: EmailService
-    @StateObject var kakaoAuthVM = KakaoAuthVM()
-    @StateObject var apple = AppleAuthVM()
-//    @ObservedObject var emailAuthVM = EmailAuthVM()
+    @State private var appleAuthVM: AppleAuthViewModel?
     // ------
     @State var signUpErrorMessage: String = ""
     
@@ -32,7 +30,6 @@ struct LoginUIView: View {
     
     @State var animationTrigger: Bool = false
     @FocusState private var focusState: TextFieldType?
-    @State private var appleAuthVM: EmailService?
 
     var body: some View {
             NavigationView {
@@ -212,7 +209,7 @@ struct LoginUIView: View {
     }
     
     func handleAppleLogin() {
-        appleAuthVM = emailService(window: window)
+        appleAuthVM = AppleAuthViewModel(window: window)
         appleAuthVM?.startAppleLogin()
     }
 }

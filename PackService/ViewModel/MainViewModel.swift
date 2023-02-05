@@ -9,12 +9,13 @@ import Foundation
 import Combine
 
 class MainViewModel: ObservableObject {
-    
+
     @Published var isLoading: Bool = true
     @Published var info: TrackInfo?
     @Published var company: String = ""
     @Published var searchText = ""
     
+    private var emailService: EmailService?
     private var trackingInfoService = TrackingInfoService()
     private var companyService = CompanyService()
     private var cancellables = Set<AnyCancellable>()
@@ -23,9 +24,19 @@ class MainViewModel: ObservableObject {
     @Published var carouselItems: [InfoModel] = []
     @Published var searchModels: [InfoModel] = []
     
-    init(info: TrackInfo?) {
-        self.info = info
+    init() {
+//        self.emailService = emailService
+//        self.info = emailService.trackInfo
+//        print("info: \(self.info)")
+//        setup(emailService: emailService)
         addSubscribers()
+    }
+    
+    func setup(emailService: EmailService) {
+        self.emailService = emailService
+        emailService.readTrackNumber()
+        self.info = emailService.trackInfo
+        print("info: \(self.info)")
     }
     
     // 1. MainView에 표시할 정보들을 TrackInfoModel에서 추출해서 다른 모델에 저장해야함 (完)

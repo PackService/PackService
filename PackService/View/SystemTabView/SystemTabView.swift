@@ -30,6 +30,11 @@ struct SystemTabView: View {
                     SystemButtonView(buttonType: .version, text: "현재 버전")
                     SystemButtonView(buttonType: .arrow, text: "피드백 보내기")
                     Button(action: {
+                        emailService.readTrackNumber()
+                    }, label: {
+                        Text("테스트")
+                    })
+                    Button(action: {
                         emailService.logout()
 //                        withAnimation(.easeInOut) {
 //                            logStatus = false
