@@ -12,12 +12,13 @@ struct MainView: View {
 //    @AppStorage("log_status") var logStatus = false
     @EnvironmentObject var emailService: EmailService
     var trackInfo: TrackInfo?
-    @StateObject var vm = MainViewModel()
+    @ObservedObject var vm: MainViewModel
     
-//    init(trackInfo: TrackInfo?) {
-////        self.trackInfo = trackInfo
-////        _vm = StateObject(wrappedValue: MainViewModel(emailService: self.emailService))
-//    }
+    init(vm: MainViewModel) {
+        self.vm = vm
+//        self.trackInfo = trackInfo
+//        _vm = StateObject(wrappedValue: MainViewModel(emailService: self.emailService))
+    }
     
     var body: some View {
         NavigationView {
@@ -46,7 +47,7 @@ struct MainView: View {
             .accentColor(ColorManager.primaryColor)
         }
         .onAppear {
-            self.vm.setup(emailService: self.emailService)
+            emailService.readTrackNumber()
         }
 //        .onAppear(perform: { isFirstLaunching.toggle() })
 //        .onAppear(perform: {emailService.readTrackNumber()})

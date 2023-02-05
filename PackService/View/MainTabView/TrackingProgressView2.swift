@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct TrackingProgressView2: View {
-    @Binding var currentStep: Double
+    var currentStep: Double
     
     var body: some View {
         ProgressView("Loading...", value: currentStep, total: 3)
-            .progressViewStyle(TrackingProgressViewStyle2(value: $currentStep))
+            .progressViewStyle(TrackingProgressViewStyle2(value: currentStep))
     }
 }
 
 //MARK: - ProgressView Style
 struct TrackingProgressViewStyle2: ProgressViewStyle {
-    @Binding var value: Double
+    var value: Double
     
     func makeBody(configuration: Configuration) -> some View {
         
@@ -124,9 +124,9 @@ struct TrackingProgressViewStyle2: ProgressViewStyle {
     }
 }
 
-
-struct TrackingProgressView2_Previews: PreviewProvider {
-    static var previews: some View {
-        TrackingProgressView2(currentStep: .constant(0.0))
-    }
-}
+//
+//struct TrackingProgressView2_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TrackingProgressView2(currentStep: .constant(0.0))
+//    }
+//}

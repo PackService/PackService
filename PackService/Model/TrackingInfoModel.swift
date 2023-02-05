@@ -167,8 +167,6 @@ struct TrackingInfoModel: Codable, Identifiable {
             current = max(detail.level, current)
         }
         
-//        print(current)
-        
         if 0 <= current && current <= 4 {
             result = 1
         } else if current == 5 {
@@ -177,7 +175,6 @@ struct TrackingInfoModel: Codable, Identifiable {
             result = 3
         }
         
-//        print("Result:\(result)")
         return result
     }
     

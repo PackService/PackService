@@ -11,19 +11,19 @@ struct ContentView: View {
     @AppStorage("log_status") var logStatus = false
     @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
     
-    @EnvironmentObject var emailAuthVM: EmailService
+    @EnvironmentObject var service: EmailService
 
     var body: some View {
         // 앱 최초 구동 시 전체화면으로 OnboardingTabView 띄우기
         ZStack {
             if logStatus {
-                MainView(trackInfo: emailAuthVM.trackInfo)
-                    .environmentObject(emailAuthVM)
+                MainView(vm: MainViewModel(service: self.service))
+//                    .environmentObject(emailAuthVM)
             } else if !logStatus && isFirstLaunching {
                 OnBoardingView(isFirstLaunching: $isFirstLaunching)
             } else {
                 LoginUIView()
-                    .environmentObject(emailAuthVM)
+                    .environmentObject(service)
 //                LoginUIView()
 //                    .fullScreenCover(isPresented: $isFirstLaunching) {
 //                        OnBoardingView(isFirstLaunching: $isFirstLaunching)

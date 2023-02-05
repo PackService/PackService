@@ -15,7 +15,7 @@ class MainViewModel: ObservableObject {
     @Published var company: String = ""
     @Published var searchText = ""
     
-    private var emailService: EmailService?
+    var service: EmailService
     private var trackingInfoService = TrackingInfoService()
     private var companyService = CompanyService()
     private var cancellables = Set<AnyCancellable>()
@@ -24,7 +24,9 @@ class MainViewModel: ObservableObject {
     @Published var carouselItems: [InfoModel] = []
     @Published var searchModels: [InfoModel] = []
     
-    init() {
+    init(service: EmailService) {
+        self.service = service
+//        service.readTrackNumber()
 //        self.emailService = emailService
 //        self.info = emailService.trackInfo
 //        print("info: \(self.info)")
@@ -32,12 +34,12 @@ class MainViewModel: ObservableObject {
         addSubscribers()
     }
     
-    func setup(emailService: EmailService) {
-        self.emailService = emailService
-        emailService.readTrackNumber()
-        self.info = emailService.trackInfo
-        print("info: \(self.info)")
-    }
+//    func setup(emailService: EmailService) {
+//        self.emailService = emailService
+//        emailService.readTrackNumber()
+//        self.info = emailService.trackInfo
+//        print("info: \(self.info)")
+//    }
     
     // 1. MainView에 표시할 정보들을 TrackInfoModel에서 추출해서 다른 모델에 저장해야함 (完)
     // => Optional 처리에 의한 번거로움을 줄이기 위해서
@@ -48,7 +50,7 @@ class MainViewModel: ObservableObject {
     // 5. 로그인 후 로그인 정보가 앱을 종료하고 다시 실행했을 때 남아 있어야함
     
     func addSubscribers() {
-        guard let info = info else {
+        guard let info = self.service.trackInfo else {
             print("info")
             return
         }
