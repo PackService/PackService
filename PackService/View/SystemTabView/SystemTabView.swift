@@ -31,6 +31,7 @@ struct SystemTabView: View {
                     SystemButtonView(buttonType: .arrow, text: "피드백 보내기")
                     Button(action: {
                         emailService.readTrackNumber()
+                        print("systemtabview : \(emailService.trackInfo)")
                     }, label: {
                         Text("테스트")
                     })

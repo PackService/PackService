@@ -17,6 +17,8 @@ struct MainTabView: View {
     @State var text: String = ""
     
     var body: some View {
+        Text("hi")
+            .onAppear(perform: {print("maintabView: \(emailAuthVM.trackInfo)")})
         if !vm.isLoading {
             VStack(spacing: 8) {
                 TopOfTabView(title: "지금 배송중")

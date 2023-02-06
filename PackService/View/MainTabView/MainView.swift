@@ -10,6 +10,7 @@ import SwiftUI
 // MARK: - MainView
 struct MainView: View {
 //    @AppStorage("log_status") var logStatus = false
+    
     @EnvironmentObject var emailService: EmailService
     var trackInfo: TrackInfo?
     @StateObject var vm = MainViewModel()
@@ -46,7 +47,9 @@ struct MainView: View {
             .accentColor(ColorManager.primaryColor)
         }
         .onAppear {
-            self.vm.setup(emailService: self.emailService)
+            emailService.readTrackNumber()
+//            print("mainView: \(emailService.trackInfo)")
+//            self.vm.setup(emailService: self.emailService)
         }
 //        .onAppear(perform: { isFirstLaunching.toggle() })
 //        .onAppear(perform: {emailService.readTrackNumber()})

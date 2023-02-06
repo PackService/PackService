@@ -34,7 +34,6 @@ class MainViewModel: ObservableObject {
     
     func setup(emailService: EmailService) {
         self.emailService = emailService
-        emailService.readTrackNumber()
         self.info = emailService.trackInfo
         print("info: \(self.info)")
     }
@@ -52,7 +51,6 @@ class MainViewModel: ObservableObject {
             print("info")
             return
         }
-        
         trackingInfoService.getTrackingInfos(info: info)
         
         trackingInfoService.$infos
