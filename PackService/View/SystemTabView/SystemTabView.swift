@@ -43,6 +43,18 @@ struct SystemTabView: View {
                     }, label: {
                         Text("로그아웃")
                     })
+                    Button(action: {
+                        // logout
+                        DispatchQueue.global(qos: .background).async {
+                            try? emailService.kakaoLogout()
+                        }
+                        // back view to loginview
+                        withAnimation(.easeInOut) {
+                            logStatus = false
+                        }
+                    }, label: {
+                        Text("카톡 Log out")
+                    })
                 }
                 .padding(.top, 26)
                 Spacer()

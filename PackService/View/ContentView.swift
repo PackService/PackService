@@ -10,7 +10,6 @@ import SwiftUI
 struct ContentView: View {
     @AppStorage("log_status") var logStatus = false
     @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
-    
     @EnvironmentObject var service: EmailService
 
     var body: some View {

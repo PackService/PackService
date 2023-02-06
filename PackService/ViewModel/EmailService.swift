@@ -28,7 +28,7 @@ class EmailService: ObservableObject {
     var window: UIWindow?
     
     private var cancellables = Set<AnyCancellable>()
-    let db = Firestore.firestore()
+//    let db = Firestore.firestore()
     
     init() {
         currentUser = Auth.auth().currentUser
@@ -50,6 +50,7 @@ class EmailService: ObservableObject {
                 self.loginError = loginErrorhandler(error: error.localizedDescription)
                 return
             }
+            self.currentUser = result?.user
             self.loginError = ""
             self.readTrackNumber()
             // contentview에서 home으로 갈지 login으로 갈지 결정해줌. 로그인 누르면 homeview로 넘어가도록 함
@@ -63,7 +64,8 @@ class EmailService: ObservableObject {
         let packages = Packages(trackCompany: trackCompany, trackNumber: trackNumber)
         
         do {
-            try db.collection("users").document(currentUser?.uid ?? "").updateData([
+            let db = Firestore.firestore()
+            try db.collection("users").document(currentUser!.uid).updateData([
                 "userTracksInfo": FieldValue.arrayUnion([packages.setTrackNumber])
             ])
         } catch let error {
@@ -81,7 +83,7 @@ class EmailService: ObservableObject {
         ]
         
         DispatchQueue.main.async {
-            db.collection("users").document(self.currentUser?.uid ?? "").updateData([
+            db.collection("users").document(self.currentUser!.uid).updateData([
                 "userTracksInfo" : FieldValue.arrayRemove([trackInfoData])
             ]) { error in
                 if let error = error {
@@ -96,27 +98,31 @@ class EmailService: ObservableObject {
     
     // 송장번호 읽어오기
     func readTrackNumber() {
-        let docRef = Firestore.firestore()
-            .collection("users")
-            .document(currentUser?.uid ?? "")
-        
-        docRef.getDocument { document, error in
-            if let error = error as NSError? {
-                //                self.errorMessage = "Error getting document: \(error.localizedDescription)"
-            }
-            else {
-                if let document = document {
-                    do {
-                        let citiesDocument = try document.data(as: TrackInfo.self)
-                        self.trackInfo = citiesDocument
-                        self.logStatus = true
-                        print(self.trackInfo)
-                    }
-                    catch {
-                        print(error)
+        if currentUser?.uid != nil {
+            let docRef = Firestore.firestore()
+                .collection("users")
+                .document(currentUser!.uid)
+            
+            docRef.getDocument { document, error in
+                if let error = error as NSError? {
+                    //                self.errorMessage = "Error getting document: \(error.localizedDescription)"
+                }
+                else {
+                    if let document = document {
+                        do {
+                            let citiesDocument = try document.data(as: TrackInfo.self)
+                            self.trackInfo = citiesDocument
+                            self.logStatus = true
+                            print(self.trackInfo)
+                        }
+                        catch {
+                            print(error)
+                        }
                     }
                 }
             }
+        } else {
+            logStatus = false
         }
     }
     
@@ -128,8 +134,9 @@ class EmailService: ObservableObject {
                 // An error happened.
                 print(error)
             } else {
+                let db = Firestore.firestore()
                 // Account deleted. 데이터베이스에서 해당 회원 정보들 다 삭제해줘야 함.
-                self.db.collection("users").document(self.currentUser?.uid ?? "").delete() { err in
+                db.collection("users").document(self.currentUser!.uid).delete() { err in
                     if let err = err {
                         print("Error removing document: \(err)")
                     } else {
@@ -168,7 +175,8 @@ class EmailService: ObservableObject {
                 self.currentUser = result?.user
                 print(self.userEmail)
                 //                let db = Firestore.firestore()
-                self.db.collection("users").document(user.uid).setData(trackInfo.setEmail)
+                let db = Firestore.firestore()
+                db.collection("users").document(user.uid).setData(trackInfo.setEmail)
             }
         }
     }
@@ -179,6 +187,7 @@ class EmailService: ObservableObject {
     func kakaoLogout() {
         Task {
             if await handleKakaoLogout() {
+                currentUser = nil
                 logStatus = false
             }
         }
@@ -264,13 +273,21 @@ class EmailService: ObservableObject {
                     if let error = error {
                         print("DEBUG: 파이어베이스 사용자 생성 실패 \(error.localizedDescription)")
                         Auth.auth().signIn(withEmail: ((user?.kakaoAccount?.email ?? "") + "1"),
-                                           password: "\(String(describing: user?.id))")
+                                           password: "\(String(describing: user?.id))") { result, error in
+                            if let error = error {
+                                print("Error : \(error.localizedDescription)")
+                                return
+                            }
+                            self.currentUser = result?.user
+                            self.readTrackNumber()
+                        }
                         print("로그인되었음")
                     } else {
                         print("DEBUG: 파이어베이스 사용자 생성")
                         self.currentUser = result?.user // 이거 안하면 uid 달라짐
                         guard let user = self.currentUser else { return } // 파이어베이스 유저 객체를 가져옴
-                        self.db.collection("users").document(user.uid).setData(["email": user.email ])
+                        let db = Firestore.firestore()
+                        db.collection("users").document(user.uid).setData(["email": user.email ])
                     }
                 }
             }
