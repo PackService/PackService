@@ -100,7 +100,6 @@ class EmailService: ObservableObject {
             .collection("users")
             .document(currentUser?.uid ?? "")
         
-        
         docRef.getDocument { document, error in
             if let error = error as NSError? {
                 //                self.errorMessage = "Error getting document: \(error.localizedDescription)"

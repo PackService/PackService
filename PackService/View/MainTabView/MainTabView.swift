@@ -146,15 +146,15 @@ extension MainTabView {
                                 }
                             }
                             
-                            TrackingProgressView2(currentStep: $step)
+                            TrackingProgressView2(currentStep: item.currentStep)
                                 .padding(.top, 10)
                         }
                         .padding(.vertical, 24)
                         .padding(.horizontal, 16)
                     }
-                    .onAppear {
-                        step = item.currentStep
-                    }
+//                    .onAppear {
+//                        step = item.currentStep
+//                    }
                 }
                 
             }
@@ -204,141 +204,141 @@ extension MainTabView {
     }
 }
 
-// MARK: - MainTabView의 SliderTabView
-struct SliderTabView: View {
-    @State var step: Double = 1
-    init() {
-        UIPageControl.appearance().currentPageIndicatorTintColor = .black
-        UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.1)
-    }
-    var body: some View {
-        let packageName: [String] = [
-            "토리든 다이브인 저분자 하알루", "2번째 택배", "3번째 택배"
-        ]
-        let packageNumber: [String] = [
-            "12345664343433", "343343545", "2453452345"
-        ]
-        let packageState: [String] = [
-            "간선상차", "간선하차", "뭐시기"
-        ]
-        
-        TabView {
-            ForEach(0..<packageName.count) { item in
-                ZStack {
-                    VStack {
-                        VStack {
-                            
-                            HStack {
-                                Image(systemName: "gear")
-                                    .resizable()
-                                    .frame(width: 40, height: 40)
-                                VStack {
-                                    HStack {
-                                        Text(packageName[item])
-                                            .font(FontManager.title2)
-                                        Spacer()
-                                    }
-                                    HStack {
-                                        Text(packageNumber[item])
-                                            .font(FontManager.caption1)
-                                        Spacer()
-                                        Text(packageState[item])
-                                            .font(FontManager.caption1)
-                                    }
-                                }
-                                Button {
-                                    step += 1
-                                } label: {
-                                    Image(systemName: "arrow.clockwise.circle.fill")
-                                        .renderingMode(.template)
-                                        .resizable()
-                                        .frame(width: 24, height: 24)
-                                        .foregroundColor(ColorManager.primaryColor)
-                                }
-                                Spacer()
-                            }
-                            .padding(.top, 24)
-                            .padding(.leading, 16)
-                            .padding(.trailing, 34)
-                            
+//// MARK: - MainTabView의 SliderTabView
+//struct SliderTabView: View {
+//    @State var step: Double = 1
+//    init() {
+//        UIPageControl.appearance().currentPageIndicatorTintColor = .black
+//        UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.1)
+//    }
+//    var body: some View {
+//        let packageName: [String] = [
+//            "토리든 다이브인 저분자 하알루", "2번째 택배", "3번째 택배"
+//        ]
+//        let packageNumber: [String] = [
+//            "12345664343433", "343343545", "2453452345"
+//        ]
+//        let packageState: [String] = [
+//            "간선상차", "간선하차", "뭐시기"
+//        ]
+//        
+//        TabView {
+//            ForEach(0..<packageName.count) { item in
+//                ZStack {
+//                    VStack {
+//                        VStack {
+//                            
 //                            HStack {
-//                                ZStack(alignment: .leading) {
-//                                    Rectangle()
-//                                        .frame(width: 250, height: 12)
-//                                        .foregroundColor(ColorManager.background2)
-//                                    Image(systemName: "house.circle.fill")
+//                                Image(systemName: "gear")
+//                                    .resizable()
+//                                    .frame(width: 40, height: 40)
+//                                VStack {
+//                                    HStack {
+//                                        Text(packageName[item])
+//                                            .font(FontManager.title2)
+//                                        Spacer()
+//                                    }
+//                                    HStack {
+//                                        Text(packageNumber[item])
+//                                            .font(FontManager.caption1)
+//                                        Spacer()
+//                                        Text(packageState[item])
+//                                            .font(FontManager.caption1)
+//                                    }
+//                                }
+//                                Button {
+//                                    step += 1
+//                                } label: {
+//                                    Image(systemName: "arrow.clockwise.circle.fill")
+//                                        .renderingMode(.template)
 //                                        .resizable()
-//                                        .frame(width: 32, height: 32)
-//                                        .foregroundColor(ColorManager.background2)
-//                                        .background(ColorManager.foreground2)
-//                                        .clipShape(Circle())
-//                                        .padding(.leading, 232)
-//                                    OrderButton()
-//                                    Image(systemName: "shippingbox.circle.fill")
-//                                        .resizable()
-//                                        .frame(width: 32, height: 32)
+//                                        .frame(width: 24, height: 24)
 //                                        .foregroundColor(ColorManager.primaryColor)
-//                                        .background(ColorManager.background)
-//                                        .clipShape(Circle())
-//                                        .padding(.leading, -17)
+//                                }
+//                                Spacer()
+//                            }
+//                            .padding(.top, 24)
+//                            .padding(.leading, 16)
+//                            .padding(.trailing, 34)
+//                            
+////                            HStack {
+////                                ZStack(alignment: .leading) {
+////                                    Rectangle()
+////                                        .frame(width: 250, height: 12)
+////                                        .foregroundColor(ColorManager.background2)
+////                                    Image(systemName: "house.circle.fill")
+////                                        .resizable()
+////                                        .frame(width: 32, height: 32)
+////                                        .foregroundColor(ColorManager.background2)
+////                                        .background(ColorManager.foreground2)
+////                                        .clipShape(Circle())
+////                                        .padding(.leading, 232)
+////                                    OrderButton()
+////                                    Image(systemName: "shippingbox.circle.fill")
+////                                        .resizable()
+////                                        .frame(width: 32, height: 32)
+////                                        .foregroundColor(ColorManager.primaryColor)
+////                                        .background(ColorManager.background)
+////                                        .clipShape(Circle())
+////                                        .padding(.leading, -17)
+////                                }
+////                            }
+////                            Spacer()
+//                            VStack {
+//                                Group {
+//                                    TrackingProgressView2(currentStep: $step)
+//                                        .frame(height: 32)
+//                                        .padding(.top, 24)
+//                                        .padding(.horizontal, 12)
+//                                        .animation(Animation.easeIn(duration: 1.0), value: step)
+//                                        .onAppear {
+//                                            step = 0
+//                                        }
+//                                    //                        .background(Color.red)
+//                                    
+//                                    var arr = ["군포", "기흥", nil, "죽전"]
+//                                    
+//                                    HStack {
+//                                        ForEach(arr, id: \.self) { item in
+//                                            Text(item ?? "(정보없음)")
+//                                                .font(FontManager.caption1)
+//                                                .foregroundColor(item != arr[Int(step)] ? ColorManager.foreground1 : ColorManager.primaryColor)
+//                                            //                        Text((dict[key] ?? "(정보없음)") ?? "(정보없음)")
+//                                            if item != arr.last! {
+//                                                Spacer()
+//                                            }
+//                                            
+//                                        }
+//                                    }
+//                                    .padding(.horizontal, 20)
+//                                    .padding(.bottom, 8)
 //                                }
 //                            }
-//                            Spacer()
-                            VStack {
-                                Group {
-                                    TrackingProgressView2(currentStep: $step)
-                                        .frame(height: 32)
-                                        .padding(.top, 24)
-                                        .padding(.horizontal, 12)
-                                        .animation(Animation.easeIn(duration: 1.0), value: step)
-                                        .onAppear {
-                                            step = 0
-                                        }
-                                    //                        .background(Color.red)
-                                    
-                                    var arr = ["군포", "기흥", nil, "죽전"]
-                                    
-                                    HStack {
-                                        ForEach(arr, id: \.self) { item in
-                                            Text(item ?? "(정보없음)")
-                                                .font(FontManager.caption1)
-                                                .foregroundColor(item != arr[Int(step)] ? ColorManager.foreground1 : ColorManager.primaryColor)
-                                            //                        Text((dict[key] ?? "(정보없음)") ?? "(정보없음)")
-                                            if item != arr.last! {
-                                                Spacer()
-                                            }
-                                            
-                                        }
-                                    }
-                                    .padding(.horizontal, 20)
-                                    .padding(.bottom, 8)
-                                }
-                            }
-                        }
-                        .background( // slideTabView 그림자 넣기
-                            ColorManager.background
-                                .cornerRadius(10)
-                                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 2)
-                        )
-                        
-                        Spacer()
-                        
-                        VStack { // 택배 상태 보여주는 탭뷰와 ... 간의 간격을 위함
-                            
-                        }
-                        .padding(.top, 32)
-                        
-                    }
-                }
-            }
-        }
-        .frame(height: 170)
-        .padding(.trailing, 20)
-        .padding(.bottom, 40)
-        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-    }
-    
-}
+//                        }
+//                        .background( // slideTabView 그림자 넣기
+//                            ColorManager.background
+//                                .cornerRadius(10)
+//                                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 2)
+//                        )
+//                        
+//                        Spacer()
+//                        
+//                        VStack { // 택배 상태 보여주는 탭뷰와 ... 간의 간격을 위함
+//                            
+//                        }
+//                        .padding(.top, 32)
+//                        
+//                    }
+//                }
+//            }
+//        }
+//        .frame(height: 170)
+//        .padding(.trailing, 20)
+//        .padding(.bottom, 40)
+//        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+//    }
+//    
+//}
 
 // MARK: - MaintabView에 있는 일일 최대, 가장 빠른 지역 등을 위한 PackInfoCell
 
