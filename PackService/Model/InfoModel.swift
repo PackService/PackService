@@ -16,6 +16,7 @@ struct InfoModel: Identifiable {
     let currentStep: Double
     let itemWhere: String
     let time: String
+    // let count: String 
 }
 
 enum Step: Int {

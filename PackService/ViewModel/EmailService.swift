@@ -305,6 +305,7 @@ func loginErrorhandler(error: String) -> String {
 }
 
 class AppleAuthViewModel: NSObject, ObservableObject {
+    @Published var currentUser: Firebase.User?
     var currentNonce: String?
     let window: UIWindow?
     @AppStorage("log_status") var logStatus = false
@@ -328,9 +329,8 @@ class AppleAuthViewModel: NSObject, ObservableObject {
     }
 
     func logout() {
-//        try? Auth.auth().signOut()
+        try? Auth.auth().signOut()
         self.logStatus = false
-
     }
 
     private func sha256(_ input: String) -> String {
@@ -398,7 +398,7 @@ extension AppleAuthViewModel: ASAuthorizationControllerDelegate {
           let credential = OAuthProvider.credential(withProviderID: "apple.com",
               idToken: idTokenString,
               rawNonce: nonce)
-
+//0pE0SZLAUBhTXtmVewKWe4ODDRI3
           //Firebase 작업
           Auth.auth().signIn(with: credential) { (authResult, error) in
               if let error = error {
@@ -406,13 +406,15 @@ extension AppleAuthViewModel: ASAuthorizationControllerDelegate {
               // you're sending the SHA256-hashed nonce as a hex string with
               // your request to Apple.
                   print(error.localizedDescription)
+                  print("애플 로그인 에러 발생!")
                   return
               } else {
                   guard let user = authResult?.user else { return }
-                  print(idTokenString)
+                  self.currentUser = authResult?.user
+                  print("현재 애플 로그인 유저:\(self.currentUser?.email)")
                   let db = Firestore.firestore()
                   db.collection("users").document(user.uid).setData(["email": user.email])
-
+                  print(self.currentUser?.uid)
                   self.logStatus = true
               }
             // User is signed in to Firebase with Apple.

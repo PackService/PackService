@@ -55,6 +55,11 @@ struct SystemTabView: View {
                     }, label: {
                         Text("카톡 Log out")
                     })
+                    Button(action: {
+                        
+                    }, label: {
+                        
+                    })
                 }
                 .padding(.top, 26)
                 Spacer()

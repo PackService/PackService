@@ -209,6 +209,7 @@ struct LoginUIView: View {
     }
     
     func handleAppleLogin() {
+        print("startapplelogin함수 시작")
         appleAuthVM = AppleAuthViewModel(window: window)
         appleAuthVM?.startAppleLogin()
     }

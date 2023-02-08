@@ -37,16 +37,17 @@ class TrackingInfoService: ObservableObject {
         guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=\(code)&t_invoice=\(invoice)&t_key=1DsMXGyjhh0tW8MAmxC1gw") else {
             print("url error")
             return }
-        
-        trackingInfoSubscription = NetworkingManager.download(url: url)
-            .decode(type: TrackingInfoModel.self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedTrackingInfo) in
-                self?.trackingInfo = returnedTrackingInfo
-                self?.trackingInfo?.company = code
-                print(returnedTrackingInfo)
-                self?.trackingInfoSubscription?.cancel()
-            })
+        Task {
+           await trackingInfoSubscription = NetworkingManager.download(url: url)
+                .decode(type: TrackingInfoModel.self, decoder: JSONDecoder())
+                .receive(on: DispatchQueue.main)
+                .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedTrackingInfo) in
+                    self?.trackingInfo = returnedTrackingInfo
+                    self?.trackingInfo?.company = code
+                    print(returnedTrackingInfo)
+                    self?.trackingInfoSubscription?.cancel()
+                })
+        }
     }
     
     func getTrackingInfos(info: TrackInfo) {
@@ -54,15 +55,17 @@ class TrackingInfoService: ObservableObject {
             print("FAILED TO GET INFOS")
             return
         }
-        
+        // 대한 한진 롯데 우체국
         for info in infos {
-            print("INFOS", info)
+//            print("PACKAGE INFOS", info)
             
             guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=\(info.trackCompany)&t_invoice=\(info.trackNumber)&t_key=1DsMXGyjhh0tW8MAmxC1gw") else {
                 print("url error")
                 return }
+            print("info.trackCompany: \(info.trackCompany)")
+            print("info.trackNumber: \(info.trackNumber)")
             
-            NetworkingManager.download(url: url)
+            NetworkingManager.download(url: url) //download를 async로??
                 .decode(type: TrackingInfoModel.self, decoder: JSONDecoder())
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedTrackingInfo) in
@@ -70,6 +73,7 @@ class TrackingInfoService: ObservableObject {
                     newTrackingInfo.company = info.trackCompany
 //                    returnedTrackingInfo.company = info.trackCompany
                     self?.infos.append(newTrackingInfo)
+                    print("newtrackingInfo : \(newTrackingInfo)")
 //                    print("RESULT:", self?.infos)
 //                    self?.infosSubscription?.cancel()
                 })

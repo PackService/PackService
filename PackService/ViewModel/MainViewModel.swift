@@ -11,7 +11,7 @@ import Combine
 class MainViewModel: ObservableObject {
 
     @Published var isLoading: Bool = true
-    @Published var info: TrackInfo?
+    @Published var info: TrackInfo? //파베에서 받는 데이터
     @Published var company: String = ""
     @Published var searchText = ""
     
@@ -23,23 +23,19 @@ class MainViewModel: ObservableObject {
     @Published var trackingModels: [InfoModel] = []
     @Published var carouselItems: [InfoModel] = []
     @Published var searchModels: [InfoModel] = []
+    @Published var sortedTrackingModels: [InfoModel] = []
     
     init(service: EmailService) {
         self.service = service
+//        print("패키지 순서: \(self.service.pack[0])")
 //        service.readTrackNumber()
 //        self.emailService = emailService
 //        self.info = emailService.trackInfo
-//        print("info: \(self.info)")
 //        setup(emailService: emailService)
         addSubscribers()
+        print("trackingModels: \(self.trackingModels)")
     }
     
-//    func setup(emailService: EmailService) {
-//        self.emailService = emailService
-//        emailService.readTrackNumber()
-//        self.info = emailService.trackInfo
-//        print("info: \(self.info)")
-//    }
     
     // 1. MainView에 표시할 정보들을 TrackInfoModel에서 추출해서 다른 모델에 저장해야함 (完)
     // => Optional 처리에 의한 번거로움을 줄이기 위해서
@@ -51,11 +47,11 @@ class MainViewModel: ObservableObject {
     
     func addSubscribers() {
         guard let info = self.service.trackInfo else {
-            print("info")
             return
         }
-        trackingInfoService.getTrackingInfos(info: info)
-        
+//        print(info.userTracksInfo![0])
+        print("info!! : \(info)") // 여기까지는 순서 잘 들어감
+        trackingInfoService.getTrackingInfos(info: info) // 여기서 가져오는 순서 때문에 뒤바뀜
         trackingInfoService.$infos
             .map(mapToInfoModels)
             .sink { [weak self] (models) in
@@ -76,8 +72,11 @@ class MainViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
+    // 파베에 변수 추가
+    // 
     func mapToInfoModels(infos: [TrackingInfoModel]) -> [InfoModel] {
         var models = [InfoModel]()
+        print("infos: \(infos)")
         for info in infos {
             var model = InfoModel(
                 isComplete: info.complete ?? false,
@@ -88,6 +87,7 @@ class MainViewModel: ObservableObject {
                 itemWhere: info.trackingDetails?.last?.detailWhere.mapInfo("정보없음") ?? "정보없음",
                 time: info.trackingDetails?.last?.timeAndDateTuple.time.mapInfo("정보없음") ?? "정보없음"
             )
+            print("mapToInfoModels: \(model.company)")
             models.append(model)
         }
         

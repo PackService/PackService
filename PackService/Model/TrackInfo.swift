@@ -9,16 +9,17 @@ import Foundation
 import FirebaseFirestoreSwift
 
 
-struct City: Codable, Hashable {
-  var name: String
-  var latitude: String
-  var longitude: String
-}
+//struct City: Codable, Hashable {
+//  var name: String
+//  var latitude: String
+//  var longitude: String
+//}
 // 서버에서 넘어올 사용자 데이터
 struct TrackInfo: Codable, Identifiable {
     @DocumentID var id: String?
     let email: String
     var userTracksInfo: [Packages]?
+//    @ServerTimestamp var createdTime: Timestamp? // (3)
     var setEmail: [String:Any] {
         return [
             "email": self.email
@@ -28,7 +29,6 @@ struct TrackInfo: Codable, Identifiable {
         case email = "email"
         case userTracksInfo = "userTracksInfo"
     }
-
 }
 
 struct Packages: Codable, Hashable {
