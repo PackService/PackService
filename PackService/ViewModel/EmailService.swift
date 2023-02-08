@@ -113,7 +113,6 @@ class EmailService: ObservableObject {
                             let citiesDocument = try document.data(as: TrackInfo.self)
                             self.trackInfo = citiesDocument
                             self.logStatus = true
-                            print(self.trackInfo)
                         }
                         catch {
                             print(error)
@@ -305,11 +304,12 @@ func loginErrorhandler(error: String) -> String {
 }
 
 class AppleAuthViewModel: NSObject, ObservableObject {
+    @EnvironmentObject var emailService: EmailService
     @Published var currentUser: Firebase.User?
     var currentNonce: String?
     let window: UIWindow?
     @AppStorage("log_status") var logStatus = false
-
+    
     init(window: UIWindow?) {
         self.window = window
     }
@@ -398,8 +398,7 @@ extension AppleAuthViewModel: ASAuthorizationControllerDelegate {
           let credential = OAuthProvider.credential(withProviderID: "apple.com",
               idToken: idTokenString,
               rawNonce: nonce)
-//0pE0SZLAUBhTXtmVewKWe4ODDRI3
-          //Firebase 작업
+
           Auth.auth().signIn(with: credential) { (authResult, error) in
               if let error = error {
               // Error. If error.code == .MissingOrInvalidNonce, make sure
@@ -409,19 +408,23 @@ extension AppleAuthViewModel: ASAuthorizationControllerDelegate {
                   print("애플 로그인 에러 발생!")
                   return
               } else {
+                  self.logStatus = true
                   guard let user = authResult?.user else { return }
                   self.currentUser = authResult?.user
                   print("현재 애플 로그인 유저:\(self.currentUser?.email)")
                   let db = Firestore.firestore()
-                  db.collection("users").document(user.uid).setData(["email": user.email])
-                  print(self.currentUser?.uid)
-                  self.logStatus = true
+                  if db.collection("users").document(user.uid) == nil {
+                      db.collection("users").document(user.uid).setData(["email": user.email])
+                  }
               }
             // User is signed in to Firebase with Apple.
             // ...
           }
+            
         }
       }
+    
+    
 }
 
 extension AppleAuthViewModel: ASAuthorizationControllerPresentationContextProviding {

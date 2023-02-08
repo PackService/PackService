@@ -34,11 +34,13 @@ struct TrackInfo: Codable, Identifiable {
 struct Packages: Codable, Hashable {
     var trackCompany: String
     var trackNumber: String
+//    var count: String
     
-    var setTrackNumber: [String:Any] {
+    var setTrackNumber: [String: Any] {
         return [
             "trackCompany": self.trackCompany,
-            "trackNumber": self.trackNumber
+            "trackNumber": self.trackNumber,
+//            "count": self.count
         ]
     }
     
