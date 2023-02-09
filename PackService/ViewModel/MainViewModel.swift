@@ -45,7 +45,7 @@ class MainViewModel: ObservableObject {
     // 4. reload 함수를 구현해서 화면이 바뀔때마다 데이터를 업데이트해야함
     // 5. 로그인 후 로그인 정보가 앱을 종료하고 다시 실행했을 때 남아 있어야함
     
-    func addSubscribers() {
+    func addSubscribers() {        
         guard let info = self.service.trackInfo else {
             return
         }

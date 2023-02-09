@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct MainTabView: View {
     
@@ -17,7 +18,7 @@ struct MainTabView: View {
     @State var text: String = ""
     
     var body: some View {
-        if !vm.isLoading {
+        if let _ = Auth.auth().currentUser {
             VStack(spacing: 8) {
                 TopOfTabView(title: "지금 배송중")
                     .padding(.bottom, 8)
@@ -49,11 +50,12 @@ struct MainTabView: View {
                 
                 Spacer()
             }
-            //            .onAppear {
-            //                items.append(contentsOf: )
-            ////                text = vm.trackingModels.debugDescription
-            //            }
+            .onAppear {
+                emailAuthVM.readTrackNumber()
+//                text = vm.trackingModels.debugDescription
+            }
             .padding(.horizontal, 20)
+            
         }
     }
 }
