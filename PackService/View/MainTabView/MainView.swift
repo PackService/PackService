@@ -11,6 +11,7 @@ import FirebaseAuth
 // MARK: - MainView
 struct MainView: View {
 //    @AppStorage("log_status") var logStatus = false
+    @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
     @EnvironmentObject var emailService: EmailService
     var trackInfo: TrackInfo?
     @ObservedObject var vm: MainViewModel
@@ -51,6 +52,7 @@ struct MainView: View {
             emailService.currentUser = Auth.auth().currentUser //이걸 해줘야 현재 메인뷰 뜰때 현재 사용자 확인 가능, 애플 재접속시 오류 해결 부분
             emailService.readTrackNumber()
             print("메인뷰 onApear 현재 사용자 이메일은 : \(emailService.currentUser?.email)")
+            isFirstLaunching = false
         }
     }
 }
