@@ -30,6 +30,8 @@ class EmailService: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 //    let db = Firestore.firestore()
     
+    var apple: AppleAuthViewModel?
+    
     init() {
         currentUser = Auth.auth().currentUser
         print("emailService 현재 사용자: \(currentUser?.email)")
@@ -60,7 +62,7 @@ class EmailService: ObservableObject {
     func addTrackNumber(trackNumber: String, trackCompany: String) { // 택배 create
         //        let db = Firestore.firestore()
         print("현재 아이디: \(currentUser?.uid ?? "")")
-        let packages = Packages(trackCompany: trackCompany, trackNumber: trackNumber)
+        let packages = Packages(timeStamp: Date(), trackCompany: trackCompany, trackNumber: trackNumber)
         
         do {
             let db = Firestore.firestore()
@@ -296,6 +298,12 @@ class EmailService: ObservableObject {
             }
         }
     }
+    
+//    func appleLogin(window: UIWindow?) {
+//        apple = AppleAuthViewModel(window: window)
+//        apple?.startAppleLogin()
+//        self.currentUser = apple?.user
+//    }
     
 }
 

@@ -107,3 +107,74 @@ import Foundation
      }
  }
  */
+
+
+//import SwiftUI
+//import AuthenticationServices
+//import FirebaseAuth
+//
+//struct ContentView: View {
+//    @State private var status = ""
+//
+//    var body: some View {
+//        VStack {
+//            ASAuthorizationAppleIDButton()
+//                .frame(width: 200, height: 50)
+//                .onTapGesture {
+//                    self.signInWithApple()
+//                }
+//
+//            Text(status)
+//        }
+//    }
+//
+//    private func signInWithApple() {
+//        let appleIDProvider = ASAuthorizationAppleIDProvider()
+//        let request = appleIDProvider.createRequest()
+//        request.requestedScopes = [.fullName, .email]
+//
+//        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+//        authorizationController.delegate = self
+//        authorizationController.presentationContextProvider = self
+//        authorizationController.performRequests()
+//    }
+//
+//    private func signInToFirebase(credential: ASAuthorizationAppleIDCredential) {
+//        let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com", idToken: credential.identityToken, rawNonce: nonce)
+//
+//        Auth.auth().signIn(with: firebaseCredential) { (authResult, error) in
+//            if let error = error {
+//                self.status = "Firebase Sign In failed with error: \(error.localizedDescription)"
+//                return
+//            }
+//
+//            self.status = "Firebase Sign In succeeded!"
+//        }
+//    }
+//}
+//
+//extension ContentView: ASAuthorizationControllerDelegate {
+//    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+//        switch authorization.credential {
+//        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+//            let userIdentifier = appleIDCredential.user
+//            let fullName = appleIDCredential.fullName
+//            let email = appleIDCredential.email
+//
+//            self.signInToFirebase(credential: appleIDCredential)
+//
+//        default:
+//            self.status = "Sign In with Apple failed."
+//        }
+//    }
+//
+//    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+//        self.status = "Sign In with Apple failed with error: \(error.localizedDescription)"
+//    }
+//}
+//
+//extension ContentView: ASAuthorizationControllerPresentationContextProviding {
+//    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+//        return NSApplication.shared.windows.last!.windowScene!.activationState == .foregroundActive ? NSApplication.shared.windows.last! : nil
+//    }
+//}

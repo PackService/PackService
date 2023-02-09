@@ -32,12 +32,14 @@ struct TrackInfo: Codable, Identifiable {
 }
 
 struct Packages: Codable, Hashable {
+    var timeStamp: Date
     var trackCompany: String
     var trackNumber: String
 //    var count: String
     
     var setTrackNumber: [String: Any] {
         return [
+            "timeStamp": self.timeStamp,
             "trackCompany": self.trackCompany,
             "trackNumber": self.trackNumber,
 //            "count": self.count
@@ -45,6 +47,7 @@ struct Packages: Codable, Hashable {
     }
     
     enum CodingKeys: String, CodingKey {
+        case timeStamp
         case trackCompany = "trackCompany"
         case trackNumber = "trackNumber"
     }

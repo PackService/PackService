@@ -71,6 +71,7 @@ class TrackingInfoService: ObservableObject {
                 .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedTrackingInfo) in
                     var newTrackingInfo = returnedTrackingInfo
                     newTrackingInfo.company = info.trackCompany
+                    newTrackingInfo.addedTime = info.timeStamp
 //                    returnedTrackingInfo.company = info.trackCompany
                     self?.infos.append(newTrackingInfo)
                     print("newtrackingInfo : \(newTrackingInfo)")

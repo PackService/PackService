@@ -27,7 +27,7 @@ struct PackListTabView: View {
             ScrollView {
                 LazyVStack {
                     if !vm.searchModels.isEmpty {
-                        ForEach(vm.searchModels) { item in
+                        ForEach(vm.searchModels.reversed()) { item in
                             PackListItemView(item: $vm.searchModels[getIndex(model: item)], items: $vm.searchModels)
                                 .environmentObject(vm)
                         }
