@@ -92,7 +92,6 @@ class EmailService: ObservableObject {
                 }
             }
         }
-        
     }
     
     // 송장번호 읽어오기
@@ -303,6 +302,8 @@ class EmailService: ObservableObject {
 func loginErrorhandler(error: String) -> String {
     if error == "There is no user record corresponding to this identifier. The user may have been deleted." {
         return "이메일이 존재하지 않습니다"
+    } else if error == "The password is invalid or the user does not have a password." {
+        return "비밀번호를 확인해주세요"
     } else {
         return ""
     }

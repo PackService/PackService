@@ -54,7 +54,7 @@ struct LoginUIView: View {
                                         toggleFocus()
                                     }
                                     HStack { // 이메일 존재할 때
-                                        if emailService.loginError == nil {
+                                        if emailService.loginError == "" {
                                             Text(signUpErrorMessage)
                                                 .font(FontManager.caption2)
                                                 .foregroundColor(ColorManager.negativeColor)
