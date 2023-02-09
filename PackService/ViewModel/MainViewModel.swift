@@ -33,7 +33,7 @@ class MainViewModel: ObservableObject {
 //        self.info = emailService.trackInfo
 //        setup(emailService: emailService)
         addSubscribers()
-        print("trackingModels: \(self.trackingModels)")
+//        print("trackingModels: \(self.trackingModels)")
     }
     
     
@@ -50,7 +50,7 @@ class MainViewModel: ObservableObject {
             return
         }
 //        print(info.userTracksInfo![0])
-        print("info!! : \(info)") // 여기까지는 순서 잘 들어감
+//        print("info!! : \(info)") // 여기까지는 순서 잘 들어감
         trackingInfoService.getTrackingInfos(info: info) // 여기서 가져오는 순서 때문에 뒤바뀜
         trackingInfoService.$infos
             .map(mapToInfoModels)
@@ -76,7 +76,7 @@ class MainViewModel: ObservableObject {
     // 
     func mapToInfoModels(infos: [TrackingInfoModel]) -> [InfoModel] {
         var models = [InfoModel]()
-        print("infos: \(infos)")
+//        print("infos: \(infos)")
         for info in infos {
             var model = InfoModel(
                 isComplete: info.complete ?? false,
@@ -87,7 +87,7 @@ class MainViewModel: ObservableObject {
                 itemWhere: info.trackingDetails?.last?.detailWhere.mapInfo("정보없음") ?? "정보없음",
                 time: info.trackingDetails?.last?.timeAndDateTuple.time.mapInfo("정보없음") ?? "정보없음"
             )
-            print("mapToInfoModels: \(model.company)")
+//            print("mapToInfoModels: \(model.company)")
             models.append(model)
         }
         

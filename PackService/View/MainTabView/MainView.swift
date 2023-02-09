@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 // MARK: - MainView
 struct MainView: View {
@@ -47,10 +48,10 @@ struct MainView: View {
             .accentColor(ColorManager.primaryColor)
         }
         .onAppear {
+            emailService.currentUser = Auth.auth().currentUser //이걸 해줘야 현재 메인뷰 뜰때 현재 사용자 확인 가능, 애플 재접속시 오류 해결 부분
             emailService.readTrackNumber()
+            print("메인뷰 onApear 현재 사용자 이메일은 : \(emailService.currentUser?.email)")
         }
-//        .onAppear(perform: { isFirstLaunching.toggle() })
-//        .onAppear(perform: {emailService.readTrackNumber()})
     }
 }
 

@@ -212,6 +212,7 @@ struct LoginUIView: View {
         print("startapplelogin함수 시작")
         appleAuthVM = AppleAuthViewModel(window: window)
         appleAuthVM?.startAppleLogin()
+        print("apple logStatus click1 \(self.logStatus)")
     }
 }
 

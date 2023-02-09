@@ -37,21 +37,26 @@ struct SystemTabView: View {
                     })
                     Button(action: {
                         emailService.logout()
-//                        withAnimation(.easeInOut) {
-//                            logStatus = false
-//                        }
                     }, label: {
                         Text("로그아웃")
                     })
                     Button(action: {
                         // logout
-                        DispatchQueue.global(qos: .background).async {
-                            try? emailService.kakaoLogout()
-                        }
-                        // back view to loginview
-                        withAnimation(.easeInOut) {
+                        if emailService.currentUser?.email?.last == "2" {
+                            emailService.logout()
+                        } else if emailService.currentUser?.email?.last == "1"{
+                            DispatchQueue.global(qos: .background).async {
+                                try? emailService.kakaoLogout()
+                            }
+                            logStatus = false
+                        } else {
+                            emailService.logout()
                             logStatus = false
                         }
+//                        // back view to loginview
+//                        withAnimation(.easeInOut) {
+//                            logStatus = false
+//                        }
                     }, label: {
                         Text("카톡 Log out")
                     })

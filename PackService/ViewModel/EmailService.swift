@@ -32,7 +32,7 @@ class EmailService: ObservableObject {
     
     init() {
         currentUser = Auth.auth().currentUser
-        
+        print("emailService 현재 사용자: \(currentUser?.email)")
         $trackInfo
             .sink { [weak self] info in
                 guard let info = info else { return }
@@ -53,7 +53,6 @@ class EmailService: ObservableObject {
             self.currentUser = result?.user
             self.loginError = ""
             self.readTrackNumber()
-            // contentview에서 home으로 갈지 login으로 갈지 결정해줌. 로그인 누르면 homeview로 넘어가도록 함
         }
     }
     
@@ -75,11 +74,11 @@ class EmailService: ObservableObject {
     
     
     // 송장번호 하나 삭제
-    func deleteTrackNumber(trackNumber: String) {
+    func deleteTrackNumber(trackNumber: String, trackCompany: String) {
         let db = Firestore.firestore()
         let trackInfoData: [String: Any] = [
             "trackNumber" : trackNumber,
-            "trackCompany" : "대한통운"
+            "trackCompany" : trackCompany
         ]
         
         DispatchQueue.main.async {
@@ -150,10 +149,10 @@ class EmailService: ObservableObject {
     // 로그아웃
     func logout() {
         print("아직 로그인임\(currentUser)")
-        currentUser = nil
         try? Auth.auth().signOut()
-        print("로그아웃되었습니다\(currentUser)")
+        currentUser = nil
         logStatus = false
+        print("로그아웃되었습니다\(currentUser)")
     }
     
     // 회원가입
@@ -173,7 +172,6 @@ class EmailService: ObservableObject {
                 self.userEmail = email
                 self.currentUser = result?.user
                 print(self.userEmail)
-                //                let db = Firestore.firestore()
                 let db = Firestore.firestore()
                 db.collection("users").document(user.uid).setData(trackInfo.setEmail)
             }
@@ -182,12 +180,20 @@ class EmailService: ObservableObject {
     
     //MARK: -kakaoLogin
     
+//    func logout() {
+//        print("아직 로그인임\(currentUser)")
+//        try? Auth.auth().signOut()
+//        currentUser = nil
+//        logStatus = false
+//        print("로그아웃되었습니다\(currentUser)")
+//    }
+    
     @MainActor
     func kakaoLogout() {
         Task {
             if await handleKakaoLogout() {
+                try? Auth.auth().signOut()
                 currentUser = nil
-                logStatus = false
             }
         }
     }
@@ -265,7 +271,6 @@ class EmailService: ObservableObject {
                 print("DEBUG: 카카오톡 사용자 정보가져오기 에러 \(error.localizedDescription)")
             } else {
                 print("DEBUG: 카카오톡 사용자 정보가져오기 success.")
-                //                print((user?.kakaoAccount?.email ?? "")+"1")
                 // 파이어베이스 유저 생성 (이메일로 회원가입)
                 Auth.auth().createUser(withEmail: ((user?.kakaoAccount?.email ?? "") + "1"),
                                        password: "\(String(describing: user?.id))") { result, error in
@@ -304,8 +309,8 @@ func loginErrorhandler(error: String) -> String {
 }
 
 class AppleAuthViewModel: NSObject, ObservableObject {
-    @EnvironmentObject var emailService: EmailService
     @Published var currentUser: Firebase.User?
+    @State private var emailService: EmailService?
     var currentNonce: String?
     let window: UIWindow?
     @AppStorage("log_status") var logStatus = false
@@ -408,19 +413,18 @@ extension AppleAuthViewModel: ASAuthorizationControllerDelegate {
                   print("애플 로그인 에러 발생!")
                   return
               } else {
-                  self.logStatus = true
-                  guard let user = authResult?.user else { return }
                   self.currentUser = authResult?.user
+                  guard let user = authResult?.user else { return }
                   print("현재 애플 로그인 유저:\(self.currentUser?.email)")
                   let db = Firestore.firestore()
                   if db.collection("users").document(user.uid) == nil {
                       db.collection("users").document(user.uid).setData(["email": user.email])
                   }
+                  self.logStatus = true
               }
             // User is signed in to Firebase with Apple.
             // ...
           }
-            
         }
       }
     
