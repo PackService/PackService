@@ -75,9 +75,9 @@ class MainViewModel: ObservableObject {
     // 파베에 변수 추가
     // 
     func mapToInfoModels(infos: [TrackingInfoModel]) -> [InfoModel] {
+        var sortedInfos = infos.sorted(by: { $0.addedTime! < $1.addedTime! })
         var models = [InfoModel]()
-//        print("infos: \(infos)")
-        for info in infos {
+        for info in sortedInfos {
             var model = InfoModel(
                 isComplete: info.complete ?? false,
                 company: info.company?.mapInfo("정보없음") ?? "정보없음",
@@ -90,6 +90,7 @@ class MainViewModel: ObservableObject {
 //            print("mapToInfoModels: \(model.company)")
             models.append(model)
         }
+        print("MODELS" , models)
         
         return models
     }
@@ -109,24 +110,24 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    func mapCompanyToTrackingInfo(info: TrackingInfoModel?, company: String) -> TrackingInfoModel? {
-        if let info = info {
-            let newTrackingInfo = TrackingInfoModel(complete: info.complete, level: info.level, invoiceNo: info.invoiceNo, isValidInvoice: info.isValidInvoice, itemImage: info.itemImage, itemName: info.itemName, receiverAddr: info.receiverAddr, receiverName: info.receiverName, recipient: info.recipient, senderName: info.senderName, trackingDetails: info.trackingDetails, estimate: info.estimate, productInfo: info.productInfo, company: company, status: info.status, msg: info.msg, code: info.code)
-            
-            return newTrackingInfo
-        }
-        
-        return nil
-    }
+//    func mapCompanyToTrackingInfo(info: TrackingInfoModel?, company: String) -> TrackingInfoModel? {
+//        if let info = info {
+//            let newTrackingInfo = TrackingInfoModel(complete: info.complete, level: info.level, invoiceNo: info.invoiceNo, isValidInvoice: info.isValidInvoice, itemImage: info.itemImage, itemName: info.itemName, receiverAddr: info.receiverAddr, receiverName: info.receiverName, recipient: info.recipient, senderName: info.senderName, trackingDetails: info.trackingDetails, estimate: info.estimate, productInfo: info.productInfo, company: company, status: info.status, msg: info.msg, code: info.code)
+//
+//            return newTrackingInfo
+//        }
+//
+//        return nil
+//    }
     
     func getCarouselItems() {
         $trackingModels
             .sink { [weak self] (models) in
                 self?.carouselItems = []
                 if models.count >= 3 {
-                    self?.carouselItems = Array(models.suffix(3))
+                    self?.carouselItems = Array(models.suffix(3)).reversed()
                 } else {
-                    self?.carouselItems = Array(models.suffix(3))
+                    self?.carouselItems = Array(models.suffix(3)).reversed()
                     self?.carouselItems.append(InfoModel(isComplete: false, company: "", invoice: "", name: "", currentStep: 0, itemWhere: "", time: ""))
                 }
                 self?.isLoading = false

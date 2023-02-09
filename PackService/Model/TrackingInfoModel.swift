@@ -113,6 +113,7 @@ struct TrackingInfoModel: Codable, Identifiable {
     let status: Bool?
     let msg: String?
     let code: String?
+    var addedTime: Date?
     
     enum CodingKeys: String, CodingKey {
         case complete
@@ -128,6 +129,7 @@ struct TrackingInfoModel: Codable, Identifiable {
         case status
         case msg
         case code
+        case addedTime
     }
     
 //    var positionArray: [String?] {
