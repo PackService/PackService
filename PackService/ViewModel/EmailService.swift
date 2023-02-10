@@ -46,6 +46,7 @@ class EmailService: ObservableObject {
     
     // 로그인
     func login(email: String, password: String) {
+        self.loginLoading = true // 여기서 한번 alert창 띄워보기
         Auth.auth().signIn(withEmail: email + "2", password: password) { result, error in
             if let error = error {
                 print("Error : \(error.localizedDescription)")
@@ -169,6 +170,7 @@ class EmailService: ObservableObject {
             let trackInfo = TrackInfo(email: email, userTracksInfo: nil)
             
             if error == nil { // firebase db에 저장하는 방법
+//                self.loginLoading = true // 여기서 한번 alert창 띄워보기
                 self.signUpError = "회원가입이 완료되었습니다"
                 self.userEmail = email
                 self.currentUser = result?.user
@@ -244,7 +246,6 @@ class EmailService: ObservableObject {
                     print("DEBUG: 카카오톡 로그인 Success")
                     if let token = oauthToken {
                         print("DEBUG: 카카오톡 토큰 \(token)")
-//                        self.loginLoading = false
                         self.loginInFirebase()
                         continuation.resume(returning: true)
                     }
@@ -291,7 +292,6 @@ class EmailService: ObservableObject {
                             self.currentUser = result?.user
                             self.readTrackNumber()
                         }
-                        print("\(self.loginLoading)")
                         print("로그인되었음")
                     } else {
                         print("DEBUG: 파이어베이스 사용자 생성")

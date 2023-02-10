@@ -21,7 +21,7 @@ struct MemberShipAgreementView: View {
     @State var ageAgree: Bool = false
     @State var serviceAgree: Bool = false
     @State var personInfoAgree: Bool = false
-    @State private var signUpSuccessAlert = false
+//    @State private var signUpSuccessAlert = false
     
     // 텍스트 필드 애니메이션 변수들
     @State var emailInput: String = ""
@@ -152,7 +152,7 @@ struct MemberShipAgreementView: View {
             self.isPasswordConfirmValid = false
             self.focusState = .passwordConfirm
         } else if emailService.signUpError == "" {
-            self.checkSignupError.toggle()
+            self.checkSignupError = false
         }
     }
 }
@@ -223,19 +223,6 @@ extension MemberShipAgreementView {
         }
     }
     
-//    struct ContentView: View {
-//      @State private var showing = false
-//
-//      var body: some View {
-//        Button("Alert 띄우기") {
-//            showing = true
-//        }
-//        .alert("메시지", isPresented: $showing) {
-//          Button("OK", role: .cancel) { ... }
-//        }
-//      }
-//    }
-    
     var signUpButtonView: some View {
         Button(action: {
             isSubmitted = true
@@ -253,7 +240,7 @@ extension MemberShipAgreementView {
             
             if checkSignupError == false {// 회원가입 시 에러 없어야지 파이어베이스 등록
                 emailService.registerUser(email: emailInput, password: passwordInput)
-                signUpSuccessAlert = true
+//                signUpSuccessAlert = true
             }
             animationTrigger = false
         }, label: {
@@ -263,11 +250,13 @@ extension MemberShipAgreementView {
                 DisabledButtonView(text: "계정 만들기")
             }
         })
-        .alert("회원가입이 완료되었습니다", isPresented: $signUpSuccessAlert) {
-            Button("확인", role: .cancel){}
-        }
         .padding(.leading, 20)
         .padding(.trailing, 20)
+//        .alert(isPresented: $signUpSuccessAlert) {
+//            Alert(title: Text("Alert"),
+//                  message: Text("Alert Dialog"),
+//                  dismissButton: .default(Text("Close")))
+//        }
     }
 }
 
