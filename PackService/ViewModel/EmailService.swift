@@ -425,9 +425,26 @@ extension AppleAuthViewModel: ASAuthorizationControllerDelegate {
                   self.currentUser = authResult?.user
                   guard let user = authResult?.user else { return }
                   print("현재 애플 로그인 유저:\(self.currentUser?.email)")
+//                  Firestore.firestore()
+//                      .collection("users")
+//                      .document(currentUser!.uid)
+//
+//                  docRef.getDocument { document, error
                   let db = Firestore.firestore()
-                  if db.collection("users").document(user.uid) == nil {
-                      db.collection("users").document(user.uid).setData(["email": user.email])
+//                  if db.collection("users").document(user.uid) == nil {
+                  db.collection("users").document(user.uid).getDocument { document, error in
+                      if let error = error as NSError? {
+                          //                self.errorMessage = "Error getting document: \(error.localizedDescription)"
+                          print("get document Error 발생")
+                      }
+                      else {
+                          if let document = document, document.exists {
+                              print("이미 존재해서 안만듬")
+                          } else {
+                              db.collection("users").document(user.uid).setData(["email": user.email])
+                              print("없으니까 만들게")
+                          }
+                      }
                   }
                   self.logStatus = true
               }
