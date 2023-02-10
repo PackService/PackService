@@ -133,7 +133,7 @@ struct LoginUIView: View {
                 }
             }
             .navigationBarHidden(true)
-        
+            .onDisappear(perform: {print("로그인 뷰 사라지는 중")})
     }
     
     func toggleFocus() {

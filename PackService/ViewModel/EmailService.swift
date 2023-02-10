@@ -26,7 +26,7 @@ class EmailService: ObservableObject {
     @Published var currentUser: Firebase.User?
     var currentNonce: String?
     var window: UIWindow?
-    
+    @Published var loginLoading = false
     private var cancellables = Set<AnyCancellable>()
 //    let db = Firestore.firestore()
     
@@ -244,6 +244,7 @@ class EmailService: ObservableObject {
                     print("DEBUG: 카카오톡 로그인 Success")
                     if let token = oauthToken {
                         print("DEBUG: 카카오톡 토큰 \(token)")
+//                        self.loginLoading = false
                         self.loginInFirebase()
                         continuation.resume(returning: true)
                     }
@@ -256,6 +257,7 @@ class EmailService: ObservableObject {
     func handleKakaoLogin() {
         Task {
             // 카카오톡 설치 여부 확인 - 설치 되어있을 때
+            print("handleKakaoLogin1")
             if (UserApi.isKakaoTalkLoginAvailable()) {
                 //카카오 앱을 통해 로그인
                 logStatus = await handleLoginWithKakaoTalkApp()
@@ -264,14 +266,17 @@ class EmailService: ObservableObject {
                 logStatus = await handleLoginWithKakaoAccount()
             }
         }
+        print("handleKakaoLogin2")
     }
     
     func loginInFirebase() {
+        print("handleKakaoLogin3")
         UserApi.shared.me() { user, error in
             if let error = error {
                 print("DEBUG: 카카오톡 사용자 정보가져오기 에러 \(error.localizedDescription)")
             } else {
                 print("DEBUG: 카카오톡 사용자 정보가져오기 success.")
+                self.loginLoading = true
                 // 파이어베이스 유저 생성 (이메일로 회원가입)
                 Auth.auth().createUser(withEmail: ((user?.kakaoAccount?.email ?? "") + "1"),
                                        password: "\(String(describing: user?.id))") { result, error in
@@ -286,6 +291,7 @@ class EmailService: ObservableObject {
                             self.currentUser = result?.user
                             self.readTrackNumber()
                         }
+                        print("\(self.loginLoading)")
                         print("로그인되었음")
                     } else {
                         print("DEBUG: 파이어베이스 사용자 생성")
@@ -297,6 +303,7 @@ class EmailService: ObservableObject {
                 }
             }
         }
+        print("handleKakaoLogin4")
     }
     
 //    func appleLogin(window: UIWindow?) {

@@ -62,8 +62,6 @@ class TrackingInfoService: ObservableObject {
             guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=\(info.trackCompany)&t_invoice=\(info.trackNumber)&t_key=1DsMXGyjhh0tW8MAmxC1gw") else {
                 print("url error")
                 return }
-            print("info.trackCompany: \(info.trackCompany)")
-            print("info.trackNumber: \(info.trackNumber)")
             
             NetworkingManager.download(url: url) //download를 async로??
                 .decode(type: TrackingInfoModel.self, decoder: JSONDecoder())
@@ -74,7 +72,6 @@ class TrackingInfoService: ObservableObject {
                     newTrackingInfo.addedTime = info.timeStamp
 //                    returnedTrackingInfo.company = info.trackCompany
                     self?.infos.append(newTrackingInfo)
-                    print("newtrackingInfo : \(newTrackingInfo)")
 //                    print("RESULT:", self?.infos)
 //                    self?.infosSubscription?.cancel()
                 })
