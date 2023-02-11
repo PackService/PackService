@@ -431,6 +431,7 @@ extension AppleAuthViewModel: ASAuthorizationControllerDelegate {
               } else {
                   self.currentUser = authResult?.user
                   guard let user = authResult?.user else { return }
+                  self.emailService?.loginLoading = true
                   print("현재 애플 로그인 유저:\(self.currentUser?.email)")
 //                  Firestore.firestore()
 //                      .collection("users")

@@ -209,7 +209,7 @@ struct LoginUIView: View {
     
     func handleAppleLogin() {
         print("startapplelogin함수 시작")
-        emailService.loginLoading = true
+//        emailService.loginLoading = true
         appleAuthVM = AppleAuthViewModel(window: window)
         appleAuthVM?.startAppleLogin()
         print("apple logStatus click1 \(self.logStatus)")
