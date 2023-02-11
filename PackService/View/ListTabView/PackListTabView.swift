@@ -15,6 +15,7 @@ struct PackListTabView: View {
     @FocusState var isFocused: Bool
     
     var body: some View {
+        //NavigationView?
         VStack {
             TopOfTabView(title: "배송 목록")
                 .contentShape(Rectangle())
@@ -28,8 +29,13 @@ struct PackListTabView: View {
                 LazyVStack {
                     if !vm.searchModels.isEmpty {
                         ForEach(vm.searchModels.reversed()) { item in
-                            PackListItemView(item: $vm.searchModels[getIndex(model: item)], items: $vm.searchModels)
-                                .environmentObject(vm)
+                            NavigationLink {
+                                TrackingDetailLoadingView(companyId: item.company, invoiceNumber: item.invoice, item: item.name)
+                            } label: {
+                                PackListItemView(item: $vm.searchModels[getIndex(model: item)], items: $vm.searchModels)
+                                    .environmentObject(vm)
+                            }
+                            .buttonStyle(ContainerButtonStyle())
                         }
                     } else if vm.searchModels.isEmpty && !vm.searchText.isEmpty {
                         ZStack {
@@ -87,57 +93,6 @@ struct PackListTabView: View {
         return vm.searchModels.firstIndex { (returnedModel) -> Bool in
             return model.id == returnedModel.id
         } ?? 0
-    }
-}
-
-// 기능 구현하면 옮겨야됨
-struct PackInfoModel: Identifiable {
-    let id = UUID().uuidString
-    var packageNumber: String
-    var packageName: String
-    var packageArrvieTime: String
-    var packageState: String
-    var isComplete: Bool
-}
-
-class PackInfoViewModel: ObservableObject {
-    @Published var searchText = ""
-    
-    @Published var models1 = [
-        PackInfoModel(packageNumber: "123432", packageName: "1번이요", packageArrvieTime: "23:34", packageState: "배송중", isComplete: false),
-        PackInfoModel(packageNumber: "122332", packageName: "2번이요", packageArrvieTime: "23:34", packageState: "배송중", isComplete: false),
-        PackInfoModel(packageNumber: "167732", packageName: "3번이요", packageArrvieTime: "23:34", packageState: "배송완료", isComplete: true),
-        PackInfoModel(packageNumber: "88832", packageName: "4번이요", packageArrvieTime: "23:34", packageState: "배송완료", isComplete: true),
-        PackInfoModel(packageNumber: "773432", packageName: "1번이요", packageArrvieTime: "23:34", packageState: "배송완료", isComplete: true)
-    ]
-    
-    @Published var searchModels: [PackInfoModel] = []
-    private var cancellables = Set<AnyCancellable>()
-    
-    init() {
-        filteredModel()
-    }
-    
-    func filteredModel() {
-        $searchText
-            .combineLatest($models1)
-            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
-            .map(filtering)
-            .sink { [weak self] (models) in
-                self?.searchModels = models
-            }
-            .store(in: &cancellables)
-    }
-    
-    private func filtering(text: String, models: [PackInfoModel]) -> [PackInfoModel] {
-        guard !text.isEmpty else { return models }
-        
-        let lowercasedText = text.lowercased()
-        
-        return models.filter { model in
-            return model.packageNumber.lowercased().contains(lowercasedText) ||
-            model.packageName.lowercased().contains(lowercasedText)
-        }
     }
 }
 

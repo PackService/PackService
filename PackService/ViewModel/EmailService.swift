@@ -78,21 +78,44 @@ class EmailService: ObservableObject {
     
     // 송장번호 하나 삭제
     func deleteTrackNumber(trackNumber: String, trackCompany: String) {
-        let db = Firestore.firestore()
-        let trackInfoData: [String: Any] = [
-            "trackNumber" : trackNumber,
-            "trackCompany" : trackCompany
-        ]
         
+        print("TRACKNUMBER:", trackNumber)
+        print("TRACKCOMPANY:", trackCompany)
+        guard let value = trackInfo?.userTracksInfo else {
+            return
+        }
+
+        guard let user = self.currentUser else {
+            print("NO USER")
+            return
+        }
+        
+        guard let deleteItem = value.first(where: { $0.trackCompany == trackCompany && $0.trackNumber == trackNumber }) else {
+            print("CANNOT FIND ITEM TO DELETE")
+            return
+        }
+        
+//        var deleteArray = value.filter { !($0.trackCompany == trackCompany && $0.trackNumber == trackNumber) }
+        
+
+//        db.collection("users").document(self.currentUser!.uid).setData(["userTracksInfo": deleteItem])
+        let db = Firestore.firestore()
+//        db.collection("users").document(user.uid).updateData(["userTracksInfo": deleteArray])
+//        db.collection("users").document(user.uid).updateData([
+//            "userTracksInfo": FieldValue.arrayRemove([deleteItem.setTrackNumber])
+//        ]) { error in
+//            if let error = error {
+//                print("Unable to delete userTracksInfo: \(error.localizedDescription)")
+//            } else {
+//                print("Successfully deleted userTracksInfo")
+//            }
+//        }
         DispatchQueue.main.async {
-            db.collection("users").document(self.currentUser!.uid).updateData([
-                "userTracksInfo" : FieldValue.arrayRemove([trackInfoData])
-            ]) { error in
-                if let error = error {
-                    print("Unable to delete userTracksInfo: \(error.localizedDescription)")
-                }  else {
-                    print("Successfully deleted userTracksInfo")
-                }
+            do {
+                try db.collection("users").document(user.uid).updateData(["userTracksInfo": FieldValue.arrayRemove([deleteItem.setTrackNumber])])
+                //self.actionState = .none  - Not Important
+            } catch {
+                print("ERROR DELETING")
             }
         }
     }

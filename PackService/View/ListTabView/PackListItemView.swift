@@ -58,7 +58,7 @@ struct PackListItemView: View {
                         if isSwiped {
                             offset = 0
                         }
-                    }                    
+                    }
                 }
         }
         
@@ -91,10 +91,13 @@ struct PackListItemView: View {
                 isSwiped = false
                 offset = 0
             }
-        }        
+        }
     }
     
     func deleteModel() {
+        print("INVOICE", self.item.invoice)
+        print("COMPANY", self.item.company)
+        vm.service.deleteTrackNumber(trackNumber: self.item.invoice, trackCompany: self.item.company)
         items.removeAll { (model1) -> Bool in
             vm.trackingModels.removeAll { (model2) -> Bool in
                 return self.item.id == model2.id
@@ -166,7 +169,7 @@ struct ListButtonStyle: ButtonStyle {
 //        Group {
 //            PackListItemView(item: .constant(PackInfoModel(packageNumber: "1111111111", packageName: "유세린 더머토 클린 리프레싱 클렌징젤 200ml 1+1", packageArrvieTime: "12:48", packageState: "간선상차", isComplete: false)), items: .constant([]))
 //                .previewLayout(.sizeThatFits)
-//            
+//
 ////            PackListItemView(item: .constant(PackInfoModel(packageNumber: "1111111111", packageName: "유세린 더머토 클린 리프레싱 클렌징젤 200ml 1+1", packageArrvieTime: "12:48", packageState: "배송완료", isComplete: true)))
 ////                .previewLayout(.sizeThatFits)
 //        }

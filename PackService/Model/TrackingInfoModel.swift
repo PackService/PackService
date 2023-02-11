@@ -101,7 +101,7 @@ struct TrackingInfoModel: Codable, Identifiable {
     let id = UUID().uuidString
     let complete: Bool?
     let level: Int?
-    let invoiceNo: String?
+    var invoiceNo: String?
     let isValidInvoice: String?
     let itemImage, itemName: String?
     let receiverAddr, receiverName, recipient: String?

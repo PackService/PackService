@@ -9,11 +9,29 @@ import SwiftUI
 import Foundation
 
 struct TrackingDetailLoadingView: View {
-    @Binding var companyId: String
-    @Binding var invoiceNumber: String
+    @Environment(\.dismiss) private var dismissTrackingDetailView
+    var companyId: String
+    var invoiceNumber: String
+    var item: String
 
     var body: some View {
         TrackingDetailView(companyId: companyId, invoiceNumber: invoiceNumber)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitle(item)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        dismissTrackingDetailView()
+                    } label: {
+                        Image(systemName: "chevron.backward")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(ColorManager.defaultForeground)
+                    }
+                }
+            }
     }
 
 }

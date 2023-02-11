@@ -25,6 +25,13 @@ struct TrackInfo: Codable, Identifiable {
             "email": self.email
         ]
     }
+    
+    var setUserTracksInfo: [String: Any] {
+        return [
+            "userTracksInfo": self.userTracksInfo
+        ]
+    }
+    
     enum CodingKeys: String, CodingKey {
         case email = "email"
         case userTracksInfo = "userTracksInfo"
@@ -41,7 +48,7 @@ struct Packages: Codable, Hashable {
         return [
             "timeStamp": self.timeStamp,
             "trackCompany": self.trackCompany,
-            "trackNumber": self.trackNumber,
+            "trackNumber": self.trackNumber
 //            "count": self.count
         ]
     }
