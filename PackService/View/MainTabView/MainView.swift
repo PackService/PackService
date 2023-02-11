@@ -53,6 +53,7 @@ struct MainView: View {
             emailService.readTrackNumber()
             print("메인뷰 onApear 현재 사용자 이메일은 : \(emailService.currentUser?.email)")
             isFirstLaunching = false
+            emailService.loginLoading = false
         }
     }
 }

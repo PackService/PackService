@@ -25,6 +25,7 @@ class MainViewModel: ObservableObject {
     @Published var searchModels: [InfoModel] = []
     @Published var sortedTrackingModels: [InfoModel] = []
     
+    
     init(service: EmailService) {
         self.service = service
 //        print("패키지 순서: \(self.service.pack[0])")
@@ -91,7 +92,6 @@ class MainViewModel: ObservableObject {
             models.append(model)
         }
         print("MODELS" , models)
-        
         return models
     }
     

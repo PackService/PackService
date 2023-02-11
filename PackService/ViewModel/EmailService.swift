@@ -26,7 +26,7 @@ class EmailService: ObservableObject {
     @Published var currentUser: Firebase.User?
     var currentNonce: String?
     var window: UIWindow?
-    
+    @Published var loginLoading = false
     private var cancellables = Set<AnyCancellable>()
 //    let db = Firestore.firestore()
     
@@ -46,6 +46,7 @@ class EmailService: ObservableObject {
     
     // 로그인
     func login(email: String, password: String) {
+        self.loginLoading = true // 여기서 한번 alert창 띄워보기
         Auth.auth().signIn(withEmail: email + "2", password: password) { result, error in
             if let error = error {
                 print("Error : \(error.localizedDescription)")
@@ -169,6 +170,7 @@ class EmailService: ObservableObject {
             let trackInfo = TrackInfo(email: email, userTracksInfo: nil)
             
             if error == nil { // firebase db에 저장하는 방법
+//                self.loginLoading = true // 여기서 한번 alert창 띄워보기
                 self.signUpError = "회원가입이 완료되었습니다"
                 self.userEmail = email
                 self.currentUser = result?.user
@@ -256,6 +258,7 @@ class EmailService: ObservableObject {
     func handleKakaoLogin() {
         Task {
             // 카카오톡 설치 여부 확인 - 설치 되어있을 때
+            print("handleKakaoLogin1")
             if (UserApi.isKakaoTalkLoginAvailable()) {
                 //카카오 앱을 통해 로그인
                 logStatus = await handleLoginWithKakaoTalkApp()
@@ -264,14 +267,17 @@ class EmailService: ObservableObject {
                 logStatus = await handleLoginWithKakaoAccount()
             }
         }
+        print("handleKakaoLogin2")
     }
     
     func loginInFirebase() {
+        print("handleKakaoLogin3")
         UserApi.shared.me() { user, error in
             if let error = error {
                 print("DEBUG: 카카오톡 사용자 정보가져오기 에러 \(error.localizedDescription)")
             } else {
                 print("DEBUG: 카카오톡 사용자 정보가져오기 success.")
+                self.loginLoading = true
                 // 파이어베이스 유저 생성 (이메일로 회원가입)
                 Auth.auth().createUser(withEmail: ((user?.kakaoAccount?.email ?? "") + "1"),
                                        password: "\(String(describing: user?.id))") { result, error in
@@ -297,6 +303,7 @@ class EmailService: ObservableObject {
                 }
             }
         }
+        print("handleKakaoLogin4")
     }
     
 //    func appleLogin(window: UIWindow?) {

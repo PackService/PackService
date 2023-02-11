@@ -21,6 +21,7 @@ struct MemberShipAgreementView: View {
     @State var ageAgree: Bool = false
     @State var serviceAgree: Bool = false
     @State var personInfoAgree: Bool = false
+//    @State private var signUpSuccessAlert = false
     
     // 텍스트 필드 애니메이션 변수들
     @State var emailInput: String = ""
@@ -151,7 +152,7 @@ struct MemberShipAgreementView: View {
             self.isPasswordConfirmValid = false
             self.focusState = .passwordConfirm
         } else if emailService.signUpError == "" {
-            self.checkSignupError.toggle()
+            self.checkSignupError = false
         }
     }
 }
@@ -239,6 +240,7 @@ extension MemberShipAgreementView {
             
             if checkSignupError == false {// 회원가입 시 에러 없어야지 파이어베이스 등록
                 emailService.registerUser(email: emailInput, password: passwordInput)
+//                signUpSuccessAlert = true
             }
             animationTrigger = false
         }, label: {
@@ -248,9 +250,13 @@ extension MemberShipAgreementView {
                 DisabledButtonView(text: "계정 만들기")
             }
         })
-//        .disabled(checkEmail(str: emailInput) ? false: true)
         .padding(.leading, 20)
         .padding(.trailing, 20)
+//        .alert(isPresented: $signUpSuccessAlert) {
+//            Alert(title: Text("Alert"),
+//                  message: Text("Alert Dialog"),
+//                  dismissButton: .default(Text("Close")))
+//        }
     }
 }
 
