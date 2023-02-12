@@ -98,6 +98,7 @@ struct PackListItemView: View {
         print("INVOICE", self.item.invoice)
         print("COMPANY", self.item.company)
         vm.service.deleteTrackNumber(trackNumber: self.item.invoice, trackCompany: self.item.company)
+//        vm.service.deleteTrackNumber(trackInfoData: self.item)
         items.removeAll { (model1) -> Bool in
             vm.trackingModels.removeAll { (model2) -> Bool in
                 return self.item.id == model2.id

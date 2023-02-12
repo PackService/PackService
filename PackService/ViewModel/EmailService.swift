@@ -15,6 +15,7 @@ import FirebaseFirestoreSwift
 import CryptoKit
 import FirebaseAuth
 import AuthenticationServices
+import FirebaseAnalytics
 
 class EmailService: ObservableObject {
     @Published var trackInfo: TrackInfo?
@@ -78,44 +79,56 @@ class EmailService: ObservableObject {
     
     // 송장번호 하나 삭제
     func deleteTrackNumber(trackNumber: String, trackCompany: String) {
-        
-        print("TRACKNUMBER:", trackNumber)
-        print("TRACKCOMPANY:", trackCompany)
+        let db = Firestore.firestore()
         guard let value = trackInfo?.userTracksInfo else {
             return
         }
-
-        guard let user = self.currentUser else {
-            print("NO USER")
-            return
-        }
-        
         guard let deleteItem = value.first(where: { $0.trackCompany == trackCompany && $0.trackNumber == trackNumber }) else {
             print("CANNOT FIND ITEM TO DELETE")
             return
         }
-        
-//        var deleteArray = value.filter { !($0.trackCompany == trackCompany && $0.trackNumber == trackNumber) }
-        
 
-//        db.collection("users").document(self.currentUser!.uid).setData(["userTracksInfo": deleteItem])
-        let db = Firestore.firestore()
-//        db.collection("users").document(user.uid).updateData(["userTracksInfo": deleteArray])
-//        db.collection("users").document(user.uid).updateData([
-//            "userTracksInfo": FieldValue.arrayRemove([deleteItem.setTrackNumber])
-//        ]) { error in
-//            if let error = error {
-//                print("Unable to delete userTracksInfo: \(error.localizedDescription)")
-//            } else {
-//                print("Successfully deleted userTracksInfo")
-//            }
-//        }
-        DispatchQueue.main.async {
+        db.runTransaction{ (trans, errorPointer) -> Any? in
+            let doc: DocumentSnapshot
+            let docRef = db.collection("users").document(self.currentUser!.uid)
+
+            // get the document
             do {
-                try db.collection("users").document(user.uid).updateData(["userTracksInfo": FieldValue.arrayRemove([deleteItem.setTrackNumber])])
-                //self.actionState = .none  - Not Important
-            } catch {
-                print("ERROR DELETING")
+                try doc = trans.getDocument(docRef)
+            } catch let error as NSError {
+                errorPointer?.pointee = error
+                return nil
+            }
+
+            // get the items from the document
+            if let items = doc.get("userTracksInfo") as? [[String: Any]] {
+
+                // find the element to delete
+                if let toDelete = items.first(where: { (element) -> Bool in
+
+                    // the predicate for finding the element
+                    if let number = element["trackNumber"] as? String,
+                       number == trackNumber {
+                        return true
+                    } else {
+                        return false
+                    }
+                }) {
+                    // element found, remove it
+                    docRef.updateData([
+                        "userTracksInfo": FieldValue.arrayRemove([toDelete])
+                    ])
+                }
+            } else {
+                // array itself not found
+                print("items not found")
+            }
+            return nil // you can return things out of transactions but not needed here so return nil
+        } completion: { (_, error) in
+            if let error = error {
+                print(error)
+            } else {
+                print("transaction done")
             }
         }
     }
@@ -513,3 +526,43 @@ extension EnvironmentValues {
     }
 }
 
+typealias UnixTimestamp = Int
+
+extension Date {
+    var unixTimestamp: UnixTimestamp {
+        return UnixTimestamp(self.timeIntervalSince1970 * 1_000) // millisecond precision
+    }
+}
+
+extension UnixTimestamp {
+    var dateObject: Date {
+        return Date(timeIntervalSince1970: TimeInterval(self / 1_000)) // must take a millisecond-precision unix timestamp
+    }
+}
+
+
+
+//print("TRACKNUMBER:", trackNumber)
+//print("TRACKCOMPANY:", trackCompany)
+//guard let value = trackInfo?.userTracksInfo else {
+//    return
+//}
+//
+//guard let user = self.currentUser else {
+//    print("NO USER")
+//    return
+//}
+//
+//guard let deleteItem = value.first(where: { $0.trackCompany == trackCompany && $0.trackNumber == trackNumber }) else {
+//    print("CANNOT FIND ITEM TO DELETE")
+//    return
+//}
+//
+//DispatchQueue.main.async {
+//    do {
+//        try db.collection("users").document(user.uid).updateData(["userTracksInfo": FieldValue.arrayRemove([deleteItem.setTrackNumber])])
+//        //self.actionState = .none  - Not Important
+//    } catch {
+//        print("ERROR DELETING")
+//    }
+//}
