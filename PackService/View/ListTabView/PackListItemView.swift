@@ -15,9 +15,9 @@ struct PackListItemView: View {
     
     @State var offset: CGFloat = 0
     @State var isSwiped: Bool = false
+    @GestureState var isDragging = false
 
     var body: some View {
-        //item cell
         ZStack {
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
@@ -49,19 +49,33 @@ struct PackListItemView: View {
                 }
             }
             
-            itemCell
-                .contentShape(RoundedRectangle(cornerRadius: 10))
-                .offset(x: offset)
-                .gesture(DragGesture().onChanged(onChanged).onEnded(onEnd))
-                .onTapGesture {
-                    withAnimation(.easeOut) {
-                        if isSwiped {
+            NavigationLink {
+                TrackingDetailLoadingView(companyId: item.company, invoiceNumber: item.invoice, item: item.name)
+            } label: {
+                //item cell
+                itemCell
+                    .contentShape(RoundedRectangle(cornerRadius: 10))
+                    .offset(x: offset)
+                    .gesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
+            }
+            .buttonStyle(ListRowButtonStyle(isSwiped: $isSwiped, offset: $offset))
+            
+            if isSwiped {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(ColorManager.background.opacity(0.0))
+                    .contentShape(RoundedRectangle(cornerRadius: 10))
+                    .frame(height: 75)
+                    .offset(x: offset)
+                    .gesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
+                    .onTapGesture {
+                        withAnimation(.easeOut) {
+                            isSwiped = false
                             offset = 0
                         }
                     }
-                }
+            }
+            
         }
-        
     }
     
     func onChanged(value: DragGesture.Value) {
@@ -71,13 +85,17 @@ struct PackListItemView: View {
             } else {
                 offset = value.translation.width
             }
+        } else {
+            if isSwiped {
+                offset = min(0, value.translation.width - 120)
+            }
         }
     }
     
     func onEnd(value: DragGesture.Value) {
         withAnimation(.easeOut) {
             if value.translation.width < 0 {
-                if -value.translation.width > UIScreen.main.bounds.width / 2 {
+                if -value.translation.width > UIScreen.main.bounds.width / 2.5 {
                     offset = -1000
                     deleteModel()
                 } else if -offset > 50 {
@@ -85,7 +103,7 @@ struct PackListItemView: View {
                     offset = -120
                 } else {
                     isSwiped = false
-                    offset = 0
+                    offset = 0                    
                 }
             } else {
                 isSwiped = false
@@ -106,6 +124,17 @@ struct PackListItemView: View {
             return self.item.id == model1.id
         }
         
+    }
+}
+
+struct ListRowButtonStyle: ButtonStyle {
+    @Binding var isSwiped: Bool
+    @Binding var offset: CGFloat
+//    @Environment(\.isEnabled) var isEnabled: Bool
+    
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .brightness(configuration.isPressed && !isSwiped ? -0.1 : 0.0)
     }
 }
 

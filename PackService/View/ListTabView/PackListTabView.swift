@@ -29,13 +29,15 @@ struct PackListTabView: View {
                 LazyVStack {
                     if !vm.searchModels.isEmpty {
                         ForEach(vm.searchModels.reversed()) { item in
-                            NavigationLink {
-                                TrackingDetailLoadingView(companyId: item.company, invoiceNumber: item.invoice, item: item.name)
-                            } label: {
-                                PackListItemView(item: $vm.searchModels[getIndex(model: item)], items: $vm.searchModels)
-                                    .environmentObject(vm)
-                            }
-                            .buttonStyle(ContainerButtonStyle())
+                            PackListItemView(item: $vm.searchModels[getIndex(model: item)], items: $vm.searchModels)
+                                .environmentObject(vm)
+//                            NavigationLink {
+//                                TrackingDetailLoadingView(companyId: item.company, invoiceNumber: item.invoice, item: item.name)
+//                            } label: {
+//                                PackListItemView(item: $vm.searchModels[getIndex(model: item)], items: $vm.searchModels)
+//                                    .environmentObject(vm)
+//                            }
+                            
                         }
                     } else if vm.searchModels.isEmpty && !vm.searchText.isEmpty {
                         ZStack {
@@ -85,6 +87,7 @@ struct PackListTabView: View {
             Spacer()
         }
         .padding(.horizontal, 20)
+//        .ignoresSafeArea()
         
 //        HomeView()
     }

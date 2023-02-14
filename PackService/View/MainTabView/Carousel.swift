@@ -15,17 +15,20 @@ struct Carousel<Content: View, T: Identifiable>: View {
     var spacing: CGFloat
     var trailingSpace: CGFloat
     @Binding var index: Int
+    @Binding var isDragging: Bool
     
-    init(spacing: CGFloat = 10, trailingSpace: CGFloat = 0, index: Binding<Int>, items: [T], @ViewBuilder content: @escaping (T) -> Content) {
+    init(spacing: CGFloat = 10, trailingSpace: CGFloat = 0, index: Binding<Int>, isDragging: Binding<Bool>, items: [T], @ViewBuilder content: @escaping (T) -> Content) {
         self.list = items
         self.spacing = spacing
         self.trailingSpace = trailingSpace
         self._index = index
         self.content = content
+        self._isDragging = isDragging
     }
     
     @GestureState var offset: CGFloat = 0
     @State var currentIndex: Int = 0
+    
     
     var body: some View {
         GeometryReader { geo in
@@ -42,10 +45,13 @@ struct Carousel<Content: View, T: Identifiable>: View {
             .padding(.horizontal, spacing)
 //            .padding(.vertical, 20)
             .offset(x: (CGFloat(currentIndex) * -width) + adjustmentWidth + offset)
-            .gesture(
+            .highPriorityGesture(
                 DragGesture()
                     .updating($offset, body: { value, out, _ in
                         out = value.translation.width
+                        withAnimation(.easeOut) {
+                            isDragging = true
+                        }                        
                     })
                     .onEnded({ value in
                         let offsetX = value.translation.width
@@ -56,6 +62,8 @@ struct Carousel<Content: View, T: Identifiable>: View {
                         currentIndex  = max(min(currentIndex + Int(roundIndex), list.count - 1), 0)
                         
                         currentIndex = index
+                        
+                        isDragging = false
                     })
                     .onChanged({ value in
                         let offsetX = value.translation.width
