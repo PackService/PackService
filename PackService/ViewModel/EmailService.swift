@@ -47,16 +47,18 @@ class EmailService: ObservableObject {
     
     // 로그인
     func login(email: String, password: String) {
-        self.loginLoading = true // 여기서 한번 alert창 띄워보기
+        // 여기서 한번 alert창 띄워보기
         Auth.auth().signIn(withEmail: email + "2", password: password) { result, error in
             if let error = error {
                 print("Error : \(error.localizedDescription)")
                 self.loginError = loginErrorhandler(error: error.localizedDescription)
                 return
+            } else {
+                self.loginLoading = true
+                self.currentUser = result?.user
+                self.loginError = ""
+                self.readTrackNumber()
             }
-            self.currentUser = result?.user
-            self.loginError = ""
-            self.readTrackNumber()
         }
     }
     
@@ -525,44 +527,3 @@ extension EnvironmentValues {
         }
     }
 }
-
-typealias UnixTimestamp = Int
-
-extension Date {
-    var unixTimestamp: UnixTimestamp {
-        return UnixTimestamp(self.timeIntervalSince1970 * 1_000) // millisecond precision
-    }
-}
-
-extension UnixTimestamp {
-    var dateObject: Date {
-        return Date(timeIntervalSince1970: TimeInterval(self / 1_000)) // must take a millisecond-precision unix timestamp
-    }
-}
-
-
-
-//print("TRACKNUMBER:", trackNumber)
-//print("TRACKCOMPANY:", trackCompany)
-//guard let value = trackInfo?.userTracksInfo else {
-//    return
-//}
-//
-//guard let user = self.currentUser else {
-//    print("NO USER")
-//    return
-//}
-//
-//guard let deleteItem = value.first(where: { $0.trackCompany == trackCompany && $0.trackNumber == trackNumber }) else {
-//    print("CANNOT FIND ITEM TO DELETE")
-//    return
-//}
-//
-//DispatchQueue.main.async {
-//    do {
-//        try db.collection("users").document(user.uid).updateData(["userTracksInfo": FieldValue.arrayRemove([deleteItem.setTrackNumber])])
-//        //self.actionState = .none  - Not Important
-//    } catch {
-//        print("ERROR DELETING")
-//    }
-//}
