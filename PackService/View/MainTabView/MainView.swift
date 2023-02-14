@@ -44,9 +44,18 @@ struct MainView: View {
                             .environment(\.symbolVariants, .none)
                     }
             }
-            //        .padding(.leading, 20)
             .padding(.top, 20)
             .accentColor(ColorManager.primaryColor)
+            
+//            .background(ColorManager.primaryColor)
+            .onAppear {
+                let appearance = UITabBarAppearance()
+                appearance.backgroundColor = UIColor(ColorManager.background)
+                appearance.shadowColor = nil
+                appearance.shadowImage = nil
+             
+                UITabBar.appearance().scrollEdgeAppearance = appearance
+            }
         }
         .onAppear {
             emailService.currentUser = Auth.auth().currentUser //이걸 해줘야 현재 메인뷰 뜰때 현재 사용자 확인 가능, 애플 재접속시 오류 해결 부분

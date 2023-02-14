@@ -16,6 +16,7 @@ struct MainTabView: View {
     @State var currentIndex: Int = 0
     @State var items: [TrackingInfoModel] = []
     @State var text: String = ""
+    @State var isDragging: Bool = false
     
     var body: some View {
         if let _ = Auth.auth().currentUser {
@@ -85,7 +86,7 @@ extension MainTabView {
     
     var carousel: some View {
         VStack(spacing: 0) {
-            Carousel(index: $currentIndex, items: vm.carouselItems) { item in
+            Carousel(index: $currentIndex, isDragging: $isDragging, items: vm.carouselItems) { item in
                 if item.company.isEmpty {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
@@ -114,47 +115,52 @@ extension MainTabView {
                         }
                     }
                 } else {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(ColorManager.background)
-                            .shadow(color: Color.black.opacity(0.05), radius: 20, x: 0, y: 2)
-                        
-                        VStack {
-                            HStack(spacing: 12) {
-                                Circle()
-                                    .fill(ColorManager.defaultForegroundDisabled)
-                                    .frame(width: 44, height: 44)
-                                    .overlay(
-                                        LogoType(rawValue: item.company ?? "00")?.logo.image
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 44, height: 44)
-                                    )
-                                
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(item.name)
-                                        .font(FontManager.title2)
-                                        .frame(maxWidth: 233, alignment: .leading)
-                    //                        .background(Color.red)
-                                    HStack(spacing: 8) {
-                                        Text(item.invoice)
-                                        Spacer()
-                                        Text(item.itemWhere)
-                                    }
-                                    .font(FontManager.caption1)
-                                    .foregroundColor(ColorManager.foreground1)
-                                }
-                            }
+                    NavigationLink {
+                        TrackingDetailLoadingView(companyId: item.company, invoiceNumber: item.invoice, item: item.name)
+                    } label: {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(ColorManager.background)
+                                .shadow(color: Color.black.opacity(0.05), radius: 20, x: 0, y: 2)
                             
-                            TrackingProgressView2(currentStep: item.currentStep)
-                                .padding(.top, 10)
+                            VStack {
+                                HStack(spacing: 12) {
+                                    Circle()
+                                        .fill(ColorManager.defaultForegroundDisabled)
+                                        .frame(width: 44, height: 44)
+                                        .overlay(
+                                            LogoType(rawValue: item.company ?? "00")?.logo.image
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 44, height: 44)
+                                        )
+                                    
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(item.name)
+                                            .font(FontManager.title2)
+                                            .frame(maxWidth: 233, alignment: .leading)
+                        //                        .background(Color.red)
+                                        HStack(spacing: 8) {
+                                            Text(item.invoice)
+                                            Spacer()
+                                            Text(item.itemWhere)
+                                        }
+                                        .font(FontManager.caption1)
+                                        .foregroundColor(ColorManager.foreground1)
+                                    }
+                                }
+                                
+                                TrackingProgressView2(currentStep: item.currentStep)
+                                    .padding(.top, 10)
+                            }
+                            .padding(.vertical, 24)
+                            .padding(.horizontal, 16)
                         }
-                        .padding(.vertical, 24)
-                        .padding(.horizontal, 16)
+    //                    .onAppear {
+    //                        step = item.currentStep
+    //                    }
                     }
-//                    .onAppear {
-//                        step = item.currentStep
-//                    }
+                    .buttonStyle(CarouselButtonStyle(isDragging: $isDragging))
                 }
                 
             }
@@ -201,6 +207,16 @@ extension MainTabView {
             .padding(.horizontal, 20)
         }
         .frame(height: 88)
+    }
+}
+
+struct CarouselButtonStyle: ButtonStyle {
+    @Binding var isDragging: Bool
+//    @Environment(\.isEnabled) var isEnabled: Bool
+    
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .brightness(configuration.isPressed && !isDragging ? -0.05 : 0.0)
     }
 }
 

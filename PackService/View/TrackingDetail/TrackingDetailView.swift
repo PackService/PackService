@@ -10,50 +10,42 @@ import Foundation
 
 struct TrackingDetailLoadingView: View {
     @Environment(\.dismiss) private var dismissTrackingDetailView
+    
     var companyId: String
     var invoiceNumber: String
     var item: String
 
     var body: some View {
-        TrackingDetailView(companyId: companyId, invoiceNumber: invoiceNumber)
-            .navigationBarBackButtonHidden(true)
-            .navigationBarTitle(item)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        dismissTrackingDetailView()
-                    } label: {
-                        Image(systemName: "chevron.backward")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(ColorManager.defaultForeground)
-                    }
-                }
-            }
+        TrackingDetailView(companyId: companyId, invoiceNumber: invoiceNumber, item: item)
     }
 
 }
 
 struct TrackingDetailView: View {
+    @Environment(\.dismiss) private var dismissTrackingDetailView
     @StateObject private var trackingDetailVM: TrackingInfoViewModel
     
     @State var showMenu: Bool? = false
     @State var showToast: Bool = false
+    @State var showSheet: Bool = false
+    
     var code: String = "111"
     var invoice: String = "111"
+    var item: String = "111"
     
     //MARK: - Initializer
-    init(companyId: String, invoiceNumber: String) {
+    init(companyId: String, invoiceNumber: String, item: String) {
         _trackingDetailVM = StateObject(wrappedValue: TrackingInfoViewModel(code: companyId, invoice: invoiceNumber))
         self.code = companyId
         self.invoice = invoiceNumber
+        self.item = item
     }
     
     var body: some View {
-//         else {
-            ZStack {
+        ZStack {
+            VStack {
+                Divider()
+                
                 ScrollView {
                     ZStack(alignment: .bottom) {
                         VStack(spacing: 16) {
@@ -70,7 +62,6 @@ struct TrackingDetailView: View {
                             //tracking position
                             TrackingPositionView(code: code, invoice: invoice)
                             
-                            Text("\(trackingDetailVM.currentStep)")
                             Spacer()
                             
                         }
@@ -80,32 +71,65 @@ struct TrackingDetailView: View {
                     .frame(maxHeight: .infinity)
                     
                 }
-                
-                if showMenu ?? false {
-                    MenuView(show: $showMenu, showToast: $showToast, tel: trackingDetailVM.deliveryManContact)
-                        .animation(Animation.easeIn(duration: 2), value: showMenu)
-                }
-                
-                if trackingDetailVM.isLoading {
-                    LoadingView()
-                        .onAppear {
-                            // 만약 1.5초보다 많은 로딩 시간이 걸린다면??
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                                trackingDetailVM.isLoading = false
-                            }
+            }
+            
+            if showMenu ?? false {
+                MenuView(show: $showMenu, showToast: $showToast, tel: trackingDetailVM.deliveryManContact)
+                    .animation(Animation.easeIn(duration: 2), value: showMenu)
+                    .zIndex(2)
+            }
+            
+            if trackingDetailVM.isLoading {
+                LoadingView()
+                    .onAppear {
+                        // 만약 1.5초보다 많은 로딩 시간이 걸린다면??
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            trackingDetailVM.isLoading = false
                         }
+                    }
+            }
+            
+            ActionSheetView(show: $showSheet, code: code, company: trackingDetailVM.name ?? "", invoice: invoice)
+ 
+        }
+        .environmentObject(trackingDetailVM)
+        .alert("오류", isPresented: $trackingDetailVM.showAlert) {
+            Button("OK") {}
+        } message: {
+            Text("[\(trackingDetailVM.alertTitle)] " + trackingDetailVM.alertMessage)
+        }
+        .toast(isShowing: $showToast)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarTitle(item)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismissTrackingDetailView()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(ColorManager.defaultForeground)
                 }
-     
             }
-            .environmentObject(trackingDetailVM)
-            .alert("오류", isPresented: $trackingDetailVM.showAlert) {
-                Button("OK") {}
-            } message: {
-                Text("[\(trackingDetailVM.alertTitle)] " + trackingDetailVM.alertMessage)
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showSheet.toggle()
+                } label: {
+                    Image(systemName: "ellipsis")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(ColorManager.defaultForeground)
+                }
             }
-            .toast(isShowing: $showToast)
-//        }
+        }
         
+        
+       
     }
 }
 
@@ -138,6 +162,7 @@ extension TrackingDetailView {
                 
             Spacer()
         }
+        .padding(.top, 20)
     }
     
     //MARK: - Card View
@@ -156,13 +181,13 @@ extension TrackingDetailView {
     }
 }
 
-//MARK: - Previews
-struct TrackingDetailView_Previews: PreviewProvider {
-
-    static let companyIdPreview = "04"
-    static let invoiceNumberPreview = "1111111111"
-
-    static var previews: some View {
-        TrackingDetailView(companyId: "01", invoiceNumber: "6096353177732")
-    }
-}
+////MARK: - Previews
+//struct TrackingDetailView_Previews: PreviewProvider {
+//
+//    static let companyIdPreview = "04"
+//    static let invoiceNumberPreview = "1111111111"
+//
+//    static var previews: some View {
+//        TrackingDetailView(companyId: "08", invoiceNumber: "248569159322")
+//    }
+//}
