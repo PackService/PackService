@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct PackListTabView: View {
-    
+    @State var firstNaviLinkActive = false
     @EnvironmentObject var vm: MainViewModel
 //    @StateObject var packInfoDatas = PackInfoViewModel()
     @FocusState var isFocused: Bool
@@ -60,7 +60,7 @@ struct PackListTabView: View {
                                 
                                 //Navigation Link
                                 
-                                NavigationLink(destination: AddTrackingNumberView()) {
+                                NavigationLink(destination: AddTrackingNumberView(firstNaviLinkActive: $firstNaviLinkActive), isActive: $firstNaviLinkActive) {
                                     Text("등록")
                                         .font(FontManager.title2)
                                     .foregroundColor(ColorManager.primaryColor)

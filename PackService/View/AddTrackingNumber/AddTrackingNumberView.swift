@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddTrackingNumberView: View {
     
+    @Binding var firstNaviLinkActive: Bool
     @StateObject var emailService = EmailService()
     
     @Environment(\.dismiss) private var dismissAddTrackingNumberView
@@ -25,8 +26,16 @@ struct AddTrackingNumberView: View {
     @State var selected: String? = nil
     
     @State var showSelectCompanyView: Bool = false
-
+    
+    @StateObject var trackingDetailVM = TrackingInfoService(code: "", invoice: "")
+//    @StateObject private var trackingDetailVM: TrackingInfoService
+    
+    @State var errorMessage: String = ""
+    @State var checkTrackingInfoError: Bool = true
+    @State var buttonClicked: Bool = false
+    
     var body: some View {
+        
         ZStack {
             background
             
@@ -34,6 +43,21 @@ struct AddTrackingNumberView: View {
                 trackingNumberTextField
                 
                 selectCompanyButton
+                
+                Text(errorMessage)
+                    .onChange(of: trackingDetailVM.errorMessage) { newValue in
+                        if newValue == "" {
+                            firstNaviLinkActive = false
+                            emailService.addTrackNumber(trackNumber: trackingNumber, trackCompany: selected ?? "")
+                        } else if newValue == "동일한 운송장의 하루 요청 건수를 초과 하였습니다." {
+                            errorMessage = "동일한 운송장의 하루 요청 건수를 초과 하였습니다."
+                        } else if newValue == "유효하지 않은 운송장번호 이거나 택배사 코드 입니다." {
+                            errorMessage = "유효하지 않음."
+                        }
+                    
+                        print(newValue)
+                        print(buttonClicked)
+                    }
 
                 companyCapsuleList
                 
@@ -43,6 +67,7 @@ struct AddTrackingNumberView: View {
             }
             .padding(.horizontal, 20)
             .padding(.top, 41)
+            .onAppear(perform: {buttonClicked = false})
             
             ZStack {
                 if showSelectCompanyView {
@@ -123,32 +148,33 @@ struct AddTrackingNumberView: View {
         }
     }
 
+    
     // MARK: - buttonPressed()
     func buttonPressed() {
 //        focusState = nil
         isSubmitted = true
-        validationCheck()
+//        validationCheck()
         
-        trackAttempt = !(isSubmitted && isValid)
+//        trackAttempt = !(isSubmitted && isValid)
+        trackingDetailVM.getTrackingInfo(selected ?? "", trackingNumber)
 
         if trackAttempt {
             withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
                 animationTrigger = true
             }
         }
-        print(selectedCompany)
+
 //        else { 오류 아닐때만 등록되도록 수정해야함
-        if let selected = selected {
-            emailService.addTrackNumber(trackNumber: trackingNumber, trackCompany: selected)
-        }
-        
+//        if let selected = selected {
+//            emailService.addTrackNumber(trackNumber: trackingNumber, trackCompany: selected)
+//            print("추가되었다")
 //        }
-        
+//        }
+        errorMessage = trackingDetailVM.errorMessage
+        print("이 화면 \(errorMessage)")
         animationTrigger = false
     }
 
-    
-    
     func selectButtonPressed() {
         showSelectCompanyView = true
     }
@@ -157,11 +183,11 @@ struct AddTrackingNumberView: View {
         self.text = name
     }
     
-    func validationCheck() {
-        if trackingNumber == "12345" {
-            self.isValid = true
-        }
-    }
+//    func validationCheck() {
+//        if trackingNumber == "12345" {
+//            self.isValid = true
+//        }
+//    }
     
 }
 
@@ -221,9 +247,11 @@ extension AddTrackingNumberView {
         }
     }
     
+    
     var addTrackingNumberButton: some View {
         Button {
-            buttonPressed()
+            buttonClicked = true
+            trackingDetailVM.getTrackingInfo(selected ?? "", trackingNumber)
         } label: {
             ButtonView(text: "운송장 등록")
         }
@@ -245,11 +273,11 @@ extension AddTrackingNumberView {
     }
 }
 
-struct AddTrackingNumberView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddTrackingNumberView()
-    }
-}
+//struct AddTrackingNumberView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddTrackingNumberView()
+//    }
+//}
 
 // Grid Numpads
 /*

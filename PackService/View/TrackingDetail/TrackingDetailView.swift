@@ -127,9 +127,6 @@ struct TrackingDetailView: View {
                 }
             }
         }
-        
-        
-       
     }
 }
 

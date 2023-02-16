@@ -64,8 +64,6 @@ class EmailService: ObservableObject {
     
     // 송장번호 추가
     func addTrackNumber(trackNumber: String, trackCompany: String) { // 택배 create
-        //        let db = Firestore.firestore()
-        print("현재 아이디: \(currentUser?.uid ?? "")")
         let packages = Packages(timeStamp: Date(), trackCompany: trackCompany, trackNumber: trackNumber)
         
         do {

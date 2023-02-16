@@ -99,4 +99,8 @@ class TrackingInfoViewModel: ObservableObject {
         currentStep = 0.0
         trackingInfoService.getTrackingInfo(code, invoice)
     }
+    
+    func getTrackingInfoService(code: String, invoice: String) {
+        self.trackingInfoService = TrackingInfoService(code: code, invoice: invoice)
+    }
 }

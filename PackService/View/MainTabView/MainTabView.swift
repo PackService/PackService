@@ -10,6 +10,7 @@ import FirebaseAuth
 
 struct MainTabView: View {
     
+    @State var firstNaviLinkActive = false
     @EnvironmentObject var emailAuthVM: EmailService
     @EnvironmentObject var vm: MainViewModel
     @State var step: Double = 0.0
@@ -62,6 +63,7 @@ struct MainTabView: View {
 }
 
 struct TopOfTabView: View {
+    @State var firstNaviLinkActive = false
     var title: String
     var body: some View {
         HStack {
@@ -70,7 +72,7 @@ struct TopOfTabView: View {
             
             Spacer()
             
-            NavigationLink(destination: AddTrackingNumberView()) {
+            NavigationLink(destination: AddTrackingNumberView(firstNaviLinkActive: $firstNaviLinkActive), isActive: $firstNaviLinkActive) {
                 Image(systemName: "plus.circle.fill")
                     .resizable()
                     .foregroundColor(ColorManager.primaryColor)
@@ -100,7 +102,7 @@ extension MainTabView {
                             
                             //Navigation Link
                             
-                            NavigationLink(destination: AddTrackingNumberView()) {
+                            NavigationLink(destination: AddTrackingNumberView(firstNaviLinkActive: $firstNaviLinkActive), isActive: $firstNaviLinkActive) {
                                 Text("등록")
                                     .font(FontManager.title2)
                                 .foregroundColor(ColorManager.primaryColor)

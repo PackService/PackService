@@ -24,6 +24,7 @@ class TrackingInfoService: ObservableObject {
     
     @Published var trackingInfo: TrackingInfoModel? = nil
     @Published var infos: [TrackingInfoModel] = []
+    @Published var errorMessage: String = ""
     
     var trackingInfoSubscription: AnyCancellable?
     var infosSubscription = Set<AnyCancellable>()
@@ -37,17 +38,17 @@ class TrackingInfoService: ObservableObject {
         guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=\(code)&t_invoice=\(invoice)&t_key=1DsMXGyjhh0tW8MAmxC1gw") else {
             print("url error")
             return }
-        Task {
-           await trackingInfoSubscription = NetworkingManager.download(url: url)
-                .decode(type: TrackingInfoModel.self, decoder: JSONDecoder())
-                .receive(on: DispatchQueue.main)
-                .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedTrackingInfo) in
-                    self?.trackingInfo = returnedTrackingInfo
-                    self?.trackingInfo?.company = code
-                    print(returnedTrackingInfo)
-                    self?.trackingInfoSubscription?.cancel()
-                })
-        }
+        trackingInfoSubscription = NetworkingManager.download(url: url)
+            .decode(type: TrackingInfoModel.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedTrackingInfo) in
+                self?.trackingInfo = returnedTrackingInfo
+                self?.trackingInfo?.company = code
+                self?.errorMessage = returnedTrackingInfo.msg ?? ""
+                print("getTracking info error Message: \(self?.errorMessage)")
+                print("getTrackingInfo: \(returnedTrackingInfo)")
+                self?.trackingInfoSubscription?.cancel()
+            })
     }
     
     func getTrackingInfos(info: TrackInfo) {
