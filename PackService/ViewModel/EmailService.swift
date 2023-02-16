@@ -118,6 +118,8 @@ class EmailService: ObservableObject {
                     docRef.updateData([
                         "userTracksInfo": FieldValue.arrayRemove([toDelete])
                     ])
+                    
+                    self.readTrackNumber()
                 }
             } else {
                 // array itself not found

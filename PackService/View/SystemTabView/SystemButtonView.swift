@@ -29,35 +29,41 @@ struct SystemButtonView: View {
                 .cornerRadius(10)
             HStack {
                 Text(text)
-                    .padding(.leading, 20)
                     .font(FontManager.body2)
+                    .foregroundColor(ColorManager.defaultForeground)
                 Spacer()
                 switch buttonType {
                 case .arrow:
-                    Text(email ?? "")
-                        .padding(.trailing, 14.9)
-                        .font(FontManager.body2)
-                        .foregroundColor(ColorManager.primaryColor)
                     Image(systemName: "chevron.right")
                         .resizable()
                         .frame(width: 10.1, height: 17.6)
-                        .padding(.trailing, 26.9)
+                        .foregroundColor(ColorManager.foreground2)
+                        .fontWeight(.semibold)
                 case .toggle:
                     Toggle("", isOn: $alarmToggle)
                         .padding(.trailing, 20)
                 case .version:
-                    Text(version ?? "0.0.1")
-                        .padding(.trailing, 20)
+                    Text(getAppVersion())
                         .font(FontManager.body2)
                         .foregroundColor(ColorManager.primaryColor)
                 }
             }
+            .padding(.horizontal, 20)
         }
+    }
+    
+    func getAppVersion() -> String {
+      if let info: [String: Any] = Bundle.main.infoDictionary,
+          let version: String
+            = info["CFBundleShortVersionString"] as? String {
+            return version
+      }
+      return "-"
     }
 }
 
 struct SystemButtonView_Previews: PreviewProvider {
     static var previews: some View {
-        SystemButtonView(buttonType: .toggle, text: "hi")
+        SystemButtonView(buttonType: .arrow, text: "hi")
     }
 }

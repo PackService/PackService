@@ -18,29 +18,17 @@ struct SystemTabView: View {
                     .font(FontManager.title2)
                 VStack(spacing: 10) {
                     SystemButtonView(buttonType: .arrow, text: "계정", email: modifyEmail(emailService.currentUser?.email ?? ""))
-                    SystemButtonView(buttonType: .toggle, text: "알림설정")
                     NavigationLink(destination: NavigationServiceAgreeView()) {
                         SystemButtonView(buttonType: .arrow, text: "이용약관")
                     }
-                    .foregroundColor(.black)
+//                    .foregroundColor(.black)
                     NavigationLink(destination: NavigationPersonAgreeView()) {
                         SystemButtonView(buttonType: .arrow, text: "개인정보처리방침")
                     }
-                    .foregroundColor(.black)
+//                    .foregroundColor(.black)
                     SystemButtonView(buttonType: .version, text: "현재 버전")
-                    SystemButtonView(buttonType: .arrow, text: "피드백 보내기")
-                    Button(action: {
-                        emailService.readTrackNumber()
-                        print("systemtabview : \(emailService.trackInfo)")
-                    }, label: {
-                        Text("테스트")
-                    })
-                    Button(action: {
-                        emailService.logout()
-                    }, label: {
-                        Text("로그아웃")
-                    })
-                    Button(action: {
+                    
+                    Button(role: .destructive, action: {
                         // logout
                         if emailService.currentUser?.email?.last == "2" {
                             emailService.logout()
@@ -53,23 +41,14 @@ struct SystemTabView: View {
                             emailService.logout()
                             logStatus = false
                         }
-//                        // back view to loginview
-//                        withAnimation(.easeInOut) {
-//                            logStatus = false
-//                        }
                     }, label: {
-                        Text("카톡 Log out")
-                    })
-                    Button(action: {
-                        
-                    }, label: {
-                        
+                        Text("로그아웃")
                     })
                 }
                 .padding(.top, 26)
                 Spacer()
             }
-            .padding(.trailing, 20)
+            .padding(.horizontal, 20)
         }
     }
     
@@ -87,6 +66,20 @@ struct SystemTabView: View {
 
 //struct SystemTabView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        MainView()
+//        SystemTabView()
 //    }
 //}
+
+//SystemButtonView(buttonType: .arrow, text: "피드백 보내기")
+//Button(action: {
+//    emailService.readTrackNumber()
+//    print("systemtabview : \(emailService.trackInfo)")
+//}, label: {
+//    Text("테스트")
+//})
+//Button(action: {
+//    emailService.logout()
+//}, label: {
+//    Text("로그아웃")
+//})
+//                    SystemButtonView(buttonType: .toggle, text: "알림설정")
