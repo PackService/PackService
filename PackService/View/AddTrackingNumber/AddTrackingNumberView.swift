@@ -47,16 +47,17 @@ struct AddTrackingNumberView: View {
                 Text(errorMessage)
                     .onChange(of: trackingDetailVM.errorMessage) { newValue in
                         if newValue == "" {
+                            errorMessage = "운송장 등록"
                             firstNaviLinkActive = false
                             emailService.addTrackNumber(trackNumber: trackingNumber, trackCompany: selected ?? "")
-                        } else if newValue == "동일한 운송장의 하루 요청 건수를 초과 하였습니다." {
-                            errorMessage = "동일한 운송장의 하루 요청 건수를 초과 하였습니다."
-                        } else if newValue == "유효하지 않은 운송장번호 이거나 택배사 코드 입니다." {
-                            errorMessage = "유효하지 않음."
+                        } else if newValue == "동일한 운송장의 하루 요청 건수를 초과 하였습니다." && buttonClicked {
+                            errorMessage = trackingDetailVM.errorMessage
+                        } else if newValue == "유효하지 않은 운송장번호 이거나 택배사 코드 입니다." && buttonClicked { //처음 들어가있는게 이거라 그런거같음
+                            errorMessage = trackingDetailVM.errorMessage
                         }
                     
-                        print(newValue)
-                        print(buttonClicked)
+                        print("newValue는 \(newValue)")
+                        print("buttonclick은 \(buttonClicked)")
                     }
 
                 companyCapsuleList
@@ -67,7 +68,7 @@ struct AddTrackingNumberView: View {
             }
             .padding(.horizontal, 20)
             .padding(.top, 41)
-            .onAppear(perform: {buttonClicked = false})
+//            .onAppear(perform: {trackingDetailVM.errorMessage = " tlqkf "})
             
             ZStack {
                 if showSelectCompanyView {
@@ -170,8 +171,6 @@ struct AddTrackingNumberView: View {
 //            print("추가되었다")
 //        }
 //        }
-        errorMessage = trackingDetailVM.errorMessage
-        print("이 화면 \(errorMessage)")
         animationTrigger = false
     }
 
@@ -252,6 +251,7 @@ extension AddTrackingNumberView {
         Button {
             buttonClicked = true
             trackingDetailVM.getTrackingInfo(selected ?? "", trackingNumber)
+            errorMessage = trackingDetailVM.errorMessage
         } label: {
             ButtonView(text: "운송장 등록")
         }

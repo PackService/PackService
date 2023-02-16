@@ -44,7 +44,9 @@ class TrackingInfoService: ObservableObject {
             .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedTrackingInfo) in
                 self?.trackingInfo = returnedTrackingInfo
                 self?.trackingInfo?.company = code
-                self?.errorMessage = returnedTrackingInfo.msg ?? ""
+                if invoice != "" {
+                    self?.errorMessage = returnedTrackingInfo.msg ?? ""
+                }
                 print("getTracking info error Message: \(self?.errorMessage)")
                 print("getTrackingInfo: \(returnedTrackingInfo)")
                 self?.trackingInfoSubscription?.cancel()
