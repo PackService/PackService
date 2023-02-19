@@ -24,7 +24,8 @@ class TrackingInfoService: ObservableObject {
     
     @Published var trackingInfo: TrackingInfoModel? = nil
     @Published var infos: [TrackingInfoModel] = []
-    @Published var errorMessage: String = ""
+    @Published var errorMessage: String = " "
+    @Published var showAlert = false
     
     var trackingInfoSubscription: AnyCancellable?
     var infosSubscription = Set<AnyCancellable>()

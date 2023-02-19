@@ -22,6 +22,7 @@ class EmailService: ObservableObject {
     @State var userEmail: String = ""
     @Published var loginError: String = ""
     @Published var signUpError: String = ""
+    @Published var repeatTrackNumberError: String = ""
     @Published var pack = [Packages]()
     @AppStorage("log_status") var logStatus = false
     @Published var currentUser: Firebase.User?
@@ -76,6 +77,18 @@ class EmailService: ObservableObject {
         }
     }
     
+    func findRepeatTrackNumber(trackNumber: String, trackCompany: String) {
+        let db = Firestore.firestore()
+        guard let value = trackInfo?.userTracksInfo else {
+            return
+        }
+        if value.first(where: { $0.trackCompany == trackCompany && $0.trackNumber == trackNumber }) != nil { // 추가 불가능
+            repeatTrackNumberError = "동일한 송장번호가 이미 존재합니다"
+        } else { // 추가 가능
+            repeatTrackNumberError = ""
+        }
+        print("repeatTrackNumberError : \(repeatTrackNumberError)")
+    }
     
     // 송장번호 하나 삭제
     func deleteTrackNumber(trackNumber: String, trackCompany: String) {
@@ -212,7 +225,7 @@ class EmailService: ObservableObject {
                 self.signUpError = "회원가입이 완료되었습니다"
                 self.userEmail = email
                 self.currentUser = result?.user
-                print(self.userEmail)
+                
                 let db = Firestore.firestore()
                 db.collection("users").document(user.uid).setData(trackInfo.setEmail)
             }

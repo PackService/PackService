@@ -10,7 +10,7 @@ import SwiftUI
 struct AddTrackingNumberView: View {
     
     @Binding var firstNaviLinkActive: Bool
-    @StateObject var emailService = EmailService()
+    @EnvironmentObject var emailService: EmailService
     
     @Environment(\.dismiss) private var dismissAddTrackingNumberView
     @StateObject var recommendVM = RecommendService("")
@@ -33,6 +33,8 @@ struct AddTrackingNumberView: View {
     @State var errorMessage: String = ""
     @State var checkTrackingInfoError: Bool = true
     @State var buttonClicked: Bool = false
+    @State var showAlert: Bool = false
+    @State var repeatTrackNumber: Bool = false
     
     var body: some View {
         
@@ -44,30 +46,39 @@ struct AddTrackingNumberView: View {
                 
                 selectCompanyButton
                 
-                Text(errorMessage)
-                    .onChange(of: trackingDetailVM.errorMessage) { newValue in
-                        if newValue == "" {
-                            errorMessage = "운송장 등록"
-                            firstNaviLinkActive = false
-                            emailService.addTrackNumber(trackNumber: trackingNumber, trackCompany: selected ?? "")
-                        } else if newValue == "동일한 운송장의 하루 요청 건수를 초과 하였습니다." && buttonClicked {
-                            errorMessage = trackingDetailVM.errorMessage
-                        } else if newValue == "유효하지 않은 운송장번호 이거나 택배사 코드 입니다." && buttonClicked { //처음 들어가있는게 이거라 그런거같음
-                            errorMessage = trackingDetailVM.errorMessage
-                        }
-                    
-                        print("newValue는 \(newValue)")
-                        print("buttonclick은 \(buttonClicked)")
-                    }
-
                 companyCapsuleList
                 
+                Text(errorMessage)
+                    .onChange(of: trackingDetailVM.errorMessage) { newValue in
+                        if emailService.repeatTrackNumberError == "" {
+                            if newValue == "" {
+                                firstNaviLinkActive = false
+                                emailService.addTrackNumber(trackNumber: trackingNumber, trackCompany: selected ?? "")
+                            } else {
+                                errorMessage = trackingDetailVM.errorMessage
+                                showAlert = true
+                            }
+                        } else {
+                            errorMessage = emailService.repeatTrackNumberError
+                            showAlert = true
+                        }
+                        print("newValue는 \(newValue)")
+                        print("buttonclick은 \(buttonClicked)")
+                        print("반복에러 : \(emailService.repeatTrackNumberError)")
+                    }
+                    .frame(width: 0, height: 0)
+
                 Spacer()
                 
                 addTrackingNumberButton
             }
             .padding(.horizontal, 20)
             .padding(.top, 41)
+            .alert("오류", isPresented: $showAlert) {
+                Button("OK") {}
+            } message: {
+                Text(errorMessage)
+            }
 //            .onAppear(perform: {trackingDetailVM.errorMessage = " tlqkf "})
             
             ZStack {
@@ -157,6 +168,8 @@ struct AddTrackingNumberView: View {
 //        validationCheck()
         
 //        trackAttempt = !(isSubmitted && isValid)
+        
+        
         trackingDetailVM.getTrackingInfo(selected ?? "", trackingNumber)
 
         if trackAttempt {
@@ -251,7 +264,8 @@ extension AddTrackingNumberView {
         Button {
             buttonClicked = true
             trackingDetailVM.getTrackingInfo(selected ?? "", trackingNumber)
-            errorMessage = trackingDetailVM.errorMessage
+            emailService.findRepeatTrackNumber(trackNumber: trackingNumber, trackCompany: selected ?? "")
+//            errorMessage = trackingDetailVM.errorMessage
         } label: {
             ButtonView(text: "운송장 등록")
         }
