@@ -9,6 +9,7 @@ import SwiftUI
 import Foundation
 
 struct TrackingDetailLoadingView: View {
+    @EnvironmentObject var service: EmailService
     @Environment(\.dismiss) private var dismissTrackingDetailView
     
     var companyId: String
@@ -17,6 +18,9 @@ struct TrackingDetailLoadingView: View {
 
     var body: some View {
         TrackingDetailView(companyId: companyId, invoiceNumber: invoiceNumber, item: item)
+            .onAppear {
+                service.updateHistory(company: companyId, invoice: invoiceNumber)
+            }
     }
 
 }

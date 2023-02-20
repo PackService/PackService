@@ -24,7 +24,12 @@ class MainViewModel: ObservableObject {
     @Published var carouselItems: [InfoModel] = []
     @Published var searchModels: [InfoModel] = []
     @Published var sortedTrackingModels: [InfoModel] = []
-    
+    @Published var total: Int = 0
+    @Published var totalCompany: Int = 0
+    @Published var completed: Int = 0
+    @Published var companyCount: [String: Int] = [:]
+    @Published var mostUsed: String = ""
+    @Published var historyItem: String = ""
     
     init(service: EmailService) {
         self.service = service
@@ -52,10 +57,26 @@ class MainViewModel: ObservableObject {
         }
 //        print(info.userTracksInfo![0])
 //        print("info!! : \(info)") // 여기까지는 순서 잘 들어감
+        companyService.$allCompanies
+            .sink { [weak self] (companyModel) in
+                self?.totalCompany = companyModel.company.count
+            }
+            .store(in: &cancellables)
+        
         trackingInfoService.getTrackingInfos(info: info) // 여기서 가져오는 순서 때문에 뒤바뀜
         trackingInfoService.$infos
             .map(mapToInfoModels)
             .sink { [weak self] (models) in
+                self?.total = models.count
+//                self?.totalCompany = self?.companyService.allCompanies.company.count ?? 0
+                self?.completed = models.filter { $0.isComplete }.count
+                let mostUsedCompany = self?.companyCount.max(by: { $0.value < $1.value })?.key ?? "정보없음"
+                self?.mostUsed = self?.companyService.allCompanies.company.first(where: { $0.id == mostUsedCompany})?.name ?? ""
+                
+                self?.historyItem = models.first(where: {
+                    $0.company == self?.service.trackInfo?.history[0] &&
+                    $0.invoice == self?.service.trackInfo?.history[1]
+                })?.name ?? "최근 사용한 기록이 없습니다"
                 self?.trackingModels = models
                 self?.isLoading = false
             }
@@ -76,9 +97,13 @@ class MainViewModel: ObservableObject {
     // 파베에 변수 추가
     // 
     func mapToInfoModels(infos: [TrackingInfoModel]) -> [InfoModel] {
+        self.companyCount = [:]
         var sortedInfos = infos.sorted(by: { $0.addedTime! < $1.addedTime! })
         var models = [InfoModel]()
         for info in sortedInfos {
+            if let company = info.company {
+                self.companyCount[company] = (self.companyCount[company] ?? 0) + 1
+            }
             var model = InfoModel(
                 isComplete: info.complete ?? false,
                 company: info.company?.mapInfo("정보없음") ?? "정보없음",
@@ -91,7 +116,7 @@ class MainViewModel: ObservableObject {
 //            print("mapToInfoModels: \(model.company)")
             models.append(model)
         }
-        print("MODELS" , models)
+        print("MOST USED" , companyCount)
         return models
     }
     

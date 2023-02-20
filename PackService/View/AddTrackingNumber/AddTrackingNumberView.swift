@@ -211,7 +211,6 @@ extension AddTrackingNumberView {
             }
     }
     
-    
     var trackingNumberTextField: some View {
         
         TextFieldView(title: "운송장 번호를 입력하세요", input: $trackingNumber, wrongAttempt: $trackAttempt, isFocused: $focusState, animationTrigger: $animationTrigger, type: .trackingNumber)

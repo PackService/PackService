@@ -38,12 +38,12 @@ struct MainTabView: View {
                     insightInfoView
                     
                     HStack {
-                        PackInfoCell(title: "일일 최대 배송 개수", content: "5개")
-                        PackInfoCell(title: "평균 배송 소요 시간", content: "1일 19시간 28분")
+                        PackInfoCell(title: "등록된 운송장 개수", content: "총 \(vm.total)개")
+                        PackInfoCell(title: "완료된 운송장 개수", content: "\(vm.completed)개 완료")
                     }
                     HStack {
-                        PackInfoCell(title: "가장 빠른 지역", content: "용인시 수지구")
-                        PackInfoCell(title: "가장 빠른 택배사", content: "CJ 대한통운")
+                        PackInfoCell(title: "가장 많이 이용한 택배사", content: "\(vm.mostUsed)")
+                        PackInfoCell(title: "택배사 개수", content: "\(vm.totalCompany)개")
                     }
                 }
                 
@@ -119,6 +119,7 @@ extension MainTabView {
                 } else {
                     NavigationLink {
                         TrackingDetailLoadingView(companyId: item.company, invoiceNumber: item.invoice, item: item.name)
+//                            .environmentObject(emailAuthVM)
                     } label: {
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
@@ -185,26 +186,38 @@ extension MainTabView {
                 .fill(ColorManager.background2)
                 .shadow(color: Color.black.opacity(0.05), radius: 20, x: 0, y: 2)
             
-            VStack { // 인사이트 정보
-                HStack {
-                    Text("최단 시간 배송 완료")
-                        .font(FontManager.caption1)
-                        .foregroundColor(ColorManager.foreground1)
-                    Spacer()
-                    Text("신기록")
-                        .font(FontManager.caption2)
-                        .frame(width: 54, height: 20)
-                        .foregroundColor(.white)
-                        .background(ColorManager.primaryColor)
-                        .cornerRadius(10)
+            HStack {
+                VStack(spacing: 8) { // 인사이트 정보
+                    HStack {
+                        Text("최근 조회한 물품")
+                            .font(FontManager.caption1)
+                            .foregroundColor(ColorManager.foreground1)
+                        Spacer()
+                    }
+                    
+                    HStack {
+                        Text(vm.historyItem)
+                            .font(FontManager.body1)
+                        Spacer()
+                    }
+                                       
                 }
-                .padding(.top, 16)
-                HStack {
-                    Text("1일 3시간 32분")
+                
+                NavigationLink {
+                    TrackingDetailLoadingView(companyId: vm.service.trackInfo?.history[0] ?? "", invoiceNumber: vm.service.trackInfo?.history[1] ?? "", item: vm.historyItem)
+                } label: {
+                    Image(systemName: "arrow.right")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 16, height: 16)
                         .font(FontManager.body1)
-                    Spacer()
+                        .foregroundColor(ColorManager.background)
+                        .padding(8)
+//                        .background(Circle().fill(ColorManager.primaryColor))
                 }
-                Spacer()
+                .buttonStyle(InsightButtonStyle())
+                .disabled(vm.historyItem == "최근 사용한 기록이 없습니다")
+
             }
             .padding(.horizontal, 20)
         }
@@ -219,6 +232,17 @@ struct CarouselButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .brightness(configuration.isPressed && !isDragging ? -0.05 : 0.0)
+    }
+}
+
+struct InsightButtonStyle: ButtonStyle {
+//    @Binding var isDragging: Bool
+    @Environment(\.isEnabled) var isEnabled: Bool
+    
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .background(Circle().fill(isEnabled ? ColorManager.primaryColor : ColorManager.foreground2))
+            .brightness(configuration.isPressed ? -0.05 : 0.0)
     }
 }
 
@@ -375,10 +399,10 @@ struct PackInfoCell: View {
                     Text(title)
                         .font(FontManager.caption1)
                         .foregroundColor(ColorManager.foreground1)
-                    Image(systemName: "n.circle.fill")
-                        .resizable()
-                        .frame(width: 16, height: 16)
-                        .foregroundColor(ColorManager.primaryColor)
+//                    Image(systemName: "n.circle.fill")
+//                        .resizable()
+//                        .frame(width: 16, height: 16)
+//                        .foregroundColor(ColorManager.primaryColor)
                 }
                 Text(content)
                     .font(FontManager.body1)

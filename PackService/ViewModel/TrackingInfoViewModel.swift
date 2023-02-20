@@ -20,6 +20,7 @@ class TrackingInfoViewModel: ObservableObject {
         }
     }
     
+//    var service: EmailService
     private var cancellables = Set<AnyCancellable>()
     
     @Published var isComplete: Bool = false

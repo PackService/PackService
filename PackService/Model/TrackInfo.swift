@@ -12,10 +12,24 @@ import FirebaseFirestoreSwift
 struct TrackInfo: Codable, Identifiable {
     @DocumentID var id: String?
     let email: String
+    var history: [String]
     var userTracksInfo: [Packages]?
+    
+    enum CodingKeys: String, CodingKey {
+        case email = "email"
+        case history
+        case userTracksInfo = "userTracksInfo"
+    }
+    
     var setEmail: [String: Any] {
         return [
             "email": self.email
+        ]
+    }
+    
+    var setHistory: [String: Any] {
+        return [
+            "history": self.history
         ]
     }
     
@@ -23,12 +37,8 @@ struct TrackInfo: Codable, Identifiable {
         return [
             "userTracksInfo": self.userTracksInfo
         ]
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case email = "email"
-        case userTracksInfo = "userTracksInfo"
-    }
+    }   
+   
 }
 
 struct Packages: Codable, Hashable {

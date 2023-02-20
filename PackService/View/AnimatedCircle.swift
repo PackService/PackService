@@ -12,48 +12,44 @@ struct AnimatedCircle: View {
     @State var isAnimated: Bool = false
     
     var body: some View {
-        VStack {
-            Button {
-                isAnimated.toggle()
-            } label: {
-                Text("PRESS")
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(ColorManager.background2)
+                .shadow(color: Color.black.opacity(0.05), radius: 20, x: 0, y: 2)
+            
+            HStack {
+                VStack(spacing: 8) { // 인사이트 정보
+                    HStack {
+                        Text("최근 사용된 운송장")
+                            .font(FontManager.caption1)
+                            .foregroundColor(ColorManager.foreground1)
+                        Spacer()
+                    }
+                    
+                    HStack {
+                        Text("1일 3시간 32분")
+                            .font(FontManager.body1)
+                        Spacer()
+                    }
+                                       
+                }
+                
+                Button {
+                    
+                } label: {
+                    Image(systemName: "arrow.right")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20, height: 20)
+                        .font(FontManager.body1)
+                        .foregroundColor(ColorManager.background)
+                        .padding(8)
+                        .background(Circle().fill(ColorManager.primaryColor))
+                }
             }
-            
-//            Circle()
-//                .fill(Color.blue)
-//                .frame(width: 30, height: 30)
-//                .background(
-//                    Circle()
-//                        .stroke(lineWidth: 10)
-//                        .fill(Color.blue.opacity(0.4))
-//                        .frame(
-//                            width: isAnimated ? 50 : 30,
-//                            height: isAnimated ? 50 : 30
-//                        )
-//                        .animation(
-//                            Animation
-//                                .default
-//                                .repeatForever(autoreverses: true), value: isAnimated)
-//
-//                )
-            
-            Circle()
-                .fill(Color.blue)
-                .frame(
-                    width: isAnimated ? 30 : 40,
-                    height: isAnimated ? 30 : 40
-                )
-                .animation(
-                    Animation
-                        .default
-                        .speed(0.5)
-                        .repeatForever(autoreverses: true),
-                    value: isAnimated
-                )
+            .padding(.horizontal, 20)
         }
-
-        
-        
+        .frame(height: 88)
     }
 }
 

@@ -44,7 +44,7 @@ class EmailService: ObservableObject {
                 self?.pack = info.userTracksInfo ?? []
             }
             .store(in: &cancellables)
-    }    
+    }
     
     // 로그인
     func login(email: String, password: String) {
@@ -88,6 +88,18 @@ class EmailService: ObservableObject {
             repeatTrackNumberError = ""
         }
         print("repeatTrackNumberError : \(repeatTrackNumberError)")
+    }
+
+    func updateHistory(company: String, invoice: String) {
+        let arr = [company, invoice]
+        do {
+            let db = Firestore.firestore()
+            try db.collection("users").document(currentUser!.uid).updateData([
+                "history": arr
+            ])
+        } catch let error {
+            print("\(error)")
+        }
     }
     
     // 송장번호 하나 삭제
@@ -218,7 +230,7 @@ class EmailService: ObservableObject {
             }
             
             guard let user = result?.user else { return } // 파이어베이스 유저 객체를 가져옴
-            let trackInfo = TrackInfo(email: email, userTracksInfo: nil)
+            let trackInfo = TrackInfo(email: email, history: [], userTracksInfo: nil)
             
             if error == nil { // firebase db에 저장하는 방법
 //                self.loginLoading = true // 여기서 한번 alert창 띄워보기
@@ -227,7 +239,8 @@ class EmailService: ObservableObject {
                 self.currentUser = result?.user
                 
                 let db = Firestore.firestore()
-                db.collection("users").document(user.uid).setData(trackInfo.setEmail)
+                db.collection("users").document(user.uid).setData(["email": user.email, "history": []])
+//                db.collection("users").document(user.uid).setData(trackInfo.setHistory)
             }
         }
     }
@@ -349,7 +362,7 @@ class EmailService: ObservableObject {
                         self.currentUser = result?.user // 이거 안하면 uid 달라짐
                         guard let user = self.currentUser else { return } // 파이어베이스 유저 객체를 가져옴
                         let db = Firestore.firestore()
-                        db.collection("users").document(user.uid).setData(["email": user.email ])
+                        db.collection("users").document(user.uid).setData(["email": user.email, "history": []])
                     }
                 }
             }
@@ -500,7 +513,7 @@ extension AppleAuthViewModel: ASAuthorizationControllerDelegate {
                           if let document = document, document.exists {
                               print("이미 존재해서 안만듬")
                           } else {
-                              db.collection("users").document(user.uid).setData(["email": user.email])
+                              db.collection("users").document(user.uid).setData(["email": user.email, "history": []])
                               print("없으니까 만들게")
                           }
                       }

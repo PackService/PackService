@@ -77,6 +77,7 @@ struct NavigationServiceAgreeView: View {
                 }
                 
             }
+            .padding(.vertical, 20)
             .navigationBarTitle("서비스 이용약관", displayMode: .inline)
             Spacer()
         }
@@ -85,7 +86,7 @@ struct NavigationServiceAgreeView: View {
             showNavigationBar = true
         })
         .toolbar(showNavigationBar ? .visible : .hidden, for: .tabBar)
-        .padding(.trailing, 20)
+        .padding(.horizontal, 20)
     }
 }
 
