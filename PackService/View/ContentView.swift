@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @AppStorage("log_status") var logStatus = false
     @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
-    @EnvironmentObject var service: EmailService
+    @EnvironmentObject var service: LoginService
     var body: some View {
         ZStack {
             if logStatus {
@@ -21,7 +21,7 @@ struct ContentView: View {
                     LoadingView()
                 }
             } else {
-                LoginUIView()
+                LoginView()
                     .environmentObject(service)
                 if service.loginLoading == true {
                     LoadingView()

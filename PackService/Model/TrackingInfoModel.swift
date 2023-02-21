@@ -86,18 +86,8 @@ import Foundation
          }
  */
 
-// MARK: - TrackingInfo
+// MARK: - TrackingInfoModel
 struct TrackingInfoModel: Codable, Identifiable {
-//    let complete: Bool
-//    let level: Int
-//    let invoiceNo: String
-//    let isValidInvoice: String
-//    let itemImage, itemName: String
-//    let receiverAddr, receiverName, recipient: String
-//    let senderName: String
-//    let trackingDetails: [TrackingDetailsModel]
-//    let estimate: String?
-//    let productInfo: String?
     let id = UUID().uuidString
     let complete: Bool?
     let level: Int?
@@ -132,34 +122,7 @@ struct TrackingInfoModel: Codable, Identifiable {
         case addedTime
     }
     
-//    var positionArray: [String?] {
-//        var positions: [String?] = Array(repeating: nil, count: 4)
-//        var removeStr = "HUB|Hub|hub|물류센터|직영.*|집배점|우체국|우편집중국"
-//
-//        positions[0] = self.trackingDetails?.first?.detailWhere ?? "배달 전"
-//        positions[1] = self.trackingDetails?.filter { $0.level <= 4 }.last?.detailWhere
-//        positions[2] = self.trackingDetails?.filter { $0.level == 5 }.last?.detailWhere
-//        positions[3] = self.trackingDetails?.filter { $0.level == 6 }.last?.detailWhere
-//
-//        for (index, position) in positions.enumerated() {
-//            if let position = position {
-//                var trimmed = position.replacingOccurrences(of: removeStr, with: "", options: .regularExpression)
-//
-//                if trimmed.count == 4 {
-//                    trimmed = String(trimmed.suffix(2))
-//                } else if trimmed.count == 5 {
-//                    trimmed = String(trimmed.suffix(3))
-//                }
-//
-//                positions[index] = trimmed
-//            }
-//        }
-//
-//        return positions
-//    }
-    
     var currentStep: Double {
-        
         guard let details = self.trackingDetails, !details.isEmpty else { return 0 }
         
         var current = -1
@@ -182,7 +145,7 @@ struct TrackingInfoModel: Codable, Identifiable {
     
 }
 
-// MARK: - TrackingDetail
+// MARK: - TrackingDetailsModel
 struct TrackingDetailsModel: Identifiable, Codable {
     let id = UUID().uuidString
     let kind: String
@@ -206,13 +169,4 @@ struct TrackingDetailsModel: Identifiable, Codable {
         return (date: date, time: time)
     }
     
-}
-
-extension String {
-    func mapInfo(_ info: String) -> String {
-        if self.isEmpty {
-            return info
-        }
-        return self
-    }
 }

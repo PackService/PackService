@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//MARK: - SelectCompanyView
 struct SelectCompanyView: View {
     
     @StateObject var companyVM = CompanyService()
@@ -85,9 +86,8 @@ extension SelectCompanyView {
                         text = company.name
                         selected = company.id
                         show = false
-//                        presentationMode.wrappedValue.dismiss()
                     } label: {
-                        PackLogoButtonView(circleColor: .gray, logoImage: logo.logo.image, logoName: company.name)
+                        CompanyLogoButtonView(bgColor: .gray, logo: logo.logo.image, title: company.name)
                     }
                 }
             }
@@ -95,10 +95,10 @@ extension SelectCompanyView {
     }
 }
 
-struct SelectCompanyView_Previews: PreviewProvider {
-    static var previews: some View {
-        SelectCompanyView(show: .constant(true), text: .constant("CJ 대한통운"), selected: .constant("04"))
-//        HeaderView()
-//            .previewLayout(.sizeThatFits)
-    }
-}
+//struct SelectCompanyView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SelectCompanyView(show: .constant(true), text: .constant("CJ 대한통운"), selected: .constant("04"))
+////        HeaderView()
+////            .previewLayout(.sizeThatFits)
+//    }
+//}

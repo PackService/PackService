@@ -7,6 +7,7 @@
 
 import Foundation
 
+//MARK: - RecommendModel
 struct RecommendModel: Codable {
     let recommend: [Recommend]
     
@@ -15,7 +16,7 @@ struct RecommendModel: Codable {
     }
 }
 
-// MARK: - Company
+// MARK: - Recommend
 struct Recommend: Hashable, Identifiable, Codable {
     let id: String
     let international: String?

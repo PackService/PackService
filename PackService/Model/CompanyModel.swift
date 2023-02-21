@@ -59,16 +59,14 @@ struct Company: Hashable, Identifiable, Codable {
     }
 }
 
+//MARK: - Logo
 struct Logo {
     let image: Image
     let bgColor: Color
     let fgColor: Color
 }
 
-/*
-cj 04, cupost 46, daesin 22, dhl 13, ems 12, fedex 21, gsi 41, gspostbox 24, hanjin 05, hapdong 32, ilyana 11, koreapost 01, kyeongdong 23, logen 06, lotte 08, lxpantos 37, nonghyup 53, tnt 25, ups 14, usps 26
-*/
-
+//MARK: - LogoType
 enum LogoType: String {
     
     case cj = "04"
@@ -93,18 +91,10 @@ enum LogoType: String {
     case usps = "26"
     case etc = "998"
     
-    
     var logo: Logo {
         switch self {
-        case .cj, .cupost, .daesin, .dhl, .ems, .fedex, .gsi, .gspostbox, .hanjin, .hapdong, .ilyana, .koreapost, .kyeongdong, .logen, .lotte, .lxpantos, .nonghyup, .tnt, .ups, .usps:
+        case .cj, .cupost, .daesin, .dhl, .ems, .fedex, .gsi, .gspostbox, .hanjin, .hapdong, .ilyana, .koreapost, .kyeongdong, .logen, .lotte, .lxpantos, .nonghyup, .tnt, .ups, .usps, .etc:
             return Logo(image: Image("logo_\(self)"), bgColor: Color("bgcolor_\(self)"), fgColor: Color("fgcolor_\(self)"))
-        case .etc:
-            return Logo(image: truckImage(), bgColor: ColorManager.background2, fgColor: ColorManager.black)
-        }
-        
-        func truckImage() -> Image {
-            return Image(systemName: "box.truck")
-                .resizable()
         }
     }
 }

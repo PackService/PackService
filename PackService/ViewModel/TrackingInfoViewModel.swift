@@ -10,21 +10,12 @@ import Combine
 
 class TrackingInfoViewModel: ObservableObject {
     
-    @Published var code: String
+    @Published var company: String
     @Published var invoice: String
     @Published var isLoading: Bool = true
-    private var companyService: CompanyService
-    private var trackingInfoService: TrackingInfoService {
-        didSet {
-            addSubscribers()
-        }
-    }
-    
-//    var service: EmailService
-    private var cancellables = Set<AnyCancellable>()
     
     @Published var isComplete: Bool = false
-    @Published var name: String?
+    @Published var companyName: String?
     @Published var item: String = ""
     @Published var receiver: String = ""
     @Published var sender: String = ""
@@ -37,12 +28,21 @@ class TrackingInfoViewModel: ObservableObject {
     @Published var showAlert = false
     @Published var alertTitle = ""
     @Published var alertMessage = ""
-   
-    init(code: String, invoice: String) {
-        self.code = code
+    
+    private var companyService: CompanyService
+    private var trackingInfoService: TrackingInfoService {
+        didSet {
+            addSubscribers()
+        }
+    }
+    
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(company: String, invoice: String) {
+        self.company = company
         self.invoice = invoice
         self.companyService = CompanyService()
-        self.trackingInfoService = TrackingInfoService(code: code, invoice: invoice)
+        self.trackingInfoService = TrackingInfoService(company: company, invoice: invoice)
         self.addSubscribers()
     }
     
@@ -50,11 +50,11 @@ class TrackingInfoViewModel: ObservableObject {
         companyService.$allCompanies
             .sink { [weak self] (companyModel) in
                 if let company = companyModel.company.first(where: { company in
-                    company.id == self?.code
+                    company.id == self?.company
                 }) {
-                    self?.name = company.name
+                    self?.companyName = company.name
                 } else {
-                    self?.name = "택배사 이름"
+                    self?.companyName = "택배사 이름"
                 }
             }
             .store(in: &cancellables)
@@ -88,20 +88,17 @@ class TrackingInfoViewModel: ObservableObject {
                         self?.deliveryManContact = ""
                     }
                 }
-                
-//                self?.isLoading = false
-                
             }
             .store(in: &cancellables)
     }
     
-    func reloadData(code: String, invoice: String) {
+    func reloadData(company: String, invoice: String) {
         isLoading = true
         currentStep = 0.0
-        trackingInfoService.getTrackingInfo(code, invoice)
+        trackingInfoService.getTrackingInfo(company, invoice)
     }
     
-    func getTrackingInfoService(code: String, invoice: String) {
-        self.trackingInfoService = TrackingInfoService(code: code, invoice: invoice)
+    func getTrackingInfoService(company: String, invoice: String) {
+        self.trackingInfoService = TrackingInfoService(company: company, invoice: invoice)
     }
 }

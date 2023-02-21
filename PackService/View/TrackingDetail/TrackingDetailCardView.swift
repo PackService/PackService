@@ -73,7 +73,6 @@ extension TrackingDetailCardView {
                     }
                     
                 } label: {
-                    
                     Image(systemName: "phone.circle.fill")
                         .renderingMode(.template)
                         .resizable()

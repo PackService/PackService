@@ -8,18 +8,6 @@
 import Foundation
 import Combine
 
-//    TrackingInfoModel(
-//        complete: false,
-//        level: 0,
-//        invoiceNo: "",
-//        isValidInvoice: "",
-//        itemImage: "", itemName: "",
-//        receiverAddr: "", receiverName: "", recipient: "",
-//        senderName: "",
-//        trackingDetails: [],
-//        estimate: "",
-//        productInfo: "")
-
 class TrackingInfoService: ObservableObject {
     
     @Published var trackingInfo: TrackingInfoModel? = nil
@@ -30,13 +18,13 @@ class TrackingInfoService: ObservableObject {
     var trackingInfoSubscription: AnyCancellable?
     var infosSubscription = Set<AnyCancellable>()
 
-    init(code: String = "", invoice: String = "") {
-        getTrackingInfo(code, invoice)
+    init(company: String = "", invoice: String = "") {
+        getTrackingInfo(company, invoice)
     }
     
-    func getTrackingInfo(_ code: String, _ invoice: String) {
+    func getTrackingInfo(_ company: String, _ invoice: String) {
         
-        guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=\(code)&t_invoice=\(invoice)&t_key=1DsMXGyjhh0tW8MAmxC1gw") else {
+        guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=\(company)&t_invoice=\(invoice)&t_key=2WazFDmHoOWTz1wcpN2VeA") else {
             print("url error")
             return }
         trackingInfoSubscription = NetworkingManager.download(url: url)
@@ -44,7 +32,7 @@ class TrackingInfoService: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedTrackingInfo) in
                 self?.trackingInfo = returnedTrackingInfo
-                self?.trackingInfo?.company = code
+                self?.trackingInfo?.company = company
                 if invoice != "" {
                     self?.errorMessage = returnedTrackingInfo.msg ?? ""
                 }
@@ -54,34 +42,29 @@ class TrackingInfoService: ObservableObject {
             })
     }
     
-    func getTrackingInfos(info: TrackInfo) {
-        guard let infos = info.userTracksInfo else {
+    func getTrackingInfos(userInfo: UserInfo) {
+        guard let infos = userInfo.trackInfos else {
             print("FAILED TO GET INFOS")
             return
         }
-        // 대한 한진 롯데 우체국
+        
         for info in infos {
-//            print("PACKAGE INFOS", info)
-            
-            guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=\(info.trackCompany)&t_invoice=\(info.trackNumber)&t_key=1DsMXGyjhh0tW8MAmxC1gw") else {
+            guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=\(info.company)&t_invoice=\(info.invoice)&t_key=2WazFDmHoOWTz1wcpN2VeA") else {
                 print("url error")
                 return }
-            print("info.trackCompany: \(info.trackCompany)")
-            print("info.trackNumber: \(info.trackNumber)")
+            print("info.company: \(info.company)")
+            print("info.trackNumber: \(info.invoice)")
             
             NetworkingManager.download(url: url) //download를 async로??
                 .decode(type: TrackingInfoModel.self, decoder: JSONDecoder())
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedTrackingInfo) in
                     var newTrackingInfo = returnedTrackingInfo
-                    newTrackingInfo.company = info.trackCompany
+                    newTrackingInfo.company = info.company
                     newTrackingInfo.addedTime = info.timeStamp
-                    newTrackingInfo.invoiceNo = info.trackNumber
-//                    returnedTrackingInfo.company = info.trackCompany
+                    newTrackingInfo.invoiceNo = info.invoice
                     self?.infos.append(newTrackingInfo)
                     print("newtrackingInfo : \(newTrackingInfo)")
-//                    print("RESULT:", self?.infos)
-//                    self?.infosSubscription?.cancel()
                 })
                 .store(in: &infosSubscription)
         }

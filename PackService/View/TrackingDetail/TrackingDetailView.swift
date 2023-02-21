@@ -8,18 +8,19 @@
 import SwiftUI
 import Foundation
 
+//MARK: - TrackingDetailLoadingView
 struct TrackingDetailLoadingView: View {
-    @EnvironmentObject var service: EmailService
+    @EnvironmentObject var service: LoginService
     @Environment(\.dismiss) private var dismissTrackingDetailView
     
-    var companyId: String
-    var invoiceNumber: String
+    var company: String
+    var invoice: String
     var item: String
 
     var body: some View {
-        TrackingDetailView(companyId: companyId, invoiceNumber: invoiceNumber, item: item)
+        TrackingDetailView(company: company, invoice: invoice, item: item)
             .onAppear {
-                service.updateHistory(company: companyId, invoice: invoiceNumber)
+                service.updateHistory(company: company, invoice: invoice)
             }
     }
 
@@ -27,21 +28,21 @@ struct TrackingDetailLoadingView: View {
 
 struct TrackingDetailView: View {
     @Environment(\.dismiss) private var dismissTrackingDetailView
-    @StateObject private var trackingDetailVM: TrackingInfoViewModel
+    @StateObject private var vm: TrackingInfoViewModel
     
     @State var showMenu: Bool? = false
     @State var showToast: Bool = false
     @State var showSheet: Bool = false
     
-    var code: String = "111"
+    var company: String = "111"
     var invoice: String = "111"
     var item: String = "111"
     
     //MARK: - Initializer
-    init(companyId: String, invoiceNumber: String, item: String) {
-        _trackingDetailVM = StateObject(wrappedValue: TrackingInfoViewModel(code: companyId, invoice: invoiceNumber))
-        self.code = companyId
-        self.invoice = invoiceNumber
+    init(company: String, invoice: String, item: String) {
+        _vm = StateObject(wrappedValue: TrackingInfoViewModel(company: company, invoice: invoice))
+        self.company = company
+        self.invoice = invoice
         self.item = item
     }
     
@@ -60,11 +61,11 @@ struct TrackingDetailView: View {
                             cardView
                             
                             //promotion
-                            PromotionView(promotionTitle: "광고란", promotionContent: "광고입니다.")
-                                .padding(.vertical, 8)
+//                            PromotionView(promotionTitle: "광고란", promotionContent: "광고입니다.")
+//                                .padding(.vertical, 8)
 
                             //tracking position
-                            TrackingPositionView(code: code, invoice: invoice)
+                            TrackingPositionView(code: company, invoice: invoice)
                             
                             Spacer()
                             
@@ -78,29 +79,29 @@ struct TrackingDetailView: View {
             }
             
             if showMenu ?? false {
-                MenuView(show: $showMenu, showToast: $showToast, tel: trackingDetailVM.deliveryManContact)
+                MenuView(show: $showMenu, showToast: $showToast, tel: vm.deliveryManContact)
                     .animation(Animation.easeIn(duration: 2), value: showMenu)
                     .zIndex(2)
             }
             
-            if trackingDetailVM.isLoading {
+            if vm.isLoading {
                 LoadingView()
                     .onAppear {
                         // 만약 1.5초보다 많은 로딩 시간이 걸린다면??
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            trackingDetailVM.isLoading = false
+                            vm.isLoading = false
                         }
                     }
             }
             
-            ActionSheetView(show: $showSheet, code: code, company: trackingDetailVM.name ?? "", invoice: invoice)
+            ActionSheetView(show: $showSheet, company: company, companyName: vm.companyName ?? "", invoice: invoice)
  
         }
-        .environmentObject(trackingDetailVM)
-        .alert("오류", isPresented: $trackingDetailVM.showAlert) {
+        .environmentObject(vm)
+        .alert("오류", isPresented: $vm.showAlert) {
             Button("OK") {}
         } message: {
-            Text("[\(trackingDetailVM.alertTitle)] " + trackingDetailVM.alertMessage)
+            Text("[\(vm.alertTitle)] " + vm.alertMessage)
         }
         .toast(isShowing: $showToast)
         .navigationBarBackButtonHidden(true)
@@ -142,20 +143,20 @@ extension TrackingDetailView {
                 .fill(ColorManager.defaultForegroundDisabled)
                 .frame(width: 54, height: 54)
                 .overlay(
-                    LogoType(rawValue: trackingDetailVM.code)?.logo.image
+                    LogoType(rawValue: vm.company)?.logo.image
                         .resizable()
                         .scaledToFit()
                         .frame(width: 54, height: 54)
                 )
             
             VStack(alignment: .leading, spacing: 8) {
-                Text(!trackingDetailVM.item.isEmpty ? trackingDetailVM.item :  "\(trackingDetailVM.invoice) 물품")
+                Text(!vm.item.isEmpty ? vm.item :  "\(vm.invoice) 물품")
                     .font(FontManager.title2)
                     .frame(maxWidth: 233, alignment: .leading)
 //                        .background(Color.red)
                 HStack(spacing: 8) {
-                    Text(trackingDetailVM.name ?? "택배사 이름")
-                    Text(trackingDetailVM.invoice)
+                    Text(vm.companyName ?? "택배사 이름")
+                    Text(vm.invoice)
                 }
                 .font(FontManager.caption1)
                 .foregroundColor(ColorManager.foreground1)
@@ -170,13 +171,13 @@ extension TrackingDetailView {
     var cardView: some View {
         VStack(spacing: 10) {
             HStack(spacing: 10) {
-                TrackingDetailCardView(title: "받는 분", content: trackingDetailVM.receiver)
-                TrackingDetailCardView(title: "보내는 분", content: trackingDetailVM.sender)
+                TrackingDetailCardView(title: "받는 분", content: vm.receiver)
+                TrackingDetailCardView(title: "보내는 분", content: vm.sender)
             }
             
             HStack(spacing: 10) {
-                TrackingDetailCardView(title: "배송기사", content: trackingDetailVM.deliveryMan, deliveryman: true, show: $showMenu)
-                TrackingDetailCardView(title: "예상 완료 시간", content: trackingDetailVM.estimate ?? "", isComplete: trackingDetailVM.isComplete)
+                TrackingDetailCardView(title: "배송기사", content: vm.deliveryMan, deliveryman: true, show: $showMenu)
+                TrackingDetailCardView(title: "예상 완료 시간", content: vm.estimate ?? "", isComplete: vm.isComplete)
             }
         }
     }

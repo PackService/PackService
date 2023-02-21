@@ -10,14 +10,15 @@ import Combine
 
 class RecommendService: ObservableObject {
     @Published var allRecommend: RecommendModel = RecommendModel(recommend: [])
+    
     var recommendSubscription: AnyCancellable?
     
-    init( _ invoice: String) {
+    init(_ invoice: String) {
         getRecommendCompanies(invoice)
     }
     
     func getRecommendCompanies(_ invoice: String) {
-        guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/recommend?t_invoice=\(invoice)&t_key=1DsMXGyjhh0tW8MAmxC1gw") else { return }
+        guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/recommend?t_invoice=\(invoice)&t_key=2WazFDmHoOWTz1wcpN2VeA") else { return }
         recommendSubscription = NetworkingManager.download(url: url)
             .decode(type: RecommendModel.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)

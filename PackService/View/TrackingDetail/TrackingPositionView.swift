@@ -7,10 +7,11 @@
 
 import SwiftUI
 
+//MARK: - TrackingPositionView
 struct TrackingPositionView: View {
-    @EnvironmentObject var trackingDetailVM: TrackingInfoViewModel
+    @EnvironmentObject var vm: TrackingInfoViewModel
     
-    var code: String
+    var company: String
     var invoice: String
     
     @State var step: Double = 0
@@ -21,7 +22,7 @@ struct TrackingPositionView: View {
 
     //MARK: - Initializer
     init(code: String, invoice: String) {
-        self.code = code
+        self.company = code
         self.invoice = invoice
     }
     
@@ -99,14 +100,14 @@ extension TrackingPositionView {
     //MARK: - List
     var list: some View {
         VStack {
-            ForEach(trackingDetailVM.trackingDetails) { detail in
+            ForEach(vm.trackingDetails) { detail in
                 TrackingPositionListCellView(
                     status: detail.kind,
                     position: detail.detailWhere,
                     deliveryMan: detail.manName,
                     time: detail.timeAndDateTuple.time,
                     date: detail.timeAndDateTuple.date,
-                    isCurrent: detail.id == trackingDetailVM.trackingDetails.last!.id)
+                    isCurrent: detail.id == vm.trackingDetails.last!.id)
                     .padding(.vertical, 8)
             }
         }
@@ -120,7 +121,7 @@ extension TrackingPositionView {
             ForEach(Array(arr.enumerated()), id: \.offset) { index, item in
                 Text(item)
                     .font(FontManager.caption1)
-                    .foregroundColor(index != Int(trackingDetailVM.currentStep) ? ColorManager.foreground1 : ColorManager.primaryColor)
+                    .foregroundColor(index != Int(vm.currentStep) ? ColorManager.foreground1 : ColorManager.primaryColor)
                 
                 if item != "도착" {
                     Spacer()
@@ -140,7 +141,7 @@ extension TrackingPositionView {
     //MARK: - Refresh Button
     var refreshButton: some View {
         Button {
-            trackingDetailVM.reloadData(code: self.code, invoice: self.invoice)
+            vm.reloadData(company: self.company, invoice: self.invoice)
         } label: {
             Image(systemName: "arrow.clockwise.circle.fill")
                 .renderingMode(.template)
@@ -159,19 +160,16 @@ extension TrackingPositionView {
     
     //MARK: - Progress View
     var progressView: some View {
-        TrackingProgressView(currentStep: $trackingDetailVM.currentStep)
+        TrackingProgressView(currentStep: $vm.currentStep)
             .frame(height: 32)
             .padding(.top, 24)
             .padding(.horizontal, 12)
-            .animation(Animation.easeIn(duration: 1.0), value: trackingDetailVM.currentStep)
-//            .onAppear {
-//                step = trackingDetailVM.currentStep
-//            }
+            .animation(Animation.easeIn(duration: 1.0), value: vm.currentStep)
     }
 }
 
-struct TrackingPositionView_Previews: PreviewProvider {
-    static var previews: some View {
-        TrackingPositionView(code: "04", invoice: "1111111111")
-    }
-}
+//struct TrackingPositionView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TrackingPositionView(code: "04", invoice: "1111111111")
+//    }
+//}

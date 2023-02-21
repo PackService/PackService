@@ -37,16 +37,9 @@ struct CompanyCapsuleView: View {
     }
 }
 
-struct ContainerButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .brightness(configuration.isPressed ? -0.1 : 0.0)
-    }
-}
-
-struct CompanyCapsuleView_Previews: PreviewProvider {
-    static var previews: some View {
-        CompanyCapsuleView(color: Color.red, logoImage: Image("logo_koreapost"), logoName: "대한asdfasdf통운", nameColor: Color.white)
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct CompanyCapsuleView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CompanyCapsuleView(color: Color.red, logoImage: Image("logo_koreapost"), logoName: "대한asdfasdf통운", nameColor: Color.white)
+//            .previewLayout(.sizeThatFits)
+//    }
+//}

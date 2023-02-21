@@ -13,7 +13,7 @@ struct PackServiceApp: App {
     
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
     @Environment(\.window) var window: UIWindow?
-    @StateObject var emailService = EmailService()
+    @StateObject var emailService = LoginService()
     
     init() {
         FirebaseApp.configure()

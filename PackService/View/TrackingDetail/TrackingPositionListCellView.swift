@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-//MARK: - List Cell
+//MARK: - TrackingPositionListCellView
 struct TrackingPositionListCellView: View {
     
     var status: String
@@ -70,8 +70,7 @@ extension TrackingPositionListCellView {
                 }
             }
             .font(FontManager.caption1)
-            .foregroundColor(ColorManager.foreground1)
-            
+            .foregroundColor(ColorManager.foreground1)            
         }
     }
     
