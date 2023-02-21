@@ -62,12 +62,12 @@ struct AddTrackingNumberView: View {
                 Text(errorMessage)
                     .onChange(of: trackingDetailVM.errorMessage) { newValue in
                         if service.repeatTrackNumberError == "" {
-                            if newValue == "" {
-                                firstNaviLinkActive = false
-                                service.addTrackNumber(company: selected ?? "", invoice: invoice)
-                            } else {
+                            if newValue == "유효하지 않은 운송장번호 이거나 택배사 코드 입니다." {
                                 errorMessage = trackingDetailVM.errorMessage
                                 showAlert = true
+                            } else {
+                                firstNaviLinkActive = false
+                                service.addTrackNumber(company: selected ?? "", invoice: invoice)
                             }
                         } else {
                             errorMessage = service.repeatTrackNumberError
