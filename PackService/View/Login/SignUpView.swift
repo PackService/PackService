@@ -19,6 +19,7 @@ struct SignUpView: View {
     @State var ageAgree: Bool = false
     @State var termsOfServiceAgree: Bool = false
     @State var privacyPolicyAgree: Bool = false
+    @State var signUpSuccessAlert: Bool = false
     
     // 텍스트 필드 애니메이션 변수들
     @State var emailInput: String = ""
@@ -89,8 +90,9 @@ struct SignUpView: View {
                                     Text(service.signUpError)
                                         .font(FontManager.caption2)
                                         .foregroundColor(ColorManager.negativeColor)
+                                        .frame(width: 0, height: 0)
                                         .onAppear {
-                                            signUpScreen = false
+                                            signUpSuccessAlert = true
                                         }
                                 }
                                 
@@ -99,9 +101,6 @@ struct SignUpView: View {
                             
                             Spacer()
                         }
-    //                    .onAppear {
-    //                        allAgree = true
-    //                    }
                         .padding(.top, 20)
                         .animation(Animation.easeIn, value: allAgree)
                         .onSubmit {
@@ -115,9 +114,9 @@ struct SignUpView: View {
                 
                 Spacer()
             }
-            .onAppear {
-                service.signUpError = ""
-            }
+//            .onAppear {
+//                service.signUpError = ""
+//            }
 
             VStack {
                 Spacer()
@@ -258,26 +257,36 @@ extension SignUpView {
                 }
             }
             
-            if checkSignupError == false {// 회원가입 시 에러 없어야지 파이어베이스 등록
+            if checkSignupError == false {
                 service.registerUser(email: emailInput, password: passwordInput)
 //                signUpSuccessAlert = true
             }
             animationTrigger = false
         }, label: {
             ButtonView(text: "계정 만들기")
-//            if emailInput != "" && passwordInput != "" && passwordConfirmInput != "" {
-//
-//            } else {
-//                DisabledButtonView(text: "계정 만들기")
-//            }
         })
         .padding(.horizontal, 20)
         .disabled(emailInput.isEmpty && passwordInput.isEmpty && passwordConfirmInput.isEmpty)
-//        .alert(isPresented: $signUpSuccessAlert) {
-//            Alert(title: Text("Alert"),
-//                  message: Text("Alert Dialog"),
-//                  dismissButton: .default(Text("Close")))
-//        }
+        .alert(isPresented: $signUpSuccessAlert) {
+            Alert(title: Text("Alert"),
+                  message: Text("Alert Dialog"),
+                  dismissButton: .default(Text("Close")))
+        }
+        .alert("회원가입", isPresented: $signUpSuccessAlert) {
+            Button("OK") {
+                allAgree = false
+                ageAgree = false
+                privacyPolicyAgree = false
+                termsOfServiceAgree = false
+                service.signUpError = ""
+                emailInput = ""
+                passwordInput = ""
+                passwordConfirmInput = ""
+                signUpScreen = false
+            }
+        } message: {
+            Text(service.signUpError)
+        }
     }
 }
 
