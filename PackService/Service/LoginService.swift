@@ -148,6 +148,18 @@ class LoginService: ObservableObject {
         }
     }
     
+    func deleteAllData() {
+        do {
+            let db = Firestore.firestore()
+            try db.collection("users").document(currentUser!.uid).updateData([
+                "history": [],
+                "trackInfos": []
+            ])
+        } catch let error {
+            print("\(error)")
+        }
+    }
+    
     // 송장번호 읽어오기
     func readTrackNumber() {
         if currentUser?.uid != nil {

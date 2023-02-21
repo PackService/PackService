@@ -44,6 +44,18 @@ struct LoginView: View {
                             .edgesIgnoringSafeArea(.all)
                         ScrollView(.vertical, showsIndicators: false) {
                             VStack {
+                                HStack {
+                                    Image("easytrack")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 60, height: 60)
+                                    
+                                    Text("이지트랙")
+                                        .font(FontManager.title1)
+                                        .foregroundColor(ColorManager.primaryColor)
+                                }
+                                .padding(.bottom, 40)
+                                
                                 
                                 Spacer()
                                 
@@ -93,7 +105,7 @@ struct LoginView: View {
                                     } label: {
                                         ButtonView(text: "로그인")
                                     }
-                                    .padding(.top, 40)
+                                    .padding(.top, 20)
                 
                                     HStack {
                                         Text("계정이 없으신가요?")

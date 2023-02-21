@@ -38,6 +38,10 @@ struct SettingsView: View {
                 
                 switch buttonType {
                 case .arrow:
+                    Text(email ?? "")
+                        .font(FontManager.body2)
+                        .foregroundColor(ColorManager.primaryColor)
+                    
                     Image(systemName: "chevron.right")
                         .resizable()
                         .frame(width: 10.1, height: 17.6)

@@ -11,6 +11,7 @@ import SwiftUI
 struct SettingsTabView: View {
     @AppStorage("log_status") var logStatus = false
     @EnvironmentObject var service: LoginService
+    @State var showLogoutAlert: Bool = false
     
     var body: some View {
         NavigationView {
@@ -18,7 +19,14 @@ struct SettingsTabView: View {
                 Text("설정")
                     .font(FontManager.title2)
                 VStack(spacing: 10) {
-                    SettingsView(buttonType: .arrow, text: "계정", email: modifyEmail(service.currentUser?.email ?? ""))
+                    NavigationLink {
+                        AccountView()
+                            .navigationTitle("계정")
+                            .environmentObject(service)
+                    } label: {
+                        SettingsView(buttonType: .arrow, text: "계정", email: modifyEmail(service.currentUser?.email ?? ""))
+                    }
+                    
                     NavigationLink(destination: NavigationTermsOfServiceView()) {
                         SettingsView(buttonType: .arrow, text: "이용약관")
                     }
@@ -31,20 +39,28 @@ struct SettingsTabView: View {
                     
                     //Logout Button
                     Button(role: .destructive, action: {
-                        if service.currentUser?.email?.last == "2" {
-                            service.logout()
-                        } else if service.currentUser?.email?.last == "1"{
-                            DispatchQueue.global(qos: .background).async {
-                                try? service.kakaoLogout()
-                            }
-                            logStatus = false
-                        } else {
-                            service.logout()
-                            logStatus = false
-                        }
+                        showLogoutAlert = true
                     }, label: {
                         Text("로그아웃")
                     })
+                    .padding(.top, 8)
+                    .alert("로그아웃", isPresented: $showLogoutAlert) {
+                        Button("로그아웃", role: .destructive) {
+                            if service.currentUser?.email?.last == "2" {
+                                service.logout()
+                            } else if service.currentUser?.email?.last == "1"{
+                                DispatchQueue.global(qos: .background).async {
+                                    try? service.kakaoLogout()
+                                }
+                                logStatus = false
+                            } else {
+                                service.logout()
+                                logStatus = false
+                            }
+                        }
+                    } message: {
+                        Text("로그아웃 하시겠습니까?")
+                    }
                 }
                 .padding(.top, 26)
                 

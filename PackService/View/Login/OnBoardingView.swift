@@ -9,7 +9,7 @@ import SwiftUI
 import AuthenticationServices
 
 //MARK: - OnBoardingView
-struct OnBoardingView: View {    
+struct OnBoardingView: View {
     @Binding var isFirstLaunching: Bool
     @State var signUpScreen: Bool = false
     @EnvironmentObject var service: LoginService
@@ -20,9 +20,15 @@ struct OnBoardingView: View {
         NavigationView {
             ZStack {
                 VStack(alignment: .center) {
-                    Text("내 소중한 택배의\n우당탕탕 대모험 📦")
+                    Image("onboarding_illust")
+                        .resizable()
+                        .scaledToFit()
+                        .padding(.bottom, 10)
+                    
+                    Text("내 택배 위치를\n손쉽게 추적하기")
                         .multilineTextAlignment(.center)
-                        .font(FontManager.title1)
+                        .font(.custom("Pretendard-Bold", size: 32.0))
+                        .fontWeight(.heavy)
                         .lineSpacing(5)
                     
                     Spacer()
@@ -90,6 +96,6 @@ struct OnBoardingView: View {
 
 //struct OnBoardingView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        OnBoardingView(isFirstLaunching: .constant(true))        
+//        OnBoardingView(isFirstLaunching: .constant(true))
 //    }
 //}

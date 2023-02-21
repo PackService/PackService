@@ -21,6 +21,7 @@
 		7E09008B298233F200D9B1F3 /* AppleAuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E09008A298233F200D9B1F3 /* AppleAuthViewModel.swift */; };
 		7E09008D29826DBB00D9B1F3 /* Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E09008C29826DBB00D9B1F3 /* Carousel.swift */; };
 		7E16336F295E9C1000EBFB87 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E16336E295E9C1000EBFB87 /* OnBoardingView.swift */; };
+		7E16DA2E29A4E1000042446A /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E16DA2D29A4E1000042446A /* AccountView.swift */; };
 		7E27167E2982B33A001DD5EF /* StatusBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E27167D2982B33A001DD5EF /* StatusBarView.swift */; };
 		7E3B49F3295D9FFF0020036C /* ExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3B49F2295D9FFF0020036C /* ExampleView.swift */; };
 		7E53B7D6295C6B2E00555967 /* AnimatedCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E53B7D5295C6B2E00555967 /* AnimatedCircle.swift */; };
@@ -126,6 +127,7 @@
 		7E09008A298233F200D9B1F3 /* AppleAuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthViewModel.swift; sourceTree = "<group>"; };
 		7E09008C29826DBB00D9B1F3 /* Carousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carousel.swift; sourceTree = "<group>"; };
 		7E16336E295E9C1000EBFB87 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
+		7E16DA2D29A4E1000042446A /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		7E27167D2982B33A001DD5EF /* StatusBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarView.swift; sourceTree = "<group>"; };
 		7E3B49F2295D9FFF0020036C /* ExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleView.swift; sourceTree = "<group>"; };
 		7E53B7D5295C6B2E00555967 /* AnimatedCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedCircle.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 			children = (
 				AD58305B296BFBA800099836 /* SettingsTabView.swift */,
 				ADA9599B297670D500308009 /* SettingsView.swift */,
+				7E16DA2D29A4E1000042446A /* AccountView.swift */,
 			);
 			path = SettingsTab;
 			sourceTree = "<group>";
@@ -681,6 +684,7 @@
 				AD58305A296AB06100099836 /* SelectCompanyView.swift in Sources */,
 				AD1ADDE22959A94700545DB7 /* RecommendTrackView.swift in Sources */,
 				7EBC6D90298CB19C00374738 /* ShowModel.swift in Sources */,
+				7E16DA2E29A4E1000042446A /* AccountView.swift in Sources */,
 				ADE0F3B92934588C005D2732 /* SceneDelegate.swift in Sources */,
 				7EA91CDB297FEAC8007F2B5C /* ToastView.swift in Sources */,
 				7E8E7DD82974F88C0035759A /* TrackingDetailCardView.swift in Sources */,
