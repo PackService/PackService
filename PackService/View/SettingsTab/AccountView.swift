@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//MARK: - AccountView
 struct AccountView: View {
     @EnvironmentObject var service: LoginService
     @State var showDeleteAllDataAlert: Bool = false
