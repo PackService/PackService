@@ -17,6 +17,7 @@ struct MainView: View {
     init(vm: MainViewModel) {
         self.vm = vm
     }
+    //
     
     var body: some View {
         NavigationView {
