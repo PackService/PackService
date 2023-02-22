@@ -192,20 +192,23 @@ class LoginService: ObservableObject {
     // 회원탈퇴
     func deleteUser() {
         let user = Auth.auth().currentUser
+        self.db.collection("users").document(self.currentUser!.uid).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
+            }
+        }
         user?.delete { error in
             if let error = error {
                 // An error happened.
+                print("delete 에러 발생")
                 print(error)
             } else {
                 // Account deleted. 데이터베이스에서 해당 회원 정보들 다 삭제해줘야 함.
-                self.db.collection("users").document(self.currentUser!.uid).delete() { err in
-                    if let err = err {
-                        print("Error removing document: \(err)")
-                    } else {
-                        print("Document successfully removed!")
-                    }
-                }
                 print("현재 회원 삭제")
+                self.currentUser = nil
+                self.logStatus = false
             }
         }
     }
