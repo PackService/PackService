@@ -35,7 +35,7 @@ struct TrackingStatusViewStyle: ProgressViewStyle {
                                 .fill(ColorManager.primaryColor)
                                 .frame(width: 32, height: 32)
                                 .overlay(
-                                    Image(systemName: "note.text")
+                                    Image(systemName: "list.clipboard.fill")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 16, height: 16)

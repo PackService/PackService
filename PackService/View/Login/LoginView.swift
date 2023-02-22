@@ -50,8 +50,9 @@ struct LoginView: View {
                                         .scaledToFit()
                                         .frame(width: 60, height: 60)
                                     
-                                    Text("이지트랙")
-                                        .font(FontManager.title1)
+                                    Text("쉽고")
+                                        .font(.custom("Pretendard-Bold", size: 40.0))
+                                        .fontWeight(.heavy)
                                         .foregroundColor(ColorManager.primaryColor)
                                 }
                                 .padding(.bottom, 40)
