@@ -34,6 +34,7 @@ struct AccountView: View {
                 }
             }
             .alert("데이터 삭제하기", isPresented: $showDeleteAllDataAlert) {
+                Button("취소", role: .cancel) {}
                 Button("삭제", role: .destructive) {
                     service.deleteAllData()
                 }
@@ -60,6 +61,7 @@ struct AccountView: View {
                 }
             }
             .alert("회원 탈퇴", isPresented: $showDeleteAccountAlert) {
+                Button("취소", role: .cancel) {}
                 Button("탈퇴", role: .destructive) {
                     service.deleteUser()
                     service.logStatus = false
@@ -67,6 +69,7 @@ struct AccountView: View {
             } message: {
                 Text("회원탈퇴를 하시겠습니까?")
             }
+
             
             Spacer()
         }
