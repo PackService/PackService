@@ -38,7 +38,7 @@ struct TrackingStatusViewStyle: ProgressViewStyle {
                                     Image(systemName: "list.clipboard.fill")
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(width: 16, height: 16)
+                                        .frame(width: 18, height: 18)
                                         .foregroundColor(ColorManager.background)
                             )
                             

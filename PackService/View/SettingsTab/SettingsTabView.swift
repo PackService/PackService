@@ -45,6 +45,7 @@ struct SettingsTabView: View {
                     })
                     .padding(.top, 8)
                     .alert("로그아웃", isPresented: $showLogoutAlert) {
+                        Button("취소", role: .cancel) {}
                         Button("로그아웃", role: .destructive) {
                             if service.currentUser?.email?.last == "2" {
                                 service.logout()

@@ -35,7 +35,7 @@ struct Toast: ViewModifier {
             }
             .background(
                 RoundedRectangle(cornerRadius: 10)
-                    .background(.ultraThinMaterial)
+                    .fill(ColorManager.black.opacity(0.35))
                     .frame(width: UIScreen.main.bounds.width - 60, height: 55)
             )
             .onTapGesture {
