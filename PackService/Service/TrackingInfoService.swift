@@ -24,7 +24,7 @@ class TrackingInfoService: ObservableObject {
     
     func getTrackingInfo(_ company: String, _ invoice: String) {
         
-        guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=\(company)&t_invoice=\(invoice)&t_key=52dXNkGQz9unVXqGALPSDQ") else {
+        guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=\(company)&t_invoice=\(invoice)&t_key=R3piwpbvEXgOCxQFddJEgw") else {
             print("url error")
             return }
         trackingInfoSubscription = NetworkingManager.download(url: url)
@@ -49,7 +49,7 @@ class TrackingInfoService: ObservableObject {
         }
         
         for info in infos {
-            guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=\(info.company)&t_invoice=\(info.invoice)&t_key=2WazFDmHoOWTz1wcpN2VeA") else {
+            guard let url = URL(string: "https://info.sweettracker.co.kr/api/v1/trackingInfo?t_code=\(info.company)&t_invoice=\(info.invoice)&t_key=R3piwpbvEXgOCxQFddJEgw") else {
                 print("url error")
                 return }
             print("info.company: \(info.company)")
